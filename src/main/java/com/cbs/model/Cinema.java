@@ -28,6 +28,6 @@ public class Cinema extends BaseEntity {
     private Province province;
     
     @OneToMany(mappedBy = "cinema")
-    private Set<CinemaRoomReferences> cinemaRoomReferences;
+    private Set<CinemaRoom> cinemaRoomReferences;
 
 }

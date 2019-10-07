@@ -18,7 +18,7 @@ public class Room extends BaseEntity {
 
 
     @OneToMany(mappedBy = "room")
-    private Set<CinemaRoomReferences> cinemaRoomReferences;
+    private Set<CinemaRoom> cinemaRoomReferences;
 
    
 }

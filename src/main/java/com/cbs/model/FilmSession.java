@@ -23,7 +23,7 @@ public class FilmSession extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "cinemaRoom_Id")
-    private CinemaRoomReferences cinemaRoomReferences;
+    private CinemaRoom cinemaRoomReferences;
 
     @OneToMany(mappedBy = "filmSession")
     private Set<Ticket> tickets;

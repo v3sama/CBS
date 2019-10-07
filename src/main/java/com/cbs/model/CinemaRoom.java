@@ -10,15 +10,15 @@ import lombok.EqualsAndHashCode;
 @Data
 @Entity
 @EqualsAndHashCode(callSuper = true)
-public class SessionSeatReferences  extends BaseEntity{
-	@ManyToOne
-	@JoinColumn(name = "filmSession_id")
-	private FilmSession filmSession;
+public class CinemaRoom extends BaseEntity {
+	private int rows;
 	
 	@ManyToOne
-	@JoinColumn(name = "seat_id")
-	private Seat seat;
+    @JoinColumn(name = "room_id")
+	private Room room;
 	
-	private boolean Available;
+	@ManyToOne
+    @JoinColumn(name = "cinema_id")
+	private Cinema cinema;
 	
 }
