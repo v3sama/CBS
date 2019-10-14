@@ -7,6 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import org.omg.CORBA._IDLTypeStub;
+
 import java.util.Set;
 
 @Data
@@ -28,6 +31,11 @@ public class Cinema extends BaseEntity {
     private Province province;
     
     @OneToMany(mappedBy = "cinema")
-    private Set<CinemaRoomReferences> cinemaRoomReferences;
+    private Set<CinemaScreen> cinemaScreens;
+
+	public Long getId() {
+		// TODO Auto-generated method stub
+		return this.getId();
+	}
 
 }

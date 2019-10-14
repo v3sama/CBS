@@ -14,8 +14,6 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 public class User extends BaseEntity {
 
-    private String username;
-
     private String firstName;
 
     private String lastName;
@@ -33,9 +31,6 @@ public class User extends BaseEntity {
     @JoinColumn(name = "discount_id")
     private Discount discount;
 
-	public String getPassword() {
-		// TODO Auto-generated method stub
-		return password;
-	}
+	
 
 }
