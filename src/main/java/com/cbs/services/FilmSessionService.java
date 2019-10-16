@@ -1,6 +1,6 @@
 package com.cbs.services;
 
-import com.cbs.model.ScheduleSession;
+import com.cbs.model.MovieSession;
 import com.cbs.repository.ScheduleSessionRepository;
 import com.cbs.services.FilmSessionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ public class FilmSessionService {
         this.filmSessionRepository = filmSessionRepository;
     }
 
-    public ScheduleSession addSession(ScheduleSession filmSession) {
+    public MovieSession addSession(MovieSession filmSession) {
         return filmSessionRepository.saveAndFlush(filmSession);
     }
 
@@ -29,12 +29,12 @@ public class FilmSessionService {
         }
     }
 
-    public List<ScheduleSession> getAllSession() {
+    public List<MovieSession> getAllSession() {
         return filmSessionRepository.findAll();
     }
 
 
-    public ScheduleSession getSessionById(Long id) {
+    public MovieSession getSessionById(Long id) {
         return filmSessionRepository.getOne(id);
     }
 

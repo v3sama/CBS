@@ -1,5 +1,8 @@
 package com.cbs.model;
 
+import java.util.Date;
+import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -10,16 +13,14 @@ import lombok.EqualsAndHashCode;
 @Data
 @Entity
 @EqualsAndHashCode(callSuper = true)
-public class CinemaScreen extends BaseEntity {
-	//số hàng ghế trong room
-	private int rows;
+public class CardInformation extends BaseEntity {
+	private String card_no;
+	private Date card_date;
+	private String bank;
 	
 	@ManyToOne
-    @JoinColumn(name = "screen_id")
-	private Screen screen;
+	@JoinColumn(name = "user_id")
+	private User member;
 	
-	@ManyToOne
-    @JoinColumn(name = "cinema_id")
-	private Cinema cinema;
 	
 }

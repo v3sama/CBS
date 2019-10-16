@@ -17,8 +17,8 @@ public class Screen extends BaseEntity {
     private String description;
 
 
-    @OneToMany(mappedBy = "room")
-    private Set<CinemaScreen> cinemaRoomReferences;
+    @OneToMany(mappedBy = "screen")
+    private Set<CinemaScreen> cinemaScreens;
 
    
 }

@@ -16,13 +16,14 @@ import lombok.EqualsAndHashCode;
 @Entity
 @EqualsAndHashCode(callSuper = true)
 public class Order extends BaseEntity{
-	private Double Amount;
+	private Double total;
 	private Boolean Paid;
-	private LocalDateTime orderDate;
+	private LocalDateTime orderTime;
+	private String status;
 
 	@ManyToOne
 	@JoinColumn(name = "user_id")
-	private User user;
+	private User member;
 
 	@OneToMany(mappedBy = "order")
 	private Set<Ticket> tickets;

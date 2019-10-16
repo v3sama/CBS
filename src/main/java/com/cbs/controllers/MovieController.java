@@ -1,6 +1,6 @@
 package com.cbs.controllers;
 
-import com.cbs.model.Film;
+import com.cbs.model.Movie;
 import com.cbs.services.ActorService;
 import com.cbs.services.FilmService;
 import com.cbs.services.GenreService;
@@ -41,7 +41,7 @@ public class MovieController {
 
     @RequestMapping(value = "/film", method = RequestMethod.GET)
     public String allFilmUser(@RequestParam(defaultValue = "1", required = false) Integer page, Model model) {
-        Page<Film> pages = filmService.getAllFilmsPage(page);
+        Page<Movie> pages = filmService.getAllFilmsPage(page);
         model.addAttribute("allFilm", pages);
         model.addAttribute("films", filmService.getAllFilms());
         return "/film";
@@ -49,19 +49,19 @@ public class MovieController {
 
     @RequestMapping(value = "/film", method = RequestMethod.GET, params = {"filmTittle"})
     public String searchFilm(@RequestParam String filmTittle, @RequestParam(defaultValue = "1", required = false) Integer page, Model model) {
-        Page<Film> searchResult = filmService.searchByTittle(filmTittle, page);
+        Page<Movie> searchResult = filmService.searchByTittle(filmTittle, page);
         model.addAttribute("allFilm", searchResult);
         return "/film";
     }
 
     @RequestMapping(value = "/admin/add/film", method = RequestMethod.GET)
     public String addFilm(Model model) {
-        model.addAttribute("film", new Film());
+        model.addAttribute("film", new Movie());
         return "/admin/add/film";
     }
 
     @RequestMapping(value = "/admin/add/film", method = RequestMethod.POST)
-    public String addFilm(@Valid Film film, BindingResult bindingResult, Model model) {
+    public String addFilm(@Valid Movie film, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             return "error";
         }
@@ -90,7 +90,7 @@ public class MovieController {
     }
 
     @RequestMapping(value = "/admin/add/genre_to_film", method = RequestMethod.POST)
-    public String addGenres(@Valid Film film, Model model, BindingResult bindingResult) {
+    public String addGenres(@Valid Movie film, Model model, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "error";
         }
@@ -112,7 +112,7 @@ public class MovieController {
     }
 
     @RequestMapping(value = "/admin/add/actor_to_film", method = RequestMethod.POST)
-    public String addActors(@Valid Film film, Model model, BindingResult bindingResult) {
+    public String addActors(@Valid Movie film, Model model, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "error";
         }

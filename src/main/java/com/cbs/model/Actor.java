@@ -13,12 +13,10 @@ import java.util.Set;
 @Entity
 @EqualsAndHashCode(callSuper = true)
 public class Actor extends BaseEntity {
-
-    private String firstName;
-    private String lastName;
+    private String name;
 
     @ManyToMany
     @JoinTable(joinColumns = @JoinColumn(name = "actor_id"),
-            inverseJoinColumns = @JoinColumn(name = "film_id"))
-    private Set<Film> films;
+            inverseJoinColumns = @JoinColumn(name = "movie_id"))
+    private Set<Movie> movies;
 }

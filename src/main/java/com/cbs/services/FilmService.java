@@ -1,6 +1,6 @@
 package com.cbs.services;
 
-import com.cbs.model.Film;
+import com.cbs.model.Movie;
 import com.cbs.repository.FilmRepository;
 import com.cbs.services.FilmService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,31 +23,31 @@ public class FilmService {
         this.filmRepository = filmRepository;
     }
 
-    public List<Film> getAllFilms() {
+    public List<Movie> getAllFilms() {
         return filmRepository.findAll();
     }
 
-    public Page<Film> getAllFilmsPage(Integer pageNumber) {
+    public Page<Movie> getAllFilmsPage(Integer pageNumber) {
         PageRequest request =
                 new PageRequest(pageNumber - 1, PAGE_SIZE, Sort.Direction.ASC, "title");
         return filmRepository.findAll(request);
     }
 
-    public Film getFilmByID(Long id) {
+    public Movie getFilmByID(Long id) {
         return filmRepository.getOne(id);
     }
 
-    public Page<Film> searchByTittle(String filmTittle, Integer pageNumber) {
+    public Page<Movie> searchByTittle(String filmTittle, Integer pageNumber) {
         PageRequest request =
                 new PageRequest(pageNumber - 1, PAGE_SIZE, Sort.Direction.ASC, "title");
         return filmRepository.findByTitleContaining(filmTittle, request);
     }
 
-    public List<Film> getLast() {
+    public List<Movie> getLast() {
         return filmRepository.findAll();
     }
 
-    public Film addFilm(Film film) {
+    public Movie addFilm(Movie film) {
         return filmRepository.saveAndFlush(film);
     }
 

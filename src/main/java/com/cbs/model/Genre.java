@@ -14,12 +14,11 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 public class Genre extends BaseEntity {
 
-    private String title;
-    private String description;
+    private String name;
 
     @ManyToMany
     @JoinTable(joinColumns = @JoinColumn(name = "genre_id"),
-            inverseJoinColumns = @JoinColumn(name = "film_id"))
-    private Set<Film> films;
+            inverseJoinColumns = @JoinColumn(name = "movie_id"))
+    private Set<Movie> movies;
 
 }

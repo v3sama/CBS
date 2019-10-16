@@ -17,15 +17,10 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 
 public class Cinema extends BaseEntity {
-
     private String title;
     private String address;
     private String phone;
-    private String email;
-
-//    @OneToMany(mappedBy = "cinema")
-//    private Set<Room> halls;
-//    
+  
     @ManyToOne
     @JoinColumn(name = "province_id")
     private Province province;
@@ -33,9 +28,5 @@ public class Cinema extends BaseEntity {
     @OneToMany(mappedBy = "cinema")
     private Set<CinemaScreen> cinemaScreens;
 
-	public Long getId() {
-		// TODO Auto-generated method stub
-		return this.getId();
-	}
 
 }

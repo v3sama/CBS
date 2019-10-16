@@ -16,17 +16,25 @@ import javax.persistence.OneToOne;
 @Entity
 @EqualsAndHashCode(callSuper = true)
 public class Ticket extends BaseEntity {
-	private Float price;
+	private Float amount;
 
-	 @ManyToOne
-	    @JoinColumn(name = "seat_id")
-	    private Seat Seat;
+	@ManyToOne
+	@JoinColumn(name = "member_id")
+	private User member;
+	
+	@ManyToOne
+	@JoinColumn(name = "seat_id")
+	private Seat Seat;
+
+	@ManyToOne
+    @JoinColumn(name = "movieSession_id")
+    private MovieSession movieSession;
 
     @ManyToOne
-    @JoinColumn(name = "scheduleSession_id")
-    private ScheduleSession scheduleSession;
-
-    @ManyToOne
-    @JoinColumn(name = "ticket_id")
+    @JoinColumn(name = "order_id")
     private Order order;
+    
+    @ManyToOne
+    @JoinColumn(name = "price_id")
+    private Price price;	
 }

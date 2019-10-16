@@ -1,6 +1,6 @@
 package com.cbs.controllers;
 
-import com.cbs.model.ScheduleSession;
+import com.cbs.model.MovieSession;
 import com.cbs.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,7 +35,7 @@ public class ScheduleSessionController {
 
     @RequestMapping(value = "/admin/add/session", method = RequestMethod.GET, params = {"cinemaId"})
     public String addSession(@RequestParam Long cinemaId, Model model) {
-        ScheduleSession scheduleSession = new ScheduleSession();
+        MovieSession scheduleSession = new MovieSession();
         model.addAttribute("filmSessionId", scheduleSession.getId());
         model.addAttribute("scheduleSession", scheduleSession);
         model.addAttribute("cinemaId", cinemaId);
@@ -45,7 +45,7 @@ public class ScheduleSessionController {
     }
 
     @RequestMapping(value = "/admin/add/session", method = RequestMethod.POST)
-    public String addSession(@Valid ScheduleSession scheduleSession, @RequestParam("price") int price, BindingResult bindingResult, Model model) {
+    public String addSession(@Valid MovieSession scheduleSession, @RequestParam("price") int price, BindingResult bindingResult, Model model) {
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("allFilms", filmService.getAllFilms());
@@ -58,7 +58,7 @@ public class ScheduleSessionController {
 
     @RequestMapping(value = "/admin/edit/session", method = RequestMethod.GET)
     public String editSession(@RequestParam Long sessionId, Model model) {
-        ScheduleSession scheduleSession = filmSessionService.getSessionById(sessionId);
+        MovieSession scheduleSession = filmSessionService.getSessionById(sessionId);
         model.addAttribute("scheduleSession", scheduleSession);
         model.addAttribute("allScreens", scheduleSession.getCinemaScreen().getScreen());
         model.addAttribute("allFilms", filmService.getAllFilms());

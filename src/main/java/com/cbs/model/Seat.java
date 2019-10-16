@@ -21,7 +21,10 @@ public class Seat extends BaseEntity{
     private Row row;
     
     @OneToMany(mappedBy = "seat")
-    private Set<ScheduleSession> scheduleSessions;
+    private Set<MovieSession> movieSessions;
+    
+    @OneToMany(mappedBy = "seat")
+    private Set<Price> ticketPrices;
     
     
 

@@ -18,22 +18,21 @@ import java.util.Set;
 @Data
 @Entity
 @EqualsAndHashCode(callSuper = true)
-public class ScheduleSession extends BaseEntity {
+public class MovieSession extends BaseEntity {
 
     private LocalDateTime time;
 
     @ManyToOne
     @JoinColumn(name = "film_id")
-    private Film film;
+    private Movie film;
 
     @ManyToOne
     @JoinColumn(name = "cinemaRoom_Id")
     private CinemaScreen cinemaScreen;
 
-    @OneToMany(mappedBy = "ticketSession")
+    @OneToMany(mappedBy = "movieSession")
     private Set<Ticket> tickets;
     
-    @OneToMany(mappedBy = "ticketSession")
-    private Set<Ticket> ticket;
+    
     
 }
