@@ -2,7 +2,7 @@ package com.cbs.controllers;
 
 import com.cbs.model.Movie;
 import com.cbs.services.ActorService;
-import com.cbs.services.FilmService;
+import com.cbs.services.MovieService;
 import com.cbs.services.GenreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,104 +20,104 @@ import javax.validation.Valid;
 public class MovieController {
 
 
-    private final FilmService filmService;
+    private final MovieService movieService;
 
     private final ActorService actorService;
 
     private final GenreService genreService;
 
     @Autowired
-    public MovieController(FilmService filmService, ActorService actorService, GenreService genreService) {
-        this.filmService = filmService;
+    public MovieController(MovieService movieService, ActorService actorService, GenreService genreService) {
+        this.movieService = movieService;
         this.actorService = actorService;
         this.genreService = genreService;
     }
 
-    @RequestMapping(value = "/admin/film", method = RequestMethod.GET)
-    public String allFilms(Model model) {
-        model.addAttribute("films", filmService.getAllFilms());
-        return "/admin/film";
+    @RequestMapping(value = "/admin/movie", method = RequestMethod.GET)
+    public String allMovies(Model model) {
+        model.addAttribute("movies", movieService.getAllMovies());
+        return "/admin/movie";
     }
 
-    @RequestMapping(value = "/film", method = RequestMethod.GET)
-    public String allFilmUser(@RequestParam(defaultValue = "1", required = false) Integer page, Model model) {
-        Page<Movie> pages = filmService.getAllFilmsPage(page);
-        model.addAttribute("allFilm", pages);
-        model.addAttribute("films", filmService.getAllFilms());
-        return "/film";
+    @RequestMapping(value = "/movie", method = RequestMethod.GET)
+    public String allMovieUser(@RequestParam(defaultValue = "1", required = false) Integer page, Model model) {
+        Page<Movie> pages = movieService.getAllMoviesPage(page);
+        model.addAttribute("allMovie", pages);
+        model.addAttribute("movies", movieService.getAllMovies());
+        return "/movie";
     }
 
-    @RequestMapping(value = "/film", method = RequestMethod.GET, params = {"filmTittle"})
-    public String searchFilm(@RequestParam String filmTittle, @RequestParam(defaultValue = "1", required = false) Integer page, Model model) {
-        Page<Movie> searchResult = filmService.searchByTittle(filmTittle, page);
-        model.addAttribute("allFilm", searchResult);
-        return "/film";
+    @RequestMapping(value = "/movie", method = RequestMethod.GET, params = {"movieTittle"})
+    public String searchMovie(@RequestParam String movieTittle, @RequestParam(defaultValue = "1", required = false) Integer page, Model model) {
+        Page<Movie> searchResult = movieService.searchByTittle(movieTittle, page);
+        model.addAttribute("allMovie", searchResult);
+        return "/movie";
     }
 
-    @RequestMapping(value = "/admin/add/film", method = RequestMethod.GET)
-    public String addFilm(Model model) {
-        model.addAttribute("film", new Movie());
-        return "/admin/add/film";
+    @RequestMapping(value = "/admin/add/movie", method = RequestMethod.GET)
+    public String addMovie(Model model) {
+        model.addAttribute("movie", new Movie());
+        return "/admin/add/movie";
     }
 
-    @RequestMapping(value = "/admin/add/film", method = RequestMethod.POST)
-    public String addFilm(@Valid Movie film, BindingResult bindingResult, Model model) {
+    @RequestMapping(value = "/admin/add/movie", method = RequestMethod.POST)
+    public String addMovie(@Valid Movie movie, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             return "error";
         }
-        filmService.addFilm(film);
+        movieService.addMovie(movie);
 
-        return "redirect:/admin/film";
+        return "redirect:/admin/movie";
     }
 
-    @RequestMapping(value = "/admin/delete/film", method = RequestMethod.GET, params = {"filmId"})
-    public String deleteFilm(@RequestParam Long filmId, Model model) {
-        filmService.deleteFilmByID(filmId);
-        return "redirect:/admin/film";
+    @RequestMapping(value = "/admin/delete/movie", method = RequestMethod.GET, params = {"movieId"})
+    public String deleteMovie(@RequestParam Long movieId, Model model) {
+        movieService.deleteMovieByID(movieId);
+        return "redirect:/admin/movie";
     }
 
-    @RequestMapping(value = "/admin/edit/film", method = RequestMethod.GET, params = {"filmId"})
-    public String editFilm(@RequestParam Long filmId, Model model) {
-        model.addAttribute("film", filmService.getFilmByID(filmId));
-        return "/admin/edit/film";
+    @RequestMapping(value = "/admin/edit/movie", method = RequestMethod.GET, params = {"movieId"})
+    public String editMovie(@RequestParam Long movieId, Model model) {
+        model.addAttribute("movie", movieService.getMovieByID(movieId));
+        return "/admin/edit/movie";
     }
 
-    @RequestMapping(value = "/admin/add/genre_to_film", method = RequestMethod.GET, params = {"filmId"})
-    public String addGenres(@RequestParam Long filmId, Model model) {
+    @RequestMapping(value = "/admin/add/genre_to_movie", method = RequestMethod.GET, params = {"movieId"})
+    public String addGenres(@RequestParam Long movieId, Model model) {
         model.addAttribute("allGenres", genreService.getAllGenre());
-        model.addAttribute("film", filmService.getFilmByID(filmId));
-        return "/admin/add/genre_to_film";
+        model.addAttribute("movie", movieService.getMovieByID(movieId));
+        return "/admin/add/genre_to_movie";
     }
 
-    @RequestMapping(value = "/admin/add/genre_to_film", method = RequestMethod.POST)
-    public String addGenres(@Valid Movie film, Model model, BindingResult bindingResult) {
+    @RequestMapping(value = "/admin/add/genre_to_movie", method = RequestMethod.POST)
+    public String addGenres(@Valid Movie movie, Model model, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "error";
         }
-        filmService.addFilm(film);
-        return "redirect:/admin/film";
+        movieService.addMovie(movie);
+        return "redirect:/admin/movie";
     }
 
-    @RequestMapping(value = "/details/film", method = RequestMethod.GET)
-    public String getFilm(@RequestParam Long filmId, Model model) {
-        model.addAttribute("film", filmService.getFilmByID(filmId));
-        return "/details/film";
+    @RequestMapping(value = "/details/movie", method = RequestMethod.GET)
+    public String getMovie(@RequestParam Long movieId, Model model) {
+        model.addAttribute("movie", movieService.getMovieByID(movieId));
+        return "/details/movie";
     }
 
-    @RequestMapping(value = "/admin/add/actor_to_film", method = RequestMethod.GET, params = {"filmId"})
-    public String addActors(@RequestParam Long filmId, Model model) {
+    @RequestMapping(value = "/admin/add/actor_to_movie", method = RequestMethod.GET, params = {"movieId"})
+    public String addActors(@RequestParam Long movieId, Model model) {
         model.addAttribute("allActors", actorService.getAllActors());
-        model.addAttribute("film", filmService.getFilmByID(filmId));
-        return "/admin/add/actor_to_film";
+        model.addAttribute("movie", movieService.getMovieByID(movieId));
+        return "/admin/add/actor_to_movie";
     }
 
-    @RequestMapping(value = "/admin/add/actor_to_film", method = RequestMethod.POST)
-    public String addActors(@Valid Movie film, Model model, BindingResult bindingResult) {
+    @RequestMapping(value = "/admin/add/actor_to_movie", method = RequestMethod.POST)
+    public String addActors(@Valid Movie movie, Model model, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "error";
         }
-        filmService.addFilm(film);
-        return "redirect:/admin/film";
+        movieService.addMovie(movie);
+        return "redirect:/admin/movie";
     }
 
     private void validateImage(MultipartFile image) {

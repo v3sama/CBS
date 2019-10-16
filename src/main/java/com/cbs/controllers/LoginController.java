@@ -1,7 +1,7 @@
 package com.cbs.controllers;
 
 import com.cbs.model.User;
-import com.cbs.services.FilmService;
+import com.cbs.services.MovieService;
 import com.cbs.services.SecurityService;
 import com.cbs.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +17,12 @@ public class LoginController {
 
     private final UserService userService;
     private final SecurityService securityService;
-    private final FilmService filmService;
+    private final MovieService filmService;
 
     @Autowired
     public LoginController(UserService userService,
                            SecurityService securityService,
-                           FilmService filmService) {
+                           MovieService filmService) {
         this.userService = userService;
         this.securityService = securityService;
         this.filmService = filmService;

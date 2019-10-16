@@ -15,19 +15,19 @@ import javax.validation.Valid;
 @Controller
 public class ScheduleSessionController {
 
-    private final FilmSessionService filmSessionService;
-    private final FilmService filmService;
+    private final MovieSessionService movieSessionService;
+    private final MovieService movieService;
     private final CinemaService cinemaService;
     private final ScreenService screenService;
     private final TicketService ticketService;
 
 
     @Autowired
-    public ScheduleSessionController(FilmSessionService filmSessionService, FilmService filmService,
+    public ScheduleSessionController(MovieSessionService movieSessionService, MovieService movieService,
                              CinemaService cinemaService, ScreenService screenService,
                              TicketService ticketService) {
-        this.filmSessionService = filmSessionService;
-        this.filmService = filmService;
+        this.movieSessionService = movieSessionService;
+        this.movieService = movieService;
         this.cinemaService = cinemaService;
         this.screenService = screenService;
         this.ticketService = ticketService;
@@ -36,11 +36,11 @@ public class ScheduleSessionController {
     @RequestMapping(value = "/admin/add/session", method = RequestMethod.GET, params = {"cinemaId"})
     public String addSession(@RequestParam Long cinemaId, Model model) {
         MovieSession scheduleSession = new MovieSession();
-        model.addAttribute("filmSessionId", scheduleSession.getId());
+        model.addAttribute("movieSessionId", scheduleSession.getId());
         model.addAttribute("scheduleSession", scheduleSession);
         model.addAttribute("cinemaId", cinemaId);
         model.addAttribute("allScreens", cinemaService.getCinemaByID(cinemaId).getCinemaScreens());
-        model.addAttribute("allFilms", filmService.getAllFilms());
+        model.addAttribute("allMovies", movieService.getAllMovies());
         return "/admin/add/session";
     }
 
@@ -48,26 +48,26 @@ public class ScheduleSessionController {
     public String addSession(@Valid MovieSession scheduleSession, @RequestParam("price") int price, BindingResult bindingResult, Model model) {
 
         if (bindingResult.hasErrors()) {
-            model.addAttribute("allFilms", filmService.getAllFilms());
+            model.addAttribute("allMovies", movieService.getAllMovies());
             model.addAttribute("price", price);
             return "/admin/add/session";
         }
-        scheduleSession = filmSessionService.addSession(scheduleSession);
+        scheduleSession = movieSessionService.addSession(scheduleSession);
         return "redirect:/admin/session/";
     }
 
     @RequestMapping(value = "/admin/edit/session", method = RequestMethod.GET)
     public String editSession(@RequestParam Long sessionId, Model model) {
-        MovieSession scheduleSession = filmSessionService.getSessionById(sessionId);
+        MovieSession scheduleSession = movieSessionService.getSessionById(sessionId);
         model.addAttribute("scheduleSession", scheduleSession);
         model.addAttribute("allScreens", scheduleSession.getCinemaScreen().getScreen());
-        model.addAttribute("allFilms", filmService.getAllFilms());
+        model.addAttribute("allMovies", movieService.getAllMovies());
         return "/admin/edit/session";
     }
 
     @RequestMapping(value = "/admin/delete/session", method = RequestMethod.GET)
-    public String deleteSession(@RequestParam Long filmSessionId, Model model) {
-        filmSessionService.deleteSessionById(filmSessionId);
+    public String deleteSession(@RequestParam Long movieSessionId, Model model) {
+        movieSessionService.deleteSessionById(movieSessionId);
         return "redirect:/admin/session";
     }
 
@@ -80,7 +80,7 @@ public class ScheduleSessionController {
 
     @RequestMapping(value = "/admin/session", method = RequestMethod.GET)
     public String allSession(Model model) {
-        model.addAttribute("sessions", filmSessionService.getAllSession());
+        model.addAttribute("sessions", movieSessionService.getAllSession());
         return "/admin/session";
     }
 
@@ -95,20 +95,20 @@ public class ScheduleSessionController {
         return "/session";
     }
 
-    @RequestMapping(value = "/session", method = RequestMethod.GET, params = {"filmId"})
-    public String allSessionByFilmUser(@RequestParam Long filmId, Model model) {
+    @RequestMapping(value = "/session", method = RequestMethod.GET, params = {"movieId"})
+    public String allSessionByMovieUser(@RequestParam Long movieId, Model model) {
         return "/session";
     }
 
     @RequestMapping(value = "/session", method = RequestMethod.GET)
     public String allSessionUser(Model model) {
-        model.addAttribute("sessions", filmSessionService.getAllSession());
+        model.addAttribute("sessions", movieSessionService.getAllSession());
         return "/session";
     }
 
     @RequestMapping(value = "/details/session", method = RequestMethod.GET)
     public String getSession(@RequestParam Long sessionId, Model model) {
-        model.addAttribute("scheduleSession", filmSessionService.getSessionById(sessionId));
+        model.addAttribute("scheduleSession", movieSessionService.getSessionById(sessionId));
         return "/details/session";
     }
 }

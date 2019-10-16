@@ -25,7 +25,7 @@ public class SeatServices {
 		}
 	}
 
-	public Seat addHall(Seat seat) {
+	public Seat addSeat(Seat seat) {
 		return repository.saveAndFlush(seat);
 	}
 }

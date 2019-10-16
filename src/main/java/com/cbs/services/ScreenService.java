@@ -14,8 +14,8 @@ public class ScreenService {
     private ScreenRepository screenRepository;
 
     @Autowired
-    public ScreenService(ScreenRepository hallRepository) {
-        this.screenRepository = hallRepository;
+    public ScreenService(ScreenRepository screenRepository) {
+        this.screenRepository = screenRepository;
     }
 
     public List<Screen> getAllScreen() {

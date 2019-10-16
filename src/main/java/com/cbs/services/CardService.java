@@ -3,6 +3,6 @@ package com.cbs.services;
 import org.springframework.stereotype.Service;
 
 @Service
-public interface CinemaScreenService {
+public interface CardService {
 
 }
