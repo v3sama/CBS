@@ -20,11 +20,10 @@ public class Seat extends BaseEntity{
     @JoinColumn(name = "row_id")
     private Row row;
     
-    @OneToMany(mappedBy = "seat")
-    private Set<MovieSession> movieSessions;
+   
     
     @OneToMany(mappedBy = "seat")
-    private Set<Price> ticketPrices;
+    private Set<Ticket> tickets;
     
     
 

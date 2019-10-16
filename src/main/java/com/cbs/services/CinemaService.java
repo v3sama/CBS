@@ -11,12 +11,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CinemaService {
 
-    @Value("${page.size}")
+	@Value("${spring.data.rest.default-page-size}")
     private Integer pageSize;
 
     private final CinemaRepository cinemaRepository;
@@ -28,7 +27,7 @@ public class CinemaService {
 
     public Page<Cinema> getAllCinemaPage(Integer pageNumber) {
         PageRequest request =
-                new PageRequest(pageNumber - 1, pageSize, Sort.Direction.ASC, "title");
+                PageRequest.of(pageNumber - 1, pageSize, Sort.Direction.ASC, "title");
         return cinemaRepository.findAll(request);
     }
 

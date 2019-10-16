@@ -2,14 +2,9 @@ package com.cbs.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import java.time.LocalDateTime;
@@ -23,8 +18,8 @@ public class MovieSession extends BaseEntity {
     private LocalDateTime time;
 
     @ManyToOne
-    @JoinColumn(name = "film_id")
-    private Movie film;
+    @JoinColumn(name = "movie_id")
+    private Movie movie;
 
     @ManyToOne
     @JoinColumn(name = "cinemaRoom_Id")
@@ -32,7 +27,6 @@ public class MovieSession extends BaseEntity {
 
     @OneToMany(mappedBy = "movieSession")
     private Set<Ticket> tickets;
-    
     
     
 }

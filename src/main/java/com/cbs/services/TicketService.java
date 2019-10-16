@@ -14,7 +14,7 @@ import java.util.List;
 @Service
 public class TicketService {
 
-    @Value("${page.size}")
+	@Value("${spring.data.rest.default-page-size}")
     private Integer pageSize;
 
     private final TicketRepository ticketRepository;
@@ -26,7 +26,7 @@ public class TicketService {
 
     public Page<Ticket> findAll(Integer pageNumber) {
         PageRequest request =
-                new PageRequest(pageNumber - 1, pageSize);
+        		PageRequest.of(pageNumber - 1, pageSize);
         return ticketRepository.findAll(request);
     }
 

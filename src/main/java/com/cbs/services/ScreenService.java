@@ -2,7 +2,6 @@ package com.cbs.services;
 
 import com.cbs.model.Screen;
 import com.cbs.repository.ScreenRepository;
-import com.cbs.repository.ScreenRepository;
 import com.cbs.services.ScreenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

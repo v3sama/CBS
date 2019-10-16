@@ -3,6 +3,8 @@ package com.cbs.model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
@@ -15,5 +17,5 @@ public class Row extends BaseEntity {
 
 
     @OneToMany(mappedBy = "row")
-    private Seat seat;
+    private Set<Seat> seats;
 }

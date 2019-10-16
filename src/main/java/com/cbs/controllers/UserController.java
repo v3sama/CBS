@@ -4,6 +4,7 @@ import com.cbs.model.Discount;
 import com.cbs.model.User;
 import com.cbs.services.DiscountService;
 import com.cbs.services.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
 
 import javax.validation.Valid;
 
@@ -31,6 +33,7 @@ public class UserController {
     @RequestMapping(value = "/admin/user", method = RequestMethod.GET)
     public String allUser(Model model) {
         model.addAttribute("users", userService.findAll());
+       // return userService.findAll();
         return "/admin/user";
     }
 

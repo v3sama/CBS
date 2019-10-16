@@ -12,8 +12,8 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public class Price extends BaseEntity {
 	private String tittle;
-	private String Description;
-	private float Price;
+	private String description;
+	private float price;
 
 	private boolean isVIP;
 	private boolean isHoliday;
@@ -21,7 +21,7 @@ public class Price extends BaseEntity {
 
 	@ManyToOne
 	@JoinColumn(name="formatType_id")
-	private FormatType FormatType;
+	private FormatType formatType;
 	
 	@ManyToOne
 	@JoinColumn(name = "movie_id")

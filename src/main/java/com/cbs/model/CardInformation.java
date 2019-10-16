@@ -1,7 +1,6 @@
 package com.cbs.model;
 
 import java.util.Date;
-import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;

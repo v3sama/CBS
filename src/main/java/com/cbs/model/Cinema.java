@@ -8,7 +8,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import org.omg.CORBA._IDLTypeStub;
 
 import java.util.Set;
 

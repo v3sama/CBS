@@ -29,7 +29,7 @@ public class FilmService {
 
     public Page<Movie> getAllFilmsPage(Integer pageNumber) {
         PageRequest request =
-                new PageRequest(pageNumber - 1, PAGE_SIZE, Sort.Direction.ASC, "title");
+               PageRequest.of(pageNumber - 1, PAGE_SIZE, Sort.Direction.ASC, "title");
         return filmRepository.findAll(request);
     }
 

@@ -1,7 +1,5 @@
 package com.cbs.model;
 
-import java.util.Set;
-
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -17,14 +15,7 @@ public class Rating extends BaseEntity {
 	private String content;
 	private float star;
 	
-	@ManyToOne
-	@JoinColumn(name = "movie_id")
-	private Movie movie;
-	
-	@ManyToOne
-	@JoinColumn(name = "member_id")
-	private User member;
-	
-	
-
+	@OneToOne
+	@JoinColumn(name = "ticket_id",referencedColumnName = "id")
+	private Ticket ticket;
 }

@@ -7,9 +7,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
+
 @Getter
 @Setter
 @MappedSuperclass
+
 public class BaseEntity {
 
     @Id

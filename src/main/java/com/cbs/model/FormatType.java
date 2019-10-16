@@ -1,10 +1,8 @@
 package com.cbs.model;
 
-import java.time.LocalDate;
 import java.util.Set;
 
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
 import lombok.Data;
@@ -20,6 +18,9 @@ public class FormatType extends BaseEntity{
 	
 	@OneToMany(mappedBy = "formatType")
 	private Set<Price> prices;
+	
+	@OneToMany(mappedBy = "formatType")
+	private Set<Movie> movies;
 	
 	
 }

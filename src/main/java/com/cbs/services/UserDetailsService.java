@@ -22,8 +22,8 @@ public class UserDetailsService  {
 
 
     @Transactional(readOnly = true)
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
+    public UserDetails loadUserByEmail(String email) throws UsernameNotFoundException {
+        User user = userRepository.findByEmail(email);
         return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), null);
     }
 }

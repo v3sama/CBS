@@ -6,10 +6,11 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.Set;
 
@@ -35,17 +36,23 @@ public class Movie extends BaseEntity {
     private String description;
     private Date date_end;
    
-    @OneToMany(mappedBy = "movie")
-    private Set<FormatType>  formatType;
+    @ManyToOne
+    @JoinColumn(name = "formatType_id")
+    private FormatType  formatType;
     
-    @ManyToMany(mappedBy = "movies")
-    private Set<Actor> actors;
 
     @ManyToMany(mappedBy = "movies")
     private Set<Genre> genres;
     
-    @OneToMany(mappedBy = "movies")
+    @OneToMany(mappedBy = "movie")
     private Set<Price> prices;
     
+    @OneToMany(mappedBy = "movie")
+    private Set<MovieSession>  movieSessions;
+    
+    @ManyToMany
+    @JoinTable(joinColumns = @JoinColumn(name = "movie_id"),
+            inverseJoinColumns = @JoinColumn(name = "actor_id"))
+    private Set<Actor> actors;
 
 }

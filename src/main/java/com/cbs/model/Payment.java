@@ -1,8 +1,6 @@
 package com.cbs.model;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -21,7 +19,7 @@ public class Payment extends BaseEntity{
 	private LocalDateTime payment_time;
 	
 	@OneToOne(mappedBy = "payment")
-	private Order order;
+	private SOrder order;
 	
 	@ManyToOne
 	@JoinColumn(name = "cardInfo_id")

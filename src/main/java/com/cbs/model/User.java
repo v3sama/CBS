@@ -26,7 +26,7 @@ public class User extends BaseEntity {
 
     private String email;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "member")
     private Set<Ticket> tickets;
 
     @ManyToOne

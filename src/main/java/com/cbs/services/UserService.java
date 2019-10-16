@@ -5,10 +5,9 @@ import com.cbs.repository.TicketRepository;
 import com.cbs.repository.UserRepository;
 import com.cbs.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Service
 public class UserService  {
@@ -17,23 +16,22 @@ public class UserService  {
 
     private final TicketRepository ticketRepository;
 
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+  //  private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public UserService(UserRepository userRepository, TicketRepository ticketRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public UserService(UserRepository userRepository, TicketRepository ticketRepository) {
         this.userRepository = userRepository;
         this.ticketRepository = ticketRepository;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        //this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     public List<User> findAll() {
         return userRepository.findAll();
     }
 
-    public User findByUsername(String userName) {
-        return userRepository.findByUsername(userName);
+    public User findByUsername(String email) {
+        return userRepository.findByEmail(email);
     }
-
 
     public User findByEmail(String email) {
         return userRepository.findByEmail(email);
@@ -57,7 +55,9 @@ public class UserService  {
     }
 
     public void add(User user) {
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+    	BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+    	//user.setPassword(user.getPassword().);
         userRepository.save(user);
     }
 
