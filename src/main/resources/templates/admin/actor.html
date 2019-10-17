@@ -4,11 +4,12 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=2"/>
-    <script src="/public/js/jquery.js" th:src="@{/js/jquery.js}"></script>
-    <script src="/public/js/bootstrap.js" th:src="@{/js/bootstrap.js}"></script>
-    <script src="/public/js/validator.js" th:src="@{/js/validator.js}"></script>
-    <link rel="stylesheet" href="/public/css/bootstrap.css" th:href="@{/css/bootstrap.css}"/>
-    <title>Актеры</title>
+   <link rel="stylesheet" th:href="@{/css/adminlte.min.css}" />
+  	<link rel="stylesheet" th:href="@{/css/all.min.css}"/>
+  	<script th:src="@{/scripts/jquery.min.js}"></script>
+   <script th:src="@{/scripts/bootstrap.bundle.min.js}"></script>
+    
+    <title>List</title>
     <style>
         .navbar {
             margin-bottom: 10px;
@@ -22,18 +23,37 @@
 </head>
 <body>
 
-<header th:replace="admin/layout :: admin-header"></header>
+<nav th:replace="admin/layout :: admin-nav"></nav>
 
-<div th:replace="admin/layout :: admin-nav"></div>
+<aside th:replace="admin/layout :: admin-sidebar"></aside>
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0 text-dark">Actor Management</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Actor Management</li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
 
-<div class="container text-center">
-
-    <div class="table-responsive" align="center">
+    <!-- Main content -->
+    <div class="content">
+      <div class="container-fluid">
+         <div class="table-responsive" align="center">
         <table class="table">
             <thead>
             <tr>
-                <th>Имя</th>
-                <th>Фамилия</th>
+                <th>FirstName</th>
+                <th>LastName</th>
                 <th></th>
                 <th></th>
                 <th></th>
@@ -45,12 +65,12 @@
                 <td th:text="${actor.lastName}"></td>
                 <td>
                     <a th:href="@{/admin/edit/actor(actorId= ${actor.actorId})}">
-                        <button type="button" class="btn btn-default">Редактировать</button>
+                        <button type="button" class="btn btn-default">Edit</button>
                     </a>
                 </td>
                 <td>
                     <a th:href="@{/admin/delete/actor (actorId = ${actor.actorId})}">
-                        <button type="button" class="btn btn-default">Удалить</button>
+                        <button type="button" class="btn btn-default">Delete</button>
                     </a>
                 </td>
                 </tbody>
@@ -59,9 +79,15 @@
     </div>
     <br/>
     <a th:href="@{/admin/add/actor}">
-        <button type="button" class="btn btn-default">Новый актер</button>
+        <button type="button" class="btn btn-default">Create new</button>
     </a>
-</div>
+      </div>
+    </div>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+
 
 </body>
 </html>

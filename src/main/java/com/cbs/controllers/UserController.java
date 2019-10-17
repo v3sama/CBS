@@ -69,7 +69,7 @@ public class UserController {
     @RequestMapping(value = "/user/discount", method = RequestMethod.POST)
     public String addUserDiscount(@Valid Discount discount, Model model, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
-            return "/user?error";
+            return "/user?error";	
         User user = userService.findByUsername(getPrincipal());
         userService.update(user);
         return "redirect:/user";
