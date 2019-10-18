@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.validation.Valid;
 
 @Controller
-public class ScheduleSessionController {
+public class MovieSessionController {
 
     private final MovieSessionService movieSessionService;
     private final MovieService movieService;
@@ -23,7 +23,7 @@ public class ScheduleSessionController {
 
 
     @Autowired
-    public ScheduleSessionController(MovieSessionService movieSessionService, MovieService movieService,
+    public MovieSessionController(MovieSessionService movieSessionService, MovieService movieService,
                              CinemaService cinemaService, ScreenService screenService,
                              TicketService ticketService) {
         this.movieSessionService = movieSessionService;

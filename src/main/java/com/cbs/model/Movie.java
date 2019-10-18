@@ -24,7 +24,7 @@ public class Movie extends BaseEntity {
     private float duration;
  
     private String rating_type;
-    private Date date_realease;
+    private Date date_release;
     private String image;
     private String thumbnail;
     private String director;
@@ -37,7 +37,7 @@ public class Movie extends BaseEntity {
     private Date date_end;
    
     @ManyToOne
-    @JoinColumn(name = "formatType_id")
+    @JoinColumn(name = "format_Type_id")
     private FormatType  formatType;
     
 

@@ -1,6 +1,7 @@
 package com.cbs.controllers;
 
 import com.cbs.model.Discount;
+import com.cbs.model.Screen;
 import com.cbs.model.User;
 import com.cbs.services.DiscountService;
 import com.cbs.services.UserService;
@@ -42,6 +43,13 @@ public class UserController {
         model.addAttribute("user", userService.findById(userId));
         return "/admin/edit/user";
     }
+    
+    @RequestMapping(value = "/admin/add/user", method = RequestMethod.GET)
+    public String addUser(Model model) {
+    	model.addAttribute("user", new User());
+        return "/admin/add/user";
+    }
+
 
     @RequestMapping(value = "/admin/edit/user", method = RequestMethod.POST)
     public String editUser(@Valid User user, BindingResult bindingResult, Model model) {
@@ -74,6 +82,8 @@ public class UserController {
         userService.update(user);
         return "redirect:/user";
     }
+    
+    
 
     private String getPrincipal() {
         String userName;

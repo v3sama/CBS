@@ -52,8 +52,7 @@
         <table class="table">
             <thead>
             <tr>
-                <th>FirstName</th>
-                <th>LastName</th>
+                <th>Fullname</th>
                 <th></th>
                 <th></th>
                 <th></th>
@@ -61,8 +60,8 @@
             </thead>
             <th:block th:each="actor : ${actors}">
                 <tbody>
-                <td th:text="${actor.firstName}"></td>
-                <td th:text="${actor.lastName}"></td>
+                <td th:text="${actor.name}"></td>
+                
                 <td>
                     <a th:href="@{/admin/edit/actor(actorId= ${actor.actorId})}">
                         <button type="button" class="btn btn-default">Edit</button>
