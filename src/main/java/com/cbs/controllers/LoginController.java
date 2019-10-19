@@ -33,12 +33,12 @@ public class LoginController {
     public String index(Model model) {
         return "/admin/index";
     }
-
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String indexUser(Model model) {
-        model.addAttribute("films", filmService.getLast());
-        return "/index";
-    }
+//
+//    @RequestMapping(value = "/", method = RequestMethod.GET)
+//    public String indexUser(Model model) {
+//        model.addAttribute("films", filmService.getLast());
+//        return "/index";
+//    }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(Model model, String error, String logout) {
