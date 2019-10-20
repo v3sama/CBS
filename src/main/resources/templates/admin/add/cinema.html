@@ -6,6 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=2" />
 <link rel="stylesheet" th:href="@{/css/adminlte.min.css}" />
 <link rel="stylesheet" th:href="@{/css/all.min.css}" />
+
 <script th:src="@{/scripts/jquery.min.js}"></script>
 <script th:src="@{/scripts/bootstrap.bundle.min.js}"></script>
 </head>
@@ -97,6 +98,7 @@
 
 											</tr>
 										</thead>
+										
 										<tbody>
 
 											<th:block th:each="screen : ${screens}">
@@ -138,7 +140,7 @@
 		$(document).ready(function() {
 			$('.box').click(function() {
 				var set = $(this).is(':checked') ? false : true;
-				debugger;
+	
 				$('#' + $(this).val()).prop('disabled', set);
 			});
 		});

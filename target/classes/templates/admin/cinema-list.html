@@ -2,15 +2,15 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<title>Cinema management</title>
-	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=2" />
-	<link rel="stylesheet" th:href="@{/css/adminlte.min.css}" />
-	<link rel="stylesheet" th:href="@{/css/all.min.css}" />
-	<link rel="stylesheet" th:href="@{/css/all.min.css}" />
-	<script th:src="@{/scripts/jquery.js}"></script>
-	<script th:src="@{/scripts/bootstrap.bundle.min.js}"></script>
-	<script th:src="@{/scripts/jquery.dataTables.min.js}"></script>
+<title>Cinema management</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=2" />
+<link rel="stylesheet" th:href="@{/css/adminlte.min.css}" />
+<link rel="stylesheet" th:href="@{/css/all.min.css}" />
+<link rel="stylesheet" th:href="@{/css/jquery.dataTables.min.css}" />
+<script th:src="@{/scripts/jquery.js}"></script>
+<script th:src="@{/scripts/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/scripts/jquery.dataTables.min.js}"></script>
 
 </head>
 
@@ -26,6 +26,10 @@
 				<div class="row mb-2">
 					<div class="col-sm-6">
 						<h1 class="m-0 text-dark">Cinema Management</h1>
+						<a href="/admin/add/cinema.html"
+							th:href="@{/admin/add/cinema}">
+							<button type="button" class="btn btn-success">Create new </button>
+						</a>
 					</div>
 					<!-- /.col -->
 					<div class="col-sm-6">
@@ -45,9 +49,8 @@
 		<!-- Main content -->
 		<div class="content">
 			<div class="container-fluid">
-
 				<div class="table-responsive" align="center">
-					<table id="dataTable"  class="table table-hover table-bordered">
+					<table id="dataTable" class="display" style="width:100%">
 						<thead>
 							<tr>
 								<th>Title</th>
@@ -56,6 +59,14 @@
 								<th></th>
 							</tr>
 						</thead>
+						<tfoot>
+							<tr>
+								<th></th>
+								<th></th>
+								<th></th>
+								<th></th>
+							</tr>
+						</tfoot>
 						<tbody>
 							<th:block th:each="cinema : ${cinemas}">
 
@@ -64,29 +75,21 @@
 									<td th:text="${cinema.address}"></td>
 									<td th:text="${cinema.phone}"></td>
 
-									<td>
-									<a th:href="@{/admin/edit/cinema(id= ${cinema.id})}">
+									<td><a th:href="@{/admin/edit/cinema(id= ${cinema.id})}">
 											<button type="button" class="btn btn-info">Edit</button>
-									</a>
-									<a
-										th:href="@{/admin/delete/cinema(id = ${cinema.id})}">
+									</a> <a th:href="@{/admin/delete/cinema(id = ${cinema.id})}">
 											<button type="button" class="btn btn-danger">Delete</button>
-									</a>
-									<a th:href="@{/admin/screen(id = ${cinema.id})}">
+									</a> <a th:href="@{/admin/screen(id = ${cinema.id})}">
 											<button type="button" class="btn btn-primary">View
 												screen</button>
-									</a>
-									</td>
-								
-								<tr>
+									</a></td>
+
+								</tr>
 							</th:block>
 						</tbody>
 					</table>
 				</div>
-				<br /> <a href="/admin/add/cinema.html"
-					th:href="@{/admin/add/cinema}">
-					<button type="button" class="btn btn-default">Create</button>
-				</a>
+			
 
 			</div>
 		</div>
@@ -94,7 +97,7 @@
 	</div>
 
 	<div class="container text-center"></div>
-	<script th:src="@{/scripts/jquery.dataTables.min.js}"></script>
+
 	<script>
 	$(document).ready(function() {
 		 $('#dataTable').DataTable();
