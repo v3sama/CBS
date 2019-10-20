@@ -17,13 +17,19 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 public class User extends BaseEntity {
 
-    private String firstName;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private String firstName;
 
     private String lastName;
 
     private String phone;
 
     private String password;
+    private boolean active;
     @Column(unique=true)
     private String email;
 

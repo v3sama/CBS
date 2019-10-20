@@ -1,6 +1,5 @@
 package com.cbs.model;
 
-import java.util.Optional;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -8,11 +7,14 @@ import javax.persistence.ManyToOne;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @Data
 @Entity
 @EqualsAndHashCode(callSuper = true)
+@ToString(exclude = {"cinema","screen"})
 public class CinemaScreen extends BaseEntity {
+	private static final long serialVersionUID = 1L;
 	//số hàng ghế trong room
 	private int rows;
 	

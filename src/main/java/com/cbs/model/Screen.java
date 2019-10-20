@@ -12,6 +12,11 @@ import java.util.Set;
 @Entity
 @EqualsAndHashCode(callSuper = true)
 public class Screen extends BaseEntity {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Column(unique=true)
     private String title;
 

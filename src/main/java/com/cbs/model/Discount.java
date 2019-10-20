@@ -12,6 +12,7 @@ import java.util.Set;
 @Entity
 @EqualsAndHashCode(callSuper = true)
 public class Discount extends BaseEntity {
+	private static final long serialVersionUID = 1L;
 
     private String title;
 

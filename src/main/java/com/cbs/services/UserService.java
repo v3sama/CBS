@@ -1,7 +1,6 @@
 package com.cbs.services;
 
 import com.cbs.model.User;
-import com.cbs.repository.TicketRepository;
 import com.cbs.repository.UserRepository;
 import com.cbs.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,14 +13,13 @@ public class UserService  {
 
     private final UserRepository userRepository;
 
-    private final TicketRepository ticketRepository;
 
   //  private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public UserService(UserRepository userRepository, TicketRepository ticketRepository) {
+    public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.ticketRepository = ticketRepository;
+        
         //this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
@@ -60,6 +58,18 @@ public class UserService  {
     	//user.setPassword(user.getPassword().);
         userRepository.save(user);
     }
+
+	public void deactivate(Long userId) {
+		User user = userRepository.getOne(userId);
+		user.setActive(false);
+		userRepository.save(user);
+	}
+
+	public void activate(Long userId) {
+		User user = userRepository.getOne(userId);
+		user.setActive(true);
+		userRepository.save(user);
+	}
 
 }
 

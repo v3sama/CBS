@@ -9,11 +9,14 @@ import javax.persistence.ManyToOne;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @Data
 @Entity
 @EqualsAndHashCode(callSuper = true)
+@ToString(exclude = {"member"})
 public class CardInformation extends BaseEntity {
+	private static final long serialVersionUID = 1L;
 	@Column(unique=true)
 	private String card_no;
 	private Date card_date;

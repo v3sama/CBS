@@ -1,7 +1,6 @@
 package com.cbs.controllers;
 
 import com.cbs.model.Screen;
-import com.cbs.services.CinemaService;
 import com.cbs.services.ScreenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,38 +10,40 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+
 import javax.validation.Valid;
 
 @Controller
 public class ScreenController {
-
-    private final CinemaService cinemaService;
-
     private final ScreenService screenService;
 
     @Autowired
-    public ScreenController(CinemaService cinemaService, ScreenService screenService) {
-        this.cinemaService = cinemaService;
+    public ScreenController(ScreenService screenService) {
         this.screenService = screenService;
     }
 
     @RequestMapping(value = "/admin/screen", method = RequestMethod.GET)
     public String allScreen(Model model) {
         model.addAttribute("screens", screenService.getAllScreen());
-        return "/admin/screens";
+        return "/admin/screen-list";
     }
 
-    @RequestMapping(value = "/screen", method = RequestMethod.GET)
-    public String allScreenUser(Model model) {
-        model.addAttribute("screens", screenService.getAllScreen());
-        return "/screen";
+    @RequestMapping(value = "/admin/screen", method = RequestMethod.GET, params = {"cinemaId"})
+    public String allScreenUser(Model model, Long cinemaId) {
+//    	List<Screen> screens =  cinemaService.getCinemaByID(cinemaId).getCinemaScreens().stream().map(cs -> cs.getScreen()).collect(Collectors.toList());
+    	if(cinemaId != 0)
+    		model.addAttribute("screens", screenService.getScreenByCinema(cinemaId));
+    	else 
+    		model.addAttribute("screens", screenService.getAllScreen());
+        //model.addAttribute("screens", screenService.getAllScreen());
+        return "/admin/screen-list";
     }
 
     @RequestMapping(value = "/admin/add/screen", method = RequestMethod.GET)
     public String addScreen(Model model) {
         model.addAttribute("screen", new Screen());
-        model.addAttribute("cinemas", cinemaService.getAllCinema());
-        return "/admin/add/screens";
+//        model.addAttribute("cinemas", cinemaService.getAllCinema());
+        return "/admin/add/screen";
     }
 
     @RequestMapping(value = "/admin/add/screen", method = RequestMethod.POST)
@@ -56,15 +57,15 @@ public class ScreenController {
 
 
     @RequestMapping(value = "/admin/edit/screen", method = RequestMethod.GET)
-    public String editScreen(@RequestParam Long screenId, Model model) {
-        model.addAttribute("screen", screenService.getScreenById(screenId));
-        model.addAttribute("cinemas", cinemaService.getAllCinema());
-        return "/admin/edit/screen";
+    public String editScreen(@RequestParam Long id, Model model) {
+        model.addAttribute("screen", screenService.getScreenById(id));
+//        model.addAttribute("cinemas", cinemaService.getAllCinema());
+        return "/admin/add/screen";
     }
 
-    @RequestMapping(value = "/admin/delete/screen", method = RequestMethod.GET, params = {"ScreenId"})
-    public String deleteScreen(@RequestParam Long screenId, Model model) {
-        screenService.deleteScreenByID(screenId);
+    @RequestMapping(value = "/admin/delete/screen", method = RequestMethod.GET, params = {"id"})
+    public String deleteScreen(@RequestParam Long id, Model model) {
+        screenService.deleteScreenByID(id);
         return "redirect:/admin/screen";
     }
 }
