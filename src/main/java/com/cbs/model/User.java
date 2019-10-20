@@ -3,6 +3,7 @@ package com.cbs.model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -23,7 +24,7 @@ public class User extends BaseEntity {
     private String phone;
 
     private String password;
-
+    @Column(unique=true)
     private String email;
 
     @OneToMany(mappedBy = "member")

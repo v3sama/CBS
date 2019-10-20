@@ -1,5 +1,6 @@
 package com.cbs.model;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,7 +12,7 @@ import javax.persistence.MappedSuperclass;
 @Getter
 @Setter
 @MappedSuperclass
-
+@EqualsAndHashCode
 public class BaseEntity {
 
     @Id

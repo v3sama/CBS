@@ -3,6 +3,7 @@ package com.cbs.model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -13,7 +14,7 @@ import java.util.Set;
 @Entity
 @EqualsAndHashCode(callSuper = true)
 public class Genre extends BaseEntity {
-
+	@Column(unique=true)
     private String name;
 
     @ManyToMany

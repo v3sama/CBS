@@ -2,6 +2,7 @@ package com.cbs.model;
 
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
@@ -14,6 +15,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class FormatType extends BaseEntity{
+	@Column(unique=true)
 	private String name;
 	
 	@OneToMany(mappedBy = "formatType")
