@@ -14,6 +14,7 @@ import lombok.EqualsAndHashCode;
 @Entity
 @EqualsAndHashCode(callSuper = true)
 public class Role extends BaseEntity{
+	private static final long serialVersionUID = 1L;
 	private String name;
 	
 	@ManyToMany

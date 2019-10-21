@@ -1,7 +1,6 @@
 package com.cbs.controllers;
 
 import com.cbs.model.Discount;
-import com.cbs.model.Screen;
 import com.cbs.model.User;
 import com.cbs.services.DiscountService;
 import com.cbs.services.UserService;
@@ -35,12 +34,12 @@ public class UserController {
     public String allUser(Model model) {
         model.addAttribute("users", userService.findAll());
        // return userService.findAll();
-        return "/admin/user";
+        return "/admin/user-list";
     }
 
-    @RequestMapping(value = "/admin/edit/user", method = RequestMethod.GET, params = {"userId"})
-    public String getUserEdit(@RequestParam Long userId, Model model) {
-        model.addAttribute("user", userService.findById(userId));
+    @RequestMapping(value = "/admin/edit/user", method = RequestMethod.GET, params = {"id"})
+    public String getUserEdit(@RequestParam Long id, Model model) {
+        model.addAttribute("user", userService.findById(id));
         return "/admin/edit/user";
     }
     
@@ -50,7 +49,17 @@ public class UserController {
         return "/admin/add/user";
     }
 
-
+    @RequestMapping(value = "/admin/add/user", method = RequestMethod.POST)
+    public String addUser(@Valid User user, BindingResult bindingResult, Model model) {
+    	if (bindingResult.hasErrors()) {
+            return "redirect:/admin/user";
+        }
+    	user.setActive(true);
+    	user.setPassword("123456");
+        userService.add(user);
+        return "/admin/user-list";
+    }
+    
     @RequestMapping(value = "/admin/edit/user", method = RequestMethod.POST)
     public String editUser(@Valid User user, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
@@ -60,9 +69,15 @@ public class UserController {
         return "redirect:/admin/user";
     }
 
-    @RequestMapping(value = "/admin/delete/user", method = RequestMethod.GET)
-    public String deleteUser(@RequestParam Long userId, Model model) {
-        userService.delete(userId);
+    @RequestMapping(value = "/admin/deactivate/user", method = RequestMethod.GET)
+    public String deactivateUser(@RequestParam Long id, Model model) {
+        userService.deactivate(id);
+        return "redirect:/admin/user";
+    }
+    
+    @RequestMapping(value = "/admin/activate/user", method = RequestMethod.GET)
+    public String activateUser(@RequestParam Long id, Model model) {
+        userService.activate(id);
         return "redirect:/admin/user";
     }
 

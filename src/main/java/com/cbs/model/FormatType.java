@@ -14,7 +14,9 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+
 public class FormatType extends BaseEntity{
+	private static final long serialVersionUID = 1L;
 	@Column(unique=true)
 	private String name;
 	

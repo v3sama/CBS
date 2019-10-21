@@ -14,6 +14,7 @@ import java.util.Set;
 @Entity
 @EqualsAndHashCode(callSuper = true)
 public class Genre extends BaseEntity {
+	private static final long serialVersionUID = 1L;
 	@Column(unique=true)
     private String name;
 

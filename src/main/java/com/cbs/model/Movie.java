@@ -20,6 +20,7 @@ import java.util.Set;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class Movie extends BaseEntity {
+	private static final long serialVersionUID = 1L;
 	@Column(unique=true)
     private String title;
     private float duration;

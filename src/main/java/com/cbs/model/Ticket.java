@@ -13,6 +13,11 @@ import javax.persistence.OneToOne;
 @Entity
 @EqualsAndHashCode(callSuper = true)
 public class Ticket extends BaseEntity {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private Float amount;
 
 	@ManyToOne

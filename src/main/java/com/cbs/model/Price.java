@@ -11,6 +11,7 @@ import lombok.EqualsAndHashCode;
 @Entity
 @EqualsAndHashCode(callSuper = true)
 public class Price extends BaseEntity {
+	private static final long serialVersionUID = 1L;
 	private String tittle;
 	private String description;
 	private float price;
