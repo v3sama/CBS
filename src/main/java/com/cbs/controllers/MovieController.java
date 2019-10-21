@@ -3,6 +3,7 @@ package com.cbs.controllers;
 import com.cbs.model.Movie;
 import com.cbs.model.MyReponse;
 import com.cbs.services.ActorService;
+import com.cbs.services.FormatTypeService;
 import com.cbs.services.MovieService;
 import com.cbs.services.GenreService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,18 +30,21 @@ public class MovieController {
     private final ActorService actorService;
 
     private final GenreService genreService;
+    
+    private final FormatTypeService formatTypeService;
 
     @Autowired
-    public MovieController(MovieService movieService, ActorService actorService, GenreService genreService) {
+    public MovieController(MovieService movieService, ActorService actorService, GenreService genreService, FormatTypeService formatTypeService) {
         this.movieService = movieService;
         this.actorService = actorService;
         this.genreService = genreService;
+        this.formatTypeService = formatTypeService;
     }
 
     @RequestMapping(value = "/admin/movie", method = RequestMethod.GET)
     public String allMovies(Model model) {
         model.addAttribute("movies", movieService.getAllMovies());
-        return "/admin/movie";
+        return "/admin/movie-list";
     }
 
     @RequestMapping(value = "/movie", method = RequestMethod.GET)
@@ -51,9 +55,9 @@ public class MovieController {
         return "/movie";
     }
 
-    @RequestMapping(value = "/movie", method = RequestMethod.GET, params = {"movieTittle"})
-    public String searchMovie(@RequestParam String movieTittle, @RequestParam(defaultValue = "1", required = false) Integer page, Model model) {
-        Page<Movie> searchResult = movieService.searchByTittle(movieTittle, page);
+    @RequestMapping(value = "/movie", method = RequestMethod.GET, params = {"movieTitle"})
+    public String searchMovie(@RequestParam String movieTitle, @RequestParam(defaultValue = "1", required = false) Integer page, Model model) {
+        Page<Movie> searchResult = movieService.searchByTittle(movieTitle, page);
         model.addAttribute("allMovie", searchResult);
         return "/movie";
     }
@@ -67,6 +71,7 @@ public class MovieController {
     @RequestMapping(value = "/admin/add/movie", method = RequestMethod.GET)
     public String addMovie(Model model) {
         model.addAttribute("movie", new Movie());
+        model.addAttribute("formats", formatTypeService.getAllFormatType());
         return "/admin/add/movie";
     }
 
@@ -75,6 +80,7 @@ public class MovieController {
         if (bindingResult.hasErrors()) {
             return "error";
         }
+//        System.out.println("-----------" + movie.getDate_end());
         movieService.addMovie(movie);
 
         return "redirect:/admin/movie";

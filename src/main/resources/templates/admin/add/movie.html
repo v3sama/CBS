@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Add/Edit movie</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=2" />
+<link rel="stylesheet" th:href="@{/css/adminlte.min.css}" />
+<link rel="stylesheet" th:href="@{/css/all.min.css}" />
+
+<script th:src="@{/scripts/jquery.min.js}"></script>
+<script th:src="@{/scripts/bootstrap.bundle.min.js}"></script>
+</head>
+<body>
+
+	<nav th:replace="admin/layout :: admin-nav"></nav>
+
+	<aside th:replace="admin/layout :: admin-sidebar"></aside>
+
+
+	<div class="content-wrapper">
+		<!-- Content Header (Page header) -->
+		<div class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-6">
+						<h1 class="m-0 text-dark">Movie Management</h1>
+					</div>
+					<!-- /.col -->
+					<div class="col-sm-6">
+						<ol class="breadcrumb float-sm-right">
+							<li class="breadcrumb-item"><a href="#">Home</a></li>
+							<li class="breadcrumb-item active">Movie Management</li>
+						</ol>
+					</div>
+					<!-- /.col -->
+				</div>
+				<!-- /.row -->
+			</div>
+			<!-- /.container-fluid -->
+		</div>
+		<!-- /.content-header -->
+
+		<!-- Main content -->
+		<div class="content">
+			<div class="container text-center">
+				<div class="card card-info">
+
+					<div class="card-header">
+						<h3 class="card-title">Create/Update movie</h3>
+					</div>
+					<!-- form start -->
+					<form class="form-vertical" data-toggle="validator" role="form"
+						action="#" th:action="@{/admin/add/movie}" th:object="${movie}"
+						method="post" enctype="multipart/form-data">
+
+
+						<div class="col-sm-8 col-sm-offset-2">
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">Title</label> <input
+									class="form-control" type="text" placeholder="Title"
+									required="required" th:field="*{title}" />
+								<div class="help-block with-errors"></div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">duration</label> <input
+									class="form-control" type="number" placeholder="duration"
+									required="required" min="20" max="300" th:field="*{duration}" />
+								<div class="help-block with-errors"></div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">Director</label> <input
+									class="form-control" type="text" placeholder="Director"
+									required="required" th:field="*{director}" />
+								<div class="help-block with-errors"></div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">year </label> <input
+									class="form-control" type="number" placeholder="year"
+									required="required" min="1900" max="2017" th:field="*{year}" />
+								<div class="help-block with-errors"></div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">Language </label> <input
+									class="form-control" type="text" placeholder="Language"
+									required="required" th:field="*{language}" min="2" />
+								<div class="help-block with-errors"></div>
+							</div>
+
+
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">Date Release</label> <input
+									class="form-control" type="date" required="required"
+									th:field="*{date_realease}" min="2016-01-01" max="2020-01-01" />
+								<div class="help-block with-errors"></div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">Date End</label> <input
+									class="form-control" type="date" required="required"
+									th:field="*{date_end}" min="2016-01-01" max="2020-01-01" />
+								<div class="help-block with-errors"></div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">Description</label>
+								<textarea class="form-control" placeholder="Description"
+									required="required" th:field="*{description}" maxlength="600">
+                          </textarea>
+								<div class="help-block with-errors"></div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">Status </label> <input
+									class="form-control" type="number" placeholder="Status"
+									required="required" th:field="*{status}" />
+								<div class="help-block with-errors"></div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">Trailer Link </label> <input
+									class="form-control" type="text" placeholder="Trailer Link"
+									required="required" th:field="*{trailer_link}" />
+								<div class="help-block with-errors"></div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">Thumbnail </label> <input
+									class="form-control" type="text" placeholder="Thumbnail"
+									required="required" th:field="*{thumbnail}" />
+								<div class="help-block with-errors"></div>
+							</div>
+
+							<div class="form-group">
+								<label class="btn btn-default btn-file"> image <input
+									type="file" style="display: none;" name="image" />
+								</label>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">Rating Type </label> <input
+									class="form-control" type="number" placeholder="Rating Type"
+									required="required" min="1900" max="2017"
+									th:field="*{rating_type}" />
+								<div class="help-block with-errors"></div>
+							</div>
+
+							
+
+							<div class="form-group row">
+								<label class="col-sm-2 control-label">Province</label>
+								<div class="col-sm-10">
+									<select th:field="*{formatType}" class="form-control">
+										<th:block th:each="format : ${formats}">
+											<option th:value="${format.id}" th:text="${format.name}"></option>
+										</th:block>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<button type="submit" class="btn btn-primary">submit</button>
+							</div>
+						</div>
+					</form>
+					<!-- /.card-body -->
+					<div class="card-footer">
+						<button type="submit" class="btn btn-info">Create/Update</button>
+
+						<button type="reset" class="btn btn-danger ">Reset</button>
+						<button type="button" class="btn btn-warning"
+							onclick="window.location.href='/admin/movie'">Return to
+							list</button>
+					</div>
+					<!-- /.card-footer -->
+					</form>
+				</div>
+			</div>
+		</div>
+		<!-- /.content -->
+	</div>
+
+	<script>
+		$(document).ready(function() {
+			$('.box').click(function() {
+				var set = $(this).is(':checked') ? false : true;
+<<<<<<< HEAD
+
+=======
+	
+>>>>>>> branch 'dev' of https://github.com/v3sama/CBS
+				$('#' + $(this).val()).prop('disabled', set);
+			});
+		});
+	</script>
+</body>
+</html>
