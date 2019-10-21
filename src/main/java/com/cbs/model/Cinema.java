@@ -14,7 +14,7 @@ import java.util.Set;
 
 @Data
 @Entity
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = false)
 
 public class Cinema extends BaseEntity {
 	@Column(unique=true)
