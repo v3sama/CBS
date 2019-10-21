@@ -101,6 +101,8 @@ public class CinemaController {
     	Cinema cinema = cinemaService.getCinemaByID(id);
         model.addAttribute("cinema", cinema);
         model.addAttribute("screens",  cinema.getCinemaScreens());
+        model.addAttribute("cinema", cinemaService.getCinemaByID(id));
+        model.addAttribute("screens",  cinemaService.getCinemaByID(id).getCinemaScreens());
         return "/admin/add/cinema";
     }
 
