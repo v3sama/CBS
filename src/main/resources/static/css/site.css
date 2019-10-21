@@ -1,0 +1,605 @@
+/* -------------------- */
+/* CAROUSEL COMPONENTS */
+/* -------------------- */
+
+.film-show {
+    position: relative;
+    padding: 0;
+}
+
+.carousel {
+    padding-top: 35px;
+}
+
+.prevCarousel, .nextCarousel {
+    border: none;
+    background-color: transparent;
+    position: absolute;
+    z-index: 2;
+    font-size: 40px;
+    color: #888;
+    cursor: pointer;
+}
+
+.prevCarousel {
+    top: 50%;
+    left: 3%;
+}
+
+.nextCarousel {
+    top: 50%;
+    left: 95%;
+}
+
+/* -------------------- *
+/* DATVE COMPONENTS */
+/* -------------------- */
+
+.section-datve {
+    max-width: 940px;
+    position: absolute;
+    width: 100%;
+    height: 80px;
+    top: 100%;
+    left: 50%;
+    /* border-radius: 20px; */
+    /* background-color: rgb(226, 115, 115); */
+    transform: translate(-50%, -50%);
+    margin: auto;
+}
+
+.select-box {
+    height: 100%;
+    float: left;
+    position: relative;
+}
+
+.select-selected {
+    background-color: DodgerBlue;
+}
+
+.select-box:first-of-type {
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+
+.select-box:last-of-type {
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.small-block-30 {
+    width: 30%;
+    background-color: aquamarine
+}
+
+.select-box select {
+    display: none;
+}
+
+.small-block {
+    width: calc(70%/4);
+}
+
+.small-block:nth-last-of-type(0) {
+    background-color: rgb(57, 57, 75);
+}
+
+.small-block:nth-last-of-type(1) {
+    background-color: rgb(124, 124, 231);
+}
+
+.small-block:nth-last-of-type(2) {
+    background-color: rgb(229, 231, 124);
+}
+
+.small-block:nth-last-of-type(3) {
+    background-color: rgb(202, 97, 228);
+}
+
+.small-block:nth-last-of-type(4) {
+    background-color: rgb(226, 115, 115);
+}
+
+/* -------------------- */
+/* MOVIE SLIDE COMPONENTS */
+/* -------------------- */
+
+/* ----Tab-Section---- */
+
+.section-movie {
+    margin-top: 80px;
+}
+
+.tab-slider--nav {
+    width: 100%;
+    /* display: block; */
+    margin-bottom: 20px;
+}
+
+.tab-slider--tabs {
+    width: 20%;
+    display: block;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    /* text-align: center; */
+    overflow: hidden;
+    position: relative;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background: #fff;
+    margin-left: 40%;
+}
+
+.tab-slider--tabs:after {
+    content: "";
+    width: 50%;
+    background: #b2bec3;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: all 250ms ease-in-out;
+    border-radius: 35px;
+}
+
+.slide:after {
+    left: 50%;
+}
+
+.tab-slider--trigger {
+    font-size: 12px;
+    line-height: 1;
+    font-weight: bold;
+    color: #345F90;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 11px 20px;
+    position: relative;
+    z-index: 2;
+    cursor: pointer;
+    display: inline-block;
+    transition: color 250ms ease-in-out;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.tab-slider--trigger.active {
+    color: #fff;
+}
+
+/* ----Tab-Content-Section---- */
+
+.tab-slider--contents {
+    width: 90%;
+    margin-left: 5%;
+}
+
+.slick-bla {
+    text-align: center;
+}
+
+.tab-slider--body .inactive {
+    display: block;
+    height: 0;
+    overflow: hidden;
+}
+
+.tab-slider--body .active {
+    height: auto;
+}
+
+.slick-prev:before, .slick-next:before {
+    color: red !important;
+}
+
+/* ---Movie Block Section--- */
+
+.movie-block {
+    position: relative;
+    padding: 5px 0 0 6px;
+}
+
+.movie-block .info-detail {
+    visibility: visible;
+    opacity: 1;
+    transition: 0.5s;
+}
+
+.movie-block .hoverHide {
+    visibility: hidden;
+    opacity: 0;
+}
+
+.movie-block .hoverShow {
+    visibility: visible;
+    opacity: 1;
+}
+
+.movie-block-hover {
+    visibility: hidden;
+    position: absolute;
+    height: 100%;
+    width: 210px;
+    /* background-color: rgba(3, 3, 3, 0.237); */
+    top: 0%;
+    opacity: 0;
+    transition: 0.5s
+}
+
+.movie-block-hover .trailerBtn img {
+    width: 30px;
+    height: 30px;
+}
+
+.movie-block-hover .trailerBtn {
+    position: absolute;
+    top: 35%;
+    left: 40%;
+}
+
+.movie-block-hover .trailerBtn a {
+    color: rgb(253, 55, 55);
+    font-size: 45px;
+}
+
+.movie-block-hover .datveBtn {
+    position: absolute;
+    top: 85%;
+    left: 1%;
+    z-index: 3;
+}
+
+.movie-block-title {
+    width: 210px;
+    height: 38px;
+    font-weight: 600;
+    text-align: left;
+    font-size: 16px;
+    margin: 5px 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    line-height: 16px;
+    /* fallback */
+    /* max-height: 38px;    */
+    /* max-width: 210px; */
+    -webkit-line-clamp: 2;
+    /* number of lines to show */
+    -webkit-box-orient: vertical;
+}
+
+.movie-block-detail {
+    text-align: left;
+    font-size: 13px;
+}
+
+.movie-block-detail .time {
+    display: inline;
+}
+
+.time::after {
+    content: "";
+    width: 8px;
+    height: 4px;
+    display: inline-block;
+    margin: 0 2px;
+    /* background-color: #000; */
+    border-top: 1px solid rgb(145, 145, 145);
+}
+
+.movie-block-detail .imdb {
+    display: inline;
+}
+
+.thumbnail img {
+    width: auto;
+    height: auto;
+    transition: filter 0.5s;
+}
+
+.blurImg {
+    filter: blur(6px);
+}
+
+/* ---button--- */
+
+.button {
+    display: inline-block;
+    padding: 12px 65px;
+    border: 1px solid #4f4f4f;
+    border-radius: 4px;
+    transition: all 0.2s ease-in;
+    position: relative;
+    overflow: hidden;
+}
+
+.button:before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%) scaleY(1) scaleX(1.25);
+    top: 100%;
+    width: 140%;
+    height: 180%;
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: 50%;
+    display: block;
+    transition: all 0.5s 0.1s cubic-bezier(0.55, 0, 0.1, 1);
+    z-index: -1;
+}
+
+.button:after {
+    content: "";
+    position: absolute;
+    left: 55%;
+    transform: translateX(-50%) scaleY(1) scaleX(1.45);
+    top: 180%;
+    width: 160%;
+    height: 190%;
+    background-color: #39bda7;
+    border-radius: 50%;
+    display: block;
+    transition: all 0.5s 0.1s cubic-bezier(0.55, 0, 0.1, 1);
+    z-index: -1;
+}
+
+.button:hover {
+    color: #ffffff;
+    border: 1px solid #39bda7;
+}
+
+.button:hover:before {
+    top: -35%;
+    background-color: #39bda7;
+    transform: translateX(-50%) scaleY(1.3) scaleX(0.8);
+}
+
+.button:hover:after {
+    top: -45%;
+    background-color: #39bda7;
+    transform: translateX(-50%) scaleY(1.3) scaleX(0.8);
+}
+
+/* ---modal--- */
+
+.modal-box-trailer {
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    /* Stay in place */
+    z-index: 10;
+    /* Sit on top */
+    padding-top: 100px;
+    /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%;
+    /* Full width */
+    height: 100%;
+    /* Full height */
+    overflow: auto;
+    /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0);
+    /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4);
+    /* Black w/ opacity */
+}
+
+/* Modal Content */
+
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    position: relative;
+}
+
+/* The Close Button */
+
+.close {
+    position: absolute;
+    left: 99%;
+    top: -18%;
+    background-color: #fff;
+    padding: 0 5px;
+    border-radius: 50%;
+    line-height: 25px;
+    /* width: 20px;
+    height: 20px; */
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    /* border: 1px solid #888; */
+    /* z-index: 2; */
+}
+
+.close:hover, .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* -------------------- */
+/* TIME COMPONENTS */
+/* -------------------- */
+
+.section-time{
+    margin: 80px 0;
+}
+
+/* Style the tab */
+
+.tab-loc {
+    float: left;
+    border: 1px solid #ccc;
+    border-top-left-radius: 4px;
+    /* background-color: #f1f1f1; */
+    width: 30%;
+    height: 500px;
+    overflow-x: auto;
+}
+
+.tab-loc::-webkit-scrollbar {
+    width: 3px;
+}
+
+
+/* Style the buttons inside the tab */
+
+.tab-loc button {
+    display: block;
+    background-color: inherit;
+    color: rgba(0, 0, 0, 0.336);
+    padding: 15px 15px;
+    width: 100%;
+    border: none;
+    outline: none;
+    text-align: left;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 17px;
+}
+
+.tab-loc button a i {
+    color: rgba(0, 0, 0, 0.336);
+}
+
+.tab-loc button img{
+    float: left;
+    margin-right: 15px;
+}
+
+.tab-loc button .locate-detail{
+    padding-left: 65px;
+}
+
+.locate-detail .locate-address{
+    font-size: 13px;
+}
+
+/* Change background color of buttons on hover */
+
+.tab-loc button:hover {
+    color: #000;
+}
+
+.tab-loc button:hover a i{
+    color: #000;
+}
+
+/* Create an active/current "tab button" class */
+
+.tab-loc button.active {
+    color: #000;
+}
+
+.tab-loc button.active a i {
+    color: #000;
+}
+
+/* Style the tab content */
+
+.tabcontent {
+    float: left;
+    padding: 0px 12px;
+    border: 1px solid #ccc;
+    width: 70%;
+    border-left: none;
+    height: 500px;
+    overflow-x: auto;
+}
+
+.tab-movie-info{
+    width: 100%;
+    height: 50px;    
+}
+
+.tab-movie-info img {
+    float: left;
+    margin-right: 15px;
+}
+
+.tab-movie-info .tab-movie-title{
+    padding-top: 8px;
+    font-size: 15px;
+    font-weight: bold;
+    color: #000;
+}
+
+.tab-movie-info .tab-movie-detail{
+    font-size: 13px;
+    /* font-weight: 10 */
+    /* color: #000; */
+}
+
+.tabcontent-row {
+    width: 100%;
+    /* height: 100px; */
+    padding: 15px 5px;
+    position: relative;
+}
+
+.tabcontent-row::before{
+    content: "";
+    position: absolute;
+    width: 100%;
+    border-bottom: 1px solid rgba(216, 216, 216, 0.44);
+    bottom: 0;
+    left: 0;
+}
+
+.tab-movie-session{
+    margin-top: 15px;
+}
+
+.tab-movie-session .list-time{
+    margin-left: 10px;
+}
+
+.tab-movie-session .list-time a{
+    margin-right: 10px;
+    transition: 0.5s;
+}
+
+.tab-movie-session .list-time a:hover{
+    color: rgb(10, 107, 218)
+}
+
+/* -------------------- */
+/* FOOTER COMPONENTS */
+/* -------------------- */
+
+footer {
+    background-color: #555;
+}
+
+.footer-title {
+    /* margin-left: 5px;  */
+    color: #fff;
+    font-size: 14px!important;
+    font-weight: 500;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+}
+
+footer .footer-cinema a {
+    text-decoration: none;
+    display: block;
+    font-size: 12px;
+    color: #fff;
+    margin: 10px 0;
+}
+
+.footer-doitac-social a img {
+    border-radius: 50%;
+    margin: 10px 0;
+}
