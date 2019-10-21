@@ -1,3 +1,4 @@
+
 package com.cbs.controllers;
 
 import javax.validation.Valid;
@@ -14,15 +15,15 @@ import com.cbs.model.FormatType;
 import com.cbs.services.FormatTypeService;
 
 @Controller
-public class FormatTypeController {
+public class FormatController {
 	private final FormatTypeService formatTypeService;
 
     @Autowired
-    public FormatTypeController(FormatTypeService formatTypeService) {
+    public FormatController(FormatTypeService formatTypeService) {
         this.formatTypeService = formatTypeService;
     }
 
-    @RequestMapping(value = "/admin/formatType", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/format", method = RequestMethod.GET)
     public String allFormatType(Model model, Long cinemaId) {
         model.addAttribute("formatTypes", formatTypeService.getAllFormatType());
         return "/admin/format-list";

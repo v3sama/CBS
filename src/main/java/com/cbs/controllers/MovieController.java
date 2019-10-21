@@ -72,6 +72,7 @@ public class MovieController {
     public String addMovie(Model model) {
         model.addAttribute("movie", new Movie());
         model.addAttribute("formats", formatTypeService.getAllFormatType());
+        model.addAttribute("allActors", actorService.getAllActors());
         return "/admin/add/movie";
     }
 
@@ -95,13 +96,16 @@ public class MovieController {
     @RequestMapping(value = "/admin/edit/movie", method = RequestMethod.GET, params = {"movieId"})
     public String editMovie(@RequestParam Long movieId, Model model) {
         model.addAttribute("movie", movieService.getMovieByID(movieId));
-        return "/admin/edit/movie";
+        model.addAttribute("formats", formatTypeService.getAllFormatType());
+        model.addAttribute("allActors", actorService.getAllActors());
+        return "/admin/add/movie";
     }
 
     @RequestMapping(value = "/admin/add/genre_to_movie", method = RequestMethod.GET, params = {"movieId"})
     public String addGenres(@RequestParam Long movieId, Model model) {
         model.addAttribute("allGenres", genreService.getAllGenre());
         model.addAttribute("movie", movieService.getMovieByID(movieId));
+        
         return "/admin/add/genre_to_movie";
     }
 

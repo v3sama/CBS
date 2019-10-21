@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -16,6 +17,7 @@ import java.util.Set;
 @ToString(exclude = {"movies"})
 public class Actor extends BaseEntity {
 	private static final long serialVersionUID = 1L;
+	@Column(unique=true)
     private String name;
 
     @ManyToMany

@@ -36,9 +36,14 @@ public class ProvinceController {
 
     @RequestMapping(value = "/admin/add/province", method = RequestMethod.POST)
     public String addProvince(@Valid Province province, BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()  ) {
             return "redirect:/admin/province";
         }
+        if(!provinceService.isUnique(province.getName())) {
+        	model.addAttribute("msg", "name already exist");
+        	return "redirect:/admin/province";
+        }
+       
         provinceService.addProvince(province);
         return "redirect:/admin/province";
     }
@@ -46,7 +51,7 @@ public class ProvinceController {
 
     @RequestMapping(value = "/admin/edit/province", method = RequestMethod.GET)
     public String editProvince(@RequestParam Long id, Model model) {
-        model.addAttribute("province", provinceService.getProvinceById(id));
+        model.addAttribute("province", provinceService.getProvinceByID(id));
         return "/admin/add/province";
     }
 

@@ -6,6 +6,7 @@ import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -28,7 +29,8 @@ public class Cinema extends BaseEntity {
     @JoinColumn(name = "province_id")
     private Province province;
     
-    @OneToMany(mappedBy = "cinema")
+   
+   @OneToMany(mappedBy = "cinema",fetch = FetchType.LAZY)
     private Set<CinemaScreen> cinemaScreens;
 
 

@@ -3,6 +3,7 @@ package com.cbs.model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,14 +20,15 @@ import java.util.Set;
 @Entity
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@ToString(exclude = {"formatType","genres","prices","movieSessions","actors"})
 public class Movie extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 	@Column(unique=true)
     private String title;
     private float duration;
- 
     private String rating_type;
-    private Date date_realease;
+    @Column(name="date_release")
+    private Date date_release;
     private String image;
     private String thumbnail;
     private String director;
