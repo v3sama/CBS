@@ -53,6 +53,7 @@
 					<table id="dataTable" class="display" style="width:100%">
 						<thead>
 							<tr>
+								<th>ID</th>
 								<th>Name</th>
 								<th></th>
 							</tr>
@@ -66,8 +67,8 @@
 						</tfoot>
 						<tbody>
 							<th:block th:each="province : ${provinces}">
-
 								<tr>
+									<td th:text="${province.id}"></td>
 									<td th:text="${province.name}"></td>
 									<td>
 									<a th:href="@{/admin/edit/province(id= ${province.id})}">

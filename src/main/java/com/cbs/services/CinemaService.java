@@ -63,7 +63,7 @@ public class CinemaService {
 	}
 
 	public Cinema getCinemaByID(Long id) {
-		return cinemaRepository.findById(id).get();
+		return cinemaRepository.getOne(id);
 	}
 
 	

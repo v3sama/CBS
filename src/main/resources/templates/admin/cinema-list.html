@@ -77,7 +77,7 @@
 									<td th:text="${cinema.title}"></td>
 									<td th:text="${cinema.address}"></td>
 									<td th:text="${cinema.phone}"></td>
-									<td th:text="${cinema.province}"></td>
+									<td th:text="${cinema.province.name}"></td>
 
 									<td><a th:href="@{/admin/edit/cinema(id= ${cinema.id})}">
 											<button type="button" class="btn btn-info">Edit</button>

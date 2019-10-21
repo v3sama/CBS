@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<title>Province management</title>
+<title>Actor management</title>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=2" />
 <link rel="stylesheet" th:href="@{/css/adminlte.min.css}" />
@@ -25,9 +25,9 @@
 			<div class="container-fluid">
 				<div class="row mb-2">
 					<div class="col-sm-6">
-						<h1 class="m-0 text-dark">Province Management</h1>
-						<a href="/admin/add/province.html"
-							th:href="@{/admin/add/province}">
+						<h1 class="m-0 text-dark">Actor Management</h1>
+						<a href="/admin/add/actor.html"
+							th:href="@{/admin/add/actor}">
 							<button type="button" class="btn btn-success">Create new </button>
 						</a>
 					</div>
@@ -35,7 +35,7 @@
 					<div class="col-sm-6">
 						<ol class="breadcrumb float-sm-right">
 							<li class="breadcrumb-item"><a href="#">Home</a></li>
-							<li class="breadcrumb-item active">Province Management</li>
+							<li class="breadcrumb-item active">Actor Management</li>
 						</ol>
 					</div>
 					<!-- /.col -->
@@ -66,16 +66,20 @@
 							</tr>
 						</tfoot>
 						<tbody>
-							<th:block th:each="province : ${provinces}">
+							<th:block th:each="actor : ${actors}">
+
 								<tr>
-									<td th:text="${province.id}"></td>
-									<td th:text="${province.name}"></td>
+									<td th:text="${actor.id}"></td>
+									<td th:text="${actor.name}"></td>
 									<td>
-									<a th:href="@{/admin/edit/province(id= ${province.id})}">
+									<a th:href="@{/admin/edit/actor(actorId= ${actor.id})}">
 											<button type="button" class="btn btn-info">Edit</button>
 									</a> 
-									<a th:href="@{/admin/delete/province(id = ${province.id})}">
+									<a th:href="@{/admin/delete/actor(actorId = ${actor.id})}">
 											<button type="button" class="btn btn-danger">Delete</button>
+									</a>
+									<a th:href="@{/admin/movie(actorId = ${actor.id})}">
+											<button type="button" class="btn btn-primary">View acted movies</button>
 									</a>
 									</td>
 								</tr>

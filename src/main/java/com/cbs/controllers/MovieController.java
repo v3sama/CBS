@@ -40,7 +40,7 @@ public class MovieController {
     @RequestMapping(value = "/admin/movie", method = RequestMethod.GET)
     public String allMovies(Model model) {
         model.addAttribute("movies", movieService.getAllMovies());
-        return "/admin/movie";
+        return "/admin/movie-list";
     }
 
     @RequestMapping(value = "/movie", method = RequestMethod.GET)
