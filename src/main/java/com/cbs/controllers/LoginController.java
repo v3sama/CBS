@@ -1,8 +1,6 @@
 package com.cbs.controllers;
 
 import com.cbs.model.User;
-import com.cbs.services.MovieService;
-import com.cbs.services.SecurityService;
 import com.cbs.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,16 +14,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class LoginController {
 
     private final UserService userService;
-    private final SecurityService securityService;
-    private final MovieService filmService;
 
     @Autowired
-    public LoginController(UserService userService,
-                           SecurityService securityService,
-                           MovieService filmService) {
+    public LoginController(UserService userService ) {
         this.userService = userService;
-        this.securityService = securityService;
-        this.filmService = filmService;
     }
 
 

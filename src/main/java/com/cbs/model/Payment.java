@@ -14,6 +14,7 @@ import lombok.EqualsAndHashCode;
 @Entity
 @EqualsAndHashCode(callSuper = true)
 public class Payment extends BaseEntity{
+	private static final long serialVersionUID = 1L;
 	private int payment_status;
 	private String payment_mode;
 	private LocalDateTime payment_time;

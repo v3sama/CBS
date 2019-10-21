@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>Create/update user</title>
+<title>Add/Edit province</title>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=2" />
 <link rel="stylesheet" th:href="@{/css/adminlte.min.css}" />
@@ -23,13 +23,13 @@
 			<div class="container-fluid">
 				<div class="row mb-2">
 					<div class="col-sm-6">
-						<h1 class="m-0 text-dark">User Management</h1>
+						<h1 class="m-0 text-dark">Province Management</h1>
 					</div>
 					<!-- /.col -->
 					<div class="col-sm-6">
 						<ol class="breadcrumb float-sm-right">
 							<li class="breadcrumb-item"><a href="#">Home</a></li>
-							<li class="breadcrumb-item active">User Management</li>
+							<li class="breadcrumb-item active">Province Management</li>
 						</ol>
 					</div>
 					<!-- /.col -->
@@ -46,11 +46,11 @@
 				<div class="card card-info">
 
 					<div class="card-header">
-						<h3 class="card-title">Create/update user</h3>
+						<h3 class="card-title">Create/Update province</h3>
 					</div>
 					<!-- form start -->
 					<form class="form-horizontal" data-toggle="validator" role="form"
-						action="#" th:action="@{/admin/add/user}" th:object="${user}"
+						action="#" th:action="@{/admin/add/province}" th:object="${province}"
 						method="post">
 						<div class="card-body">
 							<div class="form-group row">
@@ -58,52 +58,25 @@
 							</div>
 
 							<div class="form-group row">
-								<label class="col-sm-2 control-label">First name</label>
+								<label class="col-sm-2 control-label">Name</label>
 								<div class="col-sm-10">
 									<input class="form-control" type="text"
-										placeholder=" enter first here" required="required"
-										th:field="*{firstName}" />
-									<div class="help-block with-errors"></div>
-								</div>
-							</div>
-							<div class="form-group row">
-								<label class="col-sm-2 control-label">Last name</label>
-								<div class="col-sm-10">
-									<input class="form-control" type="text"
-										placeholder=" enter last here" required="required"
-										th:field="*{lastName}" />
-									<div class="help-block with-errors"></div>
-								</div>
-							</div>
-							<div class="form-group row">
-								<label class="col-sm-2 control-label">Email</label>
-								<div class="col-sm-10">
-									<input class="form-control" type="email"
-										placeholder=" enter email here" required="required"
-										th:field="*{email}" />
-									<div class="help-block with-errors"></div>
-								</div>
-							</div>
-					
-							<div class="form-group row">
-								<label class="col-sm-2 control-label">Phone</label>
-								<div class="col-sm-10">
-									<input class="form-control" type="number"
-										placeholder="enter phone here" required="required"
-										th:field="*{phone}" minlength="12" maxlength="12"
-										data-maxlength="12" />
+										placeholder=" enter name here" required="required"
+										th:field="*{name}" />
 									<div class="help-block with-errors"></div>
 								</div>
 							</div>
 							
+						
+							
 						</div>
 						<!-- /.card-body -->
 						<div class="card-footer">
-							<button type="submit" class="btn btn-info">Create/update</button>
+							<button type="submit" class="btn btn-info">Create/Update</button>
 
 							<button type="reset" class="btn btn-danger ">Reset</button>
 							<button type="button" class="btn btn-warning"
-								onclick="window.location.href='/admin/user'">Return
+								onclick="window.location.href='/admin/province'">Return
 								to list</button>
 						</div>
 						<!-- /.card-footer -->
@@ -114,6 +87,14 @@
 		<!-- /.content -->
 	</div>
 
+	<script>
+		$(document).ready(function() {
+			$('.box').click(function() {
+				var set = $(this).is(':checked') ? false : true;
 	
+				$('#' + $(this).val()).prop('disabled', set);
+			});
+		});
+	</script>
 </body>
 </html>

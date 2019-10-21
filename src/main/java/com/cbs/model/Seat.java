@@ -14,6 +14,11 @@ import lombok.EqualsAndHashCode;
 @Entity
 @EqualsAndHashCode(callSuper = true)
 public class Seat extends BaseEntity{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private boolean isVIP;
 	
     @ManyToOne

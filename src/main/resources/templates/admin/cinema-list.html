@@ -8,6 +8,7 @@
 <link rel="stylesheet" th:href="@{/css/adminlte.min.css}" />
 <link rel="stylesheet" th:href="@{/css/all.min.css}" />
 <link rel="stylesheet" th:href="@{/css/jquery.dataTables.min.css}" />
+<link rel="stylesheet" th:href="@{/css/custom.css}" />
 <script th:src="@{/scripts/jquery.js}"></script>
 <script th:src="@{/scripts/bootstrap.bundle.min.js}"></script>
 <script th:src="@{/scripts/jquery.dataTables.min.js}"></script>
@@ -56,11 +57,13 @@
 								<th>Title</th>
 								<th>Address</th>
 								<th>Phone</th>
+								<th>Province</th>
 								<th></th>
 							</tr>
 						</thead>
 						<tfoot>
 							<tr>
+								<th></th>
 								<th></th>
 								<th></th>
 								<th></th>
@@ -74,14 +77,15 @@
 									<td th:text="${cinema.title}"></td>
 									<td th:text="${cinema.address}"></td>
 									<td th:text="${cinema.phone}"></td>
+									<td th:text="${cinema.province}"></td>
 
 									<td><a th:href="@{/admin/edit/cinema(id= ${cinema.id})}">
 											<button type="button" class="btn btn-info">Edit</button>
 									</a> <a th:href="@{/admin/delete/cinema(id = ${cinema.id})}">
 											<button type="button" class="btn btn-danger">Delete</button>
+									</a> <a th:href="@{/admin/screen(cinemaId = ${cinema.id})}">
 									</a> <a th:href="@{/admin/screen(id = ${cinema.id})}">
-											<button type="button" class="btn btn-primary">View
-												screen</button>
+											<button type="button" class="btn btn-primary">View screens</button>
 									</a></td>
 
 								</tr>
@@ -100,7 +104,46 @@
 
 	<script>
 	$(document).ready(function() {
-		 $('#dataTable').DataTable();
+		$('#dataTable').DataTable({
+            responsive: true,
+            //sort by category
+           
+            initComplete: function () {
+                // search by name or code
+                this.api().columns([0,1,2]).every(function () {
+                    var column = this;
+                    $('<input type="text" class="form-control" />')
+                        .appendTo($(column.footer()).empty());
+                    $('input', this.footer()).on('keyup change clear', function () {
+                        if (column.search() !== this.value) {
+                            column
+                                .search(this.value)
+                                .draw();
+                        }
+                    });
+                });
+              //drop down to select category
+                this.api().columns(3).every(function () {
+                    var column = this;
+                    var select = $('<select class="form-control"><option value=""></option></select>')
+                        .appendTo($(column.footer()).empty())
+                        .on('change', function () {
+                            var val = $.fn.dataTable.util.escapeRegex(
+                                $(this).val()
+                            );
+                            column
+                                .search(val ? '^' + val + '$' : '', true, false)
+                                .draw();
+                        });
+                    column.data().unique().sort().each(function (d, j) {
+                        select.append('<option value="' + d + '">' + d + '</option>')
+                    });
+                });
+
+                
+            },
+             
+        });
 	});
 	</script>
 

@@ -13,6 +13,7 @@ import javax.persistence.OneToMany;
 @Entity
 @EqualsAndHashCode(callSuper = true)
 public class Row extends BaseEntity {
+	private static final long serialVersionUID = 1L;
     private String Tittle;
 
 

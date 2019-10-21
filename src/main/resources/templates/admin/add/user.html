@@ -1,114 +1,119 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Добавить пользователя</title>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=2"/>
-    <link rel="stylesheet" th:href="@{/css/adminlte.min.css}" />
-  	<link rel="stylesheet" th:href="@{/css/all.min.css}"/>
-  		<script th:src="@{/scripts/jquery.min.js}"></script>
-   <script th:src="@{/scripts/bootstrap.bundle.min.js}"></script>
-    <style>
-        .navbar {
-            margin-bottom: 10px;
-            border-radius: 0;
-        }
+<title>Create/update user</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=2" />
+<link rel="stylesheet" th:href="@{/css/adminlte.min.css}" />
+<link rel="stylesheet" th:href="@{/css/all.min.css}" />
 
-        .jumbotron {
-            margin-bottom: 0;
-        }
-    </style>
+<script th:src="@{/scripts/jquery.min.js}"></script>
+<script th:src="@{/scripts/bootstrap.bundle.min.js}"></script>
 </head>
 <body>
 
+	<nav th:replace="admin/layout :: admin-nav"></nav>
 
-<nav th:replace="admin/layout :: admin-nav"></nav>
+	<aside th:replace="admin/layout :: admin-sidebar"></aside>
 
-<aside th:replace="admin/layout :: admin-sidebar"></aside>
-<div class="container text-center">
-<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Add user</h1>
-          </div><!-- /.col -->
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Add user</li>
-            </ol>
-          </div><!-- /.col -->
-        </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
 
-    <!-- Main content -->
-    <div class="content">
-      <div class="container-fluid">
-    <form class="form-vertical" data-toggle="validator" role="form" action="#" th:action="@{/admin/add/user}"
-          th:object="${user}" method="post">
+	<div class="content-wrapper">
+		<!-- Content Header (Page header) -->
+		<div class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-6">
+						<h1 class="m-0 text-dark">User Management</h1>
+					</div>
+					<!-- /.col -->
+					<div class="col-sm-6">
+						<ol class="breadcrumb float-sm-right">
+							<li class="breadcrumb-item"><a href="#">Home</a></li>
+							<li class="breadcrumb-item active">User Management</li>
+						</ol>
+					</div>
+					<!-- /.col -->
+				</div>
+				<!-- /.row -->
+			</div>
+			<!-- /.container-fluid -->
+		</div>
+		<!-- /.content-header -->
 
-        <div class="form-group">
-            <input class="form-control" type="hidden"
-                   th:field="*{id}"/>
-        </div>
+		<!-- Main content -->
+		<div class="content">
+			<div class="container text-center">
+				<div class="card card-info">
 
-        <div class="form-group">
-            <label class="col-sm-2 control-label">first name</label>
-            <div class="col-sm-10">
-                <input class="form-control" type="text" placeholder=""
-                       required="required" th:field="*{firstName}"/>
-                <div class="help-block with-errors"></div>
-            </div>
-        </div>
-        <br/>
-        <br/>
-        <br/>
-        <div class="form-group">
-            <label class="col-sm-2 control-label">last name</label>
-            <div class="col-sm-10">
-                <input class="form-control" type="text" placeholder=""
-                       required="required" th:field="*{lastName}"/>
-                <div class="help-block with-errors"></div>
-            </div>
-        </div>
-        <br/>
-        <br/>
-        <div class="form-group">
-            <label class="col-sm-2 control-label">phone</label>
-            <div class="col-sm-10">
-                <input class="form-control" type="text" pattern="^[0-9]{1,}$"
-                       placeholder="" required="required"
-                       th:field="*{phone}"/>
-                <div class="help-block with-errors"></div>
-            </div>
-        </div>
-        <br/>
-        <br/>
-        <div class="form-group">
-            <label class="col-sm-2 control-label">email</label>
-            <div class="col-sm-10">
-                <input class="form-control" type="email"
-                       placeholder="" required="required"
-                       th:field="*{email}"/>
-                <div class="help-block with-errors"></div>
-            </div>
-        </div>
-        <br/>
-        <br/>
-        <div class="form-group">
-            <button type="submit" class="btn btn-primary">Register</button>
-        </div>
-    </form>
-      </div>
-    </div>
-    <!-- /.content -->
-  </div>
-  <!-- /.content-wrapper -->
-    
-</div>
+					<div class="card-header">
+						<h3 class="card-title">Create/update user</h3>
+					</div>
+					<!-- form start -->
+					<form class="form-horizontal" data-toggle="validator" role="form"
+						action="#" th:action="@{/admin/add/user}" th:object="${user}"
+						method="post">
+						<div class="card-body">
+							<div class="form-group row">
+								<input class="form-control" type="hidden" th:field="*{id}" />
+							</div>
+
+							<div class="form-group row">
+								<label class="col-sm-2 control-label">First name</label>
+								<div class="col-sm-10">
+									<input class="form-control" type="text"
+										placeholder=" enter first here" required="required"
+										th:field="*{firstName}" />
+									<div class="help-block with-errors"></div>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-sm-2 control-label">Last name</label>
+								<div class="col-sm-10">
+									<input class="form-control" type="text"
+										placeholder=" enter last here" required="required"
+										th:field="*{lastName}" />
+									<div class="help-block with-errors"></div>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-sm-2 control-label">Email</label>
+								<div class="col-sm-10">
+									<input class="form-control" type="email"
+										placeholder=" enter email here" required="required"
+										th:field="*{email}" />
+									<div class="help-block with-errors"></div>
+								</div>
+							</div>
+					
+							<div class="form-group row">
+								<label class="col-sm-2 control-label">Phone</label>
+								<div class="col-sm-10">
+									<input class="form-control" type="number"
+										placeholder="enter phone here" required="required"
+										th:field="*{phone}" minlength="12" maxlength="12"
+										data-maxlength="12" />
+									<div class="help-block with-errors"></div>
+								</div>
+							</div>
+							
+						</div>
+						<!-- /.card-body -->
+						<div class="card-footer">
+							<button type="submit" class="btn btn-info">Create/update</button>
+
+							<button type="reset" class="btn btn-danger ">Reset</button>
+							<button type="button" class="btn btn-warning"
+								onclick="window.location.href='/admin/user'">Return
+								to list</button>
+						</div>
+						<!-- /.card-footer -->
+					</form>
+				</div>
+			</div>
+		</div>
+		<!-- /.content -->
+	</div>
+
+	
 </body>
 </html>

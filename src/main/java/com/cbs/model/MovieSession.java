@@ -14,6 +14,7 @@ import java.util.Set;
 @Entity
 @EqualsAndHashCode(callSuper = true)
 public class MovieSession extends BaseEntity {
+	private static final long serialVersionUID = 1L;
 
     private LocalDateTime time;
 

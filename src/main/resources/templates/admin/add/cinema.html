@@ -80,9 +80,19 @@
 								<div class="col-sm-10">
 									<input class="form-control" type="number"
 										placeholder="enter phone here" required="required"
-										th:field="*{phone}" minlength="12" maxlength="12"
+										th:field="*{phone}"  maxlength="12"
 										data-maxlength="12" />
 									<div class="help-block with-errors"></div>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-sm-2 control-label">Province</label>
+								<div class="col-sm-10">
+									<select th:field="*{province}" class="form-control">
+										<th:block th:each="province : ${provinces}">
+											<option th:value="${province.id}" th:text="${province.name}"></option>
+										</th:block>
+									</select>
 								</div>
 							</div>
 							<div class="form-group row">
@@ -91,18 +101,32 @@
 									<table class="table">
 										<thead>
 											<tr>
-
 												<th>Select</th>
 												<th>Title</th>
 												<th>Rows</th>
-
 											</tr>
 										</thead>
+<<<<<<< HEAD
+
+=======
 										
+>>>>>>> branch 'dev' of https://github.com/v3sama/CBS
 										<tbody>
 
 											<th:block th:each="screen : ${screens}">
 												<tr>
+													<!-- 													<td> -->
+													<!-- 														<input type="checkbox" th:field="*{cinemaScreens}" -->
+													<!-- 															th:value="${screen.id}" /> -->
+													<!-- 													</td> -->
+													<!-- 													<td th:text="${screen.title}" th:field="*{cinemaScreens}"> -->
+
+													<!-- 													</td> -->
+													<!-- 													<td> -->
+													<!-- 														<input class="form-control" type="text" th:field="*{cinemaScreens}" -->
+													<!-- 															th:value="${rows}" /> -->
+													<!-- 													</td> -->
+
 													<td><input class="box" type="checkbox" name="screens"
 														th:value="${screen.id}"></td>
 													<td><label class="form-check-label"
@@ -140,7 +164,11 @@
 		$(document).ready(function() {
 			$('.box').click(function() {
 				var set = $(this).is(':checked') ? false : true;
+<<<<<<< HEAD
+
+=======
 	
+>>>>>>> branch 'dev' of https://github.com/v3sama/CBS
 				$('#' + $(this).val()).prop('disabled', set);
 			});
 		});
