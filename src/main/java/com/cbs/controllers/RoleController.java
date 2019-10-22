@@ -14,13 +14,16 @@ import com.cbs.model.Role;
 import com.cbs.services.RoleService;
 
 
+
 @Controller
 public class RoleController {
 	private final RoleService roleService;
+//	private final UserService userService;
 
     @Autowired
     public RoleController(RoleService roleService) {
         this.roleService = roleService;
+//        this.userService = userService;
     }
 
     @RequestMapping(value = "/admin/role", method = RequestMethod.GET)
@@ -53,7 +56,10 @@ public class RoleController {
 
     @RequestMapping(value = "/admin/delete/role", method = RequestMethod.GET, params = {"id"})
     public String deleteRole(@RequestParam Long id, Model model) {
-        roleService.deleteRoleByID(id);
+//    	userService.delete(id);
+    	roleService.deleteRoleByID(id);
+    	
+        
         return "redirect:/admin/role";
     }
 }

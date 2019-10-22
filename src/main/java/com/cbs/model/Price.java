@@ -19,8 +19,8 @@ public class Price extends BaseEntity {
 	private String description;
 	private float price;
 	
-	private boolean isVIP;
-	private boolean isHoliday;
+	private Boolean isVIP;
+	private Boolean isHoliday;
 	
 	
 	@ManyToOne

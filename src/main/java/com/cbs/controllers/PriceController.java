@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -41,33 +42,35 @@ public class PriceController {
 			//WDVIP - ve ngay thuong ghe VIP
 			Price price = new Price();
 			price.setTitle("WDVIP"+formatType.getName());
-			price.setHoliday(false);
-			price.setVIP(true);
+			price.setIsHoliday(false);
+			price.setIsVIP(true);
 			price.setFormatType(formatType);
+			price.setDescription("Ve VIP ngay thuong");
 			pricesForm.add(price);
 			//WDVIP - ve ngay thuong ghe thuong
 			price = new Price();
 			price.setTitle("WDNONVIP"+formatType.getName());
-			price.setHoliday(false);
-			price.setVIP(false);
+			price.setIsHoliday(false);
+			price.setIsVIP(false);
 			price.setFormatType(formatType);
+			price.setDescription("Ve thuong ngay thuong");
 			pricesForm.add(price);
 			//WEVIP - ve ngay le, ghe vip
 			price = new Price();
-			price.setTitle("WDVIP"+formatType.getName());
-			price.setHoliday(true);
-			price.setVIP(true);
+			price.setTitle("WEVIP"+formatType.getName());
+			price.setIsHoliday(true);
+			price.setIsVIP(true);
 			price.setFormatType(formatType);
+			price.setDescription("Ve VIP ngay le + cuoi tuan");
 			pricesForm.add(price);
 			//WEVIP - ve ngay le, ghe thuong
 			price = new Price();
-			price.setTitle("WDVIP"+formatType.getName());
-			price.setHoliday(true);
-			price.setVIP(false);
+			price.setTitle("WENONVIP"+formatType.getName());
+			price.setIsHoliday(true);
+			price.setIsVIP(false);
 			price.setFormatType(formatType);
+			price.setDescription("Ve thuong ngay le + cuoi tuan");
 			pricesForm.add(price);
-			
-			
 			
 			model.addAttribute("forms", pricesForm);
 		} else
@@ -76,11 +79,10 @@ public class PriceController {
 	}
 
 	@RequestMapping(value = "/admin/set/price", method = RequestMethod.POST)
-	public String addPrice(@Valid List<Price> prices, Model model, BindingResult bindingResult) {
-		if (bindingResult.hasErrors()) {
-			return "error";
-		}
-		priceService.addPrices(prices);
+	public String addPrice(@ModelAttribute PriceCreationDTO form, Model model) {
+		List<Price> list = form.getPrices();
+		//priceService.addPrices(form.getPrices());
+		priceService.addPrice(list.get(1));
 		return "redirect:/admin/set/price";
 	}
 }
