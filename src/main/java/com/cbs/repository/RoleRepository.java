@@ -18,6 +18,8 @@ import com.cbs.model.Role;
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Long> {
 
+	Role getRoleByName(String name);
+
 
 //	void deleteByRole(int id);
 

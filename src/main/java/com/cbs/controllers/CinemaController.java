@@ -44,7 +44,7 @@ public class CinemaController {
     @RequestMapping(value = "/admin/cinema", method = RequestMethod.GET)
     public String allCinema(Model model) {
     	List<Cinema> list = cinemaService.getAllCinema();
-        model.addAttribute("cinemas", cinemaService.getAllCinema());
+        model.addAttribute("cinemas", list);
         return "/admin/cinema-list";
     }
 
@@ -55,21 +55,29 @@ public class CinemaController {
         return "/cinema";
     }
 
+	/*
+	 * @RequestMapping(value = "/admin/add/cinema", method = RequestMethod.GET)
+	 * public String addCinema(Model model) { AddCinema cinema = new AddCinema();
+	 * List<Screen> screens = screenService.getAllScreen();
+	 * 
+	 * Map<Long,Integer> screenRows = new HashMap<>(); for (Screen screen : screens)
+	 * {
+	 * 
+	 * screenRows.put(screen.getId(), 0); } cinema.setScreenRows(screenRows);
+	 * 
+	 * model.addAttribute("cinema", new Cinema()); model.addAttribute("provinces",
+	 * provinceService.getAllProvince()); model.addAttribute("screens",
+	 * screenService.getAllScreen());
+	 * 
+	 * return "/admin/add/cinema"; }
+	 */
     @RequestMapping(value = "/admin/add/cinema", method = RequestMethod.GET)
     public String addCinema(Model model) {
-    	AddCinema cinema  = new AddCinema();
-    	List<Screen> screens = screenService.getAllScreen();
-    	
-    	Map<Long,Integer> screenRows = new HashMap<>();
-    	for (Screen screen : screens) {
-    		
-    		screenRows.put(screen.getId(), 0);
-		}
-    	cinema.setScreenRows(screenRows);
     	
     	model.addAttribute("cinema", new Cinema());
         model.addAttribute("provinces", provinceService.getAllProvince());
-        model.addAttribute("screens", screenService.getAllScreen());
+        model.addAttribute("cinemaScreens", screenService.getAllScreen());
+        
         return "/admin/add/cinema";
     }
 
@@ -90,6 +98,23 @@ public class CinemaController {
         return "redirect:/admin/cinema";
     }
 
+	/*
+	 * @RequestMapping(value = "/admin/add/cinema", method = RequestMethod.POST)
+	 * public String addCinema(@Valid Cinema cinema, BindingResult bindingResult,
+	 * Model model, String[] screens, String[] rows) {
+	 * cinemaService.addCinema(cinema);
+	 * 
+	 * Map<Long,Integer> screenList = new HashMap<Long,Integer>();
+	 * 
+	 * for (int i = 0; i < screens.length; i++) { Long screenId =
+	 * Long.parseLong(screens[i]); Integer row = Integer.parseInt(rows[i]);
+	 * 
+	 * screenList.put(screenId,row); }
+	 * cinemaScreenService.addScreenToCinema(cinema,screenList);
+	 * 
+	 * return "redirect:/admin/cinema"; }
+	 */
+
     @RequestMapping(value = "/admin/delete/cinema", method = RequestMethod.GET, params = {"id"})
     public String deleteCinema(@RequestParam Long id, Model model) {
         cinemaService.deleteCinemaByID(id);
@@ -100,7 +125,8 @@ public class CinemaController {
     public String editCinema(@RequestParam Long id, Model model) {
     	Cinema cinema = cinemaService.getCinemaByID(id);
         model.addAttribute("cinema", cinema);
-     //   model.addAttribute("screens",  cinema.getCinemaScreens());
+        model.addAttribute("provinces", provinceService.getAllProvince());
+        model.addAttribute("screens", screenService.getAllScreen());
     
         return "/admin/add/cinema";
     }

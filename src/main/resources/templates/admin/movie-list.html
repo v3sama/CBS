@@ -52,8 +52,8 @@
 							<tr>
 								<th>Title</th>
 								<th>Duration</th>
-								<th>Director</th>
-								<th>Year</th>
+								<th>Start Date</th>
+								<th>End Date</th>
 								<th>Status</th>
 								<th>Movie Format</th>
 								<th></th>
@@ -75,8 +75,8 @@
 								<tr>
 									<td th:text="${movie.title}"></td>
 									<td th:text="${movie.duration}"></td>
-									<td th:text="${movie.director}"></td>
-									<td th:text="${movie.year}"></td>
+									<td th:text="${movie.date_release}"></td>
+									<td th:text="${movie.date_end}"></td>
 									<td th:if="${movie.status}" th:text="Active" class="btn btn-success">
 										
 									</td>
@@ -91,7 +91,8 @@
 												<button type="button" class="btn btn-info">Edit</button>
 										</a> 
 										<a th:href="@{/admin/set/price(movieId= ${movie.id})}">
-												<button type="button" class="btn btn-info">Set price</button>
+												<button type="button" class="btn btn-success
+												">Set price</button>
 										</a> 
 										<a th:if="${movie.status}" th:href="@{/admin/deactivate/movie(movieId = ${movie.id})}">
 									<!-- 			<button type="button" class="btn btn-danger">Deactivate</button>

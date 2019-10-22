@@ -22,6 +22,14 @@ public class UserService  {
         
         //this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
+    
+    public void saveUser(User user) {
+		userRepository.save(user);
+	}
+
+    public User findByConfirmationToken(String confirmationToken) {
+		return userRepository.findByConfirmationToken(confirmationToken);
+	}
 
     public List<User> findAll() {
         return userRepository.findAll();

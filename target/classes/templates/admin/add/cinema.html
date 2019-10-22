@@ -107,19 +107,28 @@
 											</tr>
 										</thead>
 										<tbody>
-											<th:block th:each="screen : ${screens}">
-												<tr>
-													<!-- 													<td> -->
-													<!-- 														<input type="checkbox" th:field="*{cinemaScreens}" -->
-													<!-- 															th:value="${screen.id}" /> -->
-													<!-- 													</td> -->
-													<!-- 													<td th:text="${screen.title}" th:field="*{cinemaScreens}"> -->
+											<tr th:each="screen, itemStat: *{cinemaScreens}">
+												
+												<td>
+													<input  type="checkbox" th:field="*{cinemaScreens[__${itemStat.index}__].screenId}"
+													/>
+												</td>
+												<td th:text="${screen.title}">
+													
+												</td>
+												<td>
+													<input  type="number" th:field="*{cinemaScreens[__${itemStat.index}__].rows}"/>
+												</td>
+												
+											</tr>
+											<!-- <tr th:each="screen : ${screens}">
+												<td><input type="checkbox" th:field="*{cinemaScreens}"
+													th:value="${screen.id}" /></td>
+												<td th:text="${screen.title}" th:field="*{cinemaScreens}">
 
-													<!-- 													</td> -->
-													<!-- 													<td> -->
-													<!-- 														<input class="form-control" type="text" th:field="*{cinemaScreens}" -->
-													<!-- 															th:value="${rows}" /> -->
-													<!-- 													</td> -->
+												</td>
+												<td><input class="form-control" type="text"
+													th:field="*{cinemaScreens}" /></td>
 
 													<td><input class="box" type="checkbox" name="screens"
 														th:value="${screen.id}"></td>
@@ -128,9 +137,8 @@
 													<td><input class="form-control" type="number"
 														name="rows" disabled="true" th:id="${screen.id}">
 													</td>
-												</tr>
+											</tr> -->
 
-											</th:block>
 										</tbody>
 									</table>
 

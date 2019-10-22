@@ -15,6 +15,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.Set;
@@ -28,9 +30,9 @@ public class Movie extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 	@Column(unique=true)
     private String title;
-    private float duration;
+    private int duration;
     private String rating_type;
-    @Column(name="date_release")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate date_release;
     private String image;
     private String thumbnail;
@@ -41,6 +43,7 @@ public class Movie extends BaseEntity {
     private String trailer_link;
     private Boolean status;
     private String description;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate date_end;
    
     @ManyToOne
