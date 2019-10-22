@@ -26,7 +26,7 @@ public class GenreController {
     @RequestMapping(value = "/admin/genre", method = RequestMethod.GET)
     public String allGenre(Model model) {
         model.addAttribute("genres", genreService.getAllGenre());
-        return "/admin/genre";
+        return "/admin/genre-list";
     }
 
     @RequestMapping(value = "/genre", method = RequestMethod.GET)

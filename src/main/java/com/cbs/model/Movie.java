@@ -36,7 +36,7 @@ public class Movie extends BaseEntity {
     private String language;
     private float avg_user_rating_star;
     private String trailer_link;
-    private int status;
+    private Boolean status;
     private String description;
     private Date date_end;
    

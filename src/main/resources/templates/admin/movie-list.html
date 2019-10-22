@@ -12,14 +12,10 @@
 <script th:src="@{/scripts/jquery.js}"></script>
 <script th:src="@{/scripts/bootstrap.bundle.min.js}"></script>
 <script th:src="@{/scripts/jquery.dataTables.min.js}"></script>
-
 </head>
-
 <body>
 	<nav th:replace="admin/layout :: admin-nav"></nav>
-
 	<aside th:replace="admin/layout :: admin-sidebar"></aside>
-
 	<div class="content-wrapper">
 		<!-- Content Header (Page header) -->
 		<div class="content-header">
@@ -59,25 +55,36 @@
 								<th>Director</th>
 								<th>Year</th>
 								<th>Status</th>
-<!-- 								<th>Format Type</th> -->
-
+								<th>Movie Format</th>
+								<th></th>
 							</tr>
 						</thead>
+						<tfoot>
+							<tr>
+								<th></th>
+								<th></th>
+								<th></th>
+								<th></th>
+								<th></th>
+								<th></th>
+								<th></th>
+							</tr>
+						</tfoot>
 						<tbody>
 							<th:block th:each="movie : ${movies}">
-								<!-- lam tiep du lieu vao day -->
-
 								<tr>
 									<td th:text="${movie.title}"></td>
 									<td th:text="${movie.duration}"></td>
 									<td th:text="${movie.director}"></td>
 									<td th:text="${movie.year}"></td>
-									<td th:text="${movie.status}"></td>
-<!-- 									<td th:text="${movie.formatType.name}"></td> -->
-
-
 									<td>
+										<span th:if="${movie.status}">Active</span>
+    									<span th:if="${!movie.status}">Inactive</span>
+									</td>
+									<td th:text="${movie.formatType.name}">
 									
+									</td>
+									<td>
 										<a th:href="@{/admin/edit/movie(movieId= ${movie.id})}">
 												<button type="button" class="btn btn-info">Edit</button>
 										</a> 
@@ -101,6 +108,50 @@
 		<!-- /.content -->
 	</div>
 
+	<script>
+	$(document).ready(function() {
+		$('#dataTable').DataTable({
+            responsive: true,
+            //sort by category
+           
+            initComplete: function () {
+                // search by name or code
+                this.api().columns([0,2,3]).every(function () {
+                    var column = this;
+                    $('<input type="text" class="form-control" />')
+                        .appendTo($(column.footer()).empty());
+                    $('input', this.footer()).on('keyup change clear', function () {
+                        if (column.search() !== this.value) {
+                            column
+                                .search(this.value)
+                                .draw();
+                        }
+                    });
+                });
+              //drop down to select category
+                this.api().columns([4,5]).every(function () {
+                    var column = this;
+                    var select = $('<select class="form-control"><option value=""></option></select>')
+                        .appendTo($(column.footer()).empty())
+                        .on('change', function () {
+                            var val = $.fn.dataTable.util.escapeRegex(
+                                $(this).val()
+                            );
+                            column
+                                .search(val ? '^' + val + '$' : '', true, false)
+                                .draw();
+                        });
+                    column.data().unique().sort().each(function (d, j) {
+                        select.append('<option value="' + d + '">' + d + '</option>')
+                    });
+                });
+
+                
+            },
+             
+        });
+	});
+	</script>
 	
 
 	

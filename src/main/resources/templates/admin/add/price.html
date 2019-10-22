@@ -50,17 +50,26 @@
 					</div>
 					<!-- form start -->
 					<form class="form-horizontal" data-toggle="validator" role="form"
-						action="#" th:action="@{/admin/add/price}" th:object="${forms}"
+						action="#" th:action="@{/admin/set/price}" th:object="${forms}"
 						method="post">
 						<div class="card-body">
-
+							<div class="form-group row">
+								<label class="col-sm-2 control-label">Movie</label>
+								<label class="col-sm-10 form-control" th:text="${movie.title}"></label>
+							</div>
+							<div class="form-group row">
+								<label class="col-sm-2 control-label">Movie Format</label>
+								<label class="col-sm-10 form-control" th:text="${movie.formatType.name}"></label>
+							</div>
+							
+							
 							<table class="table">
 								<thead>
 									<tr>
+										<th></th>
 										<th>Title</th>
-										<th>HolidayTicket</th>
-										<th>VIP Ticket</th>
-										<th>FormatId</th>
+<!-- 										<th>HolidayTicket</th> -->
+<!-- 										 <th>VIP Ticket</th> -->
 										<th>Price</th>
 										<th>Description</th>
 									</tr>
@@ -68,27 +77,23 @@
 								<tbody>
 										<tr th:each="price, itemStat: *{prices}">
 											<td>
-												<input type="text" th:field="*{prices[__${itemStat.index}__].title}"
+												<input type="hidden" th:field="*{prices[__${itemStat.index}__].isHoliday}"
+												th:value="${price.isHoliday}" />
+												<input type="hidden" th:field="*{prices[__${itemStat.index}__].isVIP}"
+												th:value="${price.isVIP}" readonly/>
+												<input type="hidden" th:field="*{prices[__${itemStat.index}__].formatType}"
+												th:value="${price.formatType}" />
+											</td>
+											<td>
+												<input class="form-control" type="text" th:field="*{prices[__${itemStat.index}__].title}"
 												th:value="${price.title}" readonly/>
 											</td>
-											<!-- <td>
-												<input type="text" th:field="*{prices[__${itemStat.index}__].isHoliday}"
-												th:value="${price.isHoliday}" />
-											</td>
 											<td>
-												<input type="text" th:field="*{prices[__${itemStat.index}__].isVIP}"
-												th:value="${prices.isVIP]}" />
-											</td>
-											<td>
-												<input type="checkbox" th:field="*{prices[__${itemStat.index}__].formatType_id}"
-												th:value="${price.formatType_id}" />
-											</td> -->
-											<td>
-												<input type="number" th:field="*{prices[__${itemStat.index}__].price}"
+												<input class="form-control"  type="number" th:field="*{prices[__${itemStat.index}__].price}"
 												th:value="${price.price}" />
 											</td>
 											<td>
-												<input type="text" th:field="*{prices[__${itemStat.index}__].description}"
+												<input class="form-control"  type="text" th:field="*{prices[__${itemStat.index}__].description}"
 												th:value="${price.description}" />
 											</td>
 											

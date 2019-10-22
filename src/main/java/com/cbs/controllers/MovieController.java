@@ -64,8 +64,12 @@ public class MovieController {
 
     @RequestMapping(value = "/admin/add/movie", method = RequestMethod.GET)
     public String addMovie(Model model) {
-        model.addAttribute("movie", new Movie());
+    	Movie movie = new Movie();
+    	movie.setStatus(true);
+        model.addAttribute("movie", movie);
         model.addAttribute("formats", formatTypeService.getAllFormatType());
+        model.addAttribute("actors", actorService.getAllActors());
+        model.addAttribute("genres", genreService.getAllGenre());
         return "/admin/add/movie";
     }
 
@@ -89,7 +93,10 @@ public class MovieController {
     @RequestMapping(value = "/admin/edit/movie", method = RequestMethod.GET, params = {"movieId"})
     public String editMovie(@RequestParam Long movieId, Model model) {
         model.addAttribute("movie", movieService.getMovieByID(movieId));
-        return "/admin/edit/movie";
+        model.addAttribute("formats", formatTypeService.getAllFormatType());
+        model.addAttribute("actors", actorService.getAllActors());
+        model.addAttribute("genres", genreService.getAllGenre());
+        return "/admin/add/movie";
     }
 
     @RequestMapping(value = "/admin/add/genre_to_movie", method = RequestMethod.GET, params = {"movieId"})
