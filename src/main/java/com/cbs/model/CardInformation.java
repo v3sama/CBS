@@ -18,6 +18,7 @@ import lombok.ToString;
 public class CardInformation extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 	@Column(unique=true)
+	
 	private String card_no;
 	private Date card_date;
 	private String bank;

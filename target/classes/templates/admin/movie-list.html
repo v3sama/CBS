@@ -58,17 +58,8 @@
 								<th>Duration</th>
 								<th>Director</th>
 								<th>Year</th>
-								<th>Language</th>
-								<th>avg_user_rating_star</th>
-								<th>date_realease</th>
-								<th>date_end</th>
-								<th>description</th>
-								<th>status</th>
-								<th>trailer_link</th>
-								<th>thumbnail</th>
-								<th>image</th>
-								<th>rating_type</th>
-								<th>Format Type</th>
+								<th>Status</th>
+<!-- 								<th>Format Type</th> -->
 
 							</tr>
 						</thead>
@@ -81,24 +72,22 @@
 									<td th:text="${movie.duration}"></td>
 									<td th:text="${movie.director}"></td>
 									<td th:text="${movie.year}"></td>
-									<td th:text="${movie.language}"></td>
-									<td th:text="${movie.avg_user_rating_star}"></td>
-									<td th:text="${movie.date_release}"></td>
-									<td th:text="${movie.date_end}"></td>
-									<td th:text="${movie.description}"></td>
 									<td th:text="${movie.status}"></td>
-									<td th:text="${movie.trailer_link}"></td>
-									<td th:text="${movie.thumbnail}"></td>
-									<td th:text="${movie.image}"></td>
-									<td th:text="${movie.rating_type}"></td>
-									<td th:text="${movie.formatType.name}"></td>
+<!-- 									<td th:text="${movie.formatType.name}"></td> -->
 
 
-									<td><a th:href="@{/admin/edit/movie(id= ${movie.id})}">
-											<button type="button" class="btn btn-info">Edit</button>
-									</a> <a th:href="@{/admin/delete/movie(id = ${movie.id})}">
-											<button type="button" class="btn btn-danger">Delete</button>
-									</a></td>
+									<td>
+									
+										<a th:href="@{/admin/edit/movie(movieId= ${movie.id})}">
+												<button type="button" class="btn btn-info">Edit</button>
+										</a> 
+										<a th:href="@{/admin/set/price(movieId= ${movie.id})}">
+												<button type="button" class="btn btn-info">Set price</button>
+										</a> 
+										<a th:href="@{/admin/delete/movie(movieId = ${movie.id})}">
+												<button type="button" class="btn btn-danger">Delete</button>
+										</a>
+									</td>
 
 								</tr>
 							</th:block>
@@ -112,101 +101,8 @@
 		<!-- /.content -->
 	</div>
 
-	<div class="container text-center"></div>
+	
 
-	<script>
-		$(document)
-				.ready(
-						function() {
-							$('#dataTable')
-									.DataTable(
-											{
-												responsive : true,
-												//sort by category
-
-												initComplete : function() {
-													// search by name or code
-													this
-															.api()
-															.columns(
-																	[ 0, 1, 2 ])
-															.every(
-																	function() {
-																		var column = this;
-																		$(
-																				'<input type="text" class="form-control" />')
-																				.appendTo(
-																						$(
-																								column
-																										.footer())
-																								.empty());
-																		$(
-																				'input',
-																				this
-																						.footer())
-																				.on(
-																						'keyup change clear',
-																						function() {
-																							if (column
-																									.search() !== this.value) {
-																								column
-																										.search(
-																												this.value)
-																										.draw();
-																							}
-																						});
-																	});
-													//drop down to select category
-													this
-															.api()
-															.columns(3)
-															.every(
-																	function() {
-																		var column = this;
-																		var select = $(
-																				'<select class="form-control"><option value=""></option></select>')
-																				.appendTo(
-																						$(
-																								column
-																										.footer())
-																								.empty())
-																				.on(
-																						'change',
-																						function() {
-																							var val = $.fn.dataTable.util
-																									.escapeRegex($(
-																											this)
-																											.val());
-																							column
-																									.search(
-																											val ? '^'
-																													+ val
-																													+ '$'
-																													: '',
-																											true,
-																											false)
-																									.draw();
-																						});
-																		column
-																				.data()
-																				.unique()
-																				.sort()
-																				.each(
-																						function(
-																								d,
-																								j) {
-																							select
-																									.append('<option value="' + d + '">'
-																											+ d
-																											+ '</option>')
-																						});
-																	});
-
-												},
-
-											});
-						});
-	</script>
-
+	
 </body>
 </html>

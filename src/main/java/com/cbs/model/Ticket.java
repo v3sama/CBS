@@ -2,7 +2,7 @@ package com.cbs.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-
+import lombok.ToString;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -12,6 +12,7 @@ import javax.persistence.OneToOne;
 @Data
 @Entity
 @EqualsAndHashCode(callSuper = true)
+@ToString(exclude = {"movieSession","member","seat","order","price","rating"})
 public class Ticket extends BaseEntity {
 	/**
 	 * 
