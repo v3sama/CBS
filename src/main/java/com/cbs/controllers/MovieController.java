@@ -62,17 +62,10 @@ public class MovieController {
         return "/movie";
     }
 
-    @GetMapping("/api/movie")
-    public ResponseEntity<Object> getAllMovieApi() {
-        MyReponse<List<Movie>> response = new MyReponse<>("success", movieService.getAllMovies());
-        return new ResponseEntity<Object>(response, HttpStatus.OK);
-    }
-
     @RequestMapping(value = "/admin/add/movie", method = RequestMethod.GET)
     public String addMovie(Model model) {
         model.addAttribute("movie", new Movie());
         model.addAttribute("formats", formatTypeService.getAllFormatType());
-        model.addAttribute("allActors", actorService.getAllActors());
         return "/admin/add/movie";
     }
 
@@ -96,16 +89,13 @@ public class MovieController {
     @RequestMapping(value = "/admin/edit/movie", method = RequestMethod.GET, params = {"movieId"})
     public String editMovie(@RequestParam Long movieId, Model model) {
         model.addAttribute("movie", movieService.getMovieByID(movieId));
-        model.addAttribute("formats", formatTypeService.getAllFormatType());
-        model.addAttribute("allActors", actorService.getAllActors());
-        return "/admin/add/movie";
+        return "/admin/edit/movie";
     }
 
     @RequestMapping(value = "/admin/add/genre_to_movie", method = RequestMethod.GET, params = {"movieId"})
     public String addGenres(@RequestParam Long movieId, Model model) {
         model.addAttribute("allGenres", genreService.getAllGenre());
         model.addAttribute("movie", movieService.getMovieByID(movieId));
-        
         return "/admin/add/genre_to_movie";
     }
 

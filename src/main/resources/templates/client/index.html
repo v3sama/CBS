@@ -2,6 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -77,6 +78,58 @@
 			<div class="small-block select-box btn-datve">Bam Dat</div>
 		</div>
 	</section>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">     -->
+    <link rel="stylesheet" th:href="@{/css/grid.css}">
+    <!-- <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet"> -->
+    <link rel="stylesheet" th:href="@{/css/site.css}">
+    <link rel="stylesheet" th:href="@{/css/default-site.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/slick.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/slick-theme.css}"/>
+    <link rel="stylesheet" th:href="@{/css/selectize.css}">
+    <link rel="stylesheet" th:href="@{/css/fontawesome/css/all.min.css}"/>
+    <title>CBS Cinema</title>
+</head>
+
+<body>
+
+<Nav th:fragment="client-nav" th:replace="client/fragments/navbar :: client-nav"></Nav>
+
+<section class="film-show">
+    <div class="carousel">
+        <!-- <img src="/bg/anh-thay-15671389225425.jpg" alt=""> -->
+        <img src="https://via.placeholder.com/1440x600?text=Carousel+1440x600" alt="">
+        <img src="https://via.placeholder.com/1440x600?text=Carousel+1440x600" alt="">
+        <img src="https://via.placeholder.com/1440x600?text=Carousel+1440x600" alt="">
+        <img src="https://via.placeholder.com/1440x600?text=Carousel+1440x600" alt="">
+        <img src="https://via.placeholder.com/1440x600?text=Carousel+1440x600" alt="">
+    </div>
+    <div class="section-datve">
+        <div class="small-block-30 select-box selectFilm">
+            <select id="select-beast">
+                <option value="volvo">Volvo</option>
+                <option value="saab">Saab</option>
+                <option value="mercedes">Mercedes</option>
+                <option value="audi">Audi</option>
+            </select>
+        </div>
+        <div class="small-block select-box selectCinema">
+            <p>Rap</p>
+        </div>
+        <div class="small-block select-box selectDate">
+            <p>Ngay Chieu</p>
+        </div>
+        <div class="small-block select-box selectSesion">
+            <p>Suat Chieu</p>
+        </div>
+        <div class="small-block select-box btn-datve">
+            Bam Dat
+        </div>
+    </div>
+</section>
+
 
 	<section id="nhaylichchieu" class="section-movie">
 		<div class="row">
@@ -718,7 +771,11 @@
 		</div>
 	</section>
 
+
 	<section class="secion-news"></section>
+
+<section class="section-news">
+
 
 	<footer>
 		<div class="row">
@@ -748,10 +805,22 @@
 	<script th:src="@{/scripts/jquery.min.js}"></script>
 	<script th:src="@{/scripts/jquery-ui.min.js}"></script>
 
+
 	<!-- <script src="/resource/js/select2.min.js"></script> -->
 	<script type="text/javascript" th:src="@{/scripts/slick.js}"></script>
 	<script type="text/javascript" th:src="@{/scripts/app.js}"></script>
 	<script type="text/javascript" th:src="@{/scripts/selectize.js}"></script>
+
+<footer th:fragment="client-footer" th:replace="client/fragments/footer :: client-footer"></footer>
+
+<script th:src="@{/scripts/jquery.min.js}"></script>
+<script th:src="@{/scripts/jquery-ui.min.js}"></script>
+
+<!-- <script src="/resource/js/select2.min.js"></script> -->
+<script type="text/javascript" th:src="@{/scripts/slick.js}"></script>
+<script type="text/javascript" th:src="@{/scripts/app.js}"></script>
+<script type="text/javascript" th:src="@{/scripts/selectize.js}"></script>
+
 </body>
 
 </html>

@@ -50,13 +50,9 @@
 					</div>
 					<!-- form start -->
 					<form class="form-horizontal" data-toggle="validator" role="form"
-						action="#" th:action="@{/admin/add/price}" th:object="${price}"
+						action="#" th:action="@{/admin/add/price}" th:object="${forms}"
 						method="post">
 						<div class="card-body">
-							<div class="form-group row">
-								<input class="form-control" type="hidden" th:field="*{id}" />
-							</div>
-
 							<div class="form-group row">
 								<label class="col-sm-2 control-label">Title</label>
 								<div class="col-sm-10">
@@ -122,12 +118,57 @@
 							<div class="card-footer">
 								<button type="submit" class="btn btn-info">Create/Update</button>
 
-								<button type="reset" class="btn btn-danger ">Reset</button>
-								<button type="button" class="btn btn-warning"
-									onclick="window.location.href='/admin/price'">Return
-									to list</button>
-							</div>
-							<!-- /.card-footer -->
+							<table class="table">
+								<thead>
+									<tr>
+										<th>Title</th>
+										<th>HolidayTicket</th>
+										<th>VIP Ticket</th>
+										<th>FormatId</th>
+										<th>Price</th>
+										<th>Description</th>
+									</tr>
+								</thead>
+								<tbody>
+										<tr th:each="price, itemStat: *{prices}">
+											<td>
+												<input type="text" th:field="*{prices[__${itemStat.index}__].title}"
+												th:value="${price.title}" readonly/>
+											</td>
+											<!-- <td>
+												<input type="text" th:field="*{prices[__${itemStat.index}__].isHoliday}"
+												th:value="${price.isHoliday}" />
+											</td>
+											<td>
+												<input type="text" th:field="*{prices[__${itemStat.index}__].isVIP}"
+												th:value="${prices.isVIP]}" />
+											</td>
+											<td>
+												<input type="checkbox" th:field="*{prices[__${itemStat.index}__].formatType_id}"
+												th:value="${price.formatType_id}" />
+											</td> -->
+											<td>
+												<input type="number" th:field="*{prices[__${itemStat.index}__].price}"
+												th:value="${price.price}" />
+											</td>
+											<td>
+												<input type="text" th:field="*{prices[__${itemStat.index}__].description}"
+												th:value="${price.description}" />
+											</td>
+											
+										</tr>
+								</tbody>
+							</table>
+						</div>
+						<!-- /.card-body -->
+						<div class="card-footer">
+							<button type="submit" class="btn btn-info">Create/Update</button>
+							<button type="reset" class="btn btn-danger ">Reset</button>
+							<button type="button" class="btn btn-warning"
+								onclick="window.location.href='/admin/price'">Return to
+								list</button>
+						</div>
+						<!-- /.card-footer -->
 					</form>
 				</div>
 			</div>
@@ -135,13 +176,6 @@
 		<!-- /.content -->
 	</div>
 
-	<script>
-		$(document).ready(function() {
-			$('.box').click(function() {
-				var set = $(this).is(':checked') ? false : true;
-				$('#' + $(this).val()).prop('disabled', set);
-			});
-		});
-	</script>
+
 </body>
 </html>
