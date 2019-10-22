@@ -20,16 +20,9 @@ public class IndexController {
         this.movieService = movieService;
     }
 
-    @GetMapping({"/", "index"})
+    @GetMapping({"", "index"})
     public String index(){
-        return "/client/index";
+        return "client/index";
     }
-
-    @GetMapping("/moviehehe")
-    public String getAllMovieApi(Model model) {
-        model.addAttribute("movies", movieService.getAllMovies());
-        return "/client/test";
-    }
-
 
 }
