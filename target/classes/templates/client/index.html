@@ -14,36 +14,13 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/slick-theme.css}"/>
     <link rel="stylesheet" th:href="@{/css/selectize.css}">
     <link rel="stylesheet" th:href="@{/css/fontawesome/css/all.min.css}"/>
-    <title>Document</title>
+    <title>CBS Cinema</title>
 </head>
 
 <body>
-<Nav>
-    <div class="nav-bar clearfix">
-        <div class="logo">
-            <img src="" alt="logo">
-        </div>
-        <ul class="nav-list">
-            <li><a href="#nhaylichchieu">Lịch Chiếu</a></li>
-            <li><a href="#nhaycumrap">Cụm Rạp</a></li>
-            <li>Tin Tức</li>
-        </ul>
-        <div class="nav-right">
-            <div class="account">
-                <a href="#">
-                    <i class="icon-signin"></i>
-                    <p>Đăng nhập</p>
-                </a>
-            </div>
-            <div class="locate">
-                <i class="icon-locate"></i>
-                <div class="dropdown">
-                    Hồ Chí Minh
-                </div>
-            </div>
-        </div>
-    </div>
-</Nav>
+
+<Nav th:fragment="client-nav" th:replace="client/fragments/navbar :: client-nav"></Nav>
+
 <section class="film-show">
     <div class="carousel">
         <!-- <img src="/bg/anh-thay-15671389225425.jpg" alt=""> -->
@@ -793,37 +770,12 @@
     </div>
 </section>
 
-<section class="secion-news">
+<section class="section-news">
 
 </section>
 
-<footer>
-    <div class="row">
-        <div class="col span-1-of-3 footer-cinema">
-            <h3 class="footer-title">CINEMA</h3>
-            <div>
-                <div class="col span-1-of-2">
-                    <a href="#">FAQ</a>
-                    <a href="#">Guidelines</a>
-                </div>
-                <div class="col span-1-of-2">
-                    <a href="#">Thoả thuận sử dụng</a>
-                    <a href="#">Quy chế hoạt động</a>
-                    <a href="#">Chính sách bảo mật</a>
-                    <a href="#">Quyền lợi thành viên</a>
-                </div>
-            </div>
-        </div>
-        <div class="col span-1-of-3 footer-doitac-social">
-            <h3 class="footer-title">ĐỐI TÁC</h3>
-            <a href="#"><img src="http://placehold.it/30x30" alt=""></a>
-        </div>
-        <div class="col span-1-of-3 footer-doitac-social">
-            <h3 class="footer-title">SOCIAL</h3>
-            <a href="#"><img src="http://placehold.it/30x30" alt=""></a>
-        </div>
-    </div>
-</footer>
+<footer th:fragment="client-footer" th:replace="client/fragments/footer :: client-footer"></footer>
+
 <script th:src="@{/scripts/jquery.min.js}"></script>
 <script th:src="@{/scripts/jquery-ui.min.js}"></script>
 

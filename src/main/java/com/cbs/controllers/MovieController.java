@@ -62,12 +62,6 @@ public class MovieController {
         return "/movie";
     }
 
-    @GetMapping("/api/movie")
-    public ResponseEntity<Object> getAllMovieApi() {
-        MyReponse<List<Movie>> response = new MyReponse<>("success", movieService.getAllMovies());
-        return new ResponseEntity<Object>(response, HttpStatus.OK);
-    }
-
     @RequestMapping(value = "/admin/add/movie", method = RequestMethod.GET)
     public String addMovie(Model model) {
         model.addAttribute("movie", new Movie());

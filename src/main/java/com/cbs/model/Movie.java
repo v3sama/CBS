@@ -26,7 +26,7 @@ public class Movie extends BaseEntity {
     private float duration;
  
     private String rating_type;
-    private Date date_realease;
+    private Date date_release;
     private String image;
     private String thumbnail;
     private String director;
