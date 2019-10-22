@@ -26,9 +26,9 @@
 				<div class="row mb-2">
 					<div class="col-sm-6">
 						<h1 class="m-0 text-dark">User Management</h1>
-						<a href="/admin/add/user.html"
-							th:href="@{/admin/add/user}">
-							<button type="button" class="btn btn-success">Create new </button>
+						<a href="/admin/add/user.html" th:href="@{/admin/add/user}">
+							<button type="button" class="btn btn-success">Create new
+							</button>
 						</a>
 					</div>
 					<!-- /.col -->
@@ -50,7 +50,7 @@
 		<div class="content">
 			<div class="container-fluid">
 				<div class="table-responsive" align="center">
-					<table id="dataTable" class="display" style="width:100%">
+					<table id="dataTable" class="display" style="width: 100%">
 						<thead>
 							<tr>
 								<th>Email</th>
@@ -75,34 +75,35 @@
 									<td th:text="${user.email}"></td>
 									<td th:text="${user.firstName + user.lastName}"></td>
 									<td th:text="${user.phone}"></td>
-									<td >
-										<input type="checkbox"  th:checked="${user.active}"/>
+									<td><input type="checkbox" th:checked="${user.active}" />
 									</td>
-									
-									<td>
-									<a th:href="@{/admin/report(id= ${user.id})}">
-											<button type="button" class="btn btn-info">View Statistic</button>
-									</a> 
-									<a th:href="@{/admin/edit/user(id= ${user.id})}">
-											<button type="button" class="btn btn-primary">Update profile</button>
-									</a> 
-									<div th:switch="${user.active}" style="display: inline"> 
-									
-									
-									<a th:case="true" th:href="@{/admin/deactivate/user(id = ${user.id})}">
-											<button type="button" class="btn btn-danger">Deactivate</button>
+
+
+
+									<td><a th:href="@{/admin/report(id= ${user.id})}">
+											<button type="button" class="btn btn-info">View
+												Statistic</button>
+									</a> <a th:href="@{/admin/edit/user(id= ${user.id})}">
+											<button type="button" class="btn btn-primary">Update
+												profile</button>
 									</a>
-									<a th:case="false" th:href="@{/admin/activate/user(id = ${user.id})}">
-											<button type="button" class="btn btn-success">Activate</button>
-									</a>
-									</div>
-									</td>
+										<div th:switch="${user.active}" style="display: inline">
+
+
+											<a th:case="true"
+												th:href="@{/admin/deactivate/user(id = ${user.id})}">
+												<button type="button" class="btn btn-danger">Deactivate</button>
+											</a> <a th:case="false"
+												th:href="@{/admin/activate/user(id = ${user.id})}">
+												<button type="button" class="btn btn-success">Activate</button>
+											</a>
+										</div></td>
 								</tr>
 							</th:block>
 						</tbody>
 					</table>
 				</div>
-			
+
 
 			</div>
 		</div>

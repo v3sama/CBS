@@ -11,7 +11,10 @@ import com.cbs.model.Role;
 //import com.cbs.model.Rating;
 //import com.cbs.model.Role;
 //import com.cbs.model.SOrder;
+
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Long> {
+
+	
 
 }

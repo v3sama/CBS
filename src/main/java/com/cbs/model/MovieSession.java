@@ -2,6 +2,7 @@ package com.cbs.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -13,6 +14,7 @@ import java.util.Set;
 @Data
 @Entity
 @EqualsAndHashCode(callSuper = true)
+@ToString(exclude = {"cinemaScreen","tickets"})
 public class MovieSession extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 

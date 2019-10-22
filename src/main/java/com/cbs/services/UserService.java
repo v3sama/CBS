@@ -54,6 +54,7 @@ public class UserService  {
 
     public void add(User user) {
     	BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    	
         user.setPassword(passwordEncoder.encode(user.getPassword()));
     	//user.setPassword(user.getPassword().);
         userRepository.save(user);

@@ -3,6 +3,7 @@ package com.cbs.controllers;
 import com.cbs.model.Discount;
 import com.cbs.model.User;
 import com.cbs.services.DiscountService;
+import com.cbs.services.RoleService;
 import com.cbs.services.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,11 +24,13 @@ public class UserController {
 
     private final UserService userService;
     private final DiscountService discountService;
+    private final RoleService roleService;
 
     @Autowired
-    public UserController(UserService userService, DiscountService discountService) {
+    public UserController(UserService userService, DiscountService discountService, RoleService roleService) {
         this.userService = userService;
         this.discountService = discountService;
+        this.roleService = roleService;
     }
 
     @RequestMapping(value = "/admin/user", method = RequestMethod.GET)
@@ -37,15 +40,19 @@ public class UserController {
         return "/admin/user-list";
     }
 
+    //Edit User
     @RequestMapping(value = "/admin/edit/user", method = RequestMethod.GET, params = {"id"})
     public String getUserEdit(@RequestParam Long id, Model model) {
         model.addAttribute("user", userService.findById(id));
-        return "/admin/edit/user";
+//        model.addAttribute("allRoles", roleService.getRoleById(id));
+        return "/admin/add/user";
     }
     
+    //Add User-Role
     @RequestMapping(value = "/admin/add/user", method = RequestMethod.GET)
     public String addUser(Model model) {
     	model.addAttribute("user", new User());
+    	model.addAttribute("allRoles", roleService.getAllRole());
         return "/admin/add/user";
     }
 
@@ -98,6 +105,7 @@ public class UserController {
         return "redirect:/user";
     }
     
+  
     
 
     private String getPrincipal() {

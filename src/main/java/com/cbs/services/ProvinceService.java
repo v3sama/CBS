@@ -37,9 +37,17 @@ public class ProvinceService {
         provinceRepository.saveAndFlush(province);
     }
 
-	public Province getProvinceById(Long id) {
+	public boolean exist(Long id) {
 		
-		return provinceRepository.getOne(id);
+		return !provinceRepository.getOne(id).equals(null);
 	}
+
+	public boolean isUnique(String name) {
+		Long found=  provinceRepository.findAll().parallelStream().filter(p -> p.getName().equals(name)).count();
+		return found == 0;
+		
+	}
+
+	
 	
 }

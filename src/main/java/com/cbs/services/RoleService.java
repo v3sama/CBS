@@ -41,7 +41,11 @@ public class RoleService {
     }
 
 	public Role getRoleById(Long id) {
-		
 		return roleRepository.getOne(id);
 	}
+
+	
+	
+
+	
 }

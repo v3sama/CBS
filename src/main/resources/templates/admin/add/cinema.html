@@ -78,10 +78,9 @@
 							<div class="form-group row">
 								<label class="col-sm-2 control-label">Phone</label>
 								<div class="col-sm-10">
-									<input class="form-control" type="number"
+									<input class="form-control" type="text"
 										placeholder="enter phone here" required="required"
-										th:field="*{phone}"  maxlength="12"
-										data-maxlength="12" />
+										th:field="*{phone}" minlength=12 data-maxlength="12" />
 									<div class="help-block with-errors"></div>
 								</div>
 							</div>
@@ -106,9 +105,7 @@
 												<th>Rows</th>
 											</tr>
 										</thead>
-
 										<tbody>
-
 											<th:block th:each="screen : ${screens}">
 												<tr>
 													<!-- 													<td> -->
@@ -160,11 +157,6 @@
 		$(document).ready(function() {
 			$('.box').click(function() {
 				var set = $(this).is(':checked') ? false : true;
-<<<<<<< HEAD
-
-=======
-	
->>>>>>> branch 'dev' of https://github.com/v3sama/CBS
 				$('#' + $(this).val()).prop('disabled', set);
 			});
 		});

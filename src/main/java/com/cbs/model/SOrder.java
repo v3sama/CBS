@@ -12,11 +12,13 @@ import javax.persistence.OneToOne;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 
 @Data
 @Entity
 @EqualsAndHashCode(callSuper = true)
+@ToString(exclude = {"payment","tickets","member"})
 public class SOrder extends BaseEntity{
 	/**
 	 * 

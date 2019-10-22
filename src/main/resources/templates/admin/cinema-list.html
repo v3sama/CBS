@@ -27,9 +27,9 @@
 				<div class="row mb-2">
 					<div class="col-sm-6">
 						<h1 class="m-0 text-dark">Cinema Management</h1>
-						<a href="/admin/add/cinema.html"
-							th:href="@{/admin/add/cinema}">
-							<button type="button" class="btn btn-success">Create new </button>
+						<a href="/admin/add/cinema.html" th:href="@{/admin/add/cinema}">
+							<button type="button" class="btn btn-success">Create new
+							</button>
 						</a>
 					</div>
 					<!-- /.col -->
@@ -51,7 +51,7 @@
 		<div class="content">
 			<div class="container-fluid">
 				<div class="table-responsive" align="center">
-					<table id="dataTable" class="display" style="width:100%">
+					<table id="dataTable" class="display" style="width: 100%">
 						<thead>
 							<tr>
 								<th>Title</th>
@@ -77,15 +77,16 @@
 									<td th:text="${cinema.title}"></td>
 									<td th:text="${cinema.address}"></td>
 									<td th:text="${cinema.phone}"></td>
-									<td th:text="${cinema.province}"></td>
+									<td th:text="${cinema.province.name}"></td>
 
 									<td><a th:href="@{/admin/edit/cinema(id= ${cinema.id})}">
 											<button type="button" class="btn btn-info">Edit</button>
 									</a> <a th:href="@{/admin/delete/cinema(id = ${cinema.id})}">
 											<button type="button" class="btn btn-danger">Delete</button>
-									</a> <a th:href="@{/admin/screen(cinemaId = ${cinema.id})}">
-									</a> <a th:href="@{/admin/screen(id = ${cinema.id})}">
-											<button type="button" class="btn btn-primary">View screens</button>
+									</a> <a th:href="@{/admin/screen(cinemaId = ${cinema.id})}"> </a> <a
+										th:href="@{/admin/screen(id = ${cinema.id})}">
+											<button type="button" class="btn btn-primary">View
+												screens</button>
 									</a></td>
 
 								</tr>
@@ -93,7 +94,7 @@
 						</tbody>
 					</table>
 				</div>
-			
+
 
 			</div>
 		</div>
