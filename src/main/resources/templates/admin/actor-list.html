@@ -26,9 +26,9 @@
 				<div class="row mb-2">
 					<div class="col-sm-6">
 						<h1 class="m-0 text-dark">Actor Management</h1>
-						<a href="/admin/add/actor.html"
-							th:href="@{/admin/add/actor}">
-							<button type="button" class="btn btn-success">Create new </button>
+						<a href="/admin/add/actor.html" th:href="@{/admin/add/actor}">
+							<button type="button" class="btn btn-success">Create new
+							</button>
 						</a>
 					</div>
 					<!-- /.col -->
@@ -50,7 +50,7 @@
 		<div class="content">
 			<div class="container-fluid">
 				<div class="table-responsive" align="center">
-					<table id="dataTable" class="display" style="width:100%">
+					<table id="dataTable" class="display" style="width: 100%">
 						<thead>
 							<tr>
 								<th>ID</th>
@@ -71,23 +71,21 @@
 								<tr>
 									<td th:text="${actor.id}"></td>
 									<td th:text="${actor.name}"></td>
-									<td>
-									<a th:href="@{/admin/edit/actor(actorId= ${actor.id})}">
+									<td><a
+										th:href="@{/admin/edit/actor(actorId= ${actor.id})}">
 											<button type="button" class="btn btn-info">Edit</button>
-									</a> 
-									<a th:href="@{/admin/delete/actor(actorId = ${actor.id})}">
+									</a> <a th:href="@{/admin/delete/actor(actorId = ${actor.id})}">
 											<button type="button" class="btn btn-danger">Delete</button>
-									</a>
-									<a th:href="@{/admin/movie(actorId = ${actor.id})}">
-											<button type="button" class="btn btn-primary">View acted movies</button>
-									</a>
-									</td>
+									</a> <a th:href="@{/admin/movie(actorId = ${actor.id})}">
+											<button type="button" class="btn btn-primary">View
+												acted movies</button>
+									</a></td>
 								</tr>
 							</th:block>
 						</tbody>
 					</table>
 				</div>
-			
+
 
 			</div>
 		</div>

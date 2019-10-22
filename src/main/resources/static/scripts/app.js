@@ -32,12 +32,13 @@
 //         })
 //     });
 // }
-
+getIndexMovieData();
 $("document").ready(function () {
     // khởi tạo slick
     initSlick();
     trailerBox();
     initSelectize();
+    // getIndexMovieData();
     $('#sap-chieu').hide();
     hoverMobieBlock();
     tabcontent = document.getElementsByClassName("tabcontent");
@@ -150,4 +151,11 @@ function openCity(evt, cityName) {	// function openCity(evt, cityName) {
     // Show the current tab, and add an "active" class to the link that opened the tab	//     // Show the current tab, and add an "active" class to the link that opened the tab
     document.getElementById(cityName).style.display = "block";	//     document.getElementById(cityName).style.display = "block";
     evt.currentTarget.className += " active";	//     evt.currentTarget.className += " active";
+}
+
+function getIndexMovieData(){
+    const url = "http://localhost:8080/api/moviehehe";
+    fetch(url).then((resp) => resp.json()).then(function (data) {
+        console.log(data)
+    })
 }

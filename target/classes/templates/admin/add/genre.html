@@ -6,17 +6,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=2" />
 <link rel="stylesheet" th:href="@{/css/adminlte.min.css}" />
 <link rel="stylesheet" th:href="@{/css/all.min.css}" />
-
+<link rel="stylesheet" th:href="@{/css/bootstrap.css}" />
 <script th:src="@{/scripts/jquery.min.js}"></script>
 <script th:src="@{/scripts/bootstrap.bundle.min.js}"></script>
 </head>
 <body>
 
 	<nav th:replace="admin/layout :: admin-nav"></nav>
-
 	<aside th:replace="admin/layout :: admin-sidebar"></aside>
-
-
+	<div class="container text-center">
 	<div class="content-wrapper">
 		<!-- Content Header (Page header) -->
 		<div class="content-header">
@@ -88,13 +86,8 @@
 	</div>
 
 	<script>
-		$(document).ready(function() {
-			$('.box').click(function() {
-				var set = $(this).is(':checked') ? false : true;
-	
-				$('#' + $(this).val()).prop('disabled', set);
-			});
-		});
 	</script>
+		<div th:replace="admin/form_layout :: genre"></div>
+	</div>
 </body>
 </html>

@@ -28,7 +28,8 @@
 						<h1 class="m-0 text-dark">FormatType Management</h1>
 						<a href="/admin/add/formatType.html"
 							th:href="@{/admin/add/formatType}">
-							<button type="button" class="btn btn-success">Create new </button>
+							<button type="button" class="btn btn-success">Create new
+							</button>
 						</a>
 					</div>
 					<!-- /.col -->
@@ -50,7 +51,7 @@
 		<div class="content">
 			<div class="container-fluid">
 				<div class="table-responsive" align="center">
-					<table id="dataTable" class="display" style="width:100%">
+					<table id="dataTable" class="display" style="width: 100%">
 						<thead>
 							<tr>
 								<th>Name</th>
@@ -68,20 +69,19 @@
 
 								<tr>
 									<td th:text="${formatType.name}"></td>
-									<td>
-									<a th:href="@{/admin/edit/formatType(id= ${formatType.id})}">
+									<td><a
+										th:href="@{/admin/edit/formatType(id= ${formatType.id})}">
 											<button type="button" class="btn btn-info">Edit</button>
-									</a> 
-									<a th:href="@{/admin/delete/formatType(id = ${formatType.id})}">
+									</a> <a
+										th:href="@{/admin/delete/formatType(id = ${formatType.id})}">
 											<button type="button" class="btn btn-danger">Delete</button>
-									</a>
-									</td>
+									</a></td>
 								</tr>
 							</th:block>
 						</tbody>
 					</table>
 				</div>
-			
+
 
 			</div>
 		</div>
