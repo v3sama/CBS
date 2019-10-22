@@ -27,10 +27,7 @@ public class Movie extends BaseEntity {
     private String title;
     private float duration;
     private String rating_type;
-<<<<<<< HEAD
-=======
     @Column(name="date_release")
->>>>>>> 6fcaa57e7af655f77c499bd74d2851b93a648c49
     private Date date_release;
     private String image;
     private String thumbnail;
