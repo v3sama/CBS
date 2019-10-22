@@ -27,8 +27,9 @@ public class IndexController {
 
     @GetMapping("/moviehehe")
     public String getAllMovieApi(Model model) {
-        System.out.println("loc" + movieService.getAllMovies());
         model.addAttribute("movies", movieService.getAllMovies());
         return "/client/test";
     }
+
+
 }

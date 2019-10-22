@@ -78,7 +78,6 @@
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
-<<<<<<< HEAD
 		</dependency>
 
 		<dependency>
@@ -89,11 +88,6 @@
 			<groupId>com.fasterxml.jackson.dataformat</groupId>
 			<artifactId>jackson-dataformat-xml</artifactId>
 		</dependency>
-=======
-
-		</dependency>
-
->>>>>>> 6fcaa57e7af655f77c499bd74d2851b93a648c49
 	</dependencies>
 
 	<build>

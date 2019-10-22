@@ -56,4 +56,8 @@ public class MovieService {
             movieRepository.deleteById(id);
         }
     }
+
+    public List<Movie> getMovieActive(){
+        return movieRepository.findByStatus(1);
+    }
 }
