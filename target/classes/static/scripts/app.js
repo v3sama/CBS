@@ -1,5 +1,5 @@
-
 $("document").ready(function () {
+    //lấy data phim lên tab đang chiếu - sắp chiếu
     getIndexMovieData();
     // khởi tạo slick
     initSlick();
@@ -7,12 +7,12 @@ $("document").ready(function () {
     initSelectize();
     $('#sap-chieu').hide();
     hoverMobieBlock();
-    tabcontent = document.getElementsByClassName("tabcontent");
+    let tabcontent = document.getElementsByClassName("tabcontent");
     for (i = 0; i < tabcontent.length; i++) {
         tabcontent[i].style.display = "none";
     }
     tabcontent[0].style.display = "block";
-    tablinks = document.getElementsByClassName("tablinks");
+    let tablinks = document.getElementsByClassName("tablinks");
     tablinks[0].classList.add('active');
 
 });

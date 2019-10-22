@@ -39,4 +39,9 @@ public class IndexRestController {
 //        model.addAttribute("movies", movieService.getAllMovies());
         return movieIndexDTOS;
     }
+
+//    @GetMapping(value = "/api/schedule/")
+//    public @ResponseBody Iterable<MovieIndexDTO> getScheduleIndex(){
+//
+//    }
 }

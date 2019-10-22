@@ -60,4 +60,6 @@ public class MovieService {
     public List<Movie> getMovieActive(){
         return movieRepository.findByStatus(1);
     }
+
+    
 }
