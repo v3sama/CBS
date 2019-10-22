@@ -1,5 +1,6 @@
 package com.cbs.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -7,6 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -22,7 +26,8 @@ public class Role extends BaseEntity{
 	private String name;
 	
 	@ManyToMany
-	@JoinTable(joinColumns = @JoinColumn(name = "role_id"),
+	@JoinTable(name = "user_roles",joinColumns = @JoinColumn(name = "role_id"),
 	            inverseJoinColumns = @JoinColumn(name = "user_id"))
-	private Set<User> users;
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	private Set<User> users = new HashSet<>();
 }
