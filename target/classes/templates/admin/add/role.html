@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Add/Edit role</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=2" />
+<link rel="stylesheet" th:href="@{/css/adminlte.min.css}" />
+<link rel="stylesheet" th:href="@{/css/all.min.css}" />
+
+<script th:src="@{/scripts/jquery.min.js}"></script>
+<script th:src="@{/scripts/bootstrap.bundle.min.js}"></script>
+</head>
+<body>
+
+	<nav th:replace="admin/layout :: admin-nav"></nav>
+
+	<aside th:replace="admin/layout :: admin-sidebar"></aside>
+
+
+	<div class="content-wrapper">
+		<!-- Content Header (Page header) -->
+		<div class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-6">
+						<h1 class="m-0 text-dark">Role Management</h1>
+					</div>
+					<!-- /.col -->
+					<div class="col-sm-6">
+						<ol class="breadcrumb float-sm-right">
+							<li class="breadcrumb-item"><a href="#">Home</a></li>
+							<li class="breadcrumb-item active">Role Management</li>
+						</ol>
+					</div>
+					<!-- /.col -->
+				</div>
+				<!-- /.row -->
+			</div>
+			<!-- /.container-fluid -->
+		</div>
+		<!-- /.content-header -->
+
+		<!-- Main content -->
+		<div class="content">
+			<div class="container text-center">
+				<div class="card card-info">
+
+					<div class="card-header">
+						<h3 class="card-title">Create/Update role</h3>
+					</div>
+					<!-- form start -->
+					<form class="form-horizontal" data-toggle="validator" role="form"
+						action="#" th:action="@{/admin/add/role}" th:object="${role}"
+						method="post">
+						<div class="card-body">
+							<div class="form-group row">
+								<input class="form-control" type="hidden" th:field="*{id}" />
+							</div>
+
+							<div class="form-group row">
+								<label class="col-sm-2 control-label">Name</label>
+								<div class="col-sm-10">
+									<input class="form-control" type="text"
+										placeholder=" enter name here" required="required"
+										th:field="*{name}" />
+									<div class="help-block with-errors"></div>
+								</div>
+							</div>
+							
+						
+							
+						</div>
+						<!-- /.card-body -->
+						<div class="card-footer">
+							<button type="submit" class="btn btn-info">Create/Update</button>
+
+							<button type="reset" class="btn btn-danger ">Reset</button>
+							<button type="button" class="btn btn-warning"
+								onclick="window.location.href='/admin/role'">Return
+								to list</button>
+						</div>
+						<!-- /.card-footer -->
+					</form>
+				</div>
+			</div>
+		</div>
+		<!-- /.content -->
+	</div>
+
+	<script>
+		$(document).ready(function() {
+			$('.box').click(function() {
+				var set = $(this).is(':checked') ? false : true;
+	
+				$('#' + $(this).val()).prop('disabled', set);
+			});
+		});
+	</script>
+</body>
+</html>

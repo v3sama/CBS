@@ -66,7 +66,7 @@ public class UserController {
             return "redirect:/admin/user";
         }
         userService.update(user);
-        return "redirect:/admin/user";
+        return "redirect:/admin/user-list";
     }
 
     @RequestMapping(value = "/admin/deactivate/user", method = RequestMethod.GET)

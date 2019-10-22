@@ -29,6 +29,7 @@ public class User extends BaseEntity {
     private String phone;
 
     private String password;
+    
     private boolean active;
     @Column(unique=true)
     private String email;
@@ -48,5 +49,8 @@ public class User extends BaseEntity {
 	@JoinTable(joinColumns = @JoinColumn(name = "user_id"),
 	            inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles;
+
+
+	
 
 }
