@@ -14,12 +14,14 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
-@Data
+@Getter
+@Setter
 @Entity
-@EqualsAndHashCode(callSuper = true)
-@ToString(exclude = {"users"})
+@EqualsAndHashCode(callSuper = true,exclude = {"users"})
 public class Role extends BaseEntity{
 	private static final long serialVersionUID = 1L;
 	@Column(unique=true)

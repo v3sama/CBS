@@ -2,6 +2,8 @@ package com.cbs.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.Column;
@@ -18,10 +20,10 @@ import org.hibernate.annotations.OnDeleteAction;
 import java.util.HashSet;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @Entity
-@EqualsAndHashCode(callSuper = true)
-@ToString(exclude = {"tickets","cards","roles"})
+@EqualsAndHashCode(callSuper = true,exclude = {"cards","roles","tickets"})
 public class User extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
@@ -29,7 +31,7 @@ public class User extends BaseEntity {
 	private String firstName;
 
     private String lastName;
-
+    @Column(unique=true)
     private String phone;
 
     private String password;
@@ -48,11 +50,9 @@ public class User extends BaseEntity {
     @OneToMany(mappedBy = "member")
     private Set<CardInformation> cards;
 
-//them name = "user_roles"
 	@ManyToMany
 	@JoinTable( name = "user_roles",joinColumns = @JoinColumn(name = "user_id"),
 	            inverseJoinColumns = @JoinColumn(name = "role_id"))
-	
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Set<Role> roles = new HashSet<>();
 

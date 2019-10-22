@@ -9,12 +9,14 @@ import javax.persistence.OneToMany;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
-@Data
+@Getter
+@Setter
 @Entity
-@EqualsAndHashCode(callSuper = true)
-@ToString(exclude = {"tickets"})
+@EqualsAndHashCode(callSuper = true,exclude = {"tickets","row"})
 public class Seat extends BaseEntity{
 	/**
 	 * 

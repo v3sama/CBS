@@ -7,12 +7,14 @@ import javax.persistence.OneToMany;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;;
 
-@Data
+@Getter
+@Setter
 @Entity
-@EqualsAndHashCode(callSuper = true)
-@ToString(exclude = {"cinemas"})
+@EqualsAndHashCode(callSuper = true,exclude = {"cinemas"})
 public class Province extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 	@Column(unique=true)

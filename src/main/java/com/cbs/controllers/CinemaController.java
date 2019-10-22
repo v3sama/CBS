@@ -100,7 +100,7 @@ public class CinemaController {
     public String editCinema(@RequestParam Long id, Model model) {
     	Cinema cinema = cinemaService.getCinemaByID(id);
         model.addAttribute("cinema", cinema);
-        model.addAttribute("screens",  cinema.getCinemaScreens());
+     //   model.addAttribute("screens",  cinema.getCinemaScreens());
     
         return "/admin/add/cinema";
     }

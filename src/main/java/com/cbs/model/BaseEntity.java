@@ -17,7 +17,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Getter
 @Setter
 @MappedSuperclass
-@ToString
+
 @EqualsAndHashCode
 public class BaseEntity implements Serializable{
 	private static final long serialVersionUID = 1L;

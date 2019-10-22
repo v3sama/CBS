@@ -2,21 +2,23 @@ package com.cbs.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
+
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
-@Data
+@Getter
+@Setter
 @Entity
-@EqualsAndHashCode(callSuper = true)
-@ToString(exclude = {"movieSession","member","seat","order","price","rating"})
+@EqualsAndHashCode(callSuper = true,exclude = {"member","seat","movieSession","order","price","rating"})
 public class Ticket extends BaseEntity {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 
 	private Float amount;

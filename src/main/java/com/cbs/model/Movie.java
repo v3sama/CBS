@@ -2,7 +2,9 @@ package com.cbs.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.Column;
@@ -13,14 +15,15 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @Entity
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
-@ToString(exclude = {"formatType","genres","prices","movieSessions","actors"})
+@EqualsAndHashCode(callSuper = true,exclude = {"formatType","genres","prices","movieSessions","actors"})
 public class Movie extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 	@Column(unique=true)
@@ -28,7 +31,7 @@ public class Movie extends BaseEntity {
     private float duration;
     private String rating_type;
     @Column(name="date_release")
-    private Date date_release;
+    private LocalDate date_release;
     private String image;
     private String thumbnail;
     private String director;
@@ -38,7 +41,7 @@ public class Movie extends BaseEntity {
     private String trailer_link;
     private Boolean status;
     private String description;
-    private Date date_end;
+    private LocalDate date_end;
    
     @ManyToOne
     @JoinColumn(name = "format_Type_id")

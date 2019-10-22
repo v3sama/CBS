@@ -2,6 +2,8 @@ package com.cbs.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.Column;
@@ -10,11 +12,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import java.util.Set;
-
-@Data
+@Getter
+@Setter
 @Entity
-@EqualsAndHashCode(callSuper = true)
-@ToString(exclude = {"movies"})
+@EqualsAndHashCode(callSuper = true,exclude = {"movies"})
 public class Genre extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 	@Column(unique=true)

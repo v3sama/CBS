@@ -8,14 +8,16 @@ import javax.persistence.OneToMany;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
-@Data
+@Getter
+@Setter
 @Entity
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
-@ToString(exclude = {"prices","movies"})
+@EqualsAndHashCode(callSuper = true,exclude = {"prices","movies"})
 public class FormatType extends BaseEntity{
 	private static final long serialVersionUID = 1L;
 	@Column(unique=true)

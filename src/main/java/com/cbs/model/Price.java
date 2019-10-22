@@ -1,17 +1,20 @@
 package com.cbs.model;
 
+import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @Entity
-@EqualsAndHashCode(callSuper = true)
-@ToString(exclude = {"formatType","movie"})
+@EqualsAndHashCode(callSuper = true,exclude = {"formatType","movie"})
+
 public class Price extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 	

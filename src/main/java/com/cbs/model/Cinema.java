@@ -2,6 +2,8 @@ package com.cbs.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.Column;
@@ -14,10 +16,10 @@ import javax.persistence.OneToMany;
 
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @Entity
-@EqualsAndHashCode(callSuper = true)
-@ToString(exclude = {"province","cinemaScreens"})
+@EqualsAndHashCode(callSuper = true,exclude = {"province","cinemaScreens"})
 public class Cinema extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 	@Column(unique=true)
@@ -30,7 +32,7 @@ public class Cinema extends BaseEntity {
     private Province province;
     
    
-   @OneToMany(mappedBy = "cinema",fetch = FetchType.LAZY)
+   @OneToMany(mappedBy = "cinema")
     private Set<CinemaScreen> cinemaScreens;
 
 
