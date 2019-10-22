@@ -13,7 +13,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 
 @SpringBootApplication
 @EnableJpaRepositories("com.cbs.repository")
-@ComponentScan(basePackages = { "com.cbs.controllers", "com.cbs.services"})
+@ComponentScan(basePackages = { "com.cbs.controllers", "com.cbs.services", "com.cbs.security"})
 @EntityScan("com.cbs.model")
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class CbsApplication {

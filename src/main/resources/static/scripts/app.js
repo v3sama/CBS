@@ -1,53 +1,19 @@
-
-// document.addEventListener('DOMContentLoaded', function () {
-//     const listTab = document.querySelectorAll(".tab-slider--nav li");
-//     const content = document.querySelectorAll(".tab-slider--body");
-
-//     content.forEach(element => {
-//         element.style.display = "none";
-//     });
-//     document.querySelectorAll(".tab-slider--body")[0].style.display = "block";
-
-//     toggleTab(listTab, content);
-// });
-
-// const toggleTab = (listTab, content) => {
-//     listTab.forEach(singleTab => {
-//         singleTab.addEventListener("click", function () {
-//             content.forEach(body => {
-//                 body.style.display= "none";
-//             });
-//             let activeTab = singleTab.attributes.rel.value;
-//             //cho content vao`
-//             document.getElementById(activeTab).style.display = "block";            
-//             if (activeTab === "sap-chieu") {
-//                 document.querySelector('.tab-slider--tabs').classList.add('slide');
-//             } else {
-//                 document.querySelector('.tab-slider--tabs').classList.remove('slide');
-//             }
-//             listTab.forEach(tab => {
-//                 tab.classList.remove('active');
-//             });
-//             this.classList.add('active');
-//         })
-//     });
-// }
-getIndexMovieData();
 $("document").ready(function () {
+    //lấy data phim lên tab đang chiếu - sắp chiếu
+    getIndexMovieData();
     // khởi tạo slick
     initSlick();
     trailerBox();
     initSelectize();
-    // getIndexMovieData();
     $('#sap-chieu').hide();
     hoverMobieBlock();
-    tabcontent = document.getElementsByClassName("tabcontent");
+    let tabcontent = document.getElementsByClassName("tabcontent");
     for (i = 0; i < tabcontent.length; i++) {
         tabcontent[i].style.display = "none";
     }
     tabcontent[0].style.display = "block";
-    tablinks = document.getElementsByClassName("tablinks");
-    tablinks[0].classList.add('active');    
+    let tablinks = document.getElementsByClassName("tablinks");
+    tablinks[0].classList.add('active');
 
 });
 
@@ -153,9 +119,64 @@ function openCity(evt, cityName) {	// function openCity(evt, cityName) {
     evt.currentTarget.className += " active";	//     evt.currentTarget.className += " active";
 }
 
+
 function getIndexMovieData(){
     const url = "http://localhost:8080/api/moviehehe";
-    fetch(url).then((resp) => resp.json()).then(function (data) {
-        console.log(data)
-    })
+    let username = 'user';
+    let password = '123';
+    // let headers = new Headers();
+    // headers.set('authorization', 'Basic ' + );
+
+    // console.log(btoa(username + ":" + password));
+
+    // let da =  fetch(url, {method:'GET',
+    //             headers: headers
+    //             //credentials: 'user:passwd'
+    //             //credentials: 'include'
+    // }).then((resp) => resp.json()).then(function (data) {
+    //     console.log(data);
+
+    //     // console.log(data1);
+
+    // })
+
+    $.ajax({
+        type: "get",
+        url: "http://localhost:8080/api/moviehehe",
+        headers: {
+            'authorization':'Basic '+ btoa(username + ":" + password),
+        },
+        data: "data",
+        async: false,
+        dataType: "json",
+        success: function (data) {
+            console.log(data)
+            $.each(data, function (index, itemData) {
+                $('#slick-dang-chieu').append('<div class="movie-block">' +
+                    '<div class="thumbnail">' +
+                    '<img src="http://placehold.it/215x318" alt="" class="movie-block-img">' +
+                    '</div>' +
+                    '<div class="info-detail">' +
+                    '<div class="movie-block-title">' + itemData.movie_title + '</div>' +
+                    '<div class="movie-block-detail">' +
+                    '<div class="time">155 phút</div>' +
+                    '<div class="imdb">7.9 IMDb</div>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="movie-block-hover">' +
+                    '<div class="trailerBtn">' +
+                    '<a class="box-trailer" href="#">' +
+                    '<i class="far fa-play-circle"></i>' +
+                    '</a></div>' +
+                    '<div class="button-container datveBtn">' +
+                    '<a href="#" class="button">dat ngay</a>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>')
+
+            })
+
+        }
+    });
 }
+
