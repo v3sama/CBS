@@ -44,7 +44,7 @@ public class UserController {
     @RequestMapping(value = "/admin/edit/user", method = RequestMethod.GET, params = {"id"})
     public String getUserEdit(@RequestParam Long id, Model model) {
         model.addAttribute("user", userService.findById(id));
-//        model.addAttribute("allRoles", roleService.getRoleById(id));
+        model.addAttribute("allRoles", roleService.getRoleById(id));
         return "/admin/add/user";
     }
     
@@ -61,6 +61,7 @@ public class UserController {
     	if (bindingResult.hasErrors()) {
             return "redirect:/admin/user";
         }
+    	
     	user.setActive(true);
     	user.setPassword("123456");
         userService.add(user);

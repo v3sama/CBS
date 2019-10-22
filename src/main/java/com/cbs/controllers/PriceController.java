@@ -41,6 +41,7 @@ public class PriceController {
 			PriceCreationDTO pricesForm = new PriceCreationDTO();
 			//WDVIP - ve ngay thuong ghe VIP
 			Price price = new Price();
+			price.setMovie(movie);
 			price.setTitle("WDVIP"+formatType.getName());
 			price.setIsHoliday(false);
 			price.setIsVIP(true);
@@ -49,6 +50,7 @@ public class PriceController {
 			pricesForm.add(price);
 			//WDVIP - ve ngay thuong ghe thuong
 			price = new Price();
+			price.setMovie(movie);
 			price.setTitle("WDNONVIP"+formatType.getName());
 			price.setIsHoliday(false);
 			price.setIsVIP(false);
@@ -57,6 +59,7 @@ public class PriceController {
 			pricesForm.add(price);
 			//WEVIP - ve ngay le, ghe vip
 			price = new Price();
+			price.setMovie(movie);
 			price.setTitle("WEVIP"+formatType.getName());
 			price.setIsHoliday(true);
 			price.setIsVIP(true);
@@ -66,6 +69,7 @@ public class PriceController {
 			//WEVIP - ve ngay le, ghe thuong
 			price = new Price();
 			price.setTitle("WENONVIP"+formatType.getName());
+			price.setMovie(movie);
 			price.setIsHoliday(true);
 			price.setIsVIP(false);
 			price.setFormatType(formatType);
@@ -82,7 +86,8 @@ public class PriceController {
 	public String addPrice(@ModelAttribute PriceCreationDTO form, Model model) {
 		List<Price> list = form.getPrices();
 		//priceService.addPrices(form.getPrices());
+		
 		priceService.addPrice(list.get(1));
-		return "redirect:/admin/set/price";
+		return "redirect:/admin/movie";
 	}
 }

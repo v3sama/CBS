@@ -77,11 +77,13 @@
 									<td th:text="${movie.duration}"></td>
 									<td th:text="${movie.director}"></td>
 									<td th:text="${movie.year}"></td>
-									<td>
-										<span th:if="${movie.status}">Active</span>
-    									<span th:if="${!movie.status}">Unactive</span>
+									<td th:if="${movie.status}" th:text="Active" class="btn btn-success">
+										
 									</td>
-									<td th:text="${movie.formatType.name}">
+									<td th:if="${!movie.status}" th:text="Inactive" class="btn btn-danger">
+										
+									</td>
+									<td th:text="${movie.formatType.name}" >
 									
 									</td>
 									<td>
@@ -91,9 +93,12 @@
 										<a th:href="@{/admin/set/price(movieId= ${movie.id})}">
 												<button type="button" class="btn btn-info">Set price</button>
 										</a> 
-										<a th:href="@{/admin/delete/movie(movieId = ${movie.id})}">
-												<button type="button" class="btn btn-danger">Delete</button>
+										<a th:if="${movie.status}" th:href="@{/admin/deactivate/movie(movieId = ${movie.id})}">
+									<!-- 			<button type="button" class="btn btn-danger">Deactivate</button>
 										</a>
+										<a th:if="${!movie.status}" th:href="@{/admin/activate/movie(movieId = ${movie.id})}">
+												<button type="button" class="btn btn-success">Activate</button>
+										</a> -->
 									</td>
 
 								</tr>

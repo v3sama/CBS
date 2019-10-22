@@ -61,69 +61,7 @@
 								<label class="col-sm-2 control-label">Movie Format</label>
 								<label class="col-sm-10 form-control" th:text="${movie.formatType.name}"></label>
 							</div>
-								<label class="col-sm-2 control-label">Title</label>
-								<div class="col-sm-10">
-									<input class="form-control" type="text"
-										placeholder=" enter title here" required="required"
-										th:field="*{title}" />
-									<div class="help-block with-errors"></div>
-								</div>
-							</div>
-							<div class="form-group row">
-								<label class="col-sm-2 control-label">Duration</label>
-								<div class="col-sm-10">
-									<input class="form-control" type="text"
-										placeholder=" enter title here" required="required"
-										th:field="*{duration}" />
-									<div class="help-block with-errors"></div>
-								</div>
-							</div>
-							<div class="form-group row">
-								<label class="col-sm-2 control-label">Rating</label>
-								<div class="col-sm-10">
-									<input class="form-control" type="text"
-										placeholder=" enter title here" required="required"
-										th:field="*{avg_user_rating_star}" value="0" />
-									<div class="help-block with-errors"></div>
-								</div>
-							</div>
-							<div class="form-group row">
-								<label class="col-sm-2 control-label">Status</label>
-								<div class="col-sm-10">
-									<input class="form-control" type="checkbox"
-										th:field="*{avg_user_rating_star}" value="0" />
-									<div class="help-block with-errors"></div>
-								</div>
-							</div>
-							<div class="form-group row">
-								<label class="col-sm-2 control-label">Format</label>
-								<div class="col-sm-10">
-									<select th:field="*{formatType}" class="form-control">
-										<th:block th:each="format : ${formats}">
-											<option th:value="${format.id}" th:text="${format.name}"></option>
-										</th:block>
-									</select>
-								</div>
-							</div>
-							<div class="form-group row">
-								<label class="col-sm-2 control-label">Actor</label>
-								<div class="col-sm-10">
-									<div class="row">
-										<th:block th:each="actor : ${allActors}">
-											<div class="col-sm-3">
-												<div class="form-check">
-													<input class="form-check-input" type="checkbox"
-														th:field="*{actors}" th:value="${actor.id}" /> <label
-														class="form-check-label" th:text="${actor.name}"></label>
-												</div>
-											</div>
-										</th:block>
-									</div>
-								</div>
-							</div>
-							<!-- /.card-body -->
-							<div class="card-footer">
-								<button type="submit" class="btn btn-info">Create/Update</button>
+								
 							<table class="table">
 								<thead>
 									<tr>
@@ -142,6 +80,8 @@
 												th:value="${price.isVIP}" readonly/>
 												<input type="hidden" th:field="*{prices[__${itemStat.index}__].formatType}"
 												th:value="${price.formatType}" />
+												<input type="hidden" th:field="*{prices[__${itemStat.index}__].movie}"
+												th:value="${price.movie}" />
 											</td>
 											<td>
 												<input class="form-control" type="text" th:field="*{prices[__${itemStat.index}__].title}"
