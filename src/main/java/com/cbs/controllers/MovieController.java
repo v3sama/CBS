@@ -92,7 +92,8 @@ public class MovieController {
 
     @RequestMapping(value = "/admin/edit/movie", method = RequestMethod.GET, params = {"movieId"})
     public String editMovie(@RequestParam Long movieId, Model model) {
-        model.addAttribute("movie", movieService.getMovieByID(movieId));
+    	Movie movie = movieService.getMovieByID(movieId);
+        model.addAttribute("movie", movie);
         model.addAttribute("formats", formatTypeService.getAllFormatType());
         model.addAttribute("actors", actorService.getAllActors());
         model.addAttribute("genres", genreService.getAllGenre());

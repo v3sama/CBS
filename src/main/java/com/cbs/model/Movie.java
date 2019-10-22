@@ -45,7 +45,9 @@ public class Movie extends BaseEntity {
     private FormatType  formatType;
     
 
-    @ManyToMany(mappedBy = "movies")
+    @ManyToMany
+    @JoinTable(joinColumns = @JoinColumn(name = "movie_id"),
+            inverseJoinColumns = @JoinColumn(name = "genre_id"))
     private Set<Genre> genres;
     
     @OneToMany(mappedBy = "movie")

@@ -1,3 +1,7 @@
 tfoot {
 	display: table-header-group;
 }
+
+.content{
+	background-color: white;
+}
