@@ -60,6 +60,6 @@ public class RoleController {
     	roleService.deleteRoleByID(id);
     	
         
-        return "redirect:/admin/role-list";
+        return "redirect:/admin/role";
     }
 }
