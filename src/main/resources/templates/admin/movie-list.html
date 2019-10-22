@@ -59,7 +59,7 @@
 								<th>Director</th>
 								<th>Year</th>
 								<th>Status</th>
-<!-- 								<th>Format Type</th> -->
+								<!-- 								<th>Format Type</th> -->
 
 							</tr>
 						</thead>
@@ -73,21 +73,17 @@
 									<td th:text="${movie.director}"></td>
 									<td th:text="${movie.year}"></td>
 									<td th:text="${movie.status}"></td>
-<!-- 									<td th:text="${movie.formatType.name}"></td> -->
+									<!-- 									<td th:text="${movie.formatType.name}"></td> -->
 
 
-									<td>
-									
-										<a th:href="@{/admin/edit/movie(movieId= ${movie.id})}">
-												<button type="button" class="btn btn-info">Edit</button>
-										</a> 
-										<a th:href="@{/admin/set/price(movieId= ${movie.id})}">
-												<button type="button" class="btn btn-info">Set price</button>
-										</a> 
-										<a th:href="@{/admin/delete/movie(movieId = ${movie.id})}">
-												<button type="button" class="btn btn-danger">Delete</button>
-										</a>
-									</td>
+									<td><a
+										th:href="@{/admin/edit/movie(movieId= ${movie.id})}">
+											<button type="button" class="btn btn-info">Edit</button>
+									</a> <a th:href="@{/admin/set/price(movieId= ${movie.id})}">
+											<button type="button" class="btn btn-info">Set price</button>
+									</a> <a th:href="@{/admin/delete/movie(movieId = ${movie.id})}">
+											<button type="button" class="btn btn-danger">Delete</button>
+									</a></td>
 
 								</tr>
 							</th:block>
@@ -101,8 +97,8 @@
 		<!-- /.content -->
 	</div>
 
-	
 
-	
+
+
 </body>
 </html>

@@ -1,92 +1,89 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Добавить актеры в фильм</title>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=2"/>
-    <script src="/public/js/jquery.js" th:src="@{/js/jquery.js}"></script>
-    <script src="/public/js/bootstrap.js" th:src="@{/js/bootstrap.js}"></script>
-    <script src="/public/js/validator.js" th:src="@{/js/validator.js}"></script>
-    <link rel="stylesheet" href="/public/css/bootstrap.css" th:href="@{/css/bootstrap.css}"/>
-    <style>
-        .navbar {
-            margin-bottom: 10px;
-            border-radius: 0;
-        }
+<title>Добавить актеры в фильм</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=2" />
+<script src="/public/js/jquery.js" th:src="@{/js/jquery.js}"></script>
+<script src="/public/js/bootstrap.js" th:src="@{/js/bootstrap.js}"></script>
+<script src="/public/js/validator.js" th:src="@{/js/validator.js}"></script>
+<link rel="stylesheet" href="/public/css/bootstrap.css"
+	th:href="@{/css/bootstrap.css}" />
+<style>
+.navbar {
+	margin-bottom: 10px;
+	border-radius: 0;
+}
 
-        .jumbotron {
-            margin-bottom: 0;
-        }
-    </style>
+.jumbotron {
+	margin-bottom: 0;
+}
+</style>
 </head>
 <body>
 
-<div class="container text-center">
-    <div class="table-responsive" align="center">
-        <form class="form-vertical" data-toggle="validator" role="form" action="#"
-              th:action="@{/admin/add/actor_to_movie}"
-              th:object="${movie}" method="post">
-            <div class="form-group">
-                <input class="form-control" type="hidden"
-                       th:field="*{id}"/>
-            </div>
-            <div class="form-group">
-                <input class="form-control" type="hidden"
-                       th:field="*{title}"/>
-            </div>
-            <div class="form-group">
-                <input class="form-control" type="hidden"
-                       th:field="*{description}"/>
-            </div>
-            <div class="form-group">
-                <input class="form-control" type="hidden"
-                       th:field="*{duration}"/>
-            </div>
-            <div class="form-group">
-                <input class="form-control" type="hidden"
-                       th:field="*{year}"/>
-            </div>
-            <div class="form-group">
-                <input class="form-control" type="hidden"
-                       th:field="*{language}"/>
-            </div>
-            <div class="form-group">
-                <input class="form-control" type="hidden"
-                       th:field="*{rating_type}"/>
-            </div>
-         
-            <table class="table">
-                <thead>
-                <tr>
-          
-                    <th>Name</th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                <th:block th:each="actor : ${allActors}">
-                    
-                    <tr>
-                    <td th:text="${actor.name}"></td>
-                    <td>
-                        <div class="form-group">
-                            <div class="checkbox">
-                                <input type="checkbox"
-                                       th:field="*{actors}" th:value="${actor.id}"/></div>
-                        </div>
-                    </td>
-                    </tr>
-                    
-                </th:block>
-                </tbody>
-                <h4><strong>Фильм:</strong></h4>
-                <h4 th:text="${movie.title}"></h4>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Save</button>
-                </div>
-            </table>
-        </form>
-    </div>
-</div>
+	<div class="container text-center">
+		<div class="table-responsive" align="center">
+			<form class="form-vertical" data-toggle="validator" role="form"
+				action="#" th:action="@{/admin/add/actor_to_movie}"
+				th:object="${movie}" method="post">
+				<div class="form-group">
+					<input class="form-control" type="hidden" th:field="*{id}" />
+				</div>
+				<div class="form-group">
+					<input class="form-control" type="hidden" th:field="*{title}" />
+				</div>
+				<div class="form-group">
+					<input class="form-control" type="hidden" th:field="*{description}" />
+				</div>
+				<div class="form-group">
+					<input class="form-control" type="hidden" th:field="*{duration}" />
+				</div>
+				<div class="form-group">
+					<input class="form-control" type="hidden" th:field="*{year}" />
+				</div>
+				<div class="form-group">
+					<input class="form-control" type="hidden" th:field="*{language}" />
+				</div>
+				<div class="form-group">
+					<input class="form-control" type="hidden" th:field="*{rating_type}" />
+				</div>
+
+				<table class="table">
+					<thead>
+						<tr>
+
+							<th>Name</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<th:block th:each="actor : ${allActors}">
+
+							<tr>
+								<td th:text="${actor.name}"></td>
+								<td>
+									<div class="form-group">
+										<div class="checkbox">
+											<input type="checkbox" th:field="*{actors}"
+												th:value="${actor.id}" />
+										</div>
+									</div>
+								</td>
+							</tr>
+
+						</th:block>
+					</tbody>
+					<h4>
+						<strong>Фильм:</strong>
+					</h4>
+					<h4 th:text="${movie.title}"></h4>
+					<div class="form-group">
+						<button type="submit" class="btn btn-primary">Save</button>
+					</div>
+				</table>
+			</form>
+		</div>
+	</div>
 </body>
 </html>

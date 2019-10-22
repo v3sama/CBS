@@ -26,9 +26,9 @@
 				<div class="row mb-2">
 					<div class="col-sm-6">
 						<h1 class="m-0 text-dark">Screen Management</h1>
-						<a href="/admin/add/screen.html"
-							th:href="@{/admin/add/screen}">
-							<button type="button" class="btn btn-success">Create new </button>
+						<a href="/admin/add/screen.html" th:href="@{/admin/add/screen}">
+							<button type="button" class="btn btn-success">Create new
+							</button>
 						</a>
 					</div>
 					<!-- /.col -->
@@ -50,7 +50,7 @@
 		<div class="content">
 			<div class="container-fluid">
 				<div class="table-responsive" align="center">
-					<table id="dataTable" class="display" style="width:100%">
+					<table id="dataTable" class="display" style="width: 100%">
 						<thead>
 							<tr>
 								<th>Title</th>
@@ -71,20 +71,17 @@
 								<tr>
 									<td th:text="${screen.title}"></td>
 									<td th:text="${screen.description}"></td>
-									<td>
-									<a th:href="@{/admin/edit/screen(id= ${screen.id})}">
+									<td><a th:href="@{/admin/edit/screen(id= ${screen.id})}">
 											<button type="button" class="btn btn-info">Edit</button>
-									</a> 
-									<a th:href="@{/admin/delete/screen(id = ${screen.id})}">
+									</a> <a th:href="@{/admin/delete/screen(id = ${screen.id})}">
 											<button type="button" class="btn btn-danger">Delete</button>
-									</a>
-									</td>
+									</a></td>
 								</tr>
 							</th:block>
 						</tbody>
 					</table>
 				</div>
-			
+
 
 			</div>
 		</div>
