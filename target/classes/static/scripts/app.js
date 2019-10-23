@@ -124,25 +124,9 @@ function getIndexMovieData(){
     const url = "http://localhost:8080/api/moviehehe";
     let username = 'user';
     let password = '123';
-    // let headers = new Headers();
-    // headers.set('authorization', 'Basic ' + );
-
-    // console.log(btoa(username + ":" + password));
-
-    // let da =  fetch(url, {method:'GET',
-    //             headers: headers
-    //             //credentials: 'user:passwd'
-    //             //credentials: 'include'
-    // }).then((resp) => resp.json()).then(function (data) {
-    //     console.log(data);
-
-    //     // console.log(data1);
-
-    // })
-
     $.ajax({
         type: "get",
-        url: "http://localhost:8080/api/moviehehe",
+        url: "http://localhost:8080/api/movieShowing",
         headers: {
             'authorization':'Basic '+ btoa(username + ":" + password),
         },
@@ -159,8 +143,8 @@ function getIndexMovieData(){
                     '<div class="info-detail">' +
                     '<div class="movie-block-title">' + itemData.movie_title + '</div>' +
                     '<div class="movie-block-detail">' +
-                    '<div class="time">155 phút</div>' +
-                    '<div class="imdb">7.9 IMDb</div>' +
+                    '<div class="time">' + itemData.duration + ' phút</div>' +
+                    '<div class="imdb">' + itemData.avg_point + ' IMDb</div>' +
                     '</div>' +
                     '</div>' +
                     '<div class="movie-block-hover">' +
@@ -173,7 +157,44 @@ function getIndexMovieData(){
                     '</div>' +
                     '</div>' +
                     '</div>')
+            })
 
+        }
+    });
+
+    $.ajax({
+        type: "get",
+        url: "http://localhost:8080/api/movieUpComing",
+        headers: {
+            'authorization':'Basic '+ btoa(username + ":" + password),
+        },
+        data: "data",
+        async: false,
+        dataType: "json",
+        success: function (data) {
+            console.log(data)
+            $.each(data, function (index, itemData) {
+                $('#slick-sap-chieu').append('<div class="movie-block">' +
+                    '<div class="thumbnail">' +
+                    '<img src="http://placehold.it/215x318" alt="" class="movie-block-img">' +
+                    '</div>' +
+                    '<div class="info-detail">' +
+                    '<div class="movie-block-title">' + itemData.movie_title + '</div>' +
+                    '<div class="movie-block-detail">' +
+                    '<div class="time">' + itemData.duration + ' phút</div>' +
+                    '<div class="imdb">' + itemData.avg_point + ' point</div>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="movie-block-hover">' +
+                    '<div class="trailerBtn">' +
+                    '<a class="box-trailer" href="#">' +
+                    '<i class="far fa-play-circle"></i>' +
+                    '</a></div>' +
+                    '<div class="button-container datveBtn">' +
+                    '<a href="#" class="button">dat ngay</a>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>')
             })
 
         }

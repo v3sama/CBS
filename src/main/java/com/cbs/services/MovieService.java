@@ -9,6 +9,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -58,8 +60,15 @@ public class MovieService {
     }
 
     public List<Movie> getMovieActive(){
-        return movieRepository.findByStatus(1);
+        return movieRepository.findByStatusTrue();
     }
 
+//    public List<Movie> getMovieDangChieu(Date date) {
+//        return movieRepository.findByDate_endAfter(date);
+//    }
+
+    public List<Movie> getMovieSapChieu(LocalDate date) {
+        return movieRepository.findMovieSapChieu(date.toString());
+    }
     
 }
