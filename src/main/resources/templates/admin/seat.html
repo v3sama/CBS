@@ -14,7 +14,6 @@
 
 	<nav th:replace="admin/layout :: admin-nav"></nav>
 	<aside th:replace="admin/layout :: admin-sidebar"></aside>
-	<div class="container text-center">
 	<div class="content-wrapper">
 		<!-- Content Header (Page header) -->
 		<div class="content-header">
@@ -44,37 +43,30 @@
 				<div class="card card-info">
 
 					<div class="card-header">
-						<h3 class="card-title">Seat Settings</h3>
+						<h3 class="card-title">Seat setting</h3>
 					</div>
 					<!-- form start -->
 					<form class="form-horizontal" data-toggle="validator" role="form"
-						action="#" th:action="@{/admin/add/seat}" th:object="${seat}"
-						method="post">
+						action="#" th:action="@{/admin/seat}" method="post">
 						<div class="card-body">
+							
 							<div class="form-group row">
-								<input class="form-control" type="hidden" th:field="*{id}" />
-							</div>
-
-							<div class="form-group row">
-								<label class="col-sm-8 control-label">Maximum number of seats:</label>
-								<div class="col-sm-4">
-									<input class="form-control" type="number"	 required="required"
-										th:field="*{row_id}" />
-									<div class="help-block with-errors"></div>
+								<label class="col-sm-4 control-label">Max number of row of seats</label>
+								<div class="col-sm-6">
+									<input class="form-control" type="number"
+										placeholder=" enter max row of seat" required="required"
+										name="row" th:value="${row}"/>
+									<div class="help-block with-errors" >
+									<p th:text="${error}"></p>
+									</div>
 								</div>
 							</div>
-							
-						
-							
+
 						</div>
 						<!-- /.card-body -->
 						<div class="card-footer">
-							<button type="submit" class="btn btn-info">Create/Update</button>
+							<button type="submit" class="btn btn-info">Save</button>
 
-							<button type="reset" class="btn btn-danger ">Reset</button>
-							<button type="button" class="btn btn-warning"
-								onclick="window.location.href='/admin/seat'">Return
-								to list</button>
 						</div>
 						<!-- /.card-footer -->
 					</form>
@@ -82,11 +74,6 @@
 			</div>
 		</div>
 		<!-- /.content -->
-	</div>
-
-	<script>
-	</script>
-		<div th:replace="admin/form_layout :: seat"></div>
 	</div>
 </body>
 </html>

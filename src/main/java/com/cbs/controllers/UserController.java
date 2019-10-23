@@ -44,7 +44,7 @@ public class UserController {
     @RequestMapping(value = "/admin/edit/user", method = RequestMethod.GET, params = {"id"})
     public String getUserEdit(@RequestParam Long id, Model model) {
         model.addAttribute("user", userService.findById(id));
-        model.addAttribute("allRoles", roleService.getRoleById(id));
+        model.addAttribute("allRoles", roleService.getAllRole());
         return "/admin/add/user";
     }
     
@@ -59,22 +59,22 @@ public class UserController {
     @RequestMapping(value = "/admin/add/user", method = RequestMethod.POST)
     public String addUser(@Valid User user, BindingResult bindingResult, Model model) {
     	if (bindingResult.hasErrors()) {
-            return "redirect:/admin/user";
+            return "redirect:/admin/add/user";
         }
     	
     	user.setActive(true);
     	user.setPassword("123456");
         userService.add(user);
-        return "/admin/user-list";
+        return "redirect:/admin/user";
     }
     
     @RequestMapping(value = "/admin/edit/user", method = RequestMethod.POST)
     public String editUser(@Valid User user, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            return "redirect:/admin/user";
+            return "redirect:/admin/edit/user";
         }
         userService.update(user);
-        return "redirect:/admin/user-list";
+        return "redirect:/admin/user";
     }
 
     @RequestMapping(value = "/admin/deactivate/user", method = RequestMethod.GET)

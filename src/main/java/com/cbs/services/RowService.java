@@ -27,4 +27,9 @@ public class RowService {
     public List<Row> getAllRow() {
         return rowRepository.findAll();
     }
+
+	public void addAllRow(List<Row> rows) {
+		rowRepository.saveAll(rows);
+		
+	}
 }

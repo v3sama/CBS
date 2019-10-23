@@ -8,6 +8,7 @@
 <link rel="stylesheet" th:href="@{/css/adminlte.min.css}" />
 <link rel="stylesheet" th:href="@{/css/all.min.css}" />
 <link rel="stylesheet" th:href="@{/css/jquery.dataTables.min.css}" />
+<link rel="stylesheet" th:href="@{/css/custom.css}" />
 <script th:src="@{/scripts/jquery.js}"></script>
 <script th:src="@{/scripts/bootstrap.bundle.min.js}"></script>
 <script th:src="@{/scripts/jquery.dataTables.min.js}"></script>
@@ -93,8 +94,26 @@
 
 	<script>
 	$(document).ready(function() {
-		 $('#dataTable').DataTable();
+		$('#dataTable').DataTable({
+            responsive: true,
+            initComplete: function () {
+                // search by name or code
+                this.api().columns([1]).every(function () {
+                    var column = this;
+                    $('<input type="text" class="form-control" />')
+                        .appendTo($(column.footer()).empty());
+                    $('input', this.footer()).on('keyup change clear', function () {
+                        if (column.search() !== this.value) {
+                            column
+                                .search(this.value)
+                                .draw();
+                        }
+                    });
+                });
+            }
+        });
 	});
+	
 	</script>
 
 </body>
