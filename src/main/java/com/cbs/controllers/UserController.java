@@ -33,19 +33,38 @@ public class UserController {
         this.roleService = roleService;
     }
 
+    //Admin - List
     @RequestMapping(value = "/admin/user", method = RequestMethod.GET)
     public String allUser(Model model) {
         model.addAttribute("users", userService.findAll());
        // return userService.findAll();
         return "/admin/user-list";
     }
+    
+   
 
-    //Edit User
+    //Edit - Admin User
     @RequestMapping(value = "/admin/edit/user", method = RequestMethod.GET, params = {"id"})
     public String getUserEdit(@RequestParam Long id, Model model) {
         model.addAttribute("user", userService.findById(id));
         model.addAttribute("allRoles", roleService.getRoleById(id));
         return "/admin/add/user";
+    }
+    
+    //Edit - Client User 
+    @RequestMapping(value = "/client/user-profile", method = RequestMethod.GET, params = {"id"})
+    public String getClientUserEdit(@RequestParam Long id, Model model) {
+        model.addAttribute("user", userService.findById(id));
+        return "/client/user-profile";
+    }
+    
+    @RequestMapping(value = "/client/user-profile", method = RequestMethod.POST)
+    public String editClientUser(@Valid User user, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            return "redirect:/client/user-profile";
+        }
+        userService.update(user);
+        return "redirect:/client/user-profile";
     }
     
     //Add User-Role
