@@ -1,5 +1,6 @@
 package com.cbs.controllers;
 
+import com.cbs.dto.MovieCreationDTO;
 import com.cbs.model.Movie;
 import com.cbs.model.MyReponse;
 import com.cbs.services.ActorService;
@@ -14,12 +15,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -46,8 +54,16 @@ public class MovieController {
         model.addAttribute("movies", movieService.getAllMovies());
         return "/admin/movie-list";
     }
+    
+    @RequestMapping(value = "/admin/movie", method = RequestMethod.GET, params = {"actorId"})
+    public String allMovies(Model model, Long actorId) {
+    	
+        model.addAttribute("movies", actorService.getActorByID(actorId).getMovies());
+        return "/admin/movie-list";
+    }
+    
 
-    @RequestMapping(value = "/movie", method = RequestMethod.GET)
+//    @RequestMapping(value = "/movie", method = RequestMethod.GET)
     public String allMovieUser(@RequestParam(defaultValue = "1", required = false) Integer page, Model model) {
         Page<Movie> pages = movieService.getAllMoviesPage(page);
         model.addAttribute("allMovie", pages);
@@ -55,7 +71,7 @@ public class MovieController {
         return "/movie";
     }
 
-    @RequestMapping(value = "/movie", method = RequestMethod.GET, params = {"movieTitle"})
+//    @RequestMapping(value = "/movie", method = RequestMethod.GET, params = {"movieTitle"})
     public String searchMovie(@RequestParam String movieTitle, @RequestParam(defaultValue = "1", required = false) Integer page, Model model) {
         Page<Movie> searchResult = movieService.searchByTittle(movieTitle, page);
         model.addAttribute("allMovie", searchResult);
@@ -64,27 +80,76 @@ public class MovieController {
 
     @RequestMapping(value = "/admin/add/movie", method = RequestMethod.GET)
     public String addMovie(Model model) {
-    	Movie movie = new Movie();
-    	movie.setStatus(true);
-        model.addAttribute("movie", movie);
+    	MovieCreationDTO movieDTO =  new MovieCreationDTO();
+    	movieDTO.getMovie().setStatus(true);
+        model.addAttribute("movieForm", movieDTO);
         model.addAttribute("formats", formatTypeService.getAllFormatType());
         model.addAttribute("actors", actorService.getAllActors());
         model.addAttribute("genres", genreService.getAllGenre());
+ 
         return "/admin/add/movie";
     }
 
     @RequestMapping(value = "/admin/add/movie", method = RequestMethod.POST)
-    public String addMovie(@Valid Movie movie, BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()) {
-            return "error";
-        }
-//        System.out.println("-----------" + movie.getDate_end());
+    public String addMovie(@ModelAttribute("movieForm")MovieCreationDTO movieForm, BindingResult bindingResult, Model model,HttpServletRequest request)  {
+		/*
+		 * if (bindingResult.hasErrors()) { return "error"; }
+		 */
+        Movie movie = movieForm.getMovie();
         movieService.addMovie(movie);
-
+        this.doUpload(request,movie,movieForm);
         return "redirect:/admin/movie";
     }
 
-    @RequestMapping(value = "/admin/delete/movie", method = RequestMethod.GET, params = {"movieId"})
+    private void doUpload(HttpServletRequest request, Movie movie, MovieCreationDTO movieForm) {
+    	 // Thư mục gốc upload file.
+        String uploadRootPath = request.getServletContext().getRealPath("upload");
+        System.out.println("uploadRootPath=" + uploadRootPath);
+ 
+        File uploadRootDir = new File(uploadRootPath);
+        // Tạo thư mục gốc upload nếu nó không tồn tại.
+        if (!uploadRootDir.exists()) {
+            uploadRootDir.mkdirs();
+        }
+        MultipartFile[] fileDatas = {movieForm.getThumbnail(),movieForm.getImage()};
+        // 
+        List<File> uploadedFiles = new ArrayList<File>();
+        List<String> failedFiles = new ArrayList<String>();
+ 
+        for (MultipartFile fileData : fileDatas) {
+ 
+            // Tên file gốc tại Client.
+            String name = fileData.getOriginalFilename();
+            System.out.println("Client File Name = " + name);
+ 
+            if (name != null && name.length() > 0) {
+                try {
+                    // Tạo file tại Server.
+                	 File serverPath = new File("C:" + File.separator + File.separator + "Uploads" + File.separator + "images" + File.separator + "movies"
+                			 			+ File.separator + movie.getId());
+                	 if(!serverPath.exists())
+                		 serverPath.mkdirs();
+                	 
+                   // File serverFile = new File(uploadRootDir.getAbsolutePath() + File.separator + name);
+                    File serverFile = new File("C:" + File.separator + File.separator + "Uploads" + File.separator + "images" + File.separator + "movies"
+                    				+ File.separator + movie.getId() + File.separator + name);
+                    
+                    BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+                    stream.write(fileData.getBytes());
+                    stream.close();
+                    // 
+                    uploadedFiles.add(serverFile);
+                    System.out.println("Write file: " + serverFile);
+                } catch (Exception e) {
+                    System.out.println("Error Write file: " + name);
+                    failedFiles.add(name);
+                }
+            }
+        }
+       
+	}
+
+	@RequestMapping(value = "/admin/delete/movie", method = RequestMethod.GET, params = {"movieId"})
     public String deleteMovie(@RequestParam Long movieId, Model model) {
         movieService.deleteMovieByID(movieId);
         return "redirect:/admin/movie";

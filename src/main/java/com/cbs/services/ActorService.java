@@ -41,8 +41,8 @@ public class ActorService {
 		return actorRepository.findAll(request);
 	}
 
-	public Optional<Actor> getActorByID(Long id) {
-		return actorRepository.findById(id);
+	public Actor getActorByID(Long id) {
+		return actorRepository.getOne(id);
 	}
 
 	public void deleteActorByID(Long id) {

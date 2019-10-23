@@ -76,7 +76,7 @@ public class CinemaController {
     	
     	model.addAttribute("cinema", new Cinema());
         model.addAttribute("provinces", provinceService.getAllProvince());
-        model.addAttribute("cinemaScreens", screenService.getAllScreen());
+        model.addAttribute("screens", screenService.getAllScreen());
         
         return "/admin/add/cinema";
     }

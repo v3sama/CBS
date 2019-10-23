@@ -107,7 +107,7 @@
 											</tr>
 										</thead>
 										<tbody>
-											<tr th:each="screen, itemStat: *{cinemaScreens}">
+											<!-- <tr th:each="screen, itemStat: *{cinemaScreens}">
 												
 												<td>
 													<input  type="checkbox" th:field="*{cinemaScreens[__${itemStat.index}__].screenId}"
@@ -120,9 +120,9 @@
 													<input  type="number" th:field="*{cinemaScreens[__${itemStat.index}__].rows}"/>
 												</td>
 												
-											</tr>
-											<!-- <tr th:each="screen : ${screens}">
-												<td><input type="checkbox" th:field="*{cinemaScreens}"
+											</tr> -->
+											<tr th:each="screen,itemStat : ${screens}">
+												<td><input type="checkbox"  th:field="*{screens[__${itemStat.index}__].screenId}"
 													th:value="${screen.id}" /></td>
 												<td th:text="${screen.title}" th:field="*{cinemaScreens}">
 
@@ -130,14 +130,14 @@
 												<td><input class="form-control" type="text"
 													th:field="*{cinemaScreens}" /></td>
 
-													<td><input class="box" type="checkbox" name="screens"
+												<!-- 	<td><input class="box" type="checkbox" name="screens"
 														th:value="${screen.id}"></td>
 													<td><label class="form-check-label"
 														th:text="${screen.title}"> </label></td>
 													<td><input class="form-control" type="number"
 														name="rows" disabled="true" th:id="${screen.id}">
-													</td>
-											</tr> -->
+													</td> -->
+											</tr>
 
 										</tbody>
 									</table>
