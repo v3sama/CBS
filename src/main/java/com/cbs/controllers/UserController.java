@@ -51,22 +51,16 @@ public class UserController {
         return "/admin/add/user";
     }
     
-    //Edit - Client User 
-    @RequestMapping(value = "/client/user-profile", method = RequestMethod.GET, params = {"id"})
-    public String getClientUserEdit(@RequestParam Long id, Model model) {
-        model.addAttribute("user", userService.findById(id));
-        return "/client/user-profile";
-    }
-    
-    @RequestMapping(value = "/client/user-profile", method = RequestMethod.POST)
-    public String editClientUser(@Valid User user, BindingResult bindingResult, Model model) {
+    @RequestMapping(value = "/admin/edit/user", method = RequestMethod.POST)
+    public String editUser(@Valid User user, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            return "redirect:/client/user-profile";
+            return "redirect:/admin/edit/user";
         }
         userService.update(user);
-        return "redirect:/client/user-profile";
+        return "redirect:/admin/user";
     }
-    
+
+ 
     //Add User-Role
     @RequestMapping(value = "/admin/add/user", method = RequestMethod.GET)
     public String addUser(Model model) {
@@ -87,15 +81,7 @@ public class UserController {
         return "redirect:/admin/user";
     }
     
-    @RequestMapping(value = "/admin/edit/user", method = RequestMethod.POST)
-    public String editUser(@Valid User user, BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()) {
-            return "redirect:/admin/edit/user";
-        }
-        userService.update(user);
-        return "redirect:/admin/user";
-    }
-
+    
     @RequestMapping(value = "/admin/deactivate/user", method = RequestMethod.GET)
     public String deactivateUser(@RequestParam Long id, Model model) {
         userService.deactivate(id);
@@ -138,4 +124,78 @@ public class UserController {
         }
         return userName;
     }
+    
+    //client - List - gia bo co session id - xong roi Loc xoa gium anh cai List duoi nhe
+    
+    @RequestMapping(value = "/client/view-user", method = RequestMethod.GET)
+    public String allClientUser(Model model) {
+        model.addAttribute("users", userService.findAll());
+        return "/client/view-user";
+    }
+    
+    //update-client user
+    
+    @RequestMapping(value = "/client/update-user", method = RequestMethod.GET, params = {"id"})
+    public String getClientUserEdit(@RequestParam Long id, Model model) {
+        model.addAttribute("user", userService.findById(id));
+ 
+        return "/client/update-user";
+    }
+    
+    @RequestMapping(value = "/client/update-user", method = RequestMethod.POST)
+    public String editClientUser(@Valid User user, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            return "redirect:/client/index";
+        }
+        userService.update(user);
+        return "redirect:/client/view-user";
+    }
+    
+   //Update - Reset Password
+//    @RequestMapping(value="/updateUserInfo", method=RequestMethod.POST)
+//    public ResponseEntity profileInfo(
+//                @RequestBody HashMap<String, Object> mapper
+//            ) throws Exception{
+//
+//        int id = (Integer) mapper.get("id");
+//        String email = (String) mapper.get("email");
+//        String firstName = (String) mapper.get("firstName");
+//        String lastName = (String) mapper.get("lastName");
+//        String newPassword = (String) mapper.get("newPassword");
+//        String currentPassword = (String) mapper.get("currentPassword");
+//
+//        User currentUser = userService.findById(Long.valueOf(id));
+//
+//        if(currentUser == null) {
+//            throw new Exception ("User not found");
+//        }
+//
+//        if(userService.findByEmail(email) != null) {
+//            if(userService.findByEmail(email).getId() != currentUser.getId()) {
+//                return new ResponseEntity("Email not found!", HttpStatus.BAD_REQUEST);
+//            }
+//        }
+//
+//        SecurityConfig securityConfig = new SecurityConfig();
+//
+//
+//            BCryptPasswordEncoder passwordEncoder = SecurityUtility.passwordEncoder();
+//            String dbPassword = currentUser.getPassword();
+//
+//            if(null != currentPassword)
+//            if(passwordEncoder.matches(currentPassword, dbPassword)) {
+//                if(newPassword != null && !newPassword.isEmpty() && !newPassword.equals("")) {
+//                    currentUser.setPassword(passwordEncoder.encode(newPassword));
+//                }
+//                currentUser.setEmail(email);
+//            } else {
+//                return new ResponseEntity("Incorrect current password!", HttpStatus.BAD_REQUEST);
+//            }
+//        currentUser.setFirstName(firstName);
+//        currentUser.setLastName(lastName);
+//        userService.save(currentUser);
+//
+//        return new ResponseEntity("Update Success", HttpStatus.OK);
+//    }
+    
 }
