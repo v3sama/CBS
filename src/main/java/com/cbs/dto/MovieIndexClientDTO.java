@@ -25,6 +25,15 @@ public class MovieIndexClientDTO implements Serializable {
     String trailer_link;
     String duration;
     String avg_point;
+    String sessions;
+
+    public String getSessions() {
+        return sessions;
+    }
+
+    public void setSessions(String sessions) {
+        this.sessions = sessions;
+    }
 
     public String getDuration() {
         return duration;

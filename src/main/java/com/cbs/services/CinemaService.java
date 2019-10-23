@@ -66,5 +66,8 @@ public class CinemaService {
 		return cinemaRepository.findById(id).get();
 	}
 
+	public List<Cinema> getCinemaByProvince(long id) {
+		return cinemaRepository.findCinemaByProvince_Id(id);
+	}
 	
 }
