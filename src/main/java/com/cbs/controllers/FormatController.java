@@ -38,10 +38,10 @@ public class FormatController {
     @RequestMapping(value = "/admin/add/formatType", method = RequestMethod.POST)
     public String addFormatType(@Valid FormatType formatType, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            return "redirect:/admin/formatType";
+            return "redirect:/admin/format";
         }
         formatTypeService.addFormatType(formatType);
-        return "redirect:/admin/formatType";
+        return "redirect:/admin/format";
     }
 
 
@@ -54,6 +54,6 @@ public class FormatController {
     @RequestMapping(value = "/admin/delete/formatType", method = RequestMethod.GET, params = {"id"})
     public String deleteFormatType(@RequestParam Long id, Model model) {
         formatTypeService.deleteFormatTypeByID(id);
-        return "redirect:/admin/formatType";
+        return "redirect:/admin/format";
     }
 }

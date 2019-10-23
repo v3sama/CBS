@@ -35,6 +35,7 @@ public class User extends BaseEntity {
     private String phone;
 
     private String password;
+    private String confirmationToken;
     
     private boolean active;
     @Column(unique=true)
