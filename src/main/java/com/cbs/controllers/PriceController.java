@@ -2,6 +2,7 @@ package com.cbs.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.validation.Valid;
 
@@ -31,12 +32,12 @@ public class PriceController {
 		this.priceService = priceService;
 		this.movieService = movieService;
 	}
-
 	@RequestMapping(value = "/admin/set/price", method = RequestMethod.GET, params = { "movieId" })
 	public String addPrice(@RequestParam Long movieId, Model model) {
 		Movie movie = movieService.getMovieByID(movieId);
+		Set<Price> prices =  movieService.getMovieByID(movieId).getPrices();
 		model.addAttribute("movie", movie);
-		if(movie.getPrices().isEmpty()) {
+		if(prices.isEmpty()) {
 			FormatType formatType = movie.getFormatType();
 			PriceCreationDTO pricesForm = new PriceCreationDTO();
 			//WDVIP - ve ngay thuong ghe VIP
@@ -75,19 +76,23 @@ public class PriceController {
 			price.setFormatType(formatType);
 			price.setDescription("Ve thuong ngay le + cuoi tuan");
 			pricesForm.add(price);
-			
 			model.addAttribute("forms", pricesForm);
-		} else
-			model.addAttribute("forms", movie.getPrices());
+		} else {
+			PriceCreationDTO pricesForm = new PriceCreationDTO();
+			for (Price price : prices) {
+				pricesForm.add(price);
+			}
+			model.addAttribute("forms", pricesForm);
+		}
 		return "/admin/add/price";
 	}
 
 	@RequestMapping(value = "/admin/set/price", method = RequestMethod.POST)
 	public String addPrice(@ModelAttribute PriceCreationDTO form, Model model) {
-		List<Price> list = form.getPrices();
-		//priceService.addPrices(form.getPrices());
+//		List<Price> list = form.getPrices();
+		priceService.addPrices(form.getPrices());
 		
-		priceService.addPrice(list.get(1));
+//		priceService.addPrice(list.get(1));
 		return "redirect:/admin/movie";
 	}
 }

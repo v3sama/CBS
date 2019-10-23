@@ -10,6 +10,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDateTime;
+import java.util.Dictionary;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import javax.validation.Valid;
 
 @Controller
@@ -111,4 +116,5 @@ public class MovieSessionController {
         model.addAttribute("scheduleSession", movieSessionService.getSessionById(sessionId));
         return "/details/session";
     }
+  
 }
