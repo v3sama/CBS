@@ -1,23 +1,32 @@
 $("document").ready(function () {
     //lấy data phim lên tab đang chiếu - sắp chiếu
     getIndexMovieData();
+
+    //lấy danh sách rạp lên bảng
+    getCinemaList()
+    createDataSchedule()
+    // createDataSchedule()
     // khởi tạo slick
     initSlick();
     trailerBox();
     initSelectize();
     $('#sap-chieu').hide();
     hoverMobieBlock();
+
     let tabcontent = document.getElementsByClassName("tabcontent");
     for (i = 0; i < tabcontent.length; i++) {
         tabcontent[i].style.display = "none";
     }
     tabcontent[0].style.display = "block";
     let tablinks = document.getElementsByClassName("tablinks");
-    tablinks[0].classList.add('active');
-
+    tablinks[0].classList.add('active')
 });
 
 // ĐÓNG MỞ BOX TRAILER
+
+let cinemaList = [];
+let movieList = [];
+let schedule = [];
 
 function trailerBox() {
     $('.box-trailer').click(function (e) {
@@ -99,13 +108,11 @@ function openCity(evt, cityName) {	// function openCity(evt, cityName) {
     // Declare all variables	//     // Declare all variables
     var i, tabcontent, tablinks;	//     var i, tabcontent, tablinks;
 
-
     // Get all elements with class="tabcontent" and hide them	//     // Get all elements with class="tabcontent" and hide them
     tabcontent = document.getElementsByClassName("tabcontent");	//     tabcontent = document.getElementsByClassName("tabcontent");
     for (i = 0; i < tabcontent.length; i++) {	//     for (i = 0; i < tabcontent.length; i++) {
         tabcontent[i].style.display = "none";	//         tabcontent[i].style.display = "none";
     }	//     }
-
 
     // Get all elements with class="tablinks" and remove the class "active"	//     // Get all elements with class="tablinks" and remove the class "active"
     tablinks = document.getElementsByClassName("tablinks");	//     tablinks = document.getElementsByClassName("tablinks");
@@ -113,28 +120,118 @@ function openCity(evt, cityName) {	// function openCity(evt, cityName) {
         tablinks[i].className = tablinks[i].className.replace(" active", "");	//         tablinks[i].className = tablinks[i].className.replace(" active", "");
     }	//     }
 
-
     // Show the current tab, and add an "active" class to the link that opened the tab	//     // Show the current tab, and add an "active" class to the link that opened the tab
-    document.getElementById(cityName).style.display = "block";	//     document.getElementById(cityName).style.display = "block";
+    cityName.style.display = "block";	//     document.getElementById(cityName).style.display = "block";
     evt.currentTarget.className += " active";	//     evt.currentTarget.className += " active";
 }
 
-
-function getIndexMovieData(){
-    const url = "http://localhost:8080/api/moviehehe";
-    let username = 'user';
-    let password = '123';
+function getCinemaList() {
+    // let username = 'user';
+    // let password = '123';
     $.ajax({
         type: "get",
-        url: "http://localhost:8080/api/movieShowing",
-        headers: {
-            'authorization':'Basic '+ btoa(username + ":" + password),
-        },
+        url: "http://localhost:8080/api/cinemaList?provinceId=1",
+        // headers: {
+        //     'authorization':'Basic '+ btoa(username + ":" + password),
+        // },
         data: "data",
         async: false,
         dataType: "json",
         success: function (data) {
-            console.log(data)
+            cinemaList = data;
+            $.each(data, function (index, itemData) {
+                if (index == 0){
+                    console.log(index)
+                    $('#tab-locate-render').append('<button class="tablinks" onclick="openCity(event,cinema'+ itemData.cinemaId +')" id="defaultOpen">' +
+                        '<img src="https://via.placeholder.com/50x50" alt="">' +
+                        '<div class="locate-detail">' +
+                        '<div class="locate-name">' + itemData.name + '</div>' +
+                        '<div class="locate-address">' + itemData.address + '</div>' +
+                        '<a href=""><i class="fas fa-long-arrow-alt-right"></i></a>' +
+                        '</div>' +
+                        '</button>')
+                }else{
+                    $('#tab-locate-render').append('<button class="tablinks" onclick="openCity(event,cinema'+ itemData.cinemaId +')">' +
+                        '<img src="https://via.placeholder.com/50x50" alt="">' +
+                        '<div class="locate-detail">' +
+                        '<div class="locate-name">' + itemData.name + '</div>' +
+                        '<div class="locate-address">' + itemData.address + '</div>' +
+                        '<a href=""><i class="fas fa-long-arrow-alt-right"></i></a>' +
+                        '</div>' +
+                        '</button>')
+                }
+            })
+        }
+    });
+
+
+}
+
+function createDataSchedule() {
+    $.each(cinemaList, function (index, itemData) {
+        addSessionsToMovie(itemData.cinemaId)
+        $('#tab-content-render').append('<div id="cinema'+ itemData.cinemaId +'" class="tabcontent"></div>')
+        $.each(movieList, function (indexM, itemDataM) {
+            $('#cinema'+itemData.cinemaId).append('<div class="tabcontent-row">' +
+                                                '<div class="tab-movie-info">' +
+                                                '<img src="http://placehold.it/50x50" alt="">' +
+                                                '<p class="tab-movie-title">' +
+                                                itemDataM.movie_title +
+                                                '</p>' +
+                                                '<p class="tab-movie-detail">' +
+                                                 itemDataM.duration +'phút - cinema 8 - '+ itemDataM.avg_point +
+                                                '</p>' +
+                                                '</div>' +
+                                                '<div class="tab-movie-session">' +
+                                                '<div id="movie'+ itemData.cinemaId + itemDataM.movie_id + '" class="list-time">' +
+
+                                                '</div>' +
+                                                '</div>' +
+                                                '</div>')
+            $.each(itemDataM.sessions, function (indexS, itemDataS) {
+                $('#movie' + itemData.cinemaId + itemDataM.movie_id).append(' <a href="datve?session='+ itemDataS.id +'">'+ itemDataS.time.substring(11, 16) +'</a>')
+            })
+        })
+
+    })
+}
+
+function addSessionsToMovie(cinemaId) {
+    $.each(movieList, function (index, itemData) {
+        itemData.sessions = getSessionByCinemaData(itemData.movie_id, cinemaId)
+    })
+}
+
+function getSessionByCinemaData(movieId, cinemaId) {
+    var sessionList = new Object()
+    $.ajax({
+        type: "get",
+        url: "http://localhost:8080/api/cinemaList1",
+        data: {
+            "provinceId": 1,
+            "cinemaId": cinemaId,
+            "movieId": movieId
+        },
+        async: false,
+        dataType: "json",
+        success: function (data) {
+            sessionList = data
+        }
+    });
+    return sessionList
+}
+
+function getIndexMovieData(){
+
+    $.ajax({
+        type: "get",
+        url: "http://localhost:8080/api/movieShowing",
+
+        data: "data",
+        async: false,
+        dataType: "json",
+        success: function (data) {
+            movieList = data;
             $.each(data, function (index, itemData) {
                 $('#slick-dang-chieu').append('<div class="movie-block">' +
                     '<div class="thumbnail">' +
@@ -165,9 +262,7 @@ function getIndexMovieData(){
     $.ajax({
         type: "get",
         url: "http://localhost:8080/api/movieUpComing",
-        headers: {
-            'authorization':'Basic '+ btoa(username + ":" + password),
-        },
+
         data: "data",
         async: false,
         dataType: "json",

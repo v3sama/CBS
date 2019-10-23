@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<!-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">     -->
+
+<link rel="stylesheet" th:href="@{/css/grid.css}">
+<!-- <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet"> -->
+<link rel="stylesheet" th:href="@{/css/site.css}">
+<link rel="stylesheet" th:href="@{/css/default-site.css}">
+<link rel="stylesheet" th:href="@{/css/movie-detail.css}">
+<link
+	href="https://fonts.googleapis.com/css?family=Quicksand&display=swap"
+	rel="stylesheet">
+
+<link rel="stylesheet" type="text/css" th:href="@{/css/slick.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/slick-theme.css}" />
+<link rel="stylesheet" th:href="@{/css/selectize.css}">
+<link rel="stylesheet" th:href="@{/css/fontawesome/css/all.min.css}" />
+<title>Update Profile</title>
+</head>
+
+<body>
+	<Nav>
+			<div class="nav-bar clearfix">
+				<div class="logo">
+					<img src="" alt="logo">
+				</div>
+				<ul class="nav-list">
+					<li><a href="#nhaylichchieu">Lịch Chiếu</a></li>
+					<li><a href="#nhaycumrap">Cụm Rạp</a></li>
+					<li>Tin Tức</li>
+				</ul>
+				<div class="nav-right">
+					<div class="account">
+						<a href="#"> <i class="icon-signin"></i>
+							<p>Đăng nhập</p>
+						</a>
+					</div>
+					<div class="locate">
+						<i class="icon-locate"></i>
+						<div class="dropdown">Hồ Chí Minh</div>
+					</div>
+				</div>
+			</div>
+		</Nav>
+
+	<div class="content-wrapper">
+		<!-- Content Header (Page header) -->
+		<div class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-6">
+						<h1 class="m-0 text-dark">Update Profile</h1>
+					</div>
+					<!-- /.col -->
+					<div class="col-sm-6">
+						<ol class="breadcrumb float-sm-right">
+							<li class="breadcrumb-item"><a href="#">Home</a></li>
+							<li class="breadcrumb-item active">Update Profile</li>
+						</ol>
+					</div>
+					<!-- /.col -->
+				</div>
+				<!-- /.row -->
+			</div>
+			<!-- /.container-fluid -->
+		</div>
+		<!-- /.content-header -->
+
+		<!-- Main content -->
+		<div class="content">
+			<div class="container text-center">
+				<div class="card card-info">
+
+					<div class="card-header">
+						<h3 class="card-title">Update Profile</h3>
+					</div>
+					<!-- form start -->
+					<form class="form-horizontal" data-toggle="validator" role="form"
+						action="#" th:action="@{/update-user}" th:object="${user}"
+						method="post">
+						<div class="card-body">
+							<!-- <div class="form-group row">
+								<input class="form-control" type="hidden" th:field="*{id}" />
+							</div> -->
+
+							<div class="form-group row">
+								<label class="col-sm-2 control-label">First name</label>
+								<div class="col-sm-10">
+									<input class="form-control" type="text"
+										placeholder=" enter first here" required="required"
+										th:field="*{firstName}" />
+									<div class="help-block with-errors"></div>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-sm-2 control-label">Last name</label>
+								<div class="col-sm-10">
+									<input class="form-control" type="text"
+										placeholder=" enter last here" required="required"
+										th:field="*{lastName}" />
+									<div class="help-block with-errors"></div>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-sm-2 control-label">Email</label>
+								<div class="col-sm-10">
+									<input class="form-control" type="email"
+										placeholder=" enter email here" required="required"
+										th:field="*{email}" />
+									<div class="help-block with-errors"></div>
+								</div>
+							</div>
+							
+							<div class="form-group row">
+								<label class="col-sm-2 control-label">Phone</label>
+								<div class="col-sm-10">
+									<input class="form-control" type="number"
+										placeholder="enter phone here" required="required"
+										th:field="*{phone}" minlength="12" maxlength="12"
+										data-maxlength="12" />
+									<div class="help-block with-errors"></div>
+								</div>
+							</div>
+							
+							<!-- <div class="form-group row">
+								<label class="col-sm-2 control-label">Password</label>
+								<div class="col-sm-10">
+									<input class="form-control" type="password"
+										placeholder=" enter password here" required="required"
+										th:field="*{password}" />
+									<div class="help-block with-errors"></div>
+								</div>
+							</div>
+							
+							<div class="form-group row">
+								<label class="col-sm-2 control-label">New Password</label>
+								<div class="col-sm-10">
+									<input class="form-control" type="password"
+										placeholder=" enter new password here" required="required"
+										th:field="*{password}" />
+									<div class="help-block with-errors"></div>
+								</div>
+							</div> -->
+							
+						</div>
+						<!-- /.card-body -->
+						<div class="card-footer">
+							<button type="submit" class="btn btn-info">Update profile</button>
+						</div>
+						<!-- /.card-footer -->
+						
+					</form>
+				</div>
+			</div>
+		</div>
+		<!-- /.content -->
+	</div>
+
+<footer>
+		<div class="row">
+			<div class="col span-1-of-3 footer-cinema">
+				<h3 class="footer-title">CINEMA</h3>
+				<div>
+					<div class="col span-1-of-2">
+						<a href="#">FAQ</a> <a href="#">Guidelines</a>
+					</div>
+					<div class="col span-1-of-2">
+						<a href="#">Thoả thuận sử dụng</a> <a href="#">Quy chế hoạt
+							động</a> <a href="#">Chính sách bảo mật</a> <a href="#">Quyền lợi
+							thành viên</a>
+					</div>
+				</div>
+			</div>
+			<div class="col span-1-of-3 footer-doitac-social">
+				<h3 class="footer-title">ĐỐI TÁC</h3>
+				<a href="#"><img src="http://placehold.it/30x30" alt=""></a>
+			</div>
+			<div class="col span-1-of-3 footer-doitac-social">
+				<h3 class="footer-title">SOCIAL</h3>
+				<a href="#"><img src="http://placehold.it/30x30" alt=""></a>
+			</div>
+		</div>
+	</footer>
+	<script th:src="@{/scripts/jquery.min.js}"></script>
+	<script th:src="@{/scripts/jquery-ui.min.js}"></script>
+
+	<!-- <script src="/resource/js/select2.min.js"></script> -->
+	<script type="text/javascript" th:src="@{/scripts/slick.js}"></script>
+	<script type="text/javascript" th:src="@{/scripts/app.js}"></script>
+	<script type="text/javascript" th:src="@{/scripts/selectize.js}"></script>
+</body>
+
+</html>
