@@ -9,6 +9,7 @@ import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -28,7 +29,7 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true,exclude = {"formatType","genres","prices","movieSessions","actors"})
 public class Movie extends BaseEntity {
 	private static final long serialVersionUID = 1L;
-	@Column(unique=true)
+
     private String title;
     private int duration;
     private String rating_type;
@@ -46,7 +47,7 @@ public class Movie extends BaseEntity {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate date_end;
    
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "format_Type_id")
     private FormatType  formatType;
     

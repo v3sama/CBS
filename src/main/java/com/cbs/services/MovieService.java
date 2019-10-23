@@ -36,7 +36,7 @@ public class MovieService {
     }
 
     public Movie getMovieByID(Long id) {
-        return movieRepository.getOne(id);
+        return movieRepository.findById(id).get();
     }
 
     public Page<Movie> searchByTittle(String movieTittle, Integer pageNumber) {

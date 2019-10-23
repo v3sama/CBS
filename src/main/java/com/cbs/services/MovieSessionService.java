@@ -1,6 +1,8 @@
 package com.cbs.services;
 
 import com.cbs.dto.ScheduleIndexClientDTO;
+import com.cbs.dto.SessionList2DTO;
+import com.cbs.dto.SessionListDTO;
 import com.cbs.model.MovieSession;
 import com.cbs.repository.MovieSessionRepository;
 import com.cbs.services.MovieSessionService;
@@ -34,18 +36,17 @@ public class MovieSessionService {
         return movieSessionRepository.findAll();
     }
 
-
     public MovieSession getSessionById(Long id) {
         return movieSessionRepository.getOne(id);
     }
 
-    public List<MovieSession> findSessionByCinemaScreen_Id(long id) {
-        return movieSessionRepository.findMovieSessionByCinemaScreen_Id(id);
+    public List<SessionList2DTO> findSessionByCinemaAndMovie(int province_id, int cinema_id, int movie_id) throws Exception{
+        return movieSessionRepository.findSessionByCinemaAndMovie(province_id, cinema_id, movie_id);
     }
 
-//    public List<ScheduleIndexClientDTO> findSessionByCachKhac(long cid, long mid) {
-//        return movieSessionRepository.findMovieSessionByCinema(cid, mid);
-//    }
+    public List<MovieSession> findSessionByMovieAndCinemaScreen(long mid, long cid) {
+        return movieSessionRepository.findMovieSessionByMovie_IdAndCinemaScreen_Id(mid, cid);
+    }
 
 
 }
