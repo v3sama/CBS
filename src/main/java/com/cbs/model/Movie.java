@@ -28,8 +28,9 @@ public class Movie extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 	@Column(unique=true)
     private String title;
-    private float duration;
+    private int duration;
     private String rating_type;
+
     @Column(name="date_release")
     private LocalDate date_release;
     private String image;
