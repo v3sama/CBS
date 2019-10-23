@@ -30,4 +30,9 @@ public class SeatServices {
 	public Seat addSeat(Seat seat) {
 		return repository.saveAndFlush(seat);
 	}
+
+	public void addAllSeat(List<Seat> seats) {
+		repository.saveAll(seats);
+		
+	}
 }
