@@ -1,27 +1,21 @@
 package com.cbs.dto;
 
+import javax.persistence.Entity;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.List;
 
+@Entity
 public class ScheduleIndexClientDTO {
-    long session_id;
-    Date time;
     String movie_title;
+    List<SessionListDTO> sessionList;
 
-    public long getSession_id() {
-        return session_id;
+    public List<SessionListDTO> getSessionList() {
+        return sessionList;
     }
 
-    public void setSession_id(long session_id) {
-        this.session_id = session_id;
-    }
-
-    public Date getTime() {
-        return time;
-    }
-
-    public void setTime(Date time) {
-        this.time = time;
+    public void setSessionList(List<SessionListDTO> sessionList) {
+        this.sessionList = sessionList;
     }
 
     public String getMovie_title() {

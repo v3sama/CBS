@@ -1,18 +1,11 @@
 package com.cbs.controllers;
 
-import com.cbs.dto.MovieIndexClientDTO;
-import com.cbs.dto.ScheduleIndexClientDTO;
-import com.cbs.model.CinemaScreen;
-import com.cbs.model.Movie;
-import com.cbs.model.MovieSession;
-import com.cbs.services.CinemaScreenService;
-import com.cbs.services.MovieService;
-import com.cbs.services.MovieSessionService;
+import com.cbs.dto.*;
+import com.cbs.model.*;
+import com.cbs.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -23,12 +16,17 @@ public class IndexRestController {
     private final MovieService movieService;
     private final MovieSessionService movieSessionService;
     private final CinemaScreenService cinemaScreenService;
+    private final CinemaService cinemaService;
+    private final ProvinceService provinceService;
+
 
     @Autowired
-    public IndexRestController(MovieService movieService, MovieSessionService movieSessionService, CinemaScreenService cinemaScreenService) {
+    public IndexRestController(MovieService movieService, MovieSessionService movieSessionService, CinemaScreenService cinemaScreenService, CinemaService cinemaService, ProvinceService provinceService) {
         this.movieService = movieService;
         this.movieSessionService = movieSessionService;
         this.cinemaScreenService = cinemaScreenService;
+        this.cinemaService = cinemaService;
+        this.provinceService = provinceService;
     }
 
     @GetMapping(value = "/api/movieShowing", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -57,25 +55,50 @@ public class IndexRestController {
             movieIndexClientDTO.setMovie_thumbnail(movie.getThumbnail());
             movieIndexClientDTO.setDuration(String.valueOf(movie.getDuration()));
             movieIndexClientDTO.setAvg_point(String.valueOf(movie.getAvg_user_rating_star()));
+            movieIndexClientDTO.setMovie_id(movie.getId());
             movieIndexClientDTOS.add(movieIndexClientDTO);
         }
         return movieIndexClientDTOS;
     }
 
-    @GetMapping(value = "/api/sessionCinema", produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody Iterable<ScheduleIndexClientDTO> getSessionByCinema() {
-
-        List<CinemaScreen> cinemaScreens = cinemaScreenService.findCinemaScreenByCinema_Id(1);
-
-//        List<ScheduleIndexClientDTO> sessions = movieSessionService.findSessionByCachKhac(1, 1);
-        System.out.println(cinemaScreens);
-        List<ScheduleIndexClientDTO> res = new ArrayList<>();
-        return res;
+    //Lấy List Cinema
+    @GetMapping(value = "/api/cinemeList", produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody Iterable<CinemaIndexClientDTO> getCinemas() throws Exception{
+        List<CinemaIndexClientDTO> cinemaListDTO = new ArrayList<>();
+        List<Cinema> cinemaList = cinemaService.getAllCinema();
+//        List<SessionList2DTO> sessionListDTOS = movieSessionService.findSessionByCinemaAndMovie();
+//        System.out.println(sessionListDTOS);
+        for (Cinema cinema: cinemaList) {
+            CinemaIndexClientDTO cinemaDTO = new CinemaIndexClientDTO();
+            cinemaDTO.setCinemaId(String.valueOf(cinema.getId()));
+            cinemaDTO.setName(cinema.getTitle());
+            cinemaDTO.setAddress(cinema.getAddress());
+            cinemaListDTO.add(cinemaDTO);
+        }
+        return cinemaListDTO;
     }
 
+    //Lấy session theo tỉnh thành, cinema và movie
+    @RequestMapping(value = "/api/cinemaList1", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<SessionList2DTO> getCinemas1(@RequestParam(value = "provinceId") String provinceId, @RequestParam(value = "cinemaId") String cinemaId, @RequestParam(value = "movieId") String movieId) throws Exception{
+        return movieSessionService.findSessionByCinemaAndMovie(Integer.parseInt(provinceId),Integer.parseInt(cinemaId),Integer.parseInt(movieId));
+    }
 
-//    @GetMapping(value = "/api/    schedule/")
-//    public @ResponseBody Iterable<MovieIndexDTO> getScheduleIndex(){
-//
-//    }
+    //Lấy List Province
+    @GetMapping(value = "/api/provinceList", produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody Iterable<ProvinceIndexDTO> getProvinces() throws Exception{
+        List<ProvinceIndexDTO> provinceIndexDTOS = new ArrayList<>();
+        List<Province> provinces = provinceService.getAllProvince();
+//        List<SessionList2DTO> sessionListDTOS = movieSessionService.findSessionByCinemaAndMovie();
+//        System.out.println(sessionListDTOS);
+        for (Province province: provinces) {
+            ProvinceIndexDTO provinceDTO = new ProvinceIndexDTO();
+            provinceDTO.setProvince_id(province.getId());
+            provinceDTO.setProvince_name(province.getName());
+
+            provinceIndexDTOS.add(provinceDTO);
+        }
+        return provinceIndexDTOS;
+    }
+
 }

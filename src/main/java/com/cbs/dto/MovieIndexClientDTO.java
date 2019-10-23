@@ -9,6 +9,16 @@ import java.util.List;
 public class MovieIndexClientDTO implements Serializable {
     String msg;
 
+    long movie_id;
+
+    public long getMovie_id() {
+        return movie_id;
+    }
+
+    public void setMovie_id(long movie_id) {
+        this.movie_id = movie_id;
+    }
+
     String movie_title;
     String movie_image;
     String movie_thumbnail;
