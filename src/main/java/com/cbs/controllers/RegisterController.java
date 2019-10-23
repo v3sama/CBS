@@ -1,8 +1,10 @@
 package com.cbs.controllers;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -76,9 +78,14 @@ public class RegisterController {
 			user.setActive(false);
 			
 			//Set user's role to MEMBER
-			Role memberRole = roleService.findByName("Member");
+			Role memberRole = roleService.findByName("MEMBER");
+			Role adminRole = roleService.findByName("ADMIN");
+			Set<Role> roles = new HashSet<Role>();
+			roles.add(memberRole);
+			roles.add(adminRole);
+			user.setRoles(roles);
 			
-			user.setRoles(new HashSet<Role>(Arrays.asList(memberRole)));
+			//user.setRoles(new HashSet<Role>(Arrays.asList(memberRole)));
 
 			// Generate random 36-character string token for confirmation link
 			user.setConfirmationToken(UUID.randomUUID().toString());

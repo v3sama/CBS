@@ -18,29 +18,28 @@ import org.springframework.ws.support.WebUtils;
 @Controller
 public class LoginController {
 
-    private final UserService userService;
+	private final UserService userService;
 
-    @Autowired
-    public LoginController(UserService userService ) {
-        this.userService = userService;
-    }
-
+	@Autowired
+	public LoginController(UserService userService) {
+		this.userService = userService;
+	}
 
 	/*
 	 * @RequestMapping(value = "/admin/", method = RequestMethod.GET) public String
 	 * index(Model model) { return "/admin/index"; }
 	 */
-	
-	  @RequestMapping(value = "/login", method = RequestMethod.GET) public String
-	  login(Model model, String error, String logout) { if (error != null)
-	  model.addAttribute("error", "Your username and password is invalid.");
-	  
-	  if (logout != null) model.addAttribute("message",
-	  "You have been logged out successfully.");
-	  
-	  return "/client/login"; }
-	  
-	 
+
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public String login(Model model, String error, String logout) {
+		if (error != null)
+			model.addAttribute("error", "Your username and password is invalid.");
+
+		if (logout != null)
+			model.addAttribute("message", "You have been logged out successfully.");
+
+		return "/client/login";
+	}
 
 	/*
 	 * @RequestMapping(value = "/registration", method = RequestMethod.GET) public
@@ -55,22 +54,22 @@ public class LoginController {
 	 * return "redirect:/"; }
 	 */
 
-    @RequestMapping(value = "/403", method = RequestMethod.GET)
-    public String accessDenied(Model model, Principal principal) {
- 
-        if (principal != null) {
-            User loginedUser = (User) ((Authentication) principal).getPrincipal();
- 
-            String userInfo = loginedUser.getLastName() + ' ' + loginedUser.getFirstName();
-            model.addAttribute("userInfo", userInfo);
- 
-            String message = "Hi " + principal.getName() //
-                    + "<br> You do not have permission to access this page!";
-            model.addAttribute("message", message);
- 
-        }
- 
-        return "403Page";
-    }
+	@RequestMapping(value = "/403", method = RequestMethod.GET)
+	public String accessDenied(Model model, Principal principal) {
+
+		if (principal != null) {
+			User loginedUser = (User) ((Authentication) principal).getPrincipal();
+
+			String userInfo = loginedUser.getLastName() + ' ' + loginedUser.getFirstName();
+			model.addAttribute("userInfo", userInfo);
+
+			String message = "Hi " + principal.getName() //
+					+ "<br> You do not have permission to access this page!";
+			model.addAttribute("message", message);
+
+		}
+
+		return "403Page";
+	}
 
 }
