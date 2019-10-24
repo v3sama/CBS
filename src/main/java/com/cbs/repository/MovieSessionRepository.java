@@ -1,8 +1,6 @@
 package com.cbs.repository;
 
-import com.cbs.dto.ScheduleIndexClientDTO;
 import com.cbs.dto.SessionList2DTO;
-import com.cbs.dto.SessionListDTO;
 import com.cbs.model.MovieSession;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

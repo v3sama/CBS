@@ -18,8 +18,20 @@ import javax.persistence.OneToOne;
 @Entity
 @EqualsAndHashCode(callSuper = true,exclude = {"member","seat","movieSession","order","price","rating"})
 public class Ticket extends BaseEntity {
+    @Override
+    public String toString() {
+        return "Ticket{" +
+                "amount=" + amount +
+                ", member=" + member +
+                ", seat=" + seat +
+                ", movieSession=" + movieSession +
+                ", order=" + order +
+                ", price=" + price +
+                ", rating=" + rating +
+                '}';
+    }
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
 	private Float amount;
 
