@@ -41,11 +41,6 @@ public class OrderController {
        // this.paymentController = paymentController;
     }
 
-    @GetMapping(value = "/datve", produces = MediaType.APPLICATION_JSON_VALUE)
-    public String datVe(@RequestParam(value = "session") String sessionid) {
-        return "client/seat-reserve";
-    }
-    
     @RequestMapping(value = "/admin/order", method = RequestMethod.GET)
     public String allOrder(Model model, Long cinemaId) {
         model.addAttribute("orders", orderService.getAllOrder());

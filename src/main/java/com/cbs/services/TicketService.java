@@ -30,6 +30,12 @@ public class TicketService {
         return ticketRepository.findAll(request);
     }
 
+    public void addTicket(Ticket ticket){
+        ticketRepository.save(ticket);
+    }
+
+
+
     public List<Ticket> getAllTicket() {
         return ticketRepository.findAll();
     }
@@ -48,4 +54,8 @@ public class TicketService {
         return ticketRepository.findTicketBySeat_Id(id);
     }
 
+    public boolean findTicketbySessionAndSeat(long sid, long smid){
+        List<Ticket> ticket = ticketRepository.findTicketBySeat_IdAndMovieSession_Id(sid, smid);
+        return ticket.isEmpty();
+    }
 }
