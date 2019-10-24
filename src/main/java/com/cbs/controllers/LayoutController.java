@@ -30,13 +30,15 @@ public class LayoutController {
 		this.rowService = rowService;
 	}
 
-	@RequestMapping(value = "/admin", method = RequestMethod.GET)
+	@RequestMapping(value = {"/admin"}, method = RequestMethod.GET)
 	public String index(Model model) {
 		Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
 		String username = loggedInUser.getName();
 		model.addAttribute("userInfo", username);
 		return "/admin/index";
 	}
+	
+	
 
 	@RequestMapping(value = "/admin/seat", method = RequestMethod.GET)
 	public String seatSetting(Model model) {
@@ -47,13 +49,13 @@ public class LayoutController {
 	@RequestMapping(value = "/admin/seat", method = RequestMethod.POST)
 	public String seatSetting(Model model, String row, String error) {
 		int numOfRow = Integer.parseInt(row);
-		int old = seatServices.getAllSeat().size();
+		int oldRow = rowService.getAllRow().size();
 		//moi hang co 12 ghe
-		if(numOfRow *12 > old ) {
+		if(numOfRow  > oldRow ) {
 			List<Row> rows = new ArrayList<Row>(); 
 			List<Seat> seats = new ArrayList<Seat>();
 			
-			for (int i = old/12 + 1; i <= numOfRow; i++) {
+			for (int i = oldRow + 1; i <= numOfRow; i++) {
 				Row r = new Row();
 				r.setId(Long.valueOf(i));
 				r.setTittle(String.valueOf((char)(i + 64)));

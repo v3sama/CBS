@@ -101,6 +101,7 @@
 									<table class="table">
 										<thead>
 											<tr>
+												
 												<th>Select</th>
 												<th>Title</th>
 												<th>Rows</th>
@@ -108,6 +109,9 @@
 										</thead>
 										<tbody>
 											<tr th:each="cinemaScreen, itemStat: *{cinemaScreens}">
+												
+												<input class="number" type="hidden" th:field="*{cinemaScreens[__${itemStat.index}__].id}"
+													th:value="${cinemaScreen.id}" />
 												
 												<td>
 													<input class="box" type="checkbox" th:field="*{cinemaScreens[__${itemStat.index}__].screen.id}"

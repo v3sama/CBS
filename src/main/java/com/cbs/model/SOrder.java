@@ -22,9 +22,6 @@ import lombok.ToString;
 @Entity
 @EqualsAndHashCode(callSuper = true,exclude = {"member","tickets","payment"})
 public class SOrder extends BaseEntity{
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private Double total;
 	private Boolean paid;

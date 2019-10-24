@@ -1,15 +1,19 @@
 
 package com.cbs.services;
 
+import com.cbs.dto.CustomUserDetail;
 import com.cbs.model.Role;
 import com.cbs.model.User;
 import com.cbs.repository.RoleRepository;
 import com.cbs.repository.UserRepository;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -32,9 +36,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 	@Override
 	@Transactional
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+	public CustomUserDetail loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = userRepository.findByEmail(username);
-		List<GrantedAuthority> grantList = new ArrayList<GrantedAuthority>();
+		Set<GrantedAuthority> grantList = new HashSet<GrantedAuthority>();
 
 		List<String> roleNames = new ArrayList<>();
 		for (Role role : user.getRoles()) {
@@ -47,7 +51,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 				grantList.add(authority);
 			}
 		}
-
-		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), grantList);
+		CustomUserDetail customUserDetail = new CustomUserDetail();
+		customUserDetail.setUser(user);
+		customUserDetail.setAuthorities(grantList);
+		customUserDetail.isEnabled();
+		return customUserDetail;
+		
+//		  return new org.springframework.security.core.userdetails.User(user.getEmail(),
+//		  user.getPassword(),user.isActive(), true,true,true, grantList);
+//		 
 	}
 }
