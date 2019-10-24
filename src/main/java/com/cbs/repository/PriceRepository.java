@@ -13,6 +13,5 @@ import com.cbs.model.Price;
 import com.cbs.model.Province;
 @Repository
 public interface PriceRepository extends JpaRepository<Price, Long> {
-	@Query("select price from Price price where price.movie_id =:id")
-	 List<Price> findAllPriceByMovie(@Param("id") Long movieId);
+	
 }

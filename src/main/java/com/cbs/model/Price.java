@@ -31,10 +31,10 @@ public class Price extends BaseEntity {
 	private FormatType formatType;
 	
 	@ManyToOne
-	@JoinColumn(name = "movie_id",insertable = false, updatable = false)
+//	@JoinColumn(name = "movie_id",insertable = false, updatable = false)
 	private Movie movie;
 	
-	private Long movie_id;
+//	private Long movie_id;
 	
 //	@ManyToOne
 //	@JoinColumn(name = "ticket_id")

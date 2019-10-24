@@ -4,6 +4,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.cbs.model.Movie;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class MovieCreationDTO {
 	private Movie movie = new Movie();
 
@@ -11,27 +16,4 @@ public class MovieCreationDTO {
 	private MultipartFile thumbnail;
 	private MultipartFile image;
 
-	public MultipartFile getImage() {
-		return image;
-	}
-
-	public void setImage(MultipartFile image) {
-		this.image = image;
-	}
-
-	public MultipartFile getThumbnail() {
-		return thumbnail;
-	}
-
-	public void setThumbnail(MultipartFile thumbnail) {
-		this.thumbnail = thumbnail;
-	}
-
-	public Movie getMovie() {
-		return movie;
-	}
-
-	public void setMovie(Movie movie) {
-		this.movie = movie;
-	}
 }
