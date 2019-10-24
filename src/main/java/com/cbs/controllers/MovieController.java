@@ -157,8 +157,10 @@ public class MovieController {
 
     @RequestMapping(value = "/admin/edit/movie", method = RequestMethod.GET, params = {"movieId"})
     public String editMovie(@RequestParam Long movieId, Model model) {
-    	Movie movie = movieService.getMovieByID(movieId);
-        model.addAttribute("movie", movie);
+    	MovieCreationDTO movieDTO =  new MovieCreationDTO();
+    	movieDTO.setMovie(movieService.getMovieByID(movieId));
+    	
+        model.addAttribute("movieForm", movieDTO);
         model.addAttribute("formats", formatTypeService.getAllFormatType());
         model.addAttribute("actors", actorService.getAllActors());
         model.addAttribute("genres", genreService.getAllGenre());

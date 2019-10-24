@@ -8,7 +8,9 @@ import com.cbs.services.CinemaScreenService;
 import com.cbs.services.CinemaService;
 import com.cbs.services.DiscountService;
 import com.cbs.services.ProvinceService;
+import com.cbs.services.RowService;
 import com.cbs.services.ScreenService;
+import com.cbs.services.SeatServices;
 import com.cbs.services.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,14 +38,16 @@ public class CinemaController {
     private ScreenService screenService;
     private CinemaScreenService cinemaScreenService;
     private ProvinceService provinceService;
+    private RowService rowService; 
     
     @Autowired
     public CinemaController(CinemaService cinemaService, ScreenService screenService,
-    		CinemaScreenService cinemaScreenService,ProvinceService provinceService) {
+    		CinemaScreenService cinemaScreenService,ProvinceService provinceService,RowService rowService) {
         this.cinemaService = cinemaService;
         this.screenService = screenService;
         this.cinemaScreenService = cinemaScreenService;
         this.provinceService = provinceService;
+        this.rowService = rowService;
     }
 
     @RequestMapping(value = "/admin/cinema", method = RequestMethod.GET)
@@ -101,24 +105,11 @@ public class CinemaController {
         cinemaService.addCinema(cinema);
         
         for (CinemaScreen cs  : cinemaForm.getCinemaScreens()) {
-        	if(cs.getRows() != 0) {
-        		cs.setCinema(cinema);
-    			cinemaScreenService.add(cs);
+        	if((cs.getRows() != 0 || cs.getId() != 0) && cs.getRows() <= rowService.getAllRow().size()) {
+	        		cs.setCinema(cinema);
+	    			cinemaScreenService.add(cs);
         	}
 		}
-        
-    	
-        
-      /*  Map<Long,Integer> screenList = new HashMap<Long,Integer>();
-        
-        for (int i = 0; i < screens.length; i++) {
-        	Long screenId = Long.parseLong(screens[i]);
-        	Integer row = Integer.parseInt(rows[i]);
-        	
-        	screenList.put(screenId,row);
-		}
-        cinemaScreenService.addScreenToCinema(cinema,screenList);*/
-        
         return "redirect:/admin/cinema";
     }
 
@@ -149,10 +140,11 @@ public class CinemaController {
     public String editCinema(@RequestParam Long id, Model model) {
     	CinemaCreationDTO  cinemaForm = new CinemaCreationDTO();
     	cinemaForm.setCinema(cinemaService.getCinemaByID(id));
-    //	cinemaForm.setCinemaScreens(cinemaService.getCinemaByID(id).getCinemaScreens());
+    	
+    	cinemaForm.setCinemaScreens(new ArrayList<>(cinemaService.getCinemaByID(id).getCinemaScreens()));
         model.addAttribute("cinemaForm", cinemaForm);
         model.addAttribute("provinces", provinceService.getAllProvince());
-        model.addAttribute("screens", screenService.getAllScreen());
+ 
     
         return "/admin/add/cinema";
     }

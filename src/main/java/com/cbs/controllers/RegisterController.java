@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -31,18 +32,19 @@ import com.nulabinc.zxcvbn.Zxcvbn;
 
 @Controller
 public class RegisterController {
-	//private BCryptPasswordEncoder bCryptPasswordEncoder;
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	private UserService userService;
 	private EmailService emailService;
 	private RoleService roleService;
 
 	@Autowired
-	public RegisterController( UserService userService,
+	public RegisterController( UserService userService,BCryptPasswordEncoder bCryptPasswordEncoder,
 			EmailService emailService, RoleService roleService) {
 		//this.bCryptPasswordEncoder = bCryptPasswordEncoder;
 		this.userService = userService;
 		this.emailService = emailService;
 		this.roleService = roleService;
+		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
 	}
 
 	// Return registration form template
@@ -130,7 +132,7 @@ public class RegisterController {
 	@RequestMapping(value = "/confirm", method = RequestMethod.POST)
 	public ModelAndView processConfirmationForm(ModelAndView modelAndView, BindingResult bindingResult,
 			@RequestParam Map requestParams, RedirectAttributes redir) {
-		BCryptPasswordEncoder bCryptPasswordEncoder  = new BCryptPasswordEncoder();
+		
 		modelAndView.setViewName("/client/confirm");
 
 		Zxcvbn passwordCheck = new Zxcvbn();
@@ -161,4 +163,27 @@ public class RegisterController {
 		modelAndView.addObject("successMessage", "Your password has been set!");
 		return modelAndView;
 	}
+	
+//	//Send Mail Reset Password
+//	@RequestMapping("/signup-success")
+//	public String SignupSuccess(){
+//		//Create user
+//		
+//		User user = new User();
+//		
+//		user.setFirstName("hung");
+//		user.setLastName("nguyen");
+//		user.setEmail("hungnguyenhoang223@gmail.com");
+//		
+//		//send a email 
+//		
+//		try {
+//			emailService.sendEmail(user);
+//		}catch (MailException e) {
+//			
+//		}
+//		return "Please! Sign in your gmail to "
+		
+//	}
+	
 }

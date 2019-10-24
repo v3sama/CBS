@@ -1,5 +1,6 @@
 package com.cbs.controllers;
 
+import com.cbs.dto.CustomUserDetail;
 import com.cbs.model.User;
 import com.cbs.services.UserService;
 
@@ -7,6 +8,7 @@ import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -56,11 +58,10 @@ public class LoginController {
 
 	@RequestMapping(value = "/403", method = RequestMethod.GET)
 	public String accessDenied(Model model, Principal principal) {
-
 		if (principal != null) {
-			User loginedUser = (User) ((Authentication) principal).getPrincipal();
 
-			String userInfo = loginedUser.getLastName() + ' ' + loginedUser.getFirstName();
+			CustomUserDetail loggedInUser = (CustomUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			String userInfo = loggedInUser.getFname();
 			model.addAttribute("userInfo", userInfo);
 
 			String message = "Hi " + principal.getName() //

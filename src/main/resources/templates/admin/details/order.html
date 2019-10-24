@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Order details</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=2" />
+<link rel="stylesheet" th:href="@{/css/adminlte.min.css}" />
+<link rel="stylesheet" th:href="@{/css/all.min.css}" />
+
+<script th:src="@{/scripts/jquery.min.js}"></script>
+<script th:src="@{/scripts/bootstrap.bundle.min.js}"></script>
+</head>
+<body>
+
+	<nav th:replace="admin/layout :: admin-nav"></nav>
+
+	<aside th:replace="admin/layout :: admin-sidebar"></aside>
+
+
+	<div class="content-wrapper">
+		<!-- Content Header (Page header) -->
+		<div class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-6">
+						<h1 class="m-0 text-dark">Order Management</h1>
+					</div>
+					<!-- /.col -->
+					<div class="col-sm-6">
+						<ol class="breadcrumb float-sm-right">
+							<li class="breadcrumb-item"><a href="#">Home</a></li>
+							<li class="breadcrumb-item active">Order Management</li>
+						</ol>
+					</div>
+					<!-- /.col -->
+				</div>
+				<!-- /.row -->
+			</div>
+			<!-- /.container-fluid -->
+		</div>
+		<!-- /.content-header -->
+
+		<!-- Main content -->
+		<div class="content">
+			<div class="container text-center">
+				<div class="card card-info">
+
+					<div class="card-header">
+						<h3 class="card-title">Update order</h3>
+					</div>
+					<!-- form start -->
+					<form class="form-horizontal" data-toggle="validator" role="form"
+						action="#" th:action="@{/admin/add/order}" th:object="${payment}"
+						method="post" enctype="multipart/form-data">
+						<div class="card-body">
+							<div>
+								<label class="radio"> 
+									<input type="radio" id="cash" name="e" value="1" checked=""/>
+									 <span>By Cash(Pay at Cashier Area)</span>
+								</label> 
+								<label class="radio">
+									 <input type="radio" id="card"	name="e" value="2"/> 
+									 <span>By Card</span>
+								</label>
+								<div id="content" class="content">
+									<input type="number" class="card-form"
+										placeholder="card number" name="card-number"> <input
+										type="text" class="card-form" placeholder="date expire"
+										name="card-date-expire"> <input type="text"
+										class="card-form" placeholder="ccv" name="card-ccv">
+								</div>
+							</div>
+						</div>
+						<!-- /.card-body -->
+						<div class="card-footer">
+							<button type="submit" class="btn btn-info">Create/Update</button>
+
+							<button type="reset" class="btn btn-danger ">Reset</button>
+							<button type="button" class="btn btn-warning"
+								onclick="window.location.href='/admin/order'">Return to
+								list</button>
+						</div>
+						<!-- /.card-footer -->
+					</form>
+				</div>
+			</div>
+		</div>
+		<!-- /.content -->
+	</div>
+
+	<script>
+		$(document)
+				.ready(
+						function() {
+							$('#dataTable')
+									.DataTable(
+											{
+												responsive : true,
+												//sort by category
+
+												initComplete : function() {
+													// search by name or code
+													this
+															.api()
+															.columns(
+																	[ 0, 2, 3 ])
+															.every(
+																	function() {
+																		var column = this;
+																		$(
+																				'<input type="text" class="form-control" />')
+																				.appendTo(
+																						$(
+																								column
+																										.footer())
+																								.empty());
+																		$(
+																				'input',
+																				this
+																						.footer())
+																				.on(
+																						'keyup change clear',
+																						function() {
+																							if (column
+																									.search() !== this.value) {
+																								column
+																										.search(
+																												this.value)
+																										.draw();
+																							}
+																						});
+																	});
+													//drop down to select category
+													this
+															.api()
+															.columns([ 4, 5 ])
+															.every(
+																	function() {
+																		var column = this;
+																		var select = $(
+																				'<select class="form-control"><option value=""></option></select>')
+																				.appendTo(
+																						$(
+																								column
+																										.footer())
+																								.empty())
+																				.on(
+																						'change',
+																						function() {
+																							var val = $.fn.dataTable.util
+																									.escapeRegex($(
+																											this)
+																											.val());
+																							column
+																									.search(
+																											val ? '^'
+																													+ val
+																													+ '$'
+																													: '',
+																											true,
+																											false)
+																									.draw();
+																						});
+																		column
+																				.data()
+																				.unique()
+																				.sort()
+																				.each(
+																						function(
+																								d,
+																								j) {
+																							select
+																									.append('<option value="' + d + '">'
+																											+ d
+																											+ '</option>')
+																						});
+																	});
+												},
+
+											});
+						});
+	</script>
+</body>
+</html>
