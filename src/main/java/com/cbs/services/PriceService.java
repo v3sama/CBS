@@ -1,16 +1,13 @@
 package com.cbs.services;
 
-import com.cbs.model.Movie;
 import com.cbs.model.Price;
-import com.cbs.repository.MovieRepository;
 import com.cbs.repository.PriceRepository;
-import com.cbs.services.PriceService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -31,6 +28,18 @@ public class PriceService {
 	public void addPrice(Price price) {
 
 		priceRepository.save(price);
+	}
+
+//	public Optional<Price> findByID(long id){
+//		return priceRepository.findById(id);
+//	}
+
+	public Price findbyId2(long id){
+		return priceRepository.getOne(id);
+	}
+
+	public List<Price> findPricebyMovie(long id, boolean isHoliday){
+		return priceRepository.findPriceByMovieIdAndIsHoliday(id, isHoliday);
 	}
 
 	
