@@ -56,5 +56,10 @@ public class CinemaScreenService {
 		cinemaScreenRepository.save(entity);
 	}
 
+	public void remove(CinemaScreen entity) {
+		// TODO Auto-generated method stub
+		cinemaScreenRepository.delete(entity);
+	}
+
 
 }

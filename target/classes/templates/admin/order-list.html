@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>Order management</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=2" />
+<link rel="stylesheet" th:href="@{/css/adminlte.min.css}" />
+<link rel="stylesheet" th:href="@{/css/all.min.css}" />
+<link rel="stylesheet" th:href="@{/css/jquery.dataTables.min.css}" />
+<link rel="stylesheet" th:href="@{/css/custom.css}" />
+<script th:src="@{/scripts/jquery.js}"></script>
+<script th:src="@{/scripts/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/scripts/jquery.dataTables.min.js}"></script>
+
+</head>
+
+<body>
+	<nav th:replace="admin/layout :: admin-nav"></nav>
+
+	<aside th:replace="admin/layout :: admin-sidebar"></aside>
+
+	<div class="content-wrapper">
+		<!-- Content Header (Page header) -->
+		<div class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-6">
+						<h1 class="m-0 text-dark">Order Management</h1>
+						
+					</div>
+					<!-- /.col -->
+					<div class="col-sm-6">
+						<ol class="breadcrumb float-sm-right">
+							<li class="breadcrumb-item"><a href="#">Home</a></li>
+							<li class="breadcrumb-item active">Order Management</li>
+						</ol>
+					</div>
+					<!-- /.col -->
+				</div>
+				<!-- /.row -->
+			</div>
+			<!-- /.container-fluid -->
+		</div>
+		<!-- /.content-header -->
+
+		<!-- Main content -->
+		<div class="content">
+			<div class="container-fluid">
+				<div class="table-responsive" align="center">
+					<table id="dataTable" class="display" style="width: 100%">
+						<thead>
+							<tr>
+								<th>Order ID</th>
+								<th>Member ID</th>
+								<th>Member name</th>
+								<th>Member phone</th>
+								<th>Order Time</th>
+								<th>Amount</th>
+								<th>Status</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tfoot>
+							<tr>
+								<th></th>
+								<th></th>
+								<th></th>
+								<th></th>
+								<th></th>
+								<th></th>
+								<th></th>
+								<th></th>
+							</tr>
+						</tfoot>
+						<tbody>
+							<th:block th:each="order : ${orders}">
+								<tr>
+									<td th:text="${order.id}"></td>
+									<td th:text="${order.member.id}"></td>
+									<td th:text="${order.member.firstName + order.member.lastName}"></td>
+									<td th:text="${order.member.phone}"></td>
+									<td th:text="${order.orderTime}"></td>
+									<td th:text="${order.total}"></td>
+									<td th:text="${order.status}"></td>
+									<td>
+										<a th:href="@{/admin/viewDetails/order(orderId= ${order.id})}">
+											<button type="button" class="btn btn-info">View	details</button>
+										</a> 
+									
+									</td>	
+								</tr>
+							</th:block>
+						</tbody>
+					</table>
+				</div>
+
+
+			</div>
+		</div>
+		<!-- /.content -->
+	</div>
+
+	<div class="container text-center"></div>
+
+	<script>
+		$(document).ready(function() {
+			$('#dataTable').DataTable({
+	            responsive: true,
+	            //sort by category
+	           
+	            initComplete: function () {
+	                // search by name or code
+	                this.api().columns([0,1,2,3,4]).every(function () {
+	                    var column = this;
+	                    $('<input type="text" class="form-control" />')
+	                        .appendTo($(column.footer()).empty());
+	                    $('input', this.footer()).on('keyup change clear', function () {
+	                        if (column.search() !== this.value) {
+	                            column
+	                                .search(this.value)
+	                                .draw();
+	                        }
+	                    });
+	                });
+	              
+	            },
+	             
+	        });
+		});
+	</script>
+
+</body>
+</html>
