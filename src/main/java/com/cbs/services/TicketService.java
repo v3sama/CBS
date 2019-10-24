@@ -42,4 +42,10 @@ public class TicketService {
         ticketRepository.save(ticket);
     }
 
+    public List<Ticket> findBySessionId(long id) { return ticketRepository.findTicketByMovieSession_Id(id); }
+
+    public Ticket findBySeat_id(long id){
+        return ticketRepository.findTicketBySeat_Id(id);
+    }
+
 }

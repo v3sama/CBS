@@ -1,14 +1,10 @@
 package com.cbs.controllers;
 
-import com.cbs.dto.AddCinema;
 import com.cbs.model.Cinema;
-import com.cbs.model.Screen;
 import com.cbs.services.CinemaScreenService;
 import com.cbs.services.CinemaService;
-import com.cbs.services.DiscountService;
 import com.cbs.services.ProvinceService;
 import com.cbs.services.ScreenService;
-import com.cbs.services.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -34,7 +30,7 @@ public class CinemaController {
     
     @Autowired
     public CinemaController(CinemaService cinemaService, ScreenService screenService,
-    		CinemaScreenService cinemaScreenService,ProvinceService provinceService) {
+                            CinemaScreenService cinemaScreenService, ProvinceService provinceService) {
         this.cinemaService = cinemaService;
         this.screenService = screenService;
         this.cinemaScreenService = cinemaScreenService;

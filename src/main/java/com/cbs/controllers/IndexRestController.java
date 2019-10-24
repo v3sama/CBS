@@ -15,16 +15,14 @@ import java.util.List;
 public class IndexRestController {
     private final MovieService movieService;
     private final MovieSessionService movieSessionService;
-    private final CinemaScreenService cinemaScreenService;
     private final CinemaService cinemaService;
     private final ProvinceService provinceService;
 
 
     @Autowired
-    public IndexRestController(MovieService movieService, MovieSessionService movieSessionService, CinemaScreenService cinemaScreenService, CinemaService cinemaService, ProvinceService provinceService) {
+    public IndexRestController(MovieService movieService, MovieSessionService movieSessionService, CinemaService cinemaService, ProvinceService provinceService) {
         this.movieService = movieService;
         this.movieSessionService = movieSessionService;
-        this.cinemaScreenService = cinemaScreenService;
         this.cinemaService = cinemaService;
         this.provinceService = provinceService;
     }
@@ -100,5 +98,6 @@ public class IndexRestController {
         }
         return provinceIndexDTOS;
     }
+
 
 }
