@@ -9,45 +9,46 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 @Service
 public class ProvinceService {
 	private final ProvinceRepository provinceRepository;
 
-    @Autowired
-    public ProvinceService(ProvinceRepository provinceRepository) {
-        this.provinceRepository = provinceRepository;
-    }
-    
-    public List<Province> getAllProvince() {
-        return provinceRepository.findAll();
-    }
+	@Autowired
+	public ProvinceService(ProvinceRepository provinceRepository) {
+		this.provinceRepository = provinceRepository;
+	}
 
-    public Province getProvinceByID(Long id) {
-        return provinceRepository.getOne(id);
-    }
+	public List<Province> getAllProvince() {
+		return provinceRepository.findAll();
+	}
 
-    public void deleteProvinceByID(Long id) {
-        if(getProvinceByID(id) != null) {
-            provinceRepository.deleteById(id);
-        }
-    }
+	public Province getProvinceByID(Long id) {
+		return provinceRepository.getOne(id);
+	}
 
-    public void addProvince(Province province) {
-        provinceRepository.saveAndFlush(province);
-    }
+	public Province getProvinceByName(String provinceName) {
+		return provinceRepository.findByName(provinceName);
+	}
+
+	public void deleteProvinceByID(Long id) {
+		if (getProvinceByID(id) != null) {
+			provinceRepository.deleteById(id);
+		}
+	}
+
+	public void addProvince(Province province) {
+		provinceRepository.saveAndFlush(province);
+	}
 
 	public boolean exist(Long id) {
-		
+
 		return !provinceRepository.getOne(id).equals(null);
 	}
 
 	public boolean isUnique(String name) {
-		Long found=  provinceRepository.findAll().parallelStream().filter(p -> p.getName().equals(name)).count();
+		Long found = provinceRepository.findAll().parallelStream().filter(p -> p.getName().equals(name)).count();
 		return found == 0;
-		
+
 	}
 
-	
-	
 }
