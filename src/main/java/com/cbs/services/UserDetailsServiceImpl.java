@@ -54,11 +54,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		CustomUserDetail customUserDetail = new CustomUserDetail();
 		customUserDetail.setUser(user);
 		customUserDetail.setAuthorities(grantList);
-		customUserDetail.isEnabled();
 		return customUserDetail;
 		
-//		  return new org.springframework.security.core.userdetails.User(user.getEmail(),
-//		  user.getPassword(),user.isActive(), true,true,true, grantList);
+		 
 //		 
 	}
 }

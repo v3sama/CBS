@@ -32,18 +32,19 @@ import com.nulabinc.zxcvbn.Zxcvbn;
 
 @Controller
 public class RegisterController {
-	//private BCryptPasswordEncoder bCryptPasswordEncoder;
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	private UserService userService;
 	private EmailService emailService;
 	private RoleService roleService;
 
 	@Autowired
-	public RegisterController( UserService userService,
+	public RegisterController( UserService userService,BCryptPasswordEncoder bCryptPasswordEncoder,
 			EmailService emailService, RoleService roleService) {
 		//this.bCryptPasswordEncoder = bCryptPasswordEncoder;
 		this.userService = userService;
 		this.emailService = emailService;
 		this.roleService = roleService;
+		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
 	}
 
 	// Return registration form template
@@ -131,7 +132,7 @@ public class RegisterController {
 	@RequestMapping(value = "/confirm", method = RequestMethod.POST)
 	public ModelAndView processConfirmationForm(ModelAndView modelAndView, BindingResult bindingResult,
 			@RequestParam Map requestParams, RedirectAttributes redir) {
-		BCryptPasswordEncoder bCryptPasswordEncoder  = new BCryptPasswordEncoder();
+		
 		modelAndView.setViewName("/client/confirm");
 
 		Zxcvbn passwordCheck = new Zxcvbn();
