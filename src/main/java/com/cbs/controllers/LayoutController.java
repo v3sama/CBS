@@ -1,6 +1,6 @@
 package com.cbs.controllers;
 
-import java.security.Principal;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.cbs.model.Row;
 import com.cbs.model.Seat;
-import com.cbs.repository.SeatRepository;
+
 import com.cbs.services.RowService;
 import com.cbs.services.SeatServices;
-import com.cbs.services.UserService;
+
 
 @Controller
 public class LayoutController {

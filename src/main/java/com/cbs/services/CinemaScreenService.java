@@ -51,5 +51,10 @@ public class CinemaScreenService {
 		return cinemaScreenRepository.findCinemaScreenByCinema_Id(id);
 	}
 
+	public void add(CinemaScreen entity) {
+		// TODO Auto-generated method stub
+		cinemaScreenRepository.save(entity);
+	}
+
 
 }

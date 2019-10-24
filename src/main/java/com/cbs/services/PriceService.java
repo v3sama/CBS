@@ -33,9 +33,5 @@ public class PriceService {
 		priceRepository.save(price);
 	}
 
-	public List<Price> getPricesByMovie(Long movieId) {
-		return priceRepository.findAllPriceByMovie(movieId);
 	
-	}
-
 }

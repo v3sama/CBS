@@ -6,15 +6,21 @@ import com.cbs.model.MovieSession;
 import com.cbs.model.Province;
 import com.cbs.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.request.RequestAttributes;
 
 import java.time.LocalDateTime;
 import java.util.Dictionary;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -50,10 +56,19 @@ public class MovieSessionController {
 		// model.addAttribute("movie", movie);
 
 		model.addAttribute("provinces", provinceService.getAllProvince());
+		// tự động load cinemas thằng tỉnh đầu tiên
+		model.addAttribute("cinemas", provinceService.getAllProvince().get(0).getCinemas());
 		model.addAttribute("movies", movieService.getAllMovies());
-		// Province province = provinceService.getProvinceByName(value);
-		// Set<Cinema> cinemas = province.getCinemas();
-		// model.addAttribute("cinemas", cinemas);
+		return "/admin/add/session";
+	}
+
+	@RequestMapping(value = "/admin/add/session", method = RequestMethod.POST, params = { "province" })
+	public String addSession(Model model, @RequestParam("province") String value) {
+		model.addAttribute("movies", movieService.getAllMovies());
+		model.addAttribute("provinces", provinceService.getAllProvince());
+		Province province = provinceService.getProvinceByID(Long.parseLong(value));
+		Set<Cinema> cinemas = provinceService.getProvinceByID(Long.parseLong(value)).getCinemas();
+		model.addAttribute("cinemas", cinemas);
 
 		/*
 		 * model.addAttribute("movieSessionId", scheduleSession.getId());
@@ -66,23 +81,21 @@ public class MovieSessionController {
 		return "/admin/add/session";
 	}
 
-	@RequestMapping(value = "/admin/add/session", method = RequestMethod.POST, params = { "province" })
-	public String addSession(@RequestParam Long movieId, Model model, @RequestParam("province") String value) {
-		Movie movie = movieService.getMovieByID(movieId);
-		model.addAttribute("movie", movie);
-		model.addAttribute("provinces", provinceService.getAllProvince());
-		Province province = provinceService.getProvinceByName(value);
-		Set<Cinema> cinemas = province.getCinemas();
-		model.addAttribute("cinemas", cinemas);
-		/*
-		 * model.addAttribute("movieSessionId", scheduleSession.getId());
-		 * model.addAttribute("scheduleSession", scheduleSession);
-		 * model.addAttribute("cinemaId", cinemaService.getAllCinema());
-		 * model.addAttribute("allScreens",
-		 * cinemaService.getCinemaByID(cinemaId).getCinemaScreens());
-		 * model.addAttribute("allMovies", movieService.getAllMovies());
-		 */
-		return "/admin/add/session";
+	// mình gọi vào địa chỉ bên dưới, truyền và provinceId
+	//đặt debug xem nó có hgọi k
+	@RequestMapping(value = "/api/admin/getCinemaByProvince", method = RequestMethod.GET, params = { "provinceId" }
+	, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody  Map<Long, String> getCinemaByProvince(@RequestParam("provinceId") Long provinceId) {
+		Set<Cinema> cinemas = provinceService.getProvinceByID(provinceId).getCinemas();
+		
+		Map<Long, String> cinemasMap = new HashMap<Long, String>(); 
+		for (Cinema cinema : cinemas) {
+			cinemasMap.put(cinema.getId(),cinema.getTitle());
+		}
+		
+		
+		
+		return cinemasMap;
 	}
 
 	@RequestMapping(value = "/admin/edit/session", method = RequestMethod.GET)

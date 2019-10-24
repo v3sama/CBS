@@ -62,10 +62,10 @@ public class IndexRestController {
     }
 
     //Lấy List Cinema
-    @GetMapping(value = "/api/cinemeList", produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody Iterable<CinemaIndexClientDTO> getCinemas() throws Exception{
+    @GetMapping(value = "/api/cinemaList", produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody Iterable<CinemaIndexClientDTO> getCinemaByProvince(@RequestParam(value = "provinceId") String provinceId) throws Exception{
         List<CinemaIndexClientDTO> cinemaListDTO = new ArrayList<>();
-        List<Cinema> cinemaList = cinemaService.getAllCinema();
+        List<Cinema> cinemaList = cinemaService.getCinemaByProvince(Long.parseLong(provinceId));
 //        List<SessionList2DTO> sessionListDTOS = movieSessionService.findSessionByCinemaAndMovie();
 //        System.out.println(sessionListDTOS);
         for (Cinema cinema: cinemaList) {

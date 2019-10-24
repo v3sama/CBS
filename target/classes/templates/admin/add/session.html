@@ -66,7 +66,8 @@
 								<label class="col-sm-2 control-label">Province</label>
 								<div class="col-sm-4">
 									<select class="form-control" id="province" name="province"
-										onchange=this.form.submit()>
+										onchange="getCinemaByProvince()">
+										<!-- onchange=this.form.submit()> -->
 										<th:block th:each="province : ${provinces}">
 											<option th:value="${province.id}" th:text="${province.name}"></option>
 										</th:block>
@@ -76,7 +77,7 @@
 								<div class="col-sm-4">
 									<select id="cinemas" class="form-control" name="cinemas">
 										<th:block th:each="cinema : ${cinemas}">
-											<option th:value=${cinema.id} th:text="${cinema.name}"></option>
+											<option th:value=${cinema.id} th:text="${cinema.title}"></option>
 									</select>
 								</div>
 								<label class="col-sm-2 control-label">Movie</label>
@@ -138,7 +139,34 @@
 		<!-- /.content -->
 	</div>
 	<script>
-		
+		function getCinemaByProvince() {
+			//lay du lieu tu id thi dung #, tu class thi dung .
+			var provinceId = $("#province").val();
+
+			$.ajax({
+				'url' : 'http://localhost:8080/api/admin/getCinemaByProvince',
+				'type' : 'GET',
+				'data' : {
+					'provinceId' : provinceId
+				},
+				'success' : function(data) {
+					//xoa het may cái option hien tai
+					$("#cinemas").html('');
+
+					//cái này xử lý giá trị server trả về
+					$.each(data, function(index, value) {
+						$("#cinemas").append(
+								"<option value='"+index+"'>" + value
+										+ "</option>");
+					});
+
+				},
+				'error' : function(request, error) {
+					//lỗi ko gửi đc request lên server
+					alert("Request: " + JSON.stringify(request));
+				}
+			});
+		}
 	</script>
 
 </body>
