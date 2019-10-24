@@ -35,4 +35,8 @@ public class SeatServices {
 		repository.saveAll(seats);
 		
 	}
+
+	public List<Seat> findVipSeat(){
+		return repository.findByVIPTrue1();
+	}
 }

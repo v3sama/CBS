@@ -8,6 +8,7 @@
 <link rel="stylesheet" th:href="@{/css/adminlte.min.css}" />
 <link rel="stylesheet" th:href="@{/css/all.min.css}" />
 <link rel="stylesheet" th:href="@{/css/jquery.dataTables.min.css}" />
+<link rel="stylesheet" th:href="@{/css/custom.css}" />
 <script th:src="@{/scripts/jquery.js}"></script>
 <script th:src="@{/scripts/bootstrap.bundle.min.js}"></script>
 <script th:src="@{/scripts/jquery.dataTables.min.js}"></script>
@@ -75,7 +76,7 @@
 									<td th:text="${user.email}"></td>
 									<td th:text="${user.firstName + user.lastName}"></td>
 									<td th:text="${user.phone}"></td>
-									<td><input type="checkbox" th:checked="${user.active}" />
+									<td><input type="checkbox" th:checked="${user.active}" th:vale="${user.active}"/>
 									</td>
 
 
@@ -114,7 +115,28 @@
 
 	<script>
 	$(document).ready(function() {
-		 $('#dataTable').DataTable();
+		$('#dataTable').DataTable({
+            responsive: true,
+            //sort by category
+           
+            initComplete: function () {
+                // search by name or code
+                this.api().columns([0,1,2]).every(function () {
+                    var column = this;
+                    $('<input type="text" class="form-control" />')
+                        .appendTo($(column.footer()).empty());
+                    $('input', this.footer()).on('keyup change clear', function () {
+                        if (column.search() !== this.value) {
+                            column
+                                .search(this.value)
+                                .draw();
+                        }
+                    });
+                });
+              
+            },
+             
+        });
 	});
 	</script>
 
