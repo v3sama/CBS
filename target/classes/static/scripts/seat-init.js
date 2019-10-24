@@ -30,7 +30,7 @@ $(document).ready(function () {
 
             },
             naming: {
-                rows: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'],
+                rows: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K'],
                 top: false,
                 getLabel: function (character, row, column) {
                     return "";

@@ -7,22 +7,10 @@ import java.util.List;
 
 @Entity
 public class ScheduleIndexClientDTO {
-    String movie_title;
+    int movieId;
+    String movieTitle;
     List<SessionListDTO> sessionList;
 
-    public List<SessionListDTO> getSessionList() {
-        return sessionList;
-    }
 
-    public void setSessionList(List<SessionListDTO> sessionList) {
-        this.sessionList = sessionList;
-    }
 
-    public String getMovie_title() {
-        return movie_title;
-    }
-
-    public void setMovie_title(String movie_title) {
-        this.movie_title = movie_title;
-    }
 }

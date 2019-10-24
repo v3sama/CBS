@@ -1,14 +1,8 @@
 package com.cbs.services;
 
 import com.cbs.model.Cinema;
-import com.cbs.model.CinemaScreen;
-import com.cbs.model.Screen;
 import com.cbs.repository.CinemaRepository;
-import com.cbs.repository.CinemaScreenRepository;
-import com.cbs.repository.ScreenRepository;
-import com.cbs.services.CinemaService;
 
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -16,11 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 @Service
 public class CinemaService {
@@ -32,11 +22,8 @@ public class CinemaService {
 	private final CinemaRepository cinemaRepository;
 
 	@Autowired
-	public CinemaService(CinemaRepository cinemaRepository, ScreenRepository screenRepository , 
-			CinemaScreenRepository cinemaScreenRepository){
+	public CinemaService(CinemaRepository cinemaRepository){
 		this.cinemaRepository = cinemaRepository;
-
-
 	}
 
 	public Page<Cinema> getAllCinemaPage(Integer pageNumber) {
@@ -66,5 +53,8 @@ public class CinemaService {
 		return cinemaRepository.findById(id).get();
 	}
 
+	public List<Cinema> getCinemaByProvince(long id) {
+		return cinemaRepository.findCinemaByProvince_Id(id);
+	}
 	
 }
