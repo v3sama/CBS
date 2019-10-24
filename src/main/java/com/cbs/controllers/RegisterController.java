@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -161,4 +162,27 @@ public class RegisterController {
 		modelAndView.addObject("successMessage", "Your password has been set!");
 		return modelAndView;
 	}
+	
+//	//Send Mail Reset Password
+//	@RequestMapping("/signup-success")
+//	public String SignupSuccess(){
+//		//Create user
+//		
+//		User user = new User();
+//		
+//		user.setFirstName("hung");
+//		user.setLastName("nguyen");
+//		user.setEmail("hungnguyenhoang223@gmail.com");
+//		
+//		//send a email 
+//		
+//		try {
+//			emailService.sendEmail(user);
+//		}catch (MailException e) {
+//			
+//		}
+//		return "Please! Sign in your gmail to "
+		
+//	}
+	
 }
