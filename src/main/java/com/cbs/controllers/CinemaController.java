@@ -1,10 +1,15 @@
 package com.cbs.controllers;
 
+import com.cbs.dto.CinemaCreationDTO;
 import com.cbs.model.Cinema;
+import com.cbs.model.CinemaScreen;
+import com.cbs.model.Screen;
 import com.cbs.services.CinemaScreenService;
 import com.cbs.services.CinemaService;
+import com.cbs.services.DiscountService;
 import com.cbs.services.ProvinceService;
 import com.cbs.services.ScreenService;
+import com.cbs.services.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,8 +21,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -30,7 +39,7 @@ public class CinemaController {
     
     @Autowired
     public CinemaController(CinemaService cinemaService, ScreenService screenService,
-                            CinemaScreenService cinemaScreenService, ProvinceService provinceService) {
+    		CinemaScreenService cinemaScreenService,ProvinceService provinceService) {
         this.cinemaService = cinemaService;
         this.screenService = screenService;
         this.cinemaScreenService = cinemaScreenService;
@@ -69,19 +78,38 @@ public class CinemaController {
 	 */
     @RequestMapping(value = "/admin/add/cinema", method = RequestMethod.GET)
     public String addCinema(Model model) {
-    	
-    	model.addAttribute("cinema", new Cinema());
+    	CinemaCreationDTO cinemaForm = new CinemaCreationDTO();
+    	cinemaForm.setCinema(new Cinema());
+    	List<Screen> screens =  screenService.getAllScreen();
+    	List<CinemaScreen> list =  new ArrayList<CinemaScreen>();
+
+    	for (Screen screen :screens) {
+    		CinemaScreen cs = new CinemaScreen();
+    		cs.setScreen(screen);
+    		list.add(cs);
+		}
+    	cinemaForm.setCinemaScreens(list);
+    	model.addAttribute("cinemaForm", cinemaForm);
         model.addAttribute("provinces", provinceService.getAllProvince());
-        model.addAttribute("screens", screenService.getAllScreen());
         
         return "/admin/add/cinema";
     }
 
     @RequestMapping(value = "/admin/add/cinema", method = RequestMethod.POST)
-    public String addCinema(@Valid Cinema cinema, BindingResult bindingResult, Model model, String[] screens, String[] rows) {
+    public String addCinema(@Valid CinemaCreationDTO cinemaForm, BindingResult bindingResult, Model model, String[] screens, String[] rows) {
+        Cinema cinema = cinemaForm.getCinema();
         cinemaService.addCinema(cinema);
         
-        Map<Long,Integer> screenList = new HashMap<Long,Integer>();
+        for (CinemaScreen cs  : cinemaForm.getCinemaScreens()) {
+        	if(cs.getRows() != 0) {
+        		cs.setCinema(cinema);
+    			cinemaScreenService.add(cs);
+        	}
+		}
+        
+    	
+        
+      /*  Map<Long,Integer> screenList = new HashMap<Long,Integer>();
         
         for (int i = 0; i < screens.length; i++) {
         	Long screenId = Long.parseLong(screens[i]);
@@ -89,7 +117,7 @@ public class CinemaController {
         	
         	screenList.put(screenId,row);
 		}
-        cinemaScreenService.addScreenToCinema(cinema,screenList);
+        cinemaScreenService.addScreenToCinema(cinema,screenList);*/
         
         return "redirect:/admin/cinema";
     }
@@ -119,8 +147,10 @@ public class CinemaController {
 
     @RequestMapping(value = "/admin/edit/cinema", method = RequestMethod.GET, params = {"id"})
     public String editCinema(@RequestParam Long id, Model model) {
-    	Cinema cinema = cinemaService.getCinemaByID(id);
-        model.addAttribute("cinema", cinema);
+    	CinemaCreationDTO  cinemaForm = new CinemaCreationDTO();
+    	cinemaForm.setCinema(cinemaService.getCinemaByID(id));
+    //	cinemaForm.setCinemaScreens(cinemaService.getCinemaByID(id).getCinemaScreens());
+        model.addAttribute("cinemaForm", cinemaForm);
         model.addAttribute("provinces", provinceService.getAllProvince());
         model.addAttribute("screens", screenService.getAllScreen());
     

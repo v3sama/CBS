@@ -50,11 +50,11 @@
 					</div>
 					<!-- form start -->
 					<form class="form-horizontal" data-toggle="validator" role="form"
-						action="#" th:action="@{/admin/add/cinema}" th:object="${cinema}"
+						action="#" th:action="@{/admin/add/cinema}" th:object="${cinemaForm}"
 						method="post">
 						<div class="card-body">
 							<div class="form-group row">
-								<input class="form-control" type="hidden" th:field="*{id}" />
+								<input class="form-control" type="hidden" th:field="*{cinema.id}" />
 							</div>
 
 							<div class="form-group row">
@@ -62,7 +62,7 @@
 								<div class="col-sm-10">
 									<input class="form-control" type="text"
 										placeholder=" enter title here" required="required"
-										th:field="*{title}" />
+										th:field="*{cinema.title}" />
 									<div class="help-block with-errors"></div>
 								</div>
 							</div>
@@ -71,16 +71,16 @@
 								<div class="col-sm-10">
 									<input class="form-control" type="text"
 										placeholder="enter address here" required="required"
-										th:field="*{address}" />
+										th:field="*{cinema.address}" />
 									<div class="help-block with-errors"></div>
 								</div>
 							</div>
 							<div class="form-group row">
 								<label class="col-sm-2 control-label">Phone</label>
 								<div class="col-sm-10">
-									<input class="form-control" type="text"
+									<input class="form-control" type="number"
 										placeholder="enter phone here" required="required"
-										th:field="*{phone}" data-maxlength="12" />
+										th:field="*{cinema.phone}" data-maxlength="12" />
 
 									<div class="help-block with-errors"></div>
 								</div>
@@ -88,7 +88,7 @@
 							<div class="form-group row">
 								<label class="col-sm-2 control-label">Province</label>
 								<div class="col-sm-10">
-									<select th:field="*{province}" class="form-control">
+									<select th:field="*{cinema.province}" class="form-control">
 										<th:block th:each="province : ${provinces}">
 											<option th:value="${province.id}" th:text="${province.name}"></option>
 										</th:block>
@@ -107,22 +107,24 @@
 											</tr>
 										</thead>
 										<tbody>
-											<!-- <tr th:each="screen, itemStat: *{cinemaScreens}">
+											<tr th:each="cinemaScreen, itemStat: *{cinemaScreens}">
 												
 												<td>
-													<input  type="checkbox" th:field="*{cinemaScreens[__${itemStat.index}__].screenId}"
-													/>
+													<input class="box" type="checkbox" th:field="*{cinemaScreens[__${itemStat.index}__].screen.id}"
+													th:value="${cinemaScreen.screen.id}" />
 												</td>
-												<td th:text="${screen.title}">
+												<td  th:text="${cinemaScreen.screen.title}" >
+													
 													
 												</td>
 												<td>
-													<input  type="number" th:field="*{cinemaScreens[__${itemStat.index}__].rows}"/>
+													<input  class="form-control" type="number" th:id="${cinemaScreen.screen.id}"
+													th:field="*{cinemaScreens[__${itemStat.index}__].rows}"/>
 												</td>
 												
-											</tr> -->
-											<tr th:each="screen,itemStat : ${screens}">
-												<td><input type="checkbox"  th:field="*{screens[__${itemStat.index}__].screenId}"
+											</tr>
+											<!-- <tr th:each="screen,itemStat : ${screens}">
+												<td><input type="checkbox"  name="cinemaScreens[" th:text=${itemStat.index} ".screenId"
 													th:value="${screen.id}" /></td>
 												<td th:text="${screen.title}" th:field="*{cinemaScreens}">
 
@@ -130,14 +132,14 @@
 												<td><input class="form-control" type="text"
 													th:field="*{cinemaScreens}" /></td>
 
-												<!-- 	<td><input class="box" type="checkbox" name="screens"
+													<td><input class="box" type="checkbox" name="screens"
 														th:value="${screen.id}"></td>
 													<td><label class="form-check-label"
 														th:text="${screen.title}"> </label></td>
 													<td><input class="form-control" type="number"
 														name="rows" disabled="true" th:id="${screen.id}">
-													</td> -->
-											</tr>
+													</td>
+											</tr> -->
 
 										</tbody>
 									</table>
@@ -164,6 +166,10 @@
 
 	<script>
 		$(document).ready(function() {
+			$('.box').each(function(){
+				$(this).prop("checked",false);
+				$('#' + $(this).val()).prop('disabled', true);
+			});
 			$('.box').click(function() {
 				var set = $(this).is(':checked') ? false : true;
 				$('#' + $(this).val()).prop('disabled', set);
