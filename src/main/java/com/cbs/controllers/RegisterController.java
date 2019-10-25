@@ -163,26 +163,6 @@ public class RegisterController {
 		return modelAndView;
 	}
 	
-//	//Send Mail Reset Password
-//	@RequestMapping("/signup-success")
-//	public String SignupSuccess(){
-//		//Create user
-//		
-//		User user = new User();
-//		
-//		user.setFirstName("hung");
-//		user.setLastName("nguyen");
-//		user.setEmail("hungnguyenhoang223@gmail.com");
-//		
-//		//send a email 
-//		
-//		try {
-//			emailService.sendEmail(user);
-//		}catch (MailException e) {
-//			
-//		}
-//		return "Please! Sign in your gmail to "
-		
-//	}
+
 	
 }
