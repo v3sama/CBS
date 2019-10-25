@@ -53,11 +53,12 @@
 
 div.seatCharts-container {
 	/* margin: 50px 0 0 40px; */
+	width: 700px;
 	padding: 20px;
 	float: left;
 	position: absolute;
 	top: 50%;
-	left: 50%;
+	left: 60%;
 	transform: translate(-50%, -50%);
 }
 

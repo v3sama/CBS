@@ -98,6 +98,7 @@ public class MovieController {
         Movie movie = movieForm.getMovie();
         movieService.addMovie(movie);
         this.doUpload(request,movie,movieForm);
+        movieService.addMovie(movie);
         return "redirect:/admin/movie";
     }
 
@@ -115,7 +116,7 @@ public class MovieController {
         // 
         List<File> uploadedFiles = new ArrayList<File>();
         List<String> failedFiles = new ArrayList<String>();
- 
+        int i= 0;
         for (MultipartFile fileData : fileDatas) {
  
             // Tên file gốc tại Client.
@@ -131,8 +132,7 @@ public class MovieController {
                 		 serverPath.mkdirs();
                 	 
                    // File serverFile = new File(uploadRootDir.getAbsolutePath() + File.separator + name);
-                    File serverFile = new File("C:" + File.separator + File.separator + "Uploads" + File.separator + "images" + File.separator + "movies"
-                    				+ File.separator + movie.getId() + File.separator + name);
+                    File serverFile = new File(serverPath.getPath() + File.separator + name);
                     
                     BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
                     stream.write(fileData.getBytes());
@@ -140,6 +140,11 @@ public class MovieController {
                     // 
                     uploadedFiles.add(serverFile);
                     System.out.println("Write file: " + serverFile);
+                    if(i==0)
+                    	movie.setThumbnail(serverFile.getPath());
+                    else
+                    	movie.setImage(serverFile.getPath());
+                    i++;
                 } catch (Exception e) {
                     System.out.println("Error Write file: " + name);
                     failedFiles.add(name);

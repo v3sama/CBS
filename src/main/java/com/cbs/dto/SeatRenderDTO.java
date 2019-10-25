@@ -1,13 +1,12 @@
 package com.cbs.dto;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class SeatRenderDTO {
 
     private ArrayList<String> rowMap;
-    private String priceVip;
-    private String priceThuong;
+    private float priceVip;
+    private float priceThuong;
 
     public ArrayList<String> getRowMap() {
         return rowMap;
@@ -18,19 +17,19 @@ public class SeatRenderDTO {
     }
 
 
-    public String getPriceVip() {
+    public float getPriceVip() {
         return priceVip;
     }
 
-    public void setPriceVip(String priceVip) {
+    public void setPriceVip(float priceVip) {
         this.priceVip = priceVip;
     }
 
-    public String getPriceThuong() {
+    public float getPriceThuong() {
         return priceThuong;
     }
 
-    public void setPriceThuong(String priceThuong) {
+    public void setPriceThuong(float priceThuong) {
         this.priceThuong = priceThuong;
     }
 }

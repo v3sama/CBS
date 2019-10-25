@@ -13,7 +13,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CustomUserDetail implements UserDetails{
+public class CustomUserDetail  implements UserDetails{
 
     private static final long serialVersionUID = 1L;
     private User user;
@@ -21,14 +21,15 @@ public class CustomUserDetail implements UserDetails{
     Set<GrantedAuthority> authorities=null;
     
 
-	/*
-	 * public Collection<? extends GrantedAuthority> getAuthorities() { return
-	 * authorities; }
-	 * 
-	 * public void setAuthorities(Set<GrantedAuthority> authorities) {
-	 * this.authorities=authorities; }
-	 */
 
+    public String getFname() {
+        return user.getFirstName() + " " + user.getLastName();
+    }
+    
+    public Long getUserId() {
+        return user.getId();
+    }
+    
     public String getPassword() {
         return user.getPassword();
     }
@@ -40,25 +41,25 @@ public class CustomUserDetail implements UserDetails{
 	@Override
 	public boolean isAccountNonExpired() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isAccountNonLocked() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isCredentialsNonExpired() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isEnabled() {
 		// TODO Auto-generated method stub
-		return false;
+		return user.isActive();
 	}
 
 
