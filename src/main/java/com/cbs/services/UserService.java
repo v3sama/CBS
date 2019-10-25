@@ -80,5 +80,10 @@ public class UserService  {
 		userRepository.save(user);
 	}
 
+	public void updatePassword(String password, Long userId) {
+        userRepository.updatePassword(password, userId);
+    }
+	
+
 }
 
