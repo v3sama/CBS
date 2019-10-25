@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface CinemaRepository extends JpaRepository<Cinema, Long> {
 
-    List<Cinema> findCinemaByProvince_Id(long id);
+	List<Cinema> findCinemaByProvince_Id(long id);
 }

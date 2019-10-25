@@ -156,14 +156,16 @@ public class BookTicketRestController {
     @PostMapping(value = "api/review")
     public String nhanGhe(@RequestBody SeatReceiveDTO seatReceiveDTO) throws Exception{
         CustomUserDetail loggedInUser = (CustomUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = userService.findById(loggedInUser.getUserId());
+        User user = userService.findUserS1(loggedInUser.getUserId());
+//        User user = userService.findUserS1(6l);
+
         SOrder order = new SOrder();
         order.setMember(user);
         orderService.addOrder(order);
         long orderId = order.getId();
         //gán để lát đưa sang trang thanh toán
         listSelectedSeats = seatReceiveDTO.getDataghe();
-
+        System.out.println(listSelectedSeats.toString());
         try{
             Map<String, Integer> doubleBraceMap = new HashMap<String, Integer>() {{
                 put("A", 1);
@@ -226,6 +228,7 @@ public class BookTicketRestController {
 //
 //        }
         ReviewOrderDTO reviewOrderDTO = new ReviewOrderDTO();
+        System.out.println(listSelectedSeats.toString());
         reviewOrderDTO.setGhe(listSelectedSeats);
         reviewOrderDTO.setNgay(xuatChieu.getTime().toLocalDate().toString());
         reviewOrderDTO.setSuatchieu(xuatChieu.getTime().toLocalTime().toString());

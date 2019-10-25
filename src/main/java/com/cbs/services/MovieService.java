@@ -16,59 +16,61 @@ import java.util.List;
 @Service
 public class MovieService {
 
-    private static final int PAGE_SIZE = 10;
+	private static final int PAGE_SIZE = 10;
 
-    private final MovieRepository movieRepository;
+	private final MovieRepository movieRepository;
 
-    @Autowired
-    public MovieService(MovieRepository movieRepository) {
-        this.movieRepository = movieRepository;
-    }
+	@Autowired
+	public MovieService(MovieRepository movieRepository) {
+		this.movieRepository = movieRepository;
+	}
 
-    public List<Movie> getAllMovies() {
-        return movieRepository.findAll();
-    }
+	public List<Movie> getAllMovies() {
+		return movieRepository.findAll();
+	}
 
-    public Page<Movie> getAllMoviesPage(Integer pageNumber) {
-        PageRequest request =
-               PageRequest.of(pageNumber - 1, PAGE_SIZE, Sort.Direction.ASC, "title");
-        return movieRepository.findAll(request);
-    }
+	public List<Movie> getAllActiveMovies() {
+		return movieRepository.getAllActiceMovie();
+	}
 
-    public Movie getMovieByID(Long id) {
-        return movieRepository.findById(id).get();
-    }
+	public Page<Movie> getAllMoviesPage(Integer pageNumber) {
+		PageRequest request = PageRequest.of(pageNumber - 1, PAGE_SIZE, Sort.Direction.ASC, "title");
+		return movieRepository.findAll(request);
+	}
 
-    public Page<Movie> searchByTittle(String movieTittle, Integer pageNumber) {
-        PageRequest request =
-                 PageRequest.of(pageNumber - 1, PAGE_SIZE, Sort.Direction.ASC, "title");
-        return movieRepository.findByTitleContaining(movieTittle, request);
-    }
+	public Movie getMovieByID(Long id) {
+		return movieRepository.findById(id).get();
+	}
 
-    public List<Movie> getLast() {
-        return movieRepository.findAll();
-    }
+	public Page<Movie> searchByTittle(String movieTittle, Integer pageNumber) {
+		PageRequest request = PageRequest.of(pageNumber - 1, PAGE_SIZE, Sort.Direction.ASC, "title");
+		return movieRepository.findByTitleContaining(movieTittle, request);
+	}
 
-    public Movie addMovie(Movie movie) {
-        return movieRepository.saveAndFlush(movie);
-    }
+	public List<Movie> getLast() {
+		return movieRepository.findAll();
+	}
 
-    public void deleteMovieByID(Long id) {
-        if (getMovieByID(id) != null) {
-            movieRepository.deleteById(id);
-        }
-    }
+	public Movie addMovie(Movie movie) {
+		return movieRepository.saveAndFlush(movie);
+	}
 
-    public List<Movie> getMovieActive(){
-        return movieRepository.findByStatusTrue();
-    }
+	public void deleteMovieByID(Long id) {
+		if (getMovieByID(id) != null) {
+			movieRepository.deleteById(id);
+		}
+	}
+
+	public List<Movie> getMovieActive() {
+		return movieRepository.findByStatusTrue();
+	}
 
 //    public List<Movie> getMovieDangChieu(Date date) {
 //        return movieRepository.findByDate_endAfter(date);
 //    }
 
-    public List<Movie> getMovieSapChieu(LocalDate date) {
-        return movieRepository.findMovieSapChieu(date.toString());
-    }
-    
+	public List<Movie> getMovieSapChieu(LocalDate date) {
+		return movieRepository.findMovieSapChieu(date.toString());
+	}
+
 }
