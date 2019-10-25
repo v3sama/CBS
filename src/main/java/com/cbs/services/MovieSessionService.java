@@ -1,11 +1,8 @@
 package com.cbs.services;
 
 import com.cbs.dto.SessionList2DTO;
-<<<<<<< HEAD
 import com.cbs.dto.SessionListDTO;
 import com.cbs.model.Movie;
-=======
->>>>>>> branch 'dev' of https://github.com/v3sama/CBS.git
 import com.cbs.model.MovieSession;
 import com.cbs.repository.MovieSessionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
