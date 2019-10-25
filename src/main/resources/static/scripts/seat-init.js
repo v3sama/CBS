@@ -176,6 +176,7 @@ $.getMovieDetail = function () {
 
 function checkReview() {
     let dataGhe = gomGhe();
+    console.log(dataGhe)
     if (dataGhe.length == 0){
         alert("Vui long chon ghe")
     }else{

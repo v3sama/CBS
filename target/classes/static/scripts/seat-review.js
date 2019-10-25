@@ -15,7 +15,8 @@ cash.addEventListener("click", function () {
 
 $(document).ready(function () {
     let dataOrder = $.getMovieData();
-    $('#confirm-seat').append(itemData.toString())
+    console.log(dataOrder)
+    $('#confirm-seat').append(dataOrder.ghe.toString())
     $('#confirm-date').append(dataOrder.ngay);
     $('#confirm-session').append(dataOrder.suatchieu);
 })

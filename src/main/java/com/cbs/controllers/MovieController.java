@@ -96,7 +96,11 @@ public class MovieController {
 		 */
         Movie movie = movieForm.getMovie();
         movieService.addMovie(movie);
-        this.doUpload(request,movie,movieForm);
+        try {
+            this.doUpload(request,movie,movieForm);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         movieService.addMovie(movie);
         return "redirect:/admin/movie";
     }

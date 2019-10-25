@@ -56,6 +56,10 @@ public class UserService  {
 
     }
 
+    public User findUserS1(long id){
+        return userRepository.findUserById(id);
+    }
+
     public void update(User user) {
         userRepository.saveAndFlush(user);
     }
