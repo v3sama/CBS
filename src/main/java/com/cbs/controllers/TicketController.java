@@ -32,6 +32,12 @@ public class TicketController {
         this.rowService = rowService;
     }
 
+    @RequestMapping(value = "/admin/bookTicket", method = RequestMethod.GET, params = {"movieId"})
+    public String bookTicket(@RequestParam Long movieId, Model model) {
+       // model.addAttribute("ticket", ticketService.findById(ticketId));
+        return "/admin/add/bookTicket";
+    }
+
     @RequestMapping(value = "/admin/edit/ticket", method = RequestMethod.GET, params = {"ticketId"})
     public String editTicket(@RequestParam Long ticketId, Model model) {
         model.addAttribute("ticket", ticketService.findById(ticketId));

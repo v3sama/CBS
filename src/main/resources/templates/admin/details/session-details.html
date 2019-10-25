@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Add/Edit MovieSession</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=2" />
+<link rel="stylesheet" th:href="@{/css/adminlte.min.css}" />
+<link rel="stylesheet" th:href="@{/css/all.min.css}" />
+
+<script th:src="@{/scripts/jquery.min.js}"></script>
+<script th:src="@{/scripts/bootstrap.bundle.min.js}"></script>
+</head>
+<body>
+
+	<nav th:replace="admin/layout :: admin-nav"></nav>
+
+	<aside th:replace="admin/layout :: admin-sidebar"></aside>
+
+
+	<div class="content-wrapper">
+		<!-- Content Header (Page header) -->
+		<div class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-6">
+						<h1 class="m-0 text-dark">Movie Session Details</h1>
+					</div>
+					<!-- /.col -->
+					<div class="col-sm-6">
+						<ol class="breadcrumb float-sm-right">
+							<li class="breadcrumb-item"><a href="#">Home</a></li>
+							<li class="breadcrumb-item active">Movie Session Details</li>
+						</ol>
+					</div>
+					<!-- /.col -->
+				</div>
+				<!-- /.row -->
+			</div>
+			<!-- /.container-fluid -->
+		</div>
+		<!-- /.content-header -->
+
+		<!-- Main content -->
+		<div class="content">
+			<div class="container text-center">
+				<div class="card card-info">
+
+					<div class="card-header">
+						<h3 class="card-title">Movie Session</h3>
+					</div>
+					<!-- form start -->
+					<!-- 					<form class="form-horizontal" data-toggle="validator" role="form" -->
+					<!-- 						action="#" th:action="@{/admin/add/session}" th:object="${forms}" -->
+					<!-- 						method="post"> -->
+					<div class="card-body">
+						<!-- 							<div class="form-group row"> -->
+						<!-- 								<label class="col-sm-2 control-label">Movie</label> <label -->
+						<!-- 									class="col-sm-10 form-control" th:text="${movie.title}"></label> -->
+						<!-- 							</div> -->
+						<!-- 							<div class="form-group row"> -->
+						<!-- 								<label class="col-sm-2 control-label">Movie Format</label> <label -->
+						<!-- 									class="col-sm-10 form-control" -->
+						<!-- 									th:text="${movie.formatType.name}"></label> -->
+						<!-- 							</div> -->
+						<div class="form-group row">
+							<label class="col-sm-2 control-label">Province</label>
+							<div class="col-sm-4" th:text="provinceDetails"></div>
+							<label class="col-sm-2 control-label">Cinema</label>
+							<div class="col-sm-4" th:text="cinemaDetails"></div>
+							<label class="col-sm-2 control-label">Movie</label>
+							<div class="col-sm-4" th:text="movieDetails"></div>
+							<label class="col-sm-2 control-label">Date</label>
+							<div class="col-sm-4" th:text="dateDetails"></div>
+						</div>
+
+						<table class="table">
+							<thead>
+								<tr th:each="cinemaScreen : ${cinemaScreens}">
+									<th th:text="${cinemaScreen}"></th>
+								</tr>
+							</thead>
+							<tbody>
+								<th:block th:each="movieSession : ${movieSessions}">
+									<tr>
+										<td th:text="${movieSession.}"></td>
+									</tr>
+							</tbody>
+						</table>
+					</div>
+					<!-- /.card-body -->
+					<div class="card-footer">
+						<button type="submit" class="btn btn-info">Create</button>
+						<!-- 							<button type="reset" class="btn btn-danger ">Reset</button> -->
+						<!-- 							<button type="button" class="btn btn-warning" -->
+						<!-- 								onclick="window.location.href='/admin/MovieSession'">Return -->
+						<!-- 								to list</button> -->
+					</div>
+					<!-- /.card-footer -->
+					<!-- 					</form> -->
+				</div>
+			</div>
+		</div>
+		<!-- /.content -->
+	</div>
+	<!-- 	<script> -->
+	// function getCinemaByProvince() { // //lay du lieu tu id thi dung #,
+	tu class thi dung . // var provinceId = $("#province").val(); //
+	$.ajax({ // 'url' :
+	'http://localhost:8080/api/admin/getCinemaByProvince', // 'type' :
+	'GET', // 'data' : { // 'provinceId' : provinceId // }, // 'success' :
+	function(data) { // //xoa het may cái option hien tai //
+	$("#cinemas").html(''); // //cái này xử lý giá trị server trả về //
+	$.each(data, function(index, value) { // $("#cinemas").append( // "
+	<option value='"+index+"'>" + value // + "</option>
+	"); // }); // }, // 'error' : function(request, error) { // //lỗi ko
+	gửi đc request lên server // alert("Request: " +
+	JSON.stringify(request)); // } // }); // }
+	<!-- 	</script> -->
+
+</body>
+</html>
