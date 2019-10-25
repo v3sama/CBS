@@ -53,6 +53,7 @@ public class Movie extends BaseEntity {
 	}
 
 	public Movie(Movie movie) {
+		
 		this.duration = movie.duration;
 		this.title = movie.title;
 	}

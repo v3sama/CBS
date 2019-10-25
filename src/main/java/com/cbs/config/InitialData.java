@@ -32,14 +32,7 @@ public class InitialData implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-//		Role adminRole = new Role();
-//		adminRole.setName("ADMIN");
-//		roleRepository.save(adminRole);
-//
-//		Role memberRole = new Role();
-//		memberRole.setName("MEMBER");
-//		roleRepository.save(memberRole);
-//
+
 //		FormatType formatType = new FormatType();
 //		formatType.setName("2D");
 //		formatTypeRepository.save(formatType);

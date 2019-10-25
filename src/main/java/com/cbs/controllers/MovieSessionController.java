@@ -4,7 +4,6 @@ import com.cbs.model.Cinema;
 import com.cbs.model.CinemaScreen;
 import com.cbs.model.Movie;
 import com.cbs.model.MovieSession;
-import com.cbs.model.Province;
 import com.cbs.model.Screen;
 import com.cbs.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.RequestAttributes;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.HashMap;
@@ -36,12 +36,13 @@ import javax.validation.Valid;
 @Controller
 public class MovieSessionController {
 
-	private final MovieSessionService movieSessionService;
+	public final MovieSessionService movieSessionService;
 	private final MovieService movieService;
 	private final CinemaService cinemaService;
 	private final ScreenService screenService;
 	private final TicketService ticketService;
 	private final ProvinceService provinceService;
+	public static List<MovieSession> movieSessions = new ArrayList<MovieSession>();
 
 	@Autowired
 	public MovieSessionController(MovieSessionService movieSessionService, MovieService movieService,
@@ -75,49 +76,54 @@ public class MovieSessionController {
 			@RequestParam("date") String date) {
 
 		List<Movie> movies = movieService.getAllActiveMovies();
-		
+
 		Movie movie = movieService.getMovieByID(Long.parseLong(movieValue));
 		Set<CinemaScreen> cinemaScreens = cinemaService.getCinemaByID(cinemaValue).getCinemaScreens();
-	
+
+		if (cinemaService.hasSession(Long.parseLong(movieValue), date) > 0)
+			return "redirect:/admin/details/session-details";
+
 		int noOfMovies = movies.size();
-        int noOfRooms = cinemaScreens.size();
+		// int noOfRooms = cinemaScreens.size();
 
-        int last = 23 * 60;
-        int first = 8 * 60;
-        int breakTime = 15;
-        int delay = 30;
+		int last = 23 * 60;
+		int first = 8 * 60;
+		int breakTime = 15;
+		int delay = 30;
 
-        Schedule.LAST = last;
-        int f = 0;
-        for (int i = 0; i < noOfRooms; i++) {
-        	//LẶP CHO PHÒNG CHIẾU
-            List<Movie> tmp = new ArrayList<>();
-            for (int j = f; j < noOfMovies + f; j++) {
-            	//SAO ĐOẠN NÀY LẠI CẦN J%NO OF MOVIE
-            	//j NÓ CÓ 3 PHIM À, PHẢI CHO NS CHIẾU HẾT NGÀY CHỨ
-            	
-                tmp.add(new Movie(movies.get(j % noOfMovies)));
-            }
+		Schedule.LAST = last;
+		int f = 0, i = 0;
+		// for (int i = 0; i < noOfRooms; i++) {
+		for (CinemaScreen cinemaScreen : cinemaScreens) {
+			List<Movie> tmp = new ArrayList<>();
+			for (int j = f; j < noOfMovies + f; j++) {
+				tmp.add(movies.get(j % noOfMovies));
+			}
 
-            if (i > noOfMovies - 1) {
-                first += delay;
-            }
+			if (i > noOfMovies - 1) {
+				first += delay;
+			}
 
-            System.out.println(tmp);
+			System.out.println(tmp);
 
-            newSchedule(first, breakTime, tmp);
-            f++;
-            
-            first = 8 * 60;
-        }
-	
-		return "/admin/add/session";
+			newSchedule(first, breakTime, tmp, cinemaScreen, date);
+			i++;
+			f++;
+
+			first = 8 * 60;
+		}
+		movieSessionService.addAll(movieSessions);
+
+		return "redirect:/#";
+
 	}
 
 	static class Schedule {
 		public List<Integer> values = new ArrayList<>();
-		public List<String> titles = new ArrayList<>();
-
+		public List<Long> movieIds = new ArrayList<>();
+		public List<Long> csIds = new ArrayList<>();
+		// public static List<MovieSession> movieSessions;
+//		private static MovieSessionService movieSessionService;
 		private int time;
 		public static int LAST;
 
@@ -129,10 +135,20 @@ public class MovieSessionController {
 			return time < LAST;
 		}
 
-		public void apply(Movie movie, int breakTime) {
+		public void apply(Movie movie, int breakTime, CinemaScreen cinemaScreen, String dateString) {
 			values.add(time);
-			titles.add(movie.getTitle());
+			movieIds.add(movie.getId());
+			csIds.add(cinemaScreen.getId());
+
+			String localDateStting = dateString + " " + toTime(time);
+			System.out.println(time);
+			System.out.println(localDateStting);
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd H:m");
+			LocalDateTime dateTime = LocalDateTime.parse(localDateStting, formatter);
+			MovieSession ms = new MovieSession(movie, cinemaScreen, dateTime);
+			movieSessions.add(ms);
 			time += movie.getDuration() + breakTime;
+
 		}
 
 		private String toTime(int value) {
@@ -146,27 +162,25 @@ public class MovieSessionController {
 		public String toString() {
 			StringBuilder sb = new StringBuilder();
 			for (int i = 0; i < values.size(); i++) {
-//				if (titles.get(i) == "Dr Strang") {
-				sb.append(toTime(values.get(i))).append("\t").append(titles.get(i)).append("\n");
-//				}
+				// sb.append(toTime(values.get(i))).append("\t").append(titles.get(i)).append("\n");
 			}
 			return sb.toString();
 		}
 	}
 
-	static void newSchedule(int first, int breakTime, List<Movie> movies) {
+	static void newSchedule(int first, int breakTime, List<Movie> movies, CinemaScreen cinemaScreen, String date) {
 		Queue<Movie> queue = new ConcurrentLinkedQueue<>(movies);
 		Schedule newSchedule = new Schedule(first);
 		while (newSchedule.canApply()) {
 			Movie tmp = queue.poll();
-			newSchedule.apply(tmp, breakTime);
+			newSchedule.apply(tmp, breakTime, cinemaScreen, date);
 			queue.add(tmp);
+
 		}
+
 		System.out.println(newSchedule);
 	}
 
-	// mình gọi vào địa chỉ bên dưới, truyền và provinceId
-	// đặt debug xem nó có hgọi k
 	@RequestMapping(value = "/api/admin/getCinemaByProvince", method = RequestMethod.GET, params = {
 			"provinceId" }, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody Map<Long, String> getCinemaByProvince(@RequestParam("provinceId") Long provinceId) {

@@ -32,4 +32,6 @@ public class CinemaScreen extends BaseEntity {
     @JoinColumn(name = "cinema_id")
 	private Cinema cinema;
 	
+	
+	
 }
