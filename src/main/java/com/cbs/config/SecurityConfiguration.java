@@ -40,6 +40,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 		return bCryptPasswordEncoder;
 	}
+	
+	@Bean
+	public PersistentTokenRepository persistentTokenRepository() {
+		JdbcTokenRepositoryImpl db = new JdbcTokenRepositoryImpl();
+		db.setDataSource(dataSource);
+		return db;
+	}
 
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
@@ -90,19 +97,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.usernameParameter("username")//
 				.passwordParameter("password")
 				// Cấu hình cho Logout Page.
-				.and().logout().logoutUrl("/logout").logoutSuccessUrl("/logoutSuccessful");
-
+				.and().logout().logoutUrl("/logout").logoutSuccessUrl("/")
 		// Cấu hình Remember Me.
-		http.authorizeRequests().and() //
+				.and() //
 				.rememberMe().tokenRepository(this.persistentTokenRepository()) //
 				.tokenValiditySeconds(1 * 24 * 60 * 60); // 24h
 
 	}
 
-	@Bean
-	public PersistentTokenRepository persistentTokenRepository() {
-		JdbcTokenRepositoryImpl db = new JdbcTokenRepositoryImpl();
-		db.setDataSource(dataSource);
-		return db;
-	}
+	
 }
