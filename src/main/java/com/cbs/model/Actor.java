@@ -26,4 +26,11 @@ public class Actor extends BaseEntity {
     @JoinTable(joinColumns = @JoinColumn(name = "actor_id"),
             inverseJoinColumns = @JoinColumn(name = "movie_id"))
     private Set<Movie> movies;
+
+    public Actor(String name) {
+        this.name = name;
+    }
+
+    public Actor() {
+    }
 }

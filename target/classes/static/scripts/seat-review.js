@@ -45,3 +45,21 @@ $.getMovieData =  function (){
     })
     return dataOrderObj
 }
+
+$.getUserCardInfo = function () {
+    // let orderid = $.urlParam('code')
+    let dataOrderObj
+    $.ajax({
+        type: "get",
+        url: "http://localhost:8080/api/getUserCardInfo",
+        // data: {
+        //     "order" : orderid
+        // },
+        async: false,
+        dataType: "json",
+        success: function (data) {
+            dataOrderObj = data
+        }
+    })
+    return dataOrderObj
+}

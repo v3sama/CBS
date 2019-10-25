@@ -1,9 +1,6 @@
 package com.cbs.controllers;
 
-import com.cbs.dto.CustomUserDetail;
-import com.cbs.dto.ReviewOrderDTO;
-import com.cbs.dto.SeatReceiveDTO;
-import com.cbs.dto.SeatRenderDTO;
+import com.cbs.dto.*;
 import com.cbs.model.*;
 import com.cbs.services.*;
 import com.google.common.collect.HashMultimap;
@@ -245,5 +242,8 @@ public class BookTicketRestController {
         reviewOrderDTO.setSuatchieu(xuatChieu.getTime().toLocalTime().toString());
         return reviewOrderDTO;
     }
+
+//    public UserCardInfoDTO getUserCardInfo()
+
 
 }
