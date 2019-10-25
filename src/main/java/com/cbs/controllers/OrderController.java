@@ -58,6 +58,7 @@ public class OrderController {
         model.addAttribute("order", order);
         model.addAttribute("tickets",order.getTickets());
         model.addAttribute("payment",order.getPayment());
+        model.addAttribute("card",order.getPayment().getCardInformation());
         return "/admin/details/order";
     }
    

@@ -1,5 +1,7 @@
 package com.cbs.model;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Set;
 
@@ -7,6 +9,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -23,7 +27,8 @@ public class CardInformation extends BaseEntity {
 	@Column(unique=true)
 	private String card_no;
 	@Column(nullable = false)
-	private Date card_date;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate card_date;
 	@Column(nullable = false)
 	private String bank;
 	
