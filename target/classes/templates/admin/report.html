@@ -32,13 +32,13 @@
 			<div class="container-fluid">
 				<div class="row mb-2">
 					<div class="col-sm-6">
-						<h1 class="m-0 text-dark">Index</h1>
+						<h1 class="m-0 text-dark">Report</h1>
 					</div>
 					<!-- /.col -->
 					<div class="col-sm-6">
 						<ol class="breadcrumb float-sm-right">
 							<li class="breadcrumb-item"><a href="#">Home</a></li>
-							<li class="breadcrumb-item active">Index</li>
+							<li class="breadcrumb-item active">Report</li>
 						</ol>
 					</div>
 					<!-- /.col -->
@@ -51,13 +51,63 @@
 
 		<!-- Main content -->
 		<div class="content">
-			<div class="container-fluid"></div>
+			<div class="container text-center">
+				<div class="card card-info">
+
+					<div class="card-header">
+						<h3 class="card-title">Select parameters</h3>
+					</div>
+					<!-- form start -->
+					<form class="form-horizontal" data-toggle="validator" role="form"
+						action="#" th:action="@{/admin/report}"
+						th:object="${reportForm}" method="post">
+						<div class="card-body">
+
+
+							<div class="form-group row">
+								<label class="col-sm-2 control-label">Province</label>
+								<div class="col-sm-4">
+									<select th:field="*{provinceId}" class="form-control"
+										required="required">
+										<th:block th:each="province : ${provinces}">
+											<option th:value="${province.id}" th:text="${province.name}"></option>
+										</th:block>
+									</select>
+								</div>
+
+								<label class="col-sm-2 control-label">Cinema</label>
+								<div class="col-sm-4">
+									<select th:field="*{cinemaId}" class="form-control"
+										required="required">
+										<th:block th:each="cinema : ${cinemas}">
+											<option th:value="${cinema.id}" th:text="${cinema.title}"></option>
+										</th:block>
+									</select>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-sm-2 control-label">From date</label>
+								<div class="col-sm-4">
+									<input class="form-control" type="date" required="required" th:field="*{fromDate}"/>
+								</div>
+
+								<label class="col-sm-2 control-label">To date</label>
+								<div class="col-sm-4">
+									<input class="form-control" type="date" required="required" th:field="*{toDate}"/>
+								</div>
+							</div>
+						</div>
+						<div class="card-footer">
+							<button type="submit" class="btn btn-info">Generate Report</button>
+
+							
+						</div>
+					</form>
+				</div>
+
+			</div>
+			<!-- /.content -->
 		</div>
-		<!-- /.content -->
-	</div>
-	<!-- /.content-wrapper -->
-
-
-
+		<!-- /.content-wrapper -->
 </body>
 </html>

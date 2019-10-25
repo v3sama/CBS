@@ -187,7 +187,9 @@ function checkReview() {
 function confirmBook() {
     let dataGhe = gomGhe()
     let sessionid = $.urlParam('session')
-    let Data = {"sesson" : sessionid, "dataghe":dataGhe}
+    let amount = $('#total').text()
+    console.log(amount)
+    let Data = {"sesson" : sessionid, "dataghe":dataGhe, "amount":amount}
     let postData = JSON.stringify(Data)
     $.ajax({
         type: "post",
