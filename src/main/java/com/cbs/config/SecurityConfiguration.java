@@ -58,28 +58,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		if(roleService.findByName("ADMIN") == null) {
-			Role role = new Role();
-			role.setName("ADMIN");
-			roleService.addRole(role);
-		}
-		if(roleService.findByName("MEMBER") == null) {
-			Role role = new Role();
-			role.setName("MEMBER");
-			roleService.addRole(role);
-		}
-		if(userService.findByEmail("admin") == null ) {
-			User user = new User();
-			user.setEmail("admin");
-			user.setPassword(passwordEncoder().encode("admin"));
-			user.setActive(true);
-			
-			Set<Role> roles = new HashSet<Role>();
-			roles.add(roleService.findByName("ADMIN"));
-			user.setRoles(roles);
-			userService.saveUser(user);
-			
-		}
+		
 			
 			
 		

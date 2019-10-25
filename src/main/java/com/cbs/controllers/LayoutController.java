@@ -32,13 +32,13 @@ public class LayoutController {
 	@RequestMapping(value = { "/admin" }, method = RequestMethod.GET)
 	public String index(Model model) {
 
-		Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
-		String username = loggedInUser.getName();
-		model.addAttribute("userInfo", username);
+//		Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
+//		String username = loggedInUser.getName();
+//		model.addAttribute("userInfo", username);
 
-//		CustomUserDetail myUserDetails = (CustomUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//		
-//		Long userId=myUserDetails.getUser().getId();
+		CustomUserDetail myUserDetails = (CustomUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
+		Long userId=myUserDetails.getUser().getId();
 		return "/admin/index";
 	}
 
