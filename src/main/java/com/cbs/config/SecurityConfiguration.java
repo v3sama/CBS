@@ -58,7 +58,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/profile/**", "/orders/**", "/datve").hasAuthority("MEMBER")
 				.antMatchers("/**").permitAll();
 						
-			
+
 		// Khi người dùng đã login, với vai trò XX.
 		// Nhưng truy cập vào trang yêu cầu vai trò YY,
 		// Ngoại lệ AccessDeniedException sẽ ném ra.
