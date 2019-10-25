@@ -33,8 +33,8 @@
 
 <section class="seat-area">
     <div class="confirm-seat">
-        <p>Xác nhận đặt ghế E6 và E7</p>
-        <p>10/10/2019 - 14:35 - Screen 2</p>
+        <p >Xác nhận đặt ghế <span id="confirm-seat"></span> </p>
+        <p><span id="confirm-date"></span> - <span id="confirm-session"></span> </p>
         <p>Vui lòng chọn phương thức và nhấn thanh toán</p>
     </div>
 </section>
@@ -80,7 +80,7 @@
         </div>
 
     </div>
-    <button class="checkout-button" onclick="checkReview()">Check out</button>
+    <button class="checkout-button" onclick="">Check out</button>
 </section>
 
 <script th:src="@{/scripts/jquery.min.js}"></script>
