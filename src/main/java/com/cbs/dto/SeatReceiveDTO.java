@@ -1,12 +1,21 @@
 package com.cbs.dto;
 
 import javax.persistence.Entity;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 public class SeatReceiveDTO {
     private int sesson;
+    private List<String> dataghe;
+    private String amount;
+
+    public String getAmount() {
+        return amount;
+    }
+
+    public void setAmount(String amount) {
+        this.amount = amount;
+    }
 
     public int getSesson() {
         return sesson;
@@ -24,7 +33,6 @@ public class SeatReceiveDTO {
         this.dataghe = dataghe;
     }
 
-    private List<String> dataghe;
 
 
     @Override

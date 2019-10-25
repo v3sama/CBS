@@ -80,6 +80,13 @@ public class MovieSessionController {
 		Movie movie = movieService.getMovieByID(Long.parseLong(movieValue));
 		Set<CinemaScreen> cinemaScreens = cinemaService.getCinemaByID(cinemaValue).getCinemaScreens();
 
+		model.addAttribute("provinceDetails", value);
+		model.addAttribute("cinemaDetails", cinemaValue);
+		model.addAttribute("movieDetails", movieValue);
+		model.addAttribute("dateDetails", date);
+		model.addAttribute("movieSessions", movieSessions);
+		model.addAttribute("cinemaScreens", cinemaScreens);
+
 		if (cinemaService.hasSession(Long.parseLong(movieValue), date) > 0)
 			return "redirect:/admin/details/session-details";
 
@@ -193,6 +200,11 @@ public class MovieSessionController {
 
 		return cinemasMap;
 	}
+
+//	@RequestMapping(value = "/admin/details/session-details", method = RequestMethod.GET)
+//	public String viewSessionDetails(@RequestParam Long sessionId, Model model) {
+//		return "/admin/details/session-details";
+//	}
 
 	@RequestMapping(value = "/admin/edit/session", method = RequestMethod.GET)
 	public String editSession(@RequestParam Long sessionId, Model model) {

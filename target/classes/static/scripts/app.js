@@ -1,4 +1,7 @@
 $("document").ready(function () {
+    // render tên user đang lỗi
+    // $.renderUser();
+
     //lấy data phim lên tab đang chiếu - sắp chiếu
     getIndexMovieData();
 
@@ -22,12 +25,12 @@ $("document").ready(function () {
     tablinks[0].classList.add('active')
 });
 
-// ĐÓNG MỞ BOX TRAILER
-
+// khai báo biến toàn cục
 let cinemaList = [];
 let movieList = [];
 let schedule = [];
 
+// ĐÓNG MỞ BOX TRAILER
 function trailerBox() {
     $('.box-trailer').click(function (e) {
         e.preventDefault();
@@ -296,3 +299,28 @@ function getIndexMovieData(){
     });
 }
 
+$.getUser = function () {
+    let dataUser
+    $.ajax({
+        type: "get",
+        url: "http://localhost:8080/api/UserSession",
+        async: false,
+        dataType: "json",
+        success: function (data) {
+            dataUser = data
+        }
+    })
+    return dataUser;
+}
+
+$.renderUser = function () {
+    dataUser = $.getUser();
+    if (dataUser.id && dataUser.id !=""){
+        $('#user-acc-name').empty();
+        $('#user-acc-name').append(dataUser.name);
+        $('#user-acc-link').attr("href", "/user/"+dataUser.name) ;
+        $('#user-acc-link').after(function () {
+            return '<a href=\"/logout\"></a>';
+        })
+    }
+}
