@@ -38,7 +38,7 @@ import com.nulabinc.zxcvbn.Strength;
 import com.nulabinc.zxcvbn.Zxcvbn;
 
 @Controller
-@RequestMapping("/client/forgot-password")
+@RequestMapping("/forgotPassword")
 public class PasswordForgotController {
 
     @Autowired private UserService userService;
@@ -52,7 +52,7 @@ public class PasswordForgotController {
 
     @GetMapping
     public String displayForgotPasswordPage() {
-        return "client/forgot-password";
+        return "/client/forgot-password";
     }
 
     @PostMapping
