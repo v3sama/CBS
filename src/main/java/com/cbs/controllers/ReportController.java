@@ -7,6 +7,9 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
+import javax.validation.Valid;
+import javax.websocket.server.PathParam;
+
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.FormulaEvaluator;
@@ -21,13 +24,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.cbs.dto.ReportForm;
 import com.cbs.dto.TicketReportDTO;
 import com.cbs.model.Cinema;
 import com.cbs.model.CinemaScreen;
+import com.cbs.model.Movie;
 import com.cbs.model.Province;
 import com.cbs.model.Ticket;
 import com.cbs.repository.CinemaRepository;
@@ -78,20 +84,31 @@ public class ReportController {
 		Cell cell = row.createCell(1);
 		return "";
 	}
+	@RequestMapping(value = "/admin/report", method = RequestMethod.GET)
+	public String reportHome(Model model) {
+		model.addAttribute("provinces", provinceRepo.findAll());
+		model.addAttribute("cinemas", cinemaRepo.findAll());
+		model.addAttribute("movies", movieRepo.findAll());
+		model.addAttribute("members", userRepo.findAll());
+		model.addAttribute("reportForm", new ReportForm());
 
-	@RequestMapping(value = "/admin/report", method = RequestMethod.GET,params = {"cinemaId","fromDate","toDate"})
-	public List<TicketReportDTO> ticketByCinema(@RequestParam Long cinemaId, 
-			@RequestParam(required = false, value = "date") @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate fromDate, 
-			@RequestParam(required = false, value = "date") @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate toDate) {
-		List<TicketReportDTO> list =  ticketRepo.findTicketByCinema(cinemaId, fromDate, toDate);
-		return list;
+		return "/admin/report";
 	}
 
-	@RequestMapping(value = "/admin/report", method = RequestMethod.GET, params = {"provinceId","fromDate","toDate"})
-	public List<TicketReportDTO> ticketsQuery(Long provinceId, LocalDate fromDate, LocalDate toDate) {
-		List<TicketReportDTO> list = ticketRepo.findTicketByProvince(provinceId, fromDate, toDate);
+	@RequestMapping(value = "/admin/report", method = RequestMethod.POST)
+	public List<TicketReportDTO> ticketByCinema(@Valid ReportForm reportForm, Model model) {
+		
+		List<TicketReportDTO> list =  ticketRepo.findTicketByCinema(reportForm.getCinemaId(), 
+				reportForm.getFromDate(),reportForm.getToDate());
 		return list;
 	}
-	
+//
+//	@RequestMapping(value = "/admin/report", method = RequestMethod.POST)
+//	public List<TicketReportDTO> ticketsQuery(@Valid ReportForm reportForm, Model model) {
+//		List<TicketReportDTO> list = ticketRepo.findTicketByProvince(reportForm.getProvinceId(), 
+//				reportForm.getFromDate(),reportForm.getToDate());
+//		return list;
+//	}
+//	
 
 }

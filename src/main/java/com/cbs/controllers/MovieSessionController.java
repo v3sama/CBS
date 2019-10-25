@@ -80,15 +80,16 @@ public class MovieSessionController {
 		Movie movie = movieService.getMovieByID(Long.parseLong(movieValue));
 		Set<CinemaScreen> cinemaScreens = cinemaService.getCinemaByID(cinemaValue).getCinemaScreens();
 
-		model.addAttribute("provinceDetails", value);
-		model.addAttribute("cinemaDetails", cinemaValue);
-		model.addAttribute("movieDetails", movieValue);
-		model.addAttribute("dateDetails", date);
-		model.addAttribute("movieSessions", movieSessions);
-		model.addAttribute("cinemaScreens", cinemaScreens);
+		model.addAttribute("province", provinceService.getProvinceByID(Long.parseLong(value)).getName());
+		model.addAttribute("cinema", cinemaService.getCinemaByID(cinemaValue).getTitle());
+		model.addAttribute("movie", movieService.getMovieByID(Long.parseLong(movieValue)).getTitle());
+		model.addAttribute("date", date);
+		model.addAttribute("cinemaScreens", screenService.getScreenByCinema(cinemaValue));
+		model.addAttribute("sessionMovies",
+				movieSessionService.findSessionByMovieAndCinemaScreen(Long.parseLong(movieValue), cinemaValue));
 
 		if (cinemaService.hasSession(Long.parseLong(movieValue), date) > 0)
-			return "redirect:/admin/details/session-details";
+			return "/admin/details/session-details";
 
 		int noOfMovies = movies.size();
 		// int noOfRooms = cinemaScreens.size();
@@ -121,8 +122,7 @@ public class MovieSessionController {
 		}
 		movieSessionService.addAll(movieSessions);
 
-		return "redirect:/#";
-
+		return "/admin/details/session-details";
 	}
 
 	static class Schedule {
@@ -155,7 +155,6 @@ public class MovieSessionController {
 			MovieSession ms = new MovieSession(movie, cinemaScreen, dateTime);
 			movieSessions.add(ms);
 			time += movie.getDuration() + breakTime;
-
 		}
 
 		private String toTime(int value) {
