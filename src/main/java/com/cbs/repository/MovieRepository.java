@@ -14,15 +14,19 @@ import java.util.List;
 @Repository
 public interface MovieRepository extends JpaRepository<Movie, Long> {
 
-    Page<Movie> findByTitleContaining(String title, Pageable pageable);
+	Page<Movie> findByTitleContaining(String title, Pageable pageable);
 
-    List<Movie> findByStatusTrue();
-    List<Movie> findByStatusFalse();
+	List<Movie> findByStatusTrue();
+
+	List<Movie> findByStatusFalse();
 
 //    List<Movie> findByDate_releaseBefore(LocalDate dDateate);
 
 //    List<Movie> findByDate_releaseAfter(LocalDate date);
 
-    @Query(value = "SELECT * FROM movie WHERE date_release > ?1", nativeQuery = true)
-    List<Movie> findMovieSapChieu (String date);
+	@Query(value = "SELECT * FROM movie WHERE date_release > ?1", nativeQuery = true)
+	List<Movie> findMovieSapChieu(String date);
+
+	@Query(value = "SELECT * FROM movie WHERE status = 1", nativeQuery = true)
+	List<Movie> getAllActiceMovie();
 }

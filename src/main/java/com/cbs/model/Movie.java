@@ -26,46 +26,53 @@ import java.util.Set;
 @Setter
 @Entity
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true,exclude = {"formatType","genres","prices","movieSessions","actors"})
+@EqualsAndHashCode(callSuper = true, exclude = { "formatType", "genres", "prices", "movieSessions", "actors" })
 public class Movie extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 
-    private String title;
-    private int duration;
-    private String rating_type;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate date_release;
-    private String image;
-    private String thumbnail;
-    private String director;
-    private String year;
-    private String language;
-    private float avg_user_rating_star;
-    private String trailer_link;
-    private Boolean status;
-    private String description;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate date_end;
-   
-    @ManyToOne()
-    @JoinColumn(name = "format_Type_id")
-    private FormatType  formatType;
-    
+	private String title;
+	private int duration;
+	private String rating_type;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate date_release;
+	private String image;
+	private String thumbnail;
+	private String director;
+	private String year;
+	private String language;
+	private float avg_user_rating_star;
+	private String trailer_link;
+	private Boolean status;
+	private String description;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate date_end;
 
-    @ManyToMany
-    @JoinTable(joinColumns = @JoinColumn(name = "movie_id"),
-            inverseJoinColumns = @JoinColumn(name = "genre_id"))
-    private Set<Genre> genres;
-    
-    @OneToMany(mappedBy = "movie")
-    private Set<Price> prices;
-    
-    @OneToMany(mappedBy = "movie")
-    private Set<MovieSession>  movieSessions;
-    
-    @ManyToMany
-    @JoinTable(joinColumns = @JoinColumn(name = "movie_id"),
-            inverseJoinColumns = @JoinColumn(name = "actor_id"))
-    private Set<Actor> actors;
+	public Movie(int duaration, String title) {
+		this.duration = duaration;
+		this.title = title;
+	}
+
+	public Movie(Movie movie) {
+		this.duration = movie.duration;
+		this.title = movie.title;
+	}
+
+	@ManyToOne()
+	@JoinColumn(name = "format_Type_id")
+	private FormatType formatType;
+
+	@ManyToMany
+	@JoinTable(joinColumns = @JoinColumn(name = "movie_id"), inverseJoinColumns = @JoinColumn(name = "genre_id"))
+	private Set<Genre> genres;
+
+	@OneToMany(mappedBy = "movie")
+	private Set<Price> prices;
+
+	@OneToMany(mappedBy = "movie")
+	private Set<MovieSession> movieSessions;
+
+	@ManyToMany
+	@JoinTable(joinColumns = @JoinColumn(name = "movie_id"), inverseJoinColumns = @JoinColumn(name = "actor_id"))
+	private Set<Actor> actors;
 
 }
