@@ -10,6 +10,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -18,11 +20,10 @@ public class CinemaService {
 	@Value("${spring.data.rest.default-page-size}")
 	private Integer pageSize;
 
-
 	private final CinemaRepository cinemaRepository;
 
 	@Autowired
-	public CinemaService(CinemaRepository cinemaRepository){
+	public CinemaService(CinemaRepository cinemaRepository) {
 		this.cinemaRepository = cinemaRepository;
 	}
 
@@ -56,5 +57,10 @@ public class CinemaService {
 	public List<Cinema> getCinemaByProvince(long id) {
 		return cinemaRepository.findCinemaByProvince_Id(id);
 	}
-	
+
+	public int hasSession(Long movieId, String date) {
+
+		return cinemaRepository.hasMovieSession(movieId, date);
+	}
+
 }

@@ -49,4 +49,9 @@ public class MovieSessionService {
 		return movieSessionRepository.findMovieSessionByMovie_IdAndCinemaScreen_Id(mid, cid);
 	}
 
+	public void addAll(List<MovieSession> movieSessions) {
+		movieSessionRepository.saveAll(movieSessions);
+		
+	}
+
 }
