@@ -22,7 +22,7 @@ import com.cbs.services.UserService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Controller
-@RequestMapping("client/reset-password")
+@RequestMapping("/reset-password")
 public class PasswordResetController {
 	
 	@Autowired private UserService userService;
@@ -57,7 +57,7 @@ public class PasswordResetController {
         if (result.hasErrors()){
             redirectAttributes.addFlashAttribute(BindingResult.class.getName() + ".passwordResetForm", result);
             redirectAttributes.addFlashAttribute("passwordResetForm", form);
-            return "redirect:/client/reset-password?token=" + form.getToken();
+            return "redirect:/reset-password?token=" + form.getToken();
         }
 
         PasswordResetToken token = tokenRepository.findByToken(form.getToken());

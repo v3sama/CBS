@@ -20,6 +20,7 @@ import java.util.Arrays;
 @ComponentScan(basePackages = { "com.cbs.controllers", "com.cbs.services", "com.cbs.config"})
 @EntityScan("com.cbs.model")
 @EnableGlobalMethodSecurity(securedEnabled = true)
+
 public class CbsApplication {
 
 	public static void main(String[] args) {

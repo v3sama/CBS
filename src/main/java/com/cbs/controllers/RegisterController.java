@@ -81,10 +81,10 @@ public class RegisterController {
 			
 			//Set user's role to MEMBER
 			Role memberRole = roleService.findByName("MEMBER");
-			Role adminRole = roleService.findByName("ADMIN");
+			//Role adminRole = roleService.findByName("ADMIN");
 			Set<Role> roles = new HashSet<Role>();
 			roles.add(memberRole);
-			roles.add(adminRole);
+			//roles.add(adminRole);
 			user.setRoles(roles);
 			
 			//user.setRoles(new HashSet<Role>(Arrays.asList(memberRole)));
