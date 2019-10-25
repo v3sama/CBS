@@ -120,7 +120,7 @@ public class MovieSessionController {
 		}
 		movieSessionService.addAll(movieSessions);
 
-		return "redirect:/#";
+		return "/admin/details/session-details";
 	}
 
 	static class Schedule {
