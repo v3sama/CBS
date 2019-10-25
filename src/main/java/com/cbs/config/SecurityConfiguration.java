@@ -17,6 +17,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
+import com.cbs.model.Role;
+import com.cbs.services.RoleService;
 import com.cbs.services.UserDetailsServiceImpl;
 
 @Configuration
@@ -27,6 +29,8 @@ import com.cbs.services.UserDetailsServiceImpl;
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private UserDetailsServiceImpl userDetailsService;
+	@Autowired
+	private RoleService roleService;
 
 	@Autowired
 	private DataSource dataSource;
@@ -39,7 +43,19 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-
+		if(roleService.findByName("ADMIN") == null) {
+			Role role = new Role();
+			role.setName("ADMIN");
+			roleService.addRole(role);
+		}
+		if(roleService.findByName("MEMBER") == null) {
+			Role role = new Role();
+			role.setName("MEMBER");
+			roleService.addRole(role);
+		}
+			
+			
+		
 		// Sét đặt dịch vụ để tìm kiếm User trong Database.
 		// Và sét đặt PasswordEncoder.
 		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
