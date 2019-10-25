@@ -64,27 +64,28 @@
 						<!-- 							</div> -->
 						<div class="form-group row">
 							<label class="col-sm-2 control-label">Province</label>
-							<div class="col-sm-4" th:text="provinceDetails"></div>
+							<div class="col-sm-4" th:text="${province}"></div>
 							<label class="col-sm-2 control-label">Cinema</label>
-							<div class="col-sm-4" th:text="cinemaDetails"></div>
+							<div class="col-sm-4" th:text="${cinema}"></div>
 							<label class="col-sm-2 control-label">Movie</label>
-							<div class="col-sm-4" th:text="movieDetails"></div>
+							<div class="col-sm-4" th:text="${movie}"></div>
 							<label class="col-sm-2 control-label">Date</label>
-							<div class="col-sm-4" th:text="dateDetails"></div>
+							<div class="col-sm-4" th:text="${date}"></div>
 						</div>
 
 						<table class="table">
 							<thead>
 								<tr th:each="cinemaScreen : ${cinemaScreens}">
-									<th th:text="${cinemaScreen}"></th>
+									<th th:text="${cinemaScreen.title}"></th>
 								</tr>
 							</thead>
-							<tbody>
-								<th:block th:each="movieSession : ${movieSessions}">
-									<tr>
-										<td th:text="${movieSession.}"></td>
-									</tr>
-							</tbody>
+							<!-- 							<tbody> -->
+							<!-- 								<th:block th:each=""> -->
+							<!-- 									<tr> -->
+							<!-- 										<td th:text=""></td> -->
+							<!-- 									</tr> -->
+							<!-- 								</th:block> -->
+							<!-- 							</tbody> -->
 						</table>
 					</div>
 					<!-- /.card-body -->
@@ -102,20 +103,22 @@
 		</div>
 		<!-- /.content -->
 	</div>
-	<!-- 	<script> -->
-	// function getCinemaByProvince() { // //lay du lieu tu id thi dung #,
-	tu class thi dung . // var provinceId = $("#province").val(); //
-	$.ajax({ // 'url' :
-	'http://localhost:8080/api/admin/getCinemaByProvince', // 'type' :
-	'GET', // 'data' : { // 'provinceId' : provinceId // }, // 'success' :
-	function(data) { // //xoa het may cái option hien tai //
-	$("#cinemas").html(''); // //cái này xử lý giá trị server trả về //
-	$.each(data, function(index, value) { // $("#cinemas").append( // "
-	<option value='"+index+"'>" + value // + "</option>
-	"); // }); // }, // 'error' : function(request, error) { // //lỗi ko
-	gửi đc request lên server // alert("Request: " +
-	JSON.stringify(request)); // } // }); // }
-	<!-- 	</script> -->
+	<!-- 	<!-- 	<script> -->
+	-->
+	<!-- 	// function getCinemaByProvince() { // //lay du lieu tu id thi dung #, -->
+	<!-- 	tu class thi dung . // var provinceId = $("#province").val(); // -->
+	<!-- 	$.ajax({ // 'url' : -->
+	<!-- 	'http://localhost:8080/api/admin/getCinemaByProvince', // 'type' : -->
+	<!-- 	'GET', // 'data' : { // 'provinceId' : provinceId // }, // 'success' : -->
+	<!-- 	function(data) { // //xoa het may cái option hien tai // -->
+	<!-- 	$("#cinemas").html(''); // //cái này xử lý giá trị server trả về // -->
+	<!-- 	$.each(data, function(index, value) { // $("#cinemas").append( // " -->
+	<!-- 	<option value='"+index+"'>" + value // + "</option> -->
+	<!-- 	"); // }); // }, // 'error' : function(request, error) { // //lỗi ko -->
+	<!-- 	gửi đc request lên server // alert("Request: " + -->
+	<!-- 	JSON.stringify(request)); // } // }); // } -->
+	<!-- 	<!-- 	</script> -->
+	-->
 
 </body>
 </html>
