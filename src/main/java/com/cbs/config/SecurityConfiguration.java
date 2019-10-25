@@ -1,6 +1,10 @@
 
 package com.cbs.config;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +22,10 @@ import org.springframework.security.web.authentication.rememberme.JdbcTokenRepos
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
 import com.cbs.model.Role;
+import com.cbs.model.User;
 import com.cbs.services.RoleService;
 import com.cbs.services.UserDetailsServiceImpl;
+import com.cbs.services.UserService;
 
 @Configuration
 
@@ -31,6 +37,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	private UserDetailsServiceImpl userDetailsService;
 	@Autowired
 	private RoleService roleService;
+	@Autowired
+	private UserService	userService;
 
 	@Autowired
 	private DataSource dataSource;
@@ -59,6 +67,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			Role role = new Role();
 			role.setName("MEMBER");
 			roleService.addRole(role);
+		}
+		if(userService.findByEmail("admin") == null ) {
+			User user = new User();
+			user.setEmail("admin");
+			user.setPassword(passwordEncoder().encode("admin"));
+			user.setActive(true);
+			
+			Set<Role> roles = new HashSet<Role>();
+			roles.add(roleService.findByName("ADMIN"));
+			user.setRoles(roles);
+			userService.saveUser(user);
+			
 		}
 			
 			
