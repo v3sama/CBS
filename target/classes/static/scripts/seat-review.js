@@ -64,3 +64,34 @@ $.getUserCardInfo = function () {
     })
     return dataOrderObj
 }
+
+
+function confirmCheckout() {
+    // let dataGhe = gomGhe()
+    // let sessionid = $.urlParam('session')
+    // let Data = {"sesson" : sessionid, "dataghe":dataGhe}
+    // let postData = JSON.stringify(Data)
+    let orderid = $.urlParam('code')
+    let paymentmethod = "";
+    if ($("#cash").prop("checked")) {
+        paymentmethod = "cash";
+    }else {
+        paymentmethod = "card";
+    }
+
+    let data = {"order" :orderid, "payment" : paymentmethod}
+
+
+    $.ajax({
+        type: "post",
+        url: "http://localhost:8080/api/checkout",
+        data: postData,
+        async: false,
+        contentType: "application/json",
+        success: function (data) {
+            if (data.length>0){
+                window.location.href = "http://localhost:8080/confirmVe?code=" + data;
+            }
+        }
+    })
+}
