@@ -1,5 +1,6 @@
 package com.cbs.controllers;
 
+import com.cbs.dto.CustomUserDetail;
 import com.cbs.model.Discount;
 import com.cbs.model.User;
 import com.cbs.services.DiscountService;
@@ -25,12 +26,15 @@ public class UserController {
     private final UserService userService;
     private final DiscountService discountService;
     private final RoleService roleService;
+    private CustomUserDetail loggedInUser;
+	private User user;
 
     @Autowired
     public UserController(UserService userService, DiscountService discountService, RoleService roleService) {
         this.userService = userService;
         this.discountService = discountService;
         this.roleService = roleService;
+       
     }
 
     //Admin - List
@@ -137,6 +141,8 @@ public class UserController {
     
     @RequestMapping(value = "/client/update-user", method = RequestMethod.GET, params = {"id"})
     public String getClientUserEdit(@RequestParam Long id, Model model) {
+    	 loggedInUser = (CustomUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+         user = loggedInUser.getUser();
         model.addAttribute("user", userService.findById(id));
  
         return "/client/update-user";
@@ -150,6 +156,14 @@ public class UserController {
         userService.update(user);
         return "redirect:/client/view-user";
     }
+    
+    
+    @RequestMapping(value = "/profile", method = RequestMethod.GET)
+    public String viewProfile(Model model) {
+    	model.addAttribute("user",	user);
+        return "/client/profile";
+    }
+    
     
    //Update - Reset Password
 //    @RequestMapping(value="/updateUserInfo", method=RequestMethod.POST)
