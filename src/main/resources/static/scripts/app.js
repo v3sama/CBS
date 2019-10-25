@@ -228,7 +228,7 @@ function getSessionByCinemaData(movieId, cinemaId) {
 }
 
 function getIndexMovieData(){
-
+    let imgplaceholder = "http://placehold.it/215x318"
     $.ajax({
         type: "get",
         url: "http://localhost:8080/api/movieShowing",
@@ -241,7 +241,7 @@ function getIndexMovieData(){
             $.each(data, function (index, itemData) {
                 $('#slick-dang-chieu').append('<div class="movie-block">' +
                     '<div class="thumbnail">' +
-                    '<img src="http://placehold.it/215x318" alt="" class="movie-block-img">' +
+                    '<img src="' + itemData.movie_image ==="" ? imgplaceholder : itemData.movie_image+ '" alt="" class="movie-block-img">' +
                     '</div>' +
                     '<div class="info-detail">' +
                     '<div class="movie-block-title">' + itemData.movie_title + '</div>' +
