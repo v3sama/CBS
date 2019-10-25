@@ -22,18 +22,18 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
 	
 	
 	
-	@Query(value = "SELECT o.id as orderId, t.member as memberId, o.orderTime as orderTime, t.amount as amount "
+	@Query("SELECT o.id as orderId, t.member as memberId, o.orderTime as orderTime, t.amount as amount "
 			+ "FROM Ticket t "
 			+ " JOIN SOrder o on t.order = o.id "
 			+ " JOIN MovieSession ms on t.movieSession = ms.id "
 			+ " JOIN CinemaScreen cs on ms.cinemaScreen = cs.id "
 			+ " JOIN Cinema c on c.id = cs.cinema "
-			+ "WHERE o.status = 'Completed' AND o.orderTime >= :fromDate "
-			+ "AND o.orderTime <= :toDate AND c.id = :cinemaId")
+			+ "WHERE o.status = 'Completed' AND o.orderTime >= ?2 "
+			+ "AND o.orderTime <= ?3 AND c.id = ?1")
 	List<TicketReportDTO> findTicketByCinema(Long cinemaId, LocalDate fromDate, LocalDate toDate);
 	
 	
-	  @Query(value = "SELECT o.id as orderId, t.member as memberId, o.orderTime, t.amount " +
+	  @Query( "SELECT o.id as orderId, t.member as memberId, o.orderTime, t.amount " +
 		  "FROM Ticket t " + 
 		  " JOIN SOrder o on t.order = o.id " +
 		  " JOIN MovieSession ms on t.movieSession = ms.id " +
