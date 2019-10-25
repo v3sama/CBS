@@ -5,6 +5,7 @@ import com.cbs.model.*;
 import com.cbs.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -97,6 +98,18 @@ public class IndexRestController {
             provinceIndexDTOS.add(provinceDTO);
         }
         return provinceIndexDTOS;
+    }
+
+    @GetMapping(value = "/api/UserSession")
+    public UserIndexDTO getUserSession(){
+        UserIndexDTO user = new UserIndexDTO();
+        CustomUserDetail loggedInUser = (CustomUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (loggedInUser.isEnabled()){
+            user.setId(loggedInUser.getUserId());
+            user.setName(loggedInUser.getUsername());
+            return user;
+        }
+        return user;
     }
 
 

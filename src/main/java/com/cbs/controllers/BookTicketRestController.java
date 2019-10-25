@@ -27,9 +27,11 @@ public class BookTicketRestController {
     private final PriceService priceService;
     private final UserService userService;
     private final OrderService orderService;
+    private final CardService cardService;
+    private final PaymentService paymentService;
 
     @Autowired
-    public BookTicketRestController(MovieService movieService, MovieSessionService movieSessionService, CinemaService cinemaService, ProvinceService provinceService, TicketService ticketService, SeatServices seatServices, PriceService priceService, UserService userService, OrderService orderService) {
+    public BookTicketRestController(MovieService movieService, MovieSessionService movieSessionService, CinemaService cinemaService, ProvinceService provinceService, TicketService ticketService, SeatServices seatServices, PriceService priceService, UserService userService, OrderService orderService, CardService cardService, PaymentService paymentService) {
         this.movieService = movieService;
         this.movieSessionService = movieSessionService;
         this.cinemaService = cinemaService;
@@ -39,12 +41,33 @@ public class BookTicketRestController {
         this.priceService = priceService;
         this.userService = userService;
         this.orderService = orderService;
+        this.cardService = cardService;
+        this.paymentService = paymentService;
     }
 
     private Price priceVipObj;
     private Price priceThuongObj;
     private List<String> listSelectedSeats;
     private MovieSession xuatChieu;
+
+    //Khai báo row map
+    Map<String, Integer> doubleBraceMap = new HashMap<String, Integer>() {{
+        put("A", 1);
+        put("B", 2);
+        put("C", 3);
+        put("D", 4);
+        put("E", 5);
+        put("F", 6);
+        put("G", 7);
+        put("H", 8);
+        put("I", 9);
+        put("J", 10);
+        put("K", 11);
+        put("L", 12);
+        put("M", 13);
+        put("N", 14);
+        put("O", 15);
+    }};
 
     //Lấy ghế theo session id
 //    public @ResponseBody I
@@ -67,8 +90,10 @@ public class BookTicketRestController {
         List<Ticket> ticketList = ticketService.findBySessionId(Long.parseLong(sessionId));
         Multimap<Long, Long> takenSeat = HashMultimap.create();
         for (Ticket ticket : ticketList){
-            long remainder = ticket.getId()%12;
+            long remainder = ticket.getSeat().getId()%12;
+            System.out.println(remainder);
             takenSeat.put(ticket.getSeat().getRow().getId(), (remainder==0?12l:remainder));
+            System.out.println(remainder==0?12l:remainder);
         }
 
         //Lấy danh sách ghế vip
@@ -87,6 +112,7 @@ public class BookTicketRestController {
                 for (Long index : takenSeat.get(Long.valueOf(i))){
                     rowTakenSeatList.add(index);
                 }
+                    System.out.println(rowTakenSeatList.toString());
 //                System.out.println("row" + i +"co ghe da dat:"+rowTakenSeatList.size() );
 
                 ArrayList<Long> rowVipSeatList = new ArrayList<>();
@@ -109,8 +135,10 @@ public class BookTicketRestController {
                 rowVipSeatList.clear();
                 //đổ string map vào array
                 rowMap.add(map);
+                System.out.println(map);
                 map = "";
             }
+            System.out.println("->>" + rowMap);
             //đổ array map vào dto
             seatDTO.setRowMap(rowMap);
 
@@ -156,35 +184,23 @@ public class BookTicketRestController {
     @PostMapping(value = "api/review")
     public String nhanGhe(@RequestBody SeatReceiveDTO seatReceiveDTO) throws Exception{
         CustomUserDetail loggedInUser = (CustomUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = userService.findUserS1(loggedInUser.getUserId());
-//        User user = userService.findUserS1(6l);
+        User user = loggedInUser.getUser();
 
         SOrder order = new SOrder();
         order.setMember(user);
+        order.setOrderTime(LocalDateTime.now());
+        order.setTotal(Double.parseDouble(seatReceiveDTO.getAmount()));
         orderService.addOrder(order);
         long orderId = order.getId();
         //gán để lát đưa sang trang thanh toán
         listSelectedSeats = seatReceiveDTO.getDataghe();
-        System.out.println(listSelectedSeats.toString());
+//        System.out.println(listSelectedSeats.toString());
         try{
-            Map<String, Integer> doubleBraceMap = new HashMap<String, Integer>() {{
-                put("A", 1);
-                put("B", 2);
-                put("C", 3);
-                put("D", 4);
-                put("E", 5);
-                put("F", 6);
-                put("G", 7);
-                put("H", 8);
-                put("I", 9);
-                put("J", 10);
-                put("K", 11);
-                put("L", 12);
-                put("M", 13);
-                put("N", 14);
-                put("O", 15);
-            }};
+            //lấy sessionmovieid
             long sessionReceived = seatReceiveDTO.getSesson();
+
+            // listseat hiện tại là ['A1', A2','B6'..] => chuyển về dạng số thứ tự seat_id trong bảng seat
+            // sau đó save 1 order có danh sách những ticket
             for (String seat : seatReceiveDTO.getDataghe()) {
                 String rowtitle = seat.substring(0, 1);
                 int seatAtRow = Integer.parseInt(seat.substring(1, seat.length()));
@@ -232,6 +248,7 @@ public class BookTicketRestController {
         reviewOrderDTO.setGhe(listSelectedSeats);
         reviewOrderDTO.setNgay(xuatChieu.getTime().toLocalDate().toString());
         reviewOrderDTO.setSuatchieu(xuatChieu.getTime().toLocalTime().toString());
+        reviewOrderDTO.setAmount(order.getTotal());
         return reviewOrderDTO;
     }
 
@@ -246,7 +263,47 @@ public class BookTicketRestController {
         return reviewOrderDTO;
     }
 
-//    public UserCardInfoDTO getUserCardInfo()
+    @GetMapping(value = "api/getUserCardInfo")
+    public UserCardInfoDTO getUserCardInfo(){
+        UserCardInfoDTO userCardInfoDTO = new UserCardInfoDTO();
+        CustomUserDetail loggedInUser = (CustomUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        long userid  =  loggedInUser.getUserId();
+        try {
+            List<CardInformation> cardInformationList = cardService.findByUserid(userid);
+            if (cardInformationList.size() > 0){
+                userCardInfoDTO.setCard_no(cardInformationList.iterator().next().getCard_no());
+                userCardInfoDTO.setCard_date(cardInformationList.iterator().next().getCard_date().toString());
+            }
+        }catch (Exception e){
+            System.out.println("Lỗi lấy card");
+        }
+        return userCardInfoDTO;
+    }
 
+    @PostMapping(value = "api/checkout")
+    public String checkPayment(@RequestBody CheckoutDTO checkoutDTO){
+
+        int orderid = checkoutDTO.getOrder();
+        SOrder order = orderService.getOrderByID(Long.valueOf(orderid));
+
+        Payment payment = new Payment();
+        String paymentMode = checkoutDTO.getPayment();
+
+        payment.setPayment_mode(paymentMode);
+        payment.setPayment_status(1);
+
+        if (paymentMode.equals("card")){
+            order.setStatus("Completed");
+            payment.setPayment_time(LocalDateTime.now());
+//            CardInformation cardInformation = new CardInformation();
+//            cardInformation.setCard_date();
+        }else {
+            order.setStatus("Pending");
+        }
+        paymentService.savePayment(payment);
+        order.setPayment(payment);
+        orderService.addOrder(order);
+        return ""+orderid;
+    }
 
 }

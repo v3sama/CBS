@@ -36,4 +36,8 @@ public class CardService {
 	public void addCard(CardInformation card) {
 		cardRepository.saveAndFlush(card);
 	}
+
+	public List<CardInformation> findByUserid(long id){
+		return cardRepository.findCardInformationByMember_Id(id);
+	}
 }

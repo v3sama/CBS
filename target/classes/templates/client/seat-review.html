@@ -35,7 +35,8 @@
     <div class="confirm-seat">
         <p >Xác nhận đặt ghế <span id="confirm-seat"></span> </p>
         <p><span id="confirm-date"></span> - <span id="confirm-session"></span> </p>
-        <p>Vui lòng chọn phương thức và nhấn thanh toán</p>
+        <p>Tổng số tiền: <span id="tong-tien"></span> &#273;</p>
+        <p>Vui lòng chọn phương thức thanh toán và nhấn CHECKOUT</p>
     </div>
 </section>
 
@@ -73,19 +74,20 @@
                 <span>By Card</span>
             </label>
             <div id="content" class="content">
-                <input type="number" id="user-card-number" class="card-form" placeholder="card number" name="card-number">
-                <input type="text" id="user-card-date-exp" class="card-form" placeholder="date expire" name="card-date-expire">
-                <input type="text" id="user-card-cvv" class="card-form" placeholder="cvv" name="card-ccv">
+                <input type="text" id="user-card-number" class="card-form cc-num" placeholder="Card Number (1234 5678 1234 5678)" name="card-number">
+                <input type="text" id="user-card-date-exp" class="card-form cc-date" placeholder="Expiry (05/2024)" name="card-date-expire">
+                <input type="text" pattern="\d*" maxlength="3" id="user-card-cvv" class="card-form cc-cvv" placeholder="cvv (3 digits)" name="card-ccv">
             </div>
         </div>
 
     </div>
-    <button class="checkout-button" onclick="">Check out</button>
+    <button class="checkout-button" onclick="clickValidateCheckout()">Checkout</button>
 </section>
 
 <script th:src="@{/scripts/jquery.min.js}"></script>
 <script th:src="@{/scripts/jquery-ui.min.js}"></script>
 
+<script th:src="@{/scripts/jquery.payment.js}"></script>
 <script th:src="@{/scripts/seat-review.js}"></script>
 <script th:src="@{/scripts/jquery.seat-charts.js}"></script>
 </body>
