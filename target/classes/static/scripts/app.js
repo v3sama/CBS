@@ -34,7 +34,10 @@ let schedule = [];
 function trailerBox() {
     $('.box-trailer').click(function (e) {
         e.preventDefault();
-        $('.modal-box-trailer').show();
+        var href = $(this).attr('href');
+        $( "iframe" ).remove( ".traillerifram" );
+        $('.modal-content').append('<iframe class="traillerifram" width="650" height="350" src="' + href + '" frameborder="0"></iframe>');
+        $('.modal-box-trailer').show()
     });
 
     // var span = $('.close')[0];
@@ -225,7 +228,7 @@ function getSessionByCinemaData(movieId, cinemaId) {
 }
 
 function getIndexMovieData(){
-
+    let imgplaceholder = "http://placehold.it/215x318"
     $.ajax({
         type: "get",
         url: "http://localhost:8080/api/movieShowing",
@@ -238,7 +241,7 @@ function getIndexMovieData(){
             $.each(data, function (index, itemData) {
                 $('#slick-dang-chieu').append('<div class="movie-block">' +
                     '<div class="thumbnail">' +
-                    '<img src="http://placehold.it/215x318" alt="" class="movie-block-img">' +
+                    '<img src="' + itemData.movie_image ==="" ? imgplaceholder : itemData.movie_image+ '" alt="" class="movie-block-img">' +
                     '</div>' +
                     '<div class="info-detail">' +
                     '<div class="movie-block-title">' + itemData.movie_title + '</div>' +
@@ -249,7 +252,7 @@ function getIndexMovieData(){
                     '</div>' +
                     '<div class="movie-block-hover">' +
                     '<div class="trailerBtn">' +
-                    '<a class="box-trailer" href="#">' +
+                    '<a class="box-trailer" href="'+ itemData.trailer_link+'">' +
                     '<i class="far fa-play-circle"></i>' +
                     '</a></div>' +
                     '<div class="button-container datveBtn">' +

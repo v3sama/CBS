@@ -51,7 +51,7 @@ public class MovieSessionService {
 
 	public void addAll(List<MovieSession> movieSessions) {
 		movieSessionRepository.saveAll(movieSessions);
-		
+
 	}
 
 }
