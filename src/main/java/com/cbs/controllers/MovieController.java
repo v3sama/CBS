@@ -86,7 +86,6 @@ public class MovieController {
         model.addAttribute("formats", formatTypeService.getAllFormatType());
         model.addAttribute("actors", actorService.getAllActors());
         model.addAttribute("genres", genreService.getAllGenre());
- 
         return "/admin/add/movie";
     }
 
