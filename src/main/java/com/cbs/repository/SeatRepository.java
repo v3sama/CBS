@@ -13,4 +13,6 @@ public interface SeatRepository extends JpaRepository<Seat,Long>{
 
     @Query(value = "select * from seat s where s.isVIP = true", nativeQuery = true)
     List<Seat> findByVIPTrue1();
+
+    Seat findSeatById(long id);
 }

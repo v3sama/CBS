@@ -56,6 +56,10 @@ public class UserService  {
 
     }
 
+    public User findUserS1(long id){
+        return userRepository.findUserById(id);
+    }
+
     public void update(User user) {
         userRepository.saveAndFlush(user);
     }
@@ -79,6 +83,11 @@ public class UserService  {
 		user.setActive(true);
 		userRepository.save(user);
 	}
+
+	public void updatePassword(String password, Long userId) {
+        userRepository.updatePassword(password, userId);
+    }
+	
 
 }
 

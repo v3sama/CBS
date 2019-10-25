@@ -45,13 +45,13 @@
         </div>
         <div class="ticket-detail">
             <div class="movie-title">
-                <span class="rating-type">P</span> <p>Everest: Người tuyết bé nhỏ</p>
+                <span class="rating-type">P</span> <p id="movie-title"></p>
             </div>
-            <div class="cinema-detail">
-                CGV Hoàng Văn Thụ
+            <div class="cinema-detail" id="ten-rap">
+
             </div>
             <div class="session-booking">
-                <p>10/10/2019</p>-<p>14:35</p>-<p>Screen 2</p>
+                <p id="ngay-chieu"></p>-<p id="suat-chieu"></p>
             </div>
         </div>
         <div class="wrapper-select-seat">
@@ -59,7 +59,7 @@
             <ul class="wrap" id="selected-seats"></ul>
         </div>
     </div>
-    <button class="checkout-button">Review</button>
+    <button class="checkout-button" onclick="checkReview()">book ticket</button>
 </section>
 
 <script th:src="@{/scripts/jquery.min.js}"></script>
@@ -67,7 +67,6 @@
 
 <script th:src="@{/scripts/jquery.seat-charts.js}"></script>
 <script th:src="@{/scripts/seat-init.js}"></script>
-<script th:src="@{/scripts/seat-reserve.js}"></script>
 </body>
 
 </html>

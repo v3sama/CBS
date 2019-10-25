@@ -14,4 +14,5 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
 
     Ticket findTicketBySeat_Id(long id);
 
+    List<Ticket> findTicketBySeat_IdAndMovieSession_Id(long sid, long msid);
 }

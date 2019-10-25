@@ -53,11 +53,12 @@
 
 div.seatCharts-container {
 	/* margin: 50px 0 0 40px; */
+	width: 700px;
 	padding: 20px;
 	float: left;
 	position: absolute;
 	top: 50%;
-	left: 50%;
+	left: 60%;
 	transform: translate(-50%, -50%);
 }
 
@@ -197,7 +198,8 @@ b.total-price-text {
 
 /* Check out button */
 .checkout-button {
-	background-color: rgb(133, 133, 133);
+	cursor: pointer;
+	background-color: rgb(45, 161, 93);
 	border: none;
 	color: #fff;
 	letter-spacing: 1px;
@@ -231,7 +233,6 @@ b.total-price-text {
 	padding: 0 18px;
 	display: none;
 	overflow: hidden;
-	background-color: #f1f1f1;
 }
 
 .payment-method {

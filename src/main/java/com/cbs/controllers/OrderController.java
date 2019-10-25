@@ -41,11 +41,6 @@ public class OrderController {
        // this.paymentController = paymentController;
     }
 
-    @GetMapping(value = "/datve", produces = MediaType.APPLICATION_JSON_VALUE)
-    public String datVe(@RequestParam(value = "session") String sessionid) {
-        return "client/seat-reserve";
-    }
-    
     @RequestMapping(value = "/admin/order", method = RequestMethod.GET)
     public String allOrder(Model model, Long cinemaId) {
         model.addAttribute("orders", orderService.getAllOrder());
@@ -54,16 +49,20 @@ public class OrderController {
     
     @RequestMapping(value = {"/admin/viewDetails/order","review"}, method = RequestMethod.GET,params = {"orderId"})
     public String viewOrderDetails(@RequestParam Long orderId, Model model) {
-    	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    	String currentPrincipalName = authentication.getName();
-    	
     	SOrder order = orderService.getOrderByID(orderId);
-    	List<Ticket> tickets = new ArrayList<Ticket>(order.getTickets());
-    	Payment payment = order.getPayment();
         model.addAttribute("order", order);
         model.addAttribute("tickets",order.getTickets());
         model.addAttribute("payment",order.getPayment());
+        model.addAttribute("card",order.getPayment().getCardInformation());
         return "/admin/details/order";
+    }
+    
+    @RequestMapping(value = {"/admin/update/order"}, method = RequestMethod.GET,params = {"orderId"})
+    public String updateOrder(@RequestParam Long orderId, Model model) {
+    	SOrder order = orderService.getOrderByID(orderId);
+    	order.setStatus("Completed");
+    	orderService.addOrder(order);
+        return "/admin/details/order?orderId="+orderId;
     }
    
 }

@@ -1,36 +1,25 @@
-var firstSeatLabel = 1;
-
 $(document).ready(function () {
-    var $cart = $('#selected-seats'),
+    var dataSeat = $.getSeatData(),
+        $cart = $('#selected-seats'),
         $counter = $('#counter'),
         $total = $('#total'),
         sc = $('#seat-map').seatCharts({
-            map: [
-                'fffffffffff',
-                'fffffffffff',
-                'eeeeeeeeeee',
-                'eeeeeeeeeee',
-                'eeeeeeeeeee',
-                'eeeeeeeeeee',
-                'eeeeeeeeeee',
-                'eeeeeeeeeee',
-                'eeeeeeeeeee',
-            ],
+            map: dataSeat.rowMap,
             seats: {
-                f: {
-                    price: 50000,
+                v: {
+                    price: dataSeat.priceVip,
                     classes: 'first-class', //your custom CSS class
                     category: 'Ghe Vip'
                 },
                 e: {
-                    price: 30000,
+                    price: dataSeat.priceThuong,
                     classes: 'economy-class', //your custom CSS class
                     category: 'Ghe Thuong'
                 },
 
             },
             naming: {
-                rows: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K'],
+                rows: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O'],
                 top: false,
                 getLabel: function (character, row, column) {
                     return "";
@@ -42,27 +31,22 @@ $(document).ready(function () {
             legend: {
                 node: $('#legend'),
                 items: [
-                    ['f', 'available', 'Ghe Vip'],
+                    ['v', 'available', 'Ghe Vip'],
                     ['e', 'available', 'Ghe Thuong'],
-                    ['f', 'unavailable', 'Already Booked']
+                    ['u', 'unavailable', 'Already Booked']
                 ]
             },
             animate :false,
             click: function () {
                 if (this.status() == 'available') {
                     //let's create a new <li> which we'll add to the cart items
-                    console.log(this.settings);
+                    // console.log(this.settings);
                     
-                    $('<li>' + this.data().category + '  #' + this.settings.id + ': <b>' + this.data().price + '&#273;</b> <a href="#" class="cancel-cart-item">[huy]</a></li>')
+                    $('<li>' + this.data().category + '  ' + this.settings.id + ': <b>' + this.data().price + '&#273;</b> <a href="#" class="cancel-cart-item">[huy]</a></li>')
                         .attr('id', 'cart-item-' + this.settings.id)
                         .data('seatId', this.settings.id)
                         .appendTo($cart);
-                    // if (this.settings.character === 'e') {
-                    //     $('<span class="badge back-yellow">' + this.settings.id + '</span>').attr('id', 'cart-item-' + this.settings.id).data('seatId', this.settings.id).appendTo($cart);
-                    // }else{
-                    //     $('<span class="badge back-red">' + this.settings.id + '</span>').attr('id', 'cart-item-' + this.settings.id).data('seatId', this.settings.id).appendTo($cart);
-                    // }
-                    
+
                     /*
                      * Lets update the counter and total
                      *
@@ -71,14 +55,12 @@ $(document).ready(function () {
                      */
                     $counter.text(sc.find('selected').length + 1);
                     $total.text(recalculateTotal(sc) + this.data().price);
-
                     return 'selected';
                 } else if (this.status() == 'selected') {
                     //update the counter
                     $counter.text(sc.find('selected').length - 1);
                     //and total
                     $total.text(recalculateTotal(sc) - this.data().price);
-
                     //remove the item from our cart
                     $('#cart-item-' + this.settings.id).remove();
 
@@ -100,8 +82,14 @@ $(document).ready(function () {
     });
 
     //let's pretend some seats have already been booked
-    sc.get(['A1', 'C8', 'C7', 'C6']).status('unavailable');
+    // sc.get(['A1', 'C8', 'C7', 'C6']).status('unavailable');
+    sc.find('u.available').status('unavailable');
 
+    dataMovie = $.getMovieDetail();
+    $('#movie-title').append(dataMovie.tenphim);
+    $('#ten-rap').append(dataMovie.rap);
+    $('#ngay-chieu').append(dataMovie.ngay);
+    $('#suat-chieu').append(dataMovie.suatchieu);
 });
 
 function recalculateTotal(sc) {
@@ -113,4 +101,104 @@ function recalculateTotal(sc) {
     });
 
     return total;
+}
+
+function gomGhe(){
+    let dataGhe = []
+    $('#selected-seats > li').each(function () {
+        dataGhe.push(this.id.slice(10, this.id.length))
+    })
+    // let sessionid = $.urlParam('session')
+    // let Data = {"sesson" : sessionid, "dataghe":dataGhe}
+    // let postData = JSON.stringify(Data)
+    // console.log(postData)
+    return dataGhe
+}
+
+$.urlParam = function(name){
+    var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+    if (results==null) {
+        return null;
+    }
+    return decodeURI(results[1]) || 0;
+}
+
+var getUrlParameter = function getUrlParameter(sParam) {
+    var sPageURL = window.location.search.substring(1),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+        }
+    }
+};
+
+$.getSeatData =  function getSeatMapData() {
+    let $sessionid = $.urlParam('session')
+    let dataObj
+    $.ajax({
+        type: "get",
+        url: "http://localhost:8080/api/getSeat",
+        data: {
+            "session" : $sessionid
+        },
+        async: false,
+        dataType: "json",
+        success: function (data) {
+            dataObj = data
+        }
+    })
+    return dataObj
+}
+
+$.getMovieDetail = function () {
+    let $sessionid = $.urlParam('session')
+    let movieObj
+    $.ajax({
+        type: "get",
+        url: "http://localhost:8080/api/getMovieBySession",
+        data: {
+            "session" : $sessionid
+        },
+        async: false,
+        dataType: "json",
+        success: function (data) {
+            movieObj = data
+        }
+    })
+    return movieObj
+}
+
+function checkReview() {
+    let dataGhe = gomGhe();
+    console.log(dataGhe)
+    if (dataGhe.length == 0){
+        alert("Vui long chon ghe")
+    }else{
+        confirmBook()
+    }
+}
+
+function confirmBook() {
+    let dataGhe = gomGhe()
+    let sessionid = $.urlParam('session')
+    let Data = {"sesson" : sessionid, "dataghe":dataGhe}
+    let postData = JSON.stringify(Data)
+    $.ajax({
+        type: "post",
+        url: "http://localhost:8080/api/review",
+        data: postData,
+        async: false,
+        contentType: "application/json",
+        success: function (data) {
+            if (data.length>0){
+                window.location.href = "http://localhost:8080/confirmVe?code=" + data;
+            }
+        }
+    })
 }

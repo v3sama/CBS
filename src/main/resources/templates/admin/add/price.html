@@ -82,6 +82,8 @@
 												th:value="${price.formatType}" />
 												<input type="hidden" th:field="*{prices[__${itemStat.index}__].movie}"
 												th:value="${price.movie}" />
+												<input type="hidden" th:field="*{prices[__${itemStat.index}__].id}"
+												th:value="${price.id}" />
 											</td>
 											<td>
 												<input class="form-control" type="text" th:field="*{prices[__${itemStat.index}__].title}"
