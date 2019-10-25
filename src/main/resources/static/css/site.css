@@ -390,7 +390,7 @@
 	margin: auto;
 	padding: 20px;
 	border: 1px solid #888;
-	width: 80%;
+	width: 51%;
 	position: relative;
 }
 
@@ -398,7 +398,7 @@
 .close {
 	position: absolute;
 	left: 99%;
-	top: -18%;
+	top: -3%;
 	background-color: #fff;
 	padding: 0 5px;
 	border-radius: 50%;

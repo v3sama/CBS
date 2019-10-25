@@ -34,7 +34,10 @@ let schedule = [];
 function trailerBox() {
     $('.box-trailer').click(function (e) {
         e.preventDefault();
-        $('.modal-box-trailer').show();
+        var href = $(this).attr('href');
+        $( "iframe" ).remove( ".traillerifram" );
+        $('.modal-content').append('<iframe class="traillerifram" width="650" height="350" src="' + href + '" frameborder="0"></iframe>');
+        $('.modal-box-trailer').show()
     });
 
     // var span = $('.close')[0];
@@ -249,7 +252,7 @@ function getIndexMovieData(){
                     '</div>' +
                     '<div class="movie-block-hover">' +
                     '<div class="trailerBtn">' +
-                    '<a class="box-trailer" href="#">' +
+                    '<a class="box-trailer" href="'+ itemData.trailer_link+'">' +
                     '<i class="far fa-play-circle"></i>' +
                     '</a></div>' +
                     '<div class="button-container datveBtn">' +
