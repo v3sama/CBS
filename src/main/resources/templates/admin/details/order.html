@@ -102,6 +102,7 @@
 							<div>
 								<input type="hidden" th:value="${card.id}" th:field="*{id}"/>
 								<input type="hidden" th:value="${card.member.id}" th:field="*{member}"/>
+								<input type="hidden" th:value="${order.id}" name="orderId"/>
 								<label class="radio"> 
 									<input type="radio" id="cash" name="e" value="1" checked=""/>
 									 <span>By Cash(Pay at Cashier Area)</span>
@@ -113,12 +114,12 @@
 								<div id="content" class="form-group row">
 									<div class="col-sm-4">
 										<input type="number" class="form-control" th:field="*{card_no}"
-										placeholder="card number" name="card-number"/>
+										placeholder="card number" />
 									</div> 
 									<div class="col-sm-3">
 										<input
 										type="date" class="form-control" placeholder="date expire"
-										name="card-date-expire" th:field="*{card_date}"/> 
+										 th:field="*{card_date}"/> 
 									</div>
 									<div class="col-sm-2">
 										<input type="password" class="form-control" placeholder="ccv"
@@ -126,7 +127,7 @@
 									</div>
 									<div class="col-sm-3">
 										<input type="text" class="form-control" placeholder="bank"
-											name="bank" />
+											th:field="*{bank}" />
 									</div>
 								</div>
 							</div>
