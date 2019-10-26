@@ -4,6 +4,7 @@ package com.cbs.controllers;
 import org.apache.poi.ss.usermodel.Sheet;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -23,11 +24,13 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cbs.dto.ReportForm;
 import com.cbs.dto.TicketReportDTO;
@@ -66,6 +69,7 @@ public class ReportController {
 		this.userRepo = userRepo;
 		this.orderRepo = orderRepo;
 		this.movieSessionRepo = movieSessionRepo;
+		this.ticketRepo = ticketRepo;
 
 	}
 
@@ -95,14 +99,19 @@ public class ReportController {
 		return "/admin/report";
 	}
 
-	@RequestMapping(value = "/admin/report", method = RequestMethod.POST)
-	public List<TicketReportDTO> ticketByCinema(@Valid ReportForm reportForm, Model model) {
+	@RequestMapping(value = "/admin/report", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody List<TicketReportDTO> ticketByCinema(@Valid ReportForm reportForm, Model model) {
 		
 		List<TicketReportDTO> list =  ticketRepo.findTicketByCinema(reportForm.getCinemaId(), 
-				reportForm.getFromDate(),reportForm.getToDate());
+				convertToLDT(reportForm.getFromDate()),convertToLDT(reportForm.getToDate()));
+		
+		//model.addAttribute("ticket",list);
 		return list;
 	}
-//
+	
+	public LocalDateTime convertToLDT(LocalDate date) {
+        return date.atStartOfDay();
+	}
 //	@RequestMapping(value = "/admin/report", method = RequestMethod.POST)
 //	public List<TicketReportDTO> ticketsQuery(@Valid ReportForm reportForm, Model model) {
 //		List<TicketReportDTO> list = ticketRepo.findTicketByProvince(reportForm.getProvinceId(), 

@@ -7,12 +7,17 @@ import org.springframework.format.annotation.DateTimeFormat;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
-public class TicketReportDTO {
-	private String orderId;
-	private String memberId;
+
+public interface TicketReportDTO {
+	Long getOderId();
+	Long getMemberId();
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	private LocalDateTime  orderTime;
-	private Double amount;
+	LocalDateTime getOrderTime();
+	Double getAmount();
+	
+//	public getOrderId();  orderId;
+//	private String memberId;
+//	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+//	private LocalDateTime  orderTime;
+//	private Double amount;
 }

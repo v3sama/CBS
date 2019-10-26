@@ -77,12 +77,17 @@
 							<thead>
 								<tr th:each="cinemaScreen : ${cinemaScreens}">
 									<th th:text="${cinemaScreen.title}"></th>
+									<th:block th:each="sessionMovie : ${sessionMovies}">
+
+										<td th:text="${sessionMovie.time}"></td>
+
+									</th:block>
 								</tr>
 							</thead>
 							<tbody>
 								<th:block th:each="sessionMovie : ${sessionMovies}">
 									<tr>
-										<td th:text="sessionMovie.time"></td>
+										<td th:text="${sessionMovie.time}"></td>
 									</tr>
 								</th:block>
 							</tbody>

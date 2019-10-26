@@ -285,6 +285,7 @@ public class BookTicketRestController {
 
         int orderid = checkoutDTO.getOrder();
         SOrder order = orderService.getOrderByID(Long.valueOf(orderid));
+
         Payment payment = new Payment();
         String paymentMode = checkoutDTO.getPayment();
 
@@ -304,7 +305,7 @@ public class BookTicketRestController {
         orderService.addOrder(order);
         return ""+orderid;
     }
-
+    
     @GetMapping(value = "api/checkoutFIRST")
     public String checkPaymentFIRST(@RequestParam(value = "orderid") String orderid){
         SOrder order = orderService.findOrderByID(Long.parseLong(orderid));

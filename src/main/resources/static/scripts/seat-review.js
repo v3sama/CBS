@@ -129,6 +129,7 @@ function confirmCheckout() {
     })
 }
 
+
 function readyConfirmCheckout() {
     let orderid = $.urlParam('code')
     // let data = {"order" :orderid, "payment" : "", "cardinfo" : []}
