@@ -98,17 +98,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 		// Các trang không yêu cầu login
 
-<<<<<<< HEAD
-		http.authorizeRequests().antMatchers("/admin/**", "/admin").hasAuthority("ADMIN")
-				.antMatchers("/profile/**", "/orders/**", "/datve").hasAuthority("MEMBER").antMatchers("/**")
-				.permitAll();
-=======
 		http.authorizeRequests()
 				.antMatchers("/admin/**","/admin").hasAuthority("ADMIN")
 				.antMatchers("/profile/**", "/orders/**", "/datve", "/confirmVe", "/booksuccess").hasAuthority("MEMBER")
 				.antMatchers("/**").permitAll();
 						
->>>>>>> branch 'dev' of https://github.com/v3sama/CBS.git
 
 		// Khi người dùng đã login, với vai trò XX.
 		// Nhưng truy cập vào trang yêu cầu vai trò YY,
