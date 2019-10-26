@@ -242,7 +242,7 @@ function getIndexMovieData(){
                 console.log(itemData.movie_image)
                 $('#slick-dang-chieu').append('<div class="movie-block">' +
                     '<div class="thumbnail">' +
-                    '<img src="' + itemData.movie_image + '" alt="" class="movie-block-img">' +
+                    '<img src="http://placehold.it/215x318" alt="" class="movie-block-img">' +
                     '</div>' +
                     '<div class="info-detail">' +
                     '<div class="movie-block-title">' + itemData.movie_title + '</div>' +
@@ -278,7 +278,7 @@ function getIndexMovieData(){
             $.each(data, function (index, itemData) {
                 $('#slick-sap-chieu').append('<div class="movie-block">' +
                     '<div class="thumbnail">' +
-                    '<img src="' + itemData.movie_image + '" alt="" class="movie-block-img">' +
+                    '<img src="http://placehold.it/215x318" alt="" class="movie-block-img">' +
                     '</div>' +
                     '<div class="info-detail">' +
                     '<div class="movie-block-title">' + itemData.movie_title + '</div>' +
@@ -323,8 +323,8 @@ $.renderUser = function () {
         $('#user-acc-name').empty();
         $('#user-acc-name').append(dataUser.name);
         $('#user-acc-link').attr("href", "/user/"+dataUser.name) ;
-        $('#user-acc-link').after(function () {
-            return '<a href=\"/logout\"></a>';
+        $('.nav-right').prepend(function () {
+            return '<a style="float: right;" href=\"/logout\">Logout</a>';
         })
     }
 }
