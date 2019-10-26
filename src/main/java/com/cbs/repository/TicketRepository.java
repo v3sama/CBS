@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.persistence.SqlResultSetMapping;
+
 @Repository
 public interface TicketRepository extends JpaRepository<Ticket, Long> {
 
@@ -28,8 +30,7 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
 			+ " JOIN MovieSession ms on t.movieSession = ms.id "
 			+ " JOIN CinemaScreen cs on ms.cinemaScreen = cs.id "
 			+ " JOIN Cinema c on c.id = cs.cinema "
-			+ "WHERE o.status = 'Completed' AND o.orderTime >= ?2 "
-			+ "AND o.orderTime <= ?3 AND c.id = ?1")
+			+ "WHERE o.status = 'Completed'  and c.id = ?1")
 	List<TicketReportDTO> findTicketByCinema(Long cinemaId, LocalDate fromDate, LocalDate toDate);
 	
 	
@@ -44,4 +45,5 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
 		  "AND o.orderTime <= :toDate AND p.id = :provinceId  ")
 	  List<TicketReportDTO>	  findTicketByProvince(Long provinceId, LocalDate fromDate, LocalDate toDate);
 	 
+	  
 }

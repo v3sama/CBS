@@ -10,7 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class TicketReportDTO {
-	private String orderId;
+	private Long orderId;
 	private String memberId;
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime  orderTime;

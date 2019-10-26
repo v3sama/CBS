@@ -66,6 +66,7 @@ public class ReportController {
 		this.userRepo = userRepo;
 		this.orderRepo = orderRepo;
 		this.movieSessionRepo = movieSessionRepo;
+		this.ticketRepo = ticketRepo;
 
 	}
 
