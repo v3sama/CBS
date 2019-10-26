@@ -1,6 +1,7 @@
 package com.cbs.controllers;
 
 import com.cbs.dto.MovieIndexClientDTO;
+import com.cbs.model.CardInformation;
 import com.cbs.model.Movie;
 import com.cbs.model.Payment;
 import com.cbs.model.SOrder;
@@ -47,13 +48,16 @@ public class OrderController {
         return "/admin/order-list";
     }
     
-    @RequestMapping(value = {"/admin/viewDetails/order","review"}, method = RequestMethod.GET,params = {"orderId"})
+    @RequestMapping(value = {"/admin/viewDetails/order","/review"}, method = RequestMethod.GET,params = {"orderId"})
     public String viewOrderDetails(@RequestParam Long orderId, Model model) {
     	SOrder order = orderService.getOrderByID(orderId);
         model.addAttribute("order", order);
         model.addAttribute("tickets",order.getTickets());
         model.addAttribute("payment",order.getPayment());
-        model.addAttribute("card",order.getPayment().getCardInformation());
+        CardInformation card = order.getPayment().getCardInformation() == null
+        		? new CardInformation(order.getMember()) : order.getPayment().getCardInformation();
+		
+        model.addAttribute("card",card);
         return "/admin/details/order";
     }
     
@@ -62,7 +66,7 @@ public class OrderController {
     	SOrder order = orderService.getOrderByID(orderId);
     	order.setStatus("Completed");
     	orderService.addOrder(order);
-        return "/admin/details/order?orderId="+orderId;
+        return "redirect:/admin/viewDetails/order?orderId="+orderId;
     }
    
 }

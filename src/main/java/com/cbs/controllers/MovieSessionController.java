@@ -82,9 +82,11 @@ public class MovieSessionController {
 
 		model.addAttribute("province", provinceService.getProvinceByID(Long.parseLong(value)).getName());
 		model.addAttribute("cinema", cinemaService.getCinemaByID(cinemaValue).getTitle());
-		model.addAttribute("movie", movieService.getMovieByID(cinemaValue).getTitle());
+		model.addAttribute("movie", movieService.getMovieByID(Long.parseLong(movieValue)).getTitle());
 		model.addAttribute("date", date);
 		model.addAttribute("cinemaScreens", screenService.getScreenByCinema(cinemaValue));
+		model.addAttribute("sessionMovies",
+				movieSessionService.findSessionByMovieAndCinemaScreen(Long.parseLong(movieValue), cinemaValue));
 
 		if (cinemaService.hasSession(Long.parseLong(movieValue), date) > 0)
 			return "/admin/details/session-details";
@@ -153,7 +155,6 @@ public class MovieSessionController {
 			MovieSession ms = new MovieSession(movie, cinemaScreen, dateTime);
 			movieSessions.add(ms);
 			time += movie.getDuration() + breakTime;
-
 		}
 
 		private String toTime(int value) {

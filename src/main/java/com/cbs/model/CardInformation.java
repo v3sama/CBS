@@ -23,6 +23,7 @@ import lombok.ToString;
 @Entity
 @EqualsAndHashCode(callSuper = true)
 public class CardInformation extends BaseEntity {
+	
 	private static final long serialVersionUID = 1L;
 	@Column(unique=true)
 	private String card_no;
@@ -35,6 +36,10 @@ public class CardInformation extends BaseEntity {
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User member;
+	public CardInformation(User member) {
+		this.member = member;
+		// TODO Auto-generated constructor stub
+	}
 	
 	
 }

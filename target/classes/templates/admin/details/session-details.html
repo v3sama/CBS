@@ -77,20 +77,25 @@
 							<thead>
 								<tr th:each="cinemaScreen : ${cinemaScreens}">
 									<th th:text="${cinemaScreen.title}"></th>
+									<th:block th:each="sessionMovie : ${sessionMovies}">
+
+										<td th:text="${sessionMovie.time}"></td>
+
+									</th:block>
 								</tr>
 							</thead>
-							<!-- 							<tbody> -->
-							<!-- 								<th:block th:each=""> -->
-							<!-- 									<tr> -->
-							<!-- 										<td th:text=""></td> -->
-							<!-- 									</tr> -->
-							<!-- 								</th:block> -->
-							<!-- 							</tbody> -->
+							<tbody>
+								<th:block th:each="sessionMovie : ${sessionMovies}">
+									<tr>
+										<td th:text="${sessionMovie.time}"></td>
+									</tr>
+								</th:block>
+							</tbody>
 						</table>
 					</div>
 					<!-- /.card-body -->
 					<div class="card-footer">
-						<button type="submit" class="btn btn-info">Create</button>
+						<!-- 						<button type="submit" class="btn btn-info">Create</button> -->
 						<!-- 							<button type="reset" class="btn btn-danger ">Reset</button> -->
 						<!-- 							<button type="button" class="btn btn-warning" -->
 						<!-- 								onclick="window.location.href='/admin/MovieSession'">Return -->

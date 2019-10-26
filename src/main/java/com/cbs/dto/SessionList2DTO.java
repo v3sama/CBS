@@ -6,6 +6,7 @@ import com.cbs.model.MovieSession;
 import lombok.Data;
 
 public interface SessionList2DTO {
-    Integer getId();
-    String getTime();
+	String getId();
+
+	String getTime();
 }
