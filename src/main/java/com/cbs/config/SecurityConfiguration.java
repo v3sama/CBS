@@ -40,6 +40,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private UserService	userService;
 
+
 	@Autowired
 	private DataSource dataSource;
 
@@ -58,8 +59,30 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		
+		if(roleService.findByName("ADMIN") == null) {
+			Role role = new Role();
+			role.setName("ADMIN");
+			roleService.addRole(role);
 			
+		}
+		if(roleService.findByName("MEMBER") == null) {
+			Role role = new Role();
+			role.setName("MEMBER");
+			roleService.addRole(role);
+		}
+		if(userService.findByEmail("admin") == null) {
+			User user = new User();
+			user.setActive(true);
+			user.setEmail("admin");
+			user.setPassword("admin");
+			
+			Set<Role> roles=  new HashSet<Role>();
+			roles.add(roleService.findByName("ADMIN"));
+			user.setRoles(roles);
+			userService.add(user);
+		}
+		
+		
 			
 		
 		// Sét đặt dịch vụ để tìm kiếm User trong Database.
@@ -72,7 +95,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 
 		http.csrf().disable();
-
+		
 		// Các trang không yêu cầu login
 
 		http.authorizeRequests()
