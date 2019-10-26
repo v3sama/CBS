@@ -1,6 +1,10 @@
 
 package com.cbs.config;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +21,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
+import com.cbs.model.Role;
+import com.cbs.model.User;
+import com.cbs.services.RoleService;
 import com.cbs.services.UserDetailsServiceImpl;
+import com.cbs.services.UserService;
 
 @Configuration
 
@@ -27,6 +35,10 @@ import com.cbs.services.UserDetailsServiceImpl;
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private UserDetailsServiceImpl userDetailsService;
+	@Autowired
+	private RoleService roleService;
+	@Autowired
+	private UserService	userService;
 
 	@Autowired
 	private DataSource dataSource;
@@ -36,10 +48,20 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 		return bCryptPasswordEncoder;
 	}
+	
+	@Bean
+	public PersistentTokenRepository persistentTokenRepository() {
+		JdbcTokenRepositoryImpl db = new JdbcTokenRepositoryImpl();
+		db.setDataSource(dataSource);
+		return db;
+	}
 
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-
+		
+			
+			
+		
 		// Sét đặt dịch vụ để tìm kiếm User trong Database.
 		// Và sét đặt PasswordEncoder.
 		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
@@ -58,7 +80,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/profile/**", "/orders/**", "/datve").hasAuthority("MEMBER")
 				.antMatchers("/**").permitAll();
 						
-			
+
 		// Khi người dùng đã login, với vai trò XX.
 		// Nhưng truy cập vào trang yêu cầu vai trò YY,
 		// Ngoại lệ AccessDeniedException sẽ ném ra.
@@ -74,19 +96,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.usernameParameter("username")//
 				.passwordParameter("password")
 				// Cấu hình cho Logout Page.
-				.and().logout().logoutUrl("/logout").logoutSuccessUrl("/logoutSuccessful");
-
+				.and().logout().logoutUrl("/logout").logoutSuccessUrl("/")
 		// Cấu hình Remember Me.
-		http.authorizeRequests().and() //
+				.and() //
 				.rememberMe().tokenRepository(this.persistentTokenRepository()) //
 				.tokenValiditySeconds(1 * 24 * 60 * 60); // 24h
 
 	}
 
-	@Bean
-	public PersistentTokenRepository persistentTokenRepository() {
-		JdbcTokenRepositoryImpl db = new JdbcTokenRepositoryImpl();
-		db.setDataSource(dataSource);
-		return db;
-	}
+	
 }

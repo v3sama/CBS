@@ -46,12 +46,7 @@ $(document).ready(function () {
                         .attr('id', 'cart-item-' + this.settings.id)
                         .data('seatId', this.settings.id)
                         .appendTo($cart);
-                    // if (this.settings.character === 'e') {
-                    //     $('<span class="badge back-yellow">' + this.settings.id + '</span>').attr('id', 'cart-item-' + this.settings.id).data('seatId', this.settings.id).appendTo($cart);
-                    // }else{
-                    //     $('<span class="badge back-red">' + this.settings.id + '</span>').attr('id', 'cart-item-' + this.settings.id).data('seatId', this.settings.id).appendTo($cart);
-                    // }
-                    
+
                     /*
                      * Lets update the counter and total
                      *
@@ -90,6 +85,11 @@ $(document).ready(function () {
     // sc.get(['A1', 'C8', 'C7', 'C6']).status('unavailable');
     sc.find('u.available').status('unavailable');
 
+    dataMovie = $.getMovieDetail();
+    $('#movie-title').append(dataMovie.tenphim);
+    $('#ten-rap').append(dataMovie.rap);
+    $('#ngay-chieu').append(dataMovie.ngay);
+    $('#suat-chieu').append(dataMovie.suatchieu);
 });
 
 function recalculateTotal(sc) {
@@ -156,8 +156,27 @@ $.getSeatData =  function getSeatMapData() {
     return dataObj
 }
 
+$.getMovieDetail = function () {
+    let $sessionid = $.urlParam('session')
+    let movieObj
+    $.ajax({
+        type: "get",
+        url: "http://localhost:8080/api/getMovieBySession",
+        data: {
+            "session" : $sessionid
+        },
+        async: false,
+        dataType: "json",
+        success: function (data) {
+            movieObj = data
+        }
+    })
+    return movieObj
+}
+
 function checkReview() {
     let dataGhe = gomGhe();
+    console.log(dataGhe)
     if (dataGhe.length == 0){
         alert("Vui long chon ghe")
     }else{
@@ -168,7 +187,9 @@ function checkReview() {
 function confirmBook() {
     let dataGhe = gomGhe()
     let sessionid = $.urlParam('session')
-    let Data = {"sesson" : sessionid, "dataghe":dataGhe}
+    let amount = $('#total').text()
+    console.log(amount)
+    let Data = {"sesson" : sessionid, "dataghe":dataGhe, "amount":amount}
     let postData = JSON.stringify(Data)
     $.ajax({
         type: "post",
@@ -178,7 +199,7 @@ function confirmBook() {
         contentType: "application/json",
         success: function (data) {
             if (data.length>0){
-                window.location.href = "http://localhost:8080/confirmVe";
+                window.location.href = "http://localhost:8080/confirmVe?code=" + data;
             }
         }
     })

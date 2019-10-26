@@ -46,14 +46,63 @@
 				<div class="card card-info">
 
 					<div class="card-header">
-						<h3 class="card-title">Update order</h3>
+						<h3 class="card-title">Order details</h3>
+					</div>
+					<div  class="form-group row">
+						<label class="col-sm-2" >Movie</label>
+						<div class="col-sm-4" th:text="${tickets[0].movieSession.movie.title}">
+						</div>
+						<label class="col-sm-2" >Time</label>
+						<div class="col-sm-4" th:text="${tickets[0].movieSession.time}">
+						</div>
+					</div>
+					<div  class="form-group row">
+						<label class="col-sm-2" >Cinema</label>
+						<div class="col-sm-4" th:text="${tickets[0].movieSession.cinemaScreen.cinema.title}">
+						</div>
+						<label class="col-sm-2" >Screen</label>
+						<div class="col-sm-4" th:text="${tickets[0].movieSession.cinemaScreen.screen.title}">
+						</div>
+					</div>
+					<div class="table-responsive" align="center">
+						<table class="table table-hover" style="width: 100%">
+							<thead>
+								<tr>
+									<th>Ticket</th>
+									<th>VIP Ticket</th>
+									<th>Price</th>
+								</tr>
+							</thead>
+
+							<tbody>
+								<th:block th:each="ticket : ${tickets}">
+									<tr>
+										<td>
+											<span th:text="${ticket.seat.row.tittle}"></span>
+											 <span th:text="${ticket.seat.id}"></span>
+										</td>
+										<td >
+											<input type="checkbox" th:checked="${ticket.price.isVIP}" disabled/>
+										</td>	
+										<td th:text="${ticket.amount}"></td>
+
+									</tr>
+								</th:block>
+							</tbody>
+						</table>
+					</div>
+					<div class="card-header">
+						<h3 class="card-title">Payment method</h3>
 					</div>
 					<!-- form start -->
 					<form class="form-horizontal" data-toggle="validator" role="form"
-						action="#" th:action="@{/admin/add/order}" th:object="${payment}"
+						action="#" th:action="@{/admin/pay/order}" th:object="${card}"
 						method="post" enctype="multipart/form-data">
 						<div class="card-body">
 							<div>
+								<input type="hidden" th:value="${card.id}" th:field="*{id}"/>
+								<input type="hidden" th:value="${card.member.id}" th:field="*{member}"/>
+								<input type="hidden" th:value="${order.id}" name="orderId"/>
 								<label class="radio"> 
 									<input type="radio" id="cash" name="e" value="1" checked=""/>
 									 <span>By Cash(Pay at Cashier Area)</span>
@@ -62,20 +111,32 @@
 									 <input type="radio" id="card"	name="e" value="2"/> 
 									 <span>By Card</span>
 								</label>
-								<div id="content" class="content">
-									<input type="number" class="card-form"
-										placeholder="card number" name="card-number"> <input
-										type="text" class="card-form" placeholder="date expire"
-										name="card-date-expire"> <input type="text"
-										class="card-form" placeholder="ccv" name="card-ccv">
+								<div id="content" class="form-group row">
+									<div class="col-sm-4">
+										<input type="number" class="form-control" th:field="*{card_no}"
+										placeholder="card number" />
+									</div> 
+									<div class="col-sm-3">
+										<input
+										type="date" class="form-control" placeholder="date expire"
+										 th:field="*{card_date}"/> 
+									</div>
+									<div class="col-sm-2">
+										<input type="password" class="form-control" placeholder="ccv"
+											name="card-ccv" />
+									</div>
+									<div class="col-sm-3">
+										<input type="text" class="form-control" placeholder="bank"
+											th:field="*{bank}" />
+									</div>
 								</div>
 							</div>
 						</div>
 						<!-- /.card-body -->
 						<div class="card-footer">
-							<button type="submit" class="btn btn-info">Create/Update</button>
+							<button type="submit" class="btn btn-success">Pay</button>
 
-							<button type="reset" class="btn btn-danger ">Reset</button>
+						
 							<button type="button" class="btn btn-warning"
 								onclick="window.location.href='/admin/order'">Return to
 								list</button>
@@ -88,97 +149,5 @@
 		<!-- /.content -->
 	</div>
 
-	<script>
-		$(document)
-				.ready(
-						function() {
-							$('#dataTable')
-									.DataTable(
-											{
-												responsive : true,
-												//sort by category
-
-												initComplete : function() {
-													// search by name or code
-													this
-															.api()
-															.columns(
-																	[ 0, 2, 3 ])
-															.every(
-																	function() {
-																		var column = this;
-																		$(
-																				'<input type="text" class="form-control" />')
-																				.appendTo(
-																						$(
-																								column
-																										.footer())
-																								.empty());
-																		$(
-																				'input',
-																				this
-																						.footer())
-																				.on(
-																						'keyup change clear',
-																						function() {
-																							if (column
-																									.search() !== this.value) {
-																								column
-																										.search(
-																												this.value)
-																										.draw();
-																							}
-																						});
-																	});
-													//drop down to select category
-													this
-															.api()
-															.columns([ 4, 5 ])
-															.every(
-																	function() {
-																		var column = this;
-																		var select = $(
-																				'<select class="form-control"><option value=""></option></select>')
-																				.appendTo(
-																						$(
-																								column
-																										.footer())
-																								.empty())
-																				.on(
-																						'change',
-																						function() {
-																							var val = $.fn.dataTable.util
-																									.escapeRegex($(
-																											this)
-																											.val());
-																							column
-																									.search(
-																											val ? '^'
-																													+ val
-																													+ '$'
-																													: '',
-																											true,
-																											false)
-																									.draw();
-																						});
-																		column
-																				.data()
-																				.unique()
-																				.sort()
-																				.each(
-																						function(
-																								d,
-																								j) {
-																							select
-																									.append('<option value="' + d + '">'
-																											+ d
-																											+ '</option>')
-																						});
-																	});
-												},
-
-											});
-						});
-	</script>
 </body>
 </html>

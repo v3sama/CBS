@@ -16,6 +16,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     User findByPhone(String phone);
 
+    User findUserById(long id);
+
     //reset password
     @Modifying
     @Query("update User u set u.password = :password where u.id = :id")

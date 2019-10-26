@@ -18,7 +18,7 @@ public class SeatServices {
 	}
 
 	public Seat getSeatById(Long id) {
-		return repository.getOne(id);
+		return repository.findSeatById(id);
 	}
 
 	public void deleteBySeatId(Long id) {

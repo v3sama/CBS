@@ -36,4 +36,9 @@ public class IndexController {
     public String confirmVe(){
         return "client/seat-review";
     }
+
+    @GetMapping(value = "/booksuccess", produces = MediaType.APPLICATION_JSON_VALUE)
+    public String bookResut(@RequestParam(value = "ordercode") String ordercode) {
+        return "client/book-success";
+    }
 }

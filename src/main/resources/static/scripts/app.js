@@ -1,4 +1,7 @@
 $("document").ready(function () {
+    // render tên user đang lỗi
+    // $.renderUser();
+
     //lấy data phim lên tab đang chiếu - sắp chiếu
     getIndexMovieData();
 
@@ -22,16 +25,19 @@ $("document").ready(function () {
     tablinks[0].classList.add('active')
 });
 
-// ĐÓNG MỞ BOX TRAILER
-
+// khai báo biến toàn cục
 let cinemaList = [];
 let movieList = [];
 let schedule = [];
 
+// ĐÓNG MỞ BOX TRAILER
 function trailerBox() {
     $('.box-trailer').click(function (e) {
         e.preventDefault();
-        $('.modal-box-trailer').show();
+        var href = $(this).attr('href');
+        $( "iframe" ).remove( ".traillerifram" );
+        $('.modal-content').append('<iframe class="traillerifram" width="650" height="350" src="' + href + '" frameborder="0"></iframe>');
+        $('.modal-box-trailer').show()
     });
 
     // var span = $('.close')[0];
@@ -222,7 +228,7 @@ function getSessionByCinemaData(movieId, cinemaId) {
 }
 
 function getIndexMovieData(){
-
+    let imgplaceholder = "http://placehold.it/215x318"
     $.ajax({
         type: "get",
         url: "http://localhost:8080/api/movieShowing",
@@ -235,7 +241,7 @@ function getIndexMovieData(){
             $.each(data, function (index, itemData) {
                 $('#slick-dang-chieu').append('<div class="movie-block">' +
                     '<div class="thumbnail">' +
-                    '<img src="http://placehold.it/215x318" alt="" class="movie-block-img">' +
+                    '<img src="' + itemData.movie_image ==="" ? imgplaceholder : itemData.movie_image+ '" alt="" class="movie-block-img">' +
                     '</div>' +
                     '<div class="info-detail">' +
                     '<div class="movie-block-title">' + itemData.movie_title + '</div>' +
@@ -246,7 +252,7 @@ function getIndexMovieData(){
                     '</div>' +
                     '<div class="movie-block-hover">' +
                     '<div class="trailerBtn">' +
-                    '<a class="box-trailer" href="#">' +
+                    '<a class="box-trailer" href="'+ itemData.trailer_link+'">' +
                     '<i class="far fa-play-circle"></i>' +
                     '</a></div>' +
                     '<div class="button-container datveBtn">' +
@@ -296,3 +302,28 @@ function getIndexMovieData(){
     });
 }
 
+$.getUser = function () {
+    let dataUser
+    $.ajax({
+        type: "get",
+        url: "http://localhost:8080/api/UserSession",
+        async: false,
+        dataType: "json",
+        success: function (data) {
+            dataUser = data
+        }
+    })
+    return dataUser;
+}
+
+$.renderUser = function () {
+    dataUser = $.getUser();
+    if (dataUser.id && dataUser.id !=""){
+        $('#user-acc-name').empty();
+        $('#user-acc-name').append(dataUser.name);
+        $('#user-acc-link').attr("href", "/user/"+dataUser.name) ;
+        $('#user-acc-link').after(function () {
+            return '<a href=\"/logout\"></a>';
+        })
+    }
+}

@@ -16,22 +16,31 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@EqualsAndHashCode(callSuper = true,exclude = {"movie","cinemaScreen","tickets"})
+@EqualsAndHashCode(callSuper = true, exclude = { "movie", "cinemaScreen", "tickets" })
 public class MovieSession extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 
-    private LocalDateTime time;
+	private LocalDateTime time;
 
-    @ManyToOne
-    @JoinColumn(name = "movie_id")
-    private Movie movie;
+	@ManyToOne
+	@JoinColumn(name = "movie_id")
+	private Movie movie;
 
-    @ManyToOne
-    @JoinColumn(name = "cinemaRoom_Id")
-    private CinemaScreen cinemaScreen;
+	@ManyToOne
+	@JoinColumn(name = "cinemaRoom_Id")
+	private CinemaScreen cinemaScreen;
 
-    @OneToMany(mappedBy = "movieSession")
-    private Set<Ticket> tickets;
-    
-    
+	@OneToMany(mappedBy = "movieSession")
+	private Set<Ticket> tickets;
+
+	public MovieSession(Movie movie, CinemaScreen cinemaScreen, LocalDateTime time) {
+		this.cinemaScreen = cinemaScreen;
+		this.movie = movie;
+		this.time = time;
+	}
+
+	public MovieSession() {
+
+	}
+
 }

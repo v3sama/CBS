@@ -86,18 +86,21 @@ public class MovieController {
         model.addAttribute("formats", formatTypeService.getAllFormatType());
         model.addAttribute("actors", actorService.getAllActors());
         model.addAttribute("genres", genreService.getAllGenre());
- 
         return "/admin/add/movie";
     }
 
     @RequestMapping(value = "/admin/add/movie", method = RequestMethod.POST)
     public String addMovie(@ModelAttribute("movieForm")MovieCreationDTO movieForm, BindingResult bindingResult, Model model,HttpServletRequest request)  {
-		/*
-		 * if (bindingResult.hasErrors()) { return "error"; }
-		 */
+		
+		 if (bindingResult.hasErrors()) { return "error"; }
+		 
         Movie movie = movieForm.getMovie();
         movieService.addMovie(movie);
-        this.doUpload(request,movie,movieForm);
+        try {
+            this.doUpload(request,movie,movieForm);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         movieService.addMovie(movie);
         return "redirect:/admin/movie";
     }

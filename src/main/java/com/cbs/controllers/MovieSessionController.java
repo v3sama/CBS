@@ -1,9 +1,10 @@
 package com.cbs.controllers;
 
 import com.cbs.model.Cinema;
+import com.cbs.model.CinemaScreen;
 import com.cbs.model.Movie;
 import com.cbs.model.MovieSession;
-import com.cbs.model.Province;
+import com.cbs.model.Screen;
 import com.cbs.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -17,11 +18,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.RequestAttributes;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -30,12 +36,13 @@ import javax.validation.Valid;
 @Controller
 public class MovieSessionController {
 
-	private final MovieSessionService movieSessionService;
+	public final MovieSessionService movieSessionService;
 	private final MovieService movieService;
 	private final CinemaService cinemaService;
 	private final ScreenService screenService;
 	private final TicketService ticketService;
 	private final ProvinceService provinceService;
+	public static List<MovieSession> movieSessions = new ArrayList<MovieSession>();
 
 	@Autowired
 	public MovieSessionController(MovieSessionService movieSessionService, MovieService movieService,
@@ -58,45 +65,145 @@ public class MovieSessionController {
 		model.addAttribute("provinces", provinceService.getAllProvince());
 		// tự động load cinemas thằng tỉnh đầu tiên
 		model.addAttribute("cinemas", provinceService.getAllProvince().get(0).getCinemas());
-		model.addAttribute("movies", movieService.getAllMovies());
+		model.addAttribute("movies", movieService.getAllActiveMovies());
 		return "/admin/add/session";
 	}
 
-	@RequestMapping(value = "/admin/add/session", method = RequestMethod.POST, params = { "province" })
-	public String addSession(Model model, @RequestParam("province") String value) {
-		model.addAttribute("movies", movieService.getAllMovies());
-		model.addAttribute("provinces", provinceService.getAllProvince());
-		Province province = provinceService.getProvinceByID(Long.parseLong(value));
-		Set<Cinema> cinemas = provinceService.getProvinceByID(Long.parseLong(value)).getCinemas();
-		model.addAttribute("cinemas", cinemas);
+	@RequestMapping(value = "/admin/add/session", method = RequestMethod.POST, params = { "province", "cinemas",
+			"movies", "date" })
+	public String addSession(Model model, @RequestParam("province") String value,
+			@RequestParam("cinemas") Long cinemaValue, @RequestParam("movies") String movieValue,
+			@RequestParam("date") String date) {
 
-		/*
-		 * model.addAttribute("movieSessionId", scheduleSession.getId());
-		 * model.addAttribute("scheduleSession", scheduleSession);
-		 * model.addAttribute("cinemaId", cinemaService.getAllCinema());
-		 * model.addAttribute("allScreens",
-		 * cinemaService.getCinemaByID(cinemaId).getCinemaScreens());
-		 * model.addAttribute("allMovies", movieService.getAllMovies());
-		 */
-		return "/admin/add/session";
-	}
+		List<Movie> movies = movieService.getAllActiveMovies();
 
-	// mình gọi vào địa chỉ bên dưới, truyền và provinceId
-	//đặt debug xem nó có hgọi k
-	@RequestMapping(value = "/api/admin/getCinemaByProvince", method = RequestMethod.GET, params = { "provinceId" }
-	, produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody  Map<Long, String> getCinemaByProvince(@RequestParam("provinceId") Long provinceId) {
-		Set<Cinema> cinemas = provinceService.getProvinceByID(provinceId).getCinemas();
-		
-		Map<Long, String> cinemasMap = new HashMap<Long, String>(); 
-		for (Cinema cinema : cinemas) {
-			cinemasMap.put(cinema.getId(),cinema.getTitle());
+		Movie movie = movieService.getMovieByID(Long.parseLong(movieValue));
+		Set<CinemaScreen> cinemaScreens = cinemaService.getCinemaByID(cinemaValue).getCinemaScreens();
+
+		model.addAttribute("province", provinceService.getProvinceByID(Long.parseLong(value)).getName());
+		model.addAttribute("cinema", cinemaService.getCinemaByID(cinemaValue).getTitle());
+		model.addAttribute("movie", movieService.getMovieByID(Long.parseLong(movieValue)).getTitle());
+		model.addAttribute("date", date);
+		model.addAttribute("cinemaScreens", screenService.getScreenByCinema(cinemaValue));
+		model.addAttribute("sessionMovies",
+				movieSessionService.findSessionByMovieAndCinemaScreen(Long.parseLong(movieValue), cinemaValue));
+
+		if (cinemaService.hasSession(Long.parseLong(movieValue), date) > 0)
+			return "/admin/details/session-details";
+
+		int noOfMovies = movies.size();
+		// int noOfRooms = cinemaScreens.size();
+
+		int last = 23 * 60;
+		int first = 8 * 60;
+		int breakTime = 15;
+		int delay = 30;
+
+		Schedule.LAST = last;
+		int f = 0, i = 0;
+		// for (int i = 0; i < noOfRooms; i++) {
+		for (CinemaScreen cinemaScreen : cinemaScreens) {
+			List<Movie> tmp = new ArrayList<>();
+			for (int j = f; j < noOfMovies + f; j++) {
+				tmp.add(movies.get(j % noOfMovies));
+			}
+
+			if (i > noOfMovies - 1) {
+				first += delay;
+			}
+
+			System.out.println(tmp);
+
+			newSchedule(first, breakTime, tmp, cinemaScreen, date);
+			i++;
+			f++;
+
+			first = 8 * 60;
 		}
-		
-		
-		
+		movieSessionService.addAll(movieSessions);
+
+		return "/admin/details/session-details";
+	}
+
+	static class Schedule {
+		public List<Integer> values = new ArrayList<>();
+		public List<Long> movieIds = new ArrayList<>();
+		public List<Long> csIds = new ArrayList<>();
+		// public static List<MovieSession> movieSessions;
+//		private static MovieSessionService movieSessionService;
+		private int time;
+		public static int LAST;
+
+		public Schedule(int first) {
+			this.time = first;
+		}
+
+		public boolean canApply() {
+			return time < LAST;
+		}
+
+		public void apply(Movie movie, int breakTime, CinemaScreen cinemaScreen, String dateString) {
+			values.add(time);
+			movieIds.add(movie.getId());
+			csIds.add(cinemaScreen.getId());
+
+			String localDateStting = dateString + " " + toTime(time);
+			System.out.println(time);
+			System.out.println(localDateStting);
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd H:m");
+			LocalDateTime dateTime = LocalDateTime.parse(localDateStting, formatter);
+			MovieSession ms = new MovieSession(movie, cinemaScreen, dateTime);
+			movieSessions.add(ms);
+			time += movie.getDuration() + breakTime;
+		}
+
+		private String toTime(int value) {
+			if (value % 60 < 10) {
+				return value / 60 + ":0" + value % 60;
+			}
+			return value / 60 + ":" + value % 60;
+		}
+
+		@Override
+		public String toString() {
+			StringBuilder sb = new StringBuilder();
+			for (int i = 0; i < values.size(); i++) {
+				// sb.append(toTime(values.get(i))).append("\t").append(titles.get(i)).append("\n");
+			}
+			return sb.toString();
+		}
+	}
+
+	static void newSchedule(int first, int breakTime, List<Movie> movies, CinemaScreen cinemaScreen, String date) {
+		Queue<Movie> queue = new ConcurrentLinkedQueue<>(movies);
+		Schedule newSchedule = new Schedule(first);
+		while (newSchedule.canApply()) {
+			Movie tmp = queue.poll();
+			newSchedule.apply(tmp, breakTime, cinemaScreen, date);
+			queue.add(tmp);
+
+		}
+
+		System.out.println(newSchedule);
+	}
+
+	@RequestMapping(value = "/api/admin/getCinemaByProvince", method = RequestMethod.GET, params = {
+			"provinceId" }, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody Map<Long, String> getCinemaByProvince(@RequestParam("provinceId") Long provinceId) {
+		Set<Cinema> cinemas = provinceService.getProvinceByID(provinceId).getCinemas();
+
+		Map<Long, String> cinemasMap = new HashMap<Long, String>();
+		for (Cinema cinema : cinemas) {
+			cinemasMap.put(cinema.getId(), cinema.getTitle());
+		}
+
 		return cinemasMap;
 	}
+
+//	@RequestMapping(value = "/admin/details/session-details", method = RequestMethod.GET)
+//	public String viewSessionDetails(@RequestParam Long sessionId, Model model) {
+//		return "/admin/details/session-details";
+//	}
 
 	@RequestMapping(value = "/admin/edit/session", method = RequestMethod.GET)
 	public String editSession(@RequestParam Long sessionId, Model model) {
