@@ -17,7 +17,7 @@ $('input.cc-num').payment('formatCardNumber');
 $('input.cc-date').payment('formatCardExpiry');
 
 $(document).ready(function () {
-
+    readyConfirmCheckout()
     //Đổ data lên phần xác nhận
     let dataOrder = $.getMovieData();
     console.log("dataOrder" + dataOrder)
@@ -124,6 +124,27 @@ function confirmCheckout() {
             console.log(data)
             if (data.length>0){
                 window.location.href = "http://localhost:8080/booksuccess?ordercode="+data;
+            }
+        }
+    })
+}
+
+function readyConfirmCheckout() {
+    let orderid = $.urlParam('code')
+    // let data = {"order" :orderid, "payment" : "", "cardinfo" : []}
+    // let postData = JSON.stringify(data);
+    $.ajax({
+        type: "get",
+        url: "http://localhost:8080/api/checkoutFIRST",
+        data: {
+            "orderid" : orderid
+        },
+        async: false,
+        contentType: "application/json",
+        success: function (data) {
+            console.log(data)
+            if (data === "dathanhtoan"){
+                window.location.href = "http://localhost:8080";
             }
         }
     })
