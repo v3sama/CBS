@@ -7,7 +7,6 @@ import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -267,8 +266,6 @@ public class BookTicketRestController {
     @GetMapping(value = "api/getUserCardInfo")
     public UserCardInfoDTO getUserCardInfo(){
         UserCardInfoDTO userCardInfoDTO = new UserCardInfoDTO();
-
-//        boolean loc = SecurityContextHolder.getContext().getAuthentication().isAuthenticated();
         CustomUserDetail loggedInUser = (CustomUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         long userid  =  loggedInUser.getUserId();
         try {
@@ -285,6 +282,7 @@ public class BookTicketRestController {
 
     @PostMapping(value = "api/checkout")
     public String checkPayment(@RequestBody CheckoutDTO checkoutDTO){
+
         int orderid = checkoutDTO.getOrder();
         SOrder order = orderService.getOrderByID(Long.valueOf(orderid));
 

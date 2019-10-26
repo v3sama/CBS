@@ -1,6 +1,11 @@
 $("document").ready(function () {
+<<<<<<< HEAD
+   //  render tên user đang lỗi
+     $.renderUser();
+=======
     // render tên user đang lỗi
     $.renderUser();
+>>>>>>> branch 'dev' of https://github.com/v3sama/CBS
 
     //lấy data phim lên tab đang chiếu - sắp chiếu
     getIndexMovieData();
@@ -237,13 +242,12 @@ function getIndexMovieData(){
         async: false,
         dataType: "json",
         success: function (data) {
-            console.log(data)
             movieList = data;
             $.each(data, function (index, itemData) {
                 console.log(itemData.movie_image)
                 $('#slick-dang-chieu').append('<div class="movie-block">' +
                     '<div class="thumbnail">' +
-                    '<img src="' + itemData.movie_image + '" alt="" class="movie-block-img">' +
+                    '<img src="http://placehold.it/215x318" alt="" class="movie-block-img">' +
                     '</div>' +
                     '<div class="info-detail">' +
                     '<div class="movie-block-title">' + itemData.movie_title + '</div>' +
@@ -320,8 +324,7 @@ $.getUser = function () {
 
 $.renderUser = function () {
     dataUser = $.getUser();
-    console.log(dataUser)
-    if (dataUser!==undefined){
+    if (dataUser.id && dataUser.id !=""){
         $('#user-acc-name').empty();
         $('#user-acc-name').append(dataUser.name);
         $('#user-acc-link').attr("href", "/user/"+dataUser.name) ;

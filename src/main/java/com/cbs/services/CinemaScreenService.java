@@ -61,5 +61,9 @@ public class CinemaScreenService {
 		cinemaScreenRepository.delete(entity);
 	}
 
+	public void addAll(Set<CinemaScreen> list) {
+		cinemaScreenRepository.saveAll(list);
+	}
+
 
 }

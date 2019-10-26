@@ -1,7 +1,6 @@
 package com.cbs.repository;
 
 import com.cbs.dto.TicketReportDTO;
-import com.cbs.model.Seat;
 import com.cbs.model.Ticket;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -11,6 +10,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+
 @Repository
 public interface TicketRepository extends JpaRepository<Ticket, Long> {
 
@@ -19,9 +19,6 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
 	Ticket findTicketBySeat_Id(long id);
 
 	List<Ticket> findTicketBySeat_IdAndMovieSession_Id(long sid, long msid);
-	
-	
-	
 	
 	@Query("SELECT o.id as orderId, t.member as memberId, o.orderTime as orderTime, t.amount as amount "
 			+ "FROM Ticket t "

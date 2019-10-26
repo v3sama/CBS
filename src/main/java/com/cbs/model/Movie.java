@@ -15,6 +15,9 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -30,7 +33,9 @@ import java.util.Set;
 public class Movie extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 
+	@NotNull
 	private String title;
+	@Min(0)
 	private int duration;
 	private String rating_type;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -38,6 +43,8 @@ public class Movie extends BaseEntity {
 	private String image;
 	private String thumbnail;
 	private String director;
+	@Min(0)
+	@Max(2300)
 	private String year;
 	private String language;
 	private float avg_user_rating_star;
@@ -53,7 +60,7 @@ public class Movie extends BaseEntity {
 	}
 
 	public Movie(Movie movie) {
-		
+
 		this.duration = movie.duration;
 		this.title = movie.title;
 	}

@@ -38,7 +38,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private RoleService roleService;
 	@Autowired
-	private UserService	userService;
+	private UserService userService;
 
 	@Autowired
 	private DataSource dataSource;
@@ -48,7 +48,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 		return bCryptPasswordEncoder;
 	}
-	
+
 	@Bean
 	public PersistentTokenRepository persistentTokenRepository() {
 		JdbcTokenRepositoryImpl db = new JdbcTokenRepositoryImpl();
@@ -58,10 +58,33 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		
+		if (roleService.findByName("ADMIN") == null) {
+			Role role = new Role();
+			role.setName("ADMIN");
+			roleService.addRole(role);
+
+		}
+		if (roleService.findByName("MEMBER") == null) {
+			Role role = new Role();
+			role.setName("MEMBER");
+			roleService.addRole(role);
+		}
+		if (userService.findByEmail("admin") == null) {
+			User user = new User();
+			user.setActive(true);
+			user.setEmail("admin");
+			user.setPassword("admin");
+			user.setFirstName("admin");
+			user.setLastName("admin");
+			user.setPhone("095789462");
 			
-			
-		
+
+			Set<Role> roles = new HashSet<Role>();
+			roles.add(roleService.findByName("ADMIN"));
+			user.setRoles(roles);
+			userService.add(user);
+		}
+
 		// Sét đặt dịch vụ để tìm kiếm User trong Database.
 		// Và sét đặt PasswordEncoder.
 		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
@@ -97,12 +120,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.passwordParameter("password")
 				// Cấu hình cho Logout Page.
 				.and().logout().logoutUrl("/logout").logoutSuccessUrl("/")
-		// Cấu hình Remember Me.
+				// Cấu hình Remember Me.
 				.and() //
 				.rememberMe().tokenRepository(this.persistentTokenRepository()) //
 				.tokenValiditySeconds(1 * 24 * 60 * 60); // 24h
 
 	}
 
-	
 }

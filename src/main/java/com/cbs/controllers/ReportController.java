@@ -112,12 +112,4 @@ public class ReportController {
 	public LocalDateTime convertToLDT(LocalDate date) {
         return date.atStartOfDay();
 	}
-//	@RequestMapping(value = "/admin/report", method = RequestMethod.POST)
-//	public List<TicketReportDTO> ticketsQuery(@Valid ReportForm reportForm, Model model) {
-//		List<TicketReportDTO> list = ticketRepo.findTicketByProvince(reportForm.getProvinceId(), 
-//				reportForm.getFromDate(),reportForm.getToDate());
-//		return list;
-//	}
-//	
-
 }
