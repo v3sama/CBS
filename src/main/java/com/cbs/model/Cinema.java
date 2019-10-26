@@ -25,7 +25,11 @@ public class Cinema extends BaseEntity {
     private Province province;
     
     @OneToMany(mappedBy = "cinema")
+<<<<<<< HEAD
     private Set<CinemaScreen> cinemaScreens;
 
+=======
+    private Set<CinemaRoom> cinemaRoomReferences;
+>>>>>>> branch 'master' of https://github.com/v3sama/CBS
 
 }
