@@ -54,4 +54,9 @@ public class MovieSessionService {
 
 	}
 
+	public List<SessionList2DTO> findSessionByCinemaAndMovieAndDate(String province_id, Long cinema_id, String movie_id,
+			String time) {
+		return movieSessionRepository.findSessionByCinemaAndMovieAndDate(province_id, cinema_id, movie_id, time);
+	}
+
 }

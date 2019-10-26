@@ -48,7 +48,6 @@ public class User extends BaseEntity {
 
 	private boolean active;
 	@Column(unique = true)
-	@Email
 	private String email;
 
 	@OneToMany(mappedBy = "member")

@@ -49,25 +49,26 @@
 					<form class="form-horizontal" data-toggle="validator" role="form"
 						action="#" th:action="@{/admin/seat}" method="post">
 						<div class="card-body">
-							
+
 							<div class="form-group row">
-								<label class="col-sm-4 control-label">Max number of row of seats</label>
+								<label class="col-sm-4 control-label">Max number of row
+									of seats</label>
 								<div class="col-sm-6">
 									<input class="form-control" type="number"
 										placeholder=" enter max row of seat" required="required"
-										name="row" th:value="${row}"/>
-									<div class="help-block with-errors" >
-									<p th:text="${error}"></p>
+										readonly="readonly" name="row" th:value="${row}" />
+									<div class="help-block with-errors">
+										<p th:text="${error}"></p>
 									</div>
 								</div>
 							</div>
 
 						</div>
 						<!-- /.card-body -->
-						<div class="card-footer">
-							<button type="submit" class="btn btn-info">Save</button>
+						<!-- 						<div class="card-footer"> -->
+						<!-- 							<button type="submit" class="btn btn-info">Save</button> -->
 
-						</div>
+						<!-- 						</div> -->
 						<!-- /.card-footer -->
 					</form>
 				</div>
