@@ -1,6 +1,6 @@
 $("document").ready(function () {
     // render tên user đang lỗi
-    // $.renderUser();
+    $.renderUser();
 
     //lấy data phim lên tab đang chiếu - sắp chiếu
     getIndexMovieData();
