@@ -39,4 +39,8 @@ public class OrderService {
         return orderRepository.findSOrderById(id);
     }
 	
+public boolean existOrderOrNot(long id){
+        return orderRepository.existsSOrderById(id);
+    }
+	
 }
