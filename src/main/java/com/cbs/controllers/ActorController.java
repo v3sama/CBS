@@ -26,7 +26,7 @@ public class ActorController {
 	@RequestMapping(value = "/admin/actor", method = RequestMethod.GET)
 	public String allActor(Model model) {
 		model.addAttribute("actors", actorService.getAllActors());
-		return "/admin/actor";
+		return "/admin/actor-list";
 	}
 
 	@RequestMapping(value = "/actor", method = RequestMethod.GET)
@@ -45,7 +45,7 @@ public class ActorController {
 	@RequestMapping(value = "/admin/edit/actor", method = RequestMethod.GET, params = { "actorId" })
 	public String editActor(@RequestParam Long actorId, Model model) {
 		model.addAttribute("actor", actorService.getActorByID(actorId));
-		return "/admin/edit/actor";
+		return "/admin/add/actor";
 	}
 
 	@RequestMapping(value = "/admin/add/actor", method = RequestMethod.GET)

@@ -2,44 +2,67 @@ package com.cbs.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import com.cbs.config.ContactNumberConstraint;
+
+import java.util.HashSet;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @Entity
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true, exclude = { "cards", "roles", "tickets" })
 public class User extends BaseEntity {
 
-    private String firstName;
+	private static final long serialVersionUID = 1L;
 
-    private String lastName;
+	@NotNull
+	@Size(min = 2, max = 30)
+	private String firstName;
+	@NotNull
+	@Size(min = 2, max = 30)
+	private String lastName;
+	@Column(unique = true)
+	@ContactNumberConstraint
+	private String phone;
 
-    private String phone;
+	private String password;
+	private String confirmationToken;
 
-    private String password;
+	private boolean active;
+	@Column(unique = true)
+	private String email;
 
-    private String email;
+	@OneToMany(mappedBy = "member")
+	private Set<Ticket> tickets;
 
-    @OneToMany(mappedBy = "member")
-    private Set<Ticket> tickets;
+	@ManyToOne
+	@JoinColumn(name = "discount_id")
+	private Discount discount;
 
-    @ManyToOne
-    @JoinColumn(name = "discount_id")
-    private Discount discount;
-    
-    @OneToMany(mappedBy = "member")
-    private Set<CardInformation> cards;
-
+	@OneToMany(mappedBy = "member")
+	private Set<CardInformation> cards;
 
 	@ManyToMany
-	@JoinTable(joinColumns = @JoinColumn(name = "user_id"),
-	            inverseJoinColumns = @JoinColumn(name = "role_id"))
-	private Set<Role> roles;
+	@JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	private Set<Role> roles = new HashSet<>();
 
 }

@@ -30,6 +30,12 @@ public class TicketService {
         return ticketRepository.findAll(request);
     }
 
+    public void addTicket(Ticket ticket){
+        ticketRepository.save(ticket);
+    }
+
+
+
     public List<Ticket> getAllTicket() {
         return ticketRepository.findAll();
     }
@@ -42,4 +48,14 @@ public class TicketService {
         ticketRepository.save(ticket);
     }
 
+    public List<Ticket> findBySessionId(long id) { return ticketRepository.findTicketByMovieSession_Id(id); }
+
+    public Ticket findBySeat_id(long id){
+        return ticketRepository.findTicketBySeat_Id(id);
+    }
+
+    public boolean findTicketbySessionAndSeat(long sid, long smid){
+        List<Ticket> ticket = ticketRepository.findTicketBySeat_IdAndMovieSession_Id(sid, smid);
+        return ticket.isEmpty();
+    }
 }

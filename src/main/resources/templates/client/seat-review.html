@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" th:href="@{/css/default-site.css}">
+    <link rel="stylesheet" th:href="@{/css/seat-reserve.css}">
+    <link rel="stylesheet" th:href="@{/css/seat-review.css}">
+    <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+    <title>Document</title>
+</head>
+
+<body>
+<section class="topbar">
+    <div class="step">
+        <h4>Select Seat</h4>
+    </div>
+    <div class="step">
+        <h4 class="active">Review &amp; Check out </h4>
+    </div>
+    <div class="step">
+        <h4>result</h4>
+    </div>
+    <div class="step user-info">
+        <h4>loc</h4>
+    </div>
+</section>
+<section class="sub-movie-info">
+
+</section>
+
+<section class="seat-area">
+    <div class="confirm-seat">
+        <p >Xác nhận đặt ghế <span id="confirm-seat"></span> </p>
+        <p><span id="confirm-date"></span> - <span id="confirm-session"></span> </p>
+        <p>Tổng số tiền: <span id="tong-tien"></span> &#273;</p>
+        <p>Vui lòng chọn phương thức thanh toán và nhấn CHECKOUT</p>
+    </div>
+</section>
+
+<section class="booking-details">
+    <div class="wrapper-booking-details">
+        <div class="payment-title">
+            Payment method
+        </div>
+        <!-- <button type="button" class="collapsible">By Card</button>
+        <div class="content">
+            <p>Lorem ipsum...</p>
+        </div> -->
+        <!-- <div>
+            <input type="radio" id="cash" name="payment" value="cash" checked>
+            <label for="cash">by cash</label>
+        </div>
+
+        <div>
+            <input type="radio" id="card" name="payment" value="card">
+            <label for="card">by card</label>
+        </div>
+        <div id="content" class="content">
+            <input type="number" placeholder="card number">
+            <input type="text" placeholder="date expire">
+            <input type="text" placeholder="ccv">
+        </div> -->
+
+        <div>
+            <label class="radio">
+                <input type="radio" id="cash" name="e" value="1" checked>
+                <span>By Cash (Pay at Cashier Area)</span>
+            </label>
+            <label class="radio">
+                <input type="radio" id="card" name="e" value="2">
+                <span>By Card</span>
+            </label>
+            <div id="content" class="content">
+                <input type="text" id="user-card-number" class="card-form cc-num" placeholder="Card Number (1234 5678 1234 5678)" name="card-number">
+                <input type="text" id="user-card-date-exp" class="card-form cc-date" placeholder="Expiry (05/2024)" name="card-date-expire">
+                <input type="text" pattern="\d*" maxlength="3" id="user-card-cvv" class="card-form cc-cvv" placeholder="cvv (3 digits)" name="card-ccv">
+            </div>
+        </div>
+
+    </div>
+    <button class="checkout-button" onclick="clickValidateCheckout()">Checkout</button>
+</section>
+
+<script th:src="@{/scripts/jquery.min.js}"></script>
+<script th:src="@{/scripts/jquery-ui.min.js}"></script>
+
+<script th:src="@{/scripts/jquery.payment.js}"></script>
+<script th:src="@{/scripts/seat-review.js}"></script>
+<script th:src="@{/scripts/jquery.seat-charts.js}"></script>
+</body>
+
+</html>

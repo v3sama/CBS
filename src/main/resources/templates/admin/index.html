@@ -1,31 +1,63 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=2"/>
-    <script src="/public/js/jquery.js" th:src="@{/js/jquery.js}"></script>
-    <script src="/public/js/bootstrap.js" th:src="@{/js/bootstrap.js}"></script>
-    <script src="/public/js/validator.js" th:src="@{/js/validator.js}"></script>
-    <link rel="stylesheet" href="/public/css/bootstrap.css" th:href="@{/css/bootstrap.css}"/>
-    <style>
-        .navbar {
-            margin-bottom: 10px;
-            border-radius: 0;
-        }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=2" />
+<link rel="stylesheet" th:href="@{/css/adminlte.min.css}" />
+<link rel="stylesheet" th:href="@{/css/all.min.css}" />
+<script th:src="@{/scripts/jquery.min.js}"></script>
+<script th:src="@{/scripts/bootstrap.bundle.min.js}"></script>
 
-        .jumbotron {
-            margin-bottom: 0;
-        }
-    </style>
+<title>CBS Admin</title>
+<style>
+.navbar {
+	margin-bottom: 10px;
+	border-radius: 0;
+}
 
+.jumbotron {
+	margin-bottom: 0;
+}
+</style>
 </head>
 <body>
-<header th:replace="admin/layout :: admin-header"></header>
 
-<div th:replace="admin/layout :: admin-nav"></div>
+	<nav th:replace="admin/layout :: admin-nav"></nav>
 
-<div class="container text-center">
-    <h1 th:text="'Hello! This is admin panel'"/>
-</div>
+	<aside th:replace="admin/layout :: admin-sidebar"></aside>
+	<div class="content-wrapper">
+		<!-- Content Header (Page header) -->
+		<div class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-6">
+						<h1 class="m-0 text-dark">Index</h1>
+					</div>
+					<!-- /.col -->
+					<div class="col-sm-6">
+						<ol class="breadcrumb float-sm-right">
+							<li class="breadcrumb-item"><a href="#">Home</a></li>
+							<li class="breadcrumb-item active">Index</li>
+						</ol>
+					</div>
+					<!-- /.col -->
+				</div>
+				<!-- /.row -->
+			</div>
+			<!-- /.container-fluid -->
+		</div>
+		<!-- /.content-header -->
+
+		<!-- Main content -->
+		<div class="content">
+			<div class="container-fluid"></div>
+		</div>
+		<!-- /.content -->
+	</div>
+	<!-- /.content-wrapper -->
+
+
+
 </body>
 </html>

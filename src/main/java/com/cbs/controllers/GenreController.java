@@ -26,7 +26,7 @@ public class GenreController {
     @RequestMapping(value = "/admin/genre", method = RequestMethod.GET)
     public String allGenre(Model model) {
         model.addAttribute("genres", genreService.getAllGenre());
-        return "/admin/genre";
+        return "/admin/genre-list";
     }
 
     @RequestMapping(value = "/genre", method = RequestMethod.GET)
@@ -44,7 +44,7 @@ public class GenreController {
     @RequestMapping(value = "/admin/edit/genre", method = RequestMethod.GET, params = {"genreId"})
     public String editGenre(@RequestParam Long genreId, Model model) {
         model.addAttribute("genre", genreService.getGenreByID(genreId));
-        return "/admin/edit/genre";
+        return "/admin/add/genre";
     }
 
     @RequestMapping(value = "/admin/add/genre", method = RequestMethod.GET)

@@ -12,14 +12,19 @@ import javax.persistence.OneToOne;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 
-@Data
+@Getter
+@Setter
 @Entity
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true,exclude = {"member","tickets","payment"})
 public class SOrder extends BaseEntity{
+	private static final long serialVersionUID = 1L;
 	private Double total;
-	private Boolean paid;
+//	private Boolean paid;
 	private LocalDateTime orderTime;
 	private String status;
 

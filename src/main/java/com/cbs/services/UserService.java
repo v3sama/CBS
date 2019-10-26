@@ -1,7 +1,6 @@
 package com.cbs.services;
 
 import com.cbs.model.User;
-import com.cbs.repository.TicketRepository;
 import com.cbs.repository.UserRepository;
 import com.cbs.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,16 +13,23 @@ public class UserService  {
 
     private final UserRepository userRepository;
 
-    private final TicketRepository ticketRepository;
 
   //  private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public UserService(UserRepository userRepository, TicketRepository ticketRepository) {
+    public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.ticketRepository = ticketRepository;
+        
         //this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
+    
+    public void saveUser(User user) {
+		userRepository.save(user);
+	}
+
+    public User findByConfirmationToken(String confirmationToken) {
+		return userRepository.findByConfirmationToken(confirmationToken);
+	}
 
     public List<User> findAll() {
         return userRepository.findAll();
@@ -50,6 +56,10 @@ public class UserService  {
 
     }
 
+    public User findUserS1(long id){
+        return userRepository.findUserById(id);
+    }
+
     public void update(User user) {
         userRepository.saveAndFlush(user);
     }
@@ -57,9 +67,25 @@ public class UserService  {
     public void add(User user) {
     	BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-    	//user.setPassword(user.getPassword().);
         userRepository.save(user);
     }
+
+	public void deactivate(Long userId) {
+		User user = userRepository.getOne(userId);
+		user.setActive(false);
+		userRepository.save(user);
+	}
+
+	public void activate(Long userId) {
+		User user = userRepository.getOne(userId);
+		user.setActive(true);
+		userRepository.save(user);
+	}
+
+	public void updatePassword(String password, Long userId) {
+        userRepository.updatePassword(password, userId);
+    }
+	
 
 }
 
