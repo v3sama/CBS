@@ -53,6 +53,8 @@
 						action="#" th:action="@{/admin/add/cinema}" th:object="${cinemaForm}"
 						method="post">
 						<div class="card-body">
+							<p th:text="${error}" style="color:red;font-weight:bold"></p>
+						
 							<div class="form-group row">
 								<input class="form-control" type="hidden" th:field="*{cinema.id}" />
 							</div>

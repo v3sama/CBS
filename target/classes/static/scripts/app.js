@@ -239,9 +239,10 @@ function getIndexMovieData(){
         success: function (data) {
             movieList = data;
             $.each(data, function (index, itemData) {
+                console.log(itemData.movie_image)
                 $('#slick-dang-chieu').append('<div class="movie-block">' +
                     '<div class="thumbnail">' +
-                    '<img src="' + itemData.movie_image ==="" ? imgplaceholder : itemData.movie_image+ '" alt="" class="movie-block-img">' +
+                    '<img src="' + itemData.movie_image + '" alt="" class="movie-block-img">' +
                     '</div>' +
                     '<div class="info-detail">' +
                     '<div class="movie-block-title">' + itemData.movie_title + '</div>' +
@@ -277,7 +278,7 @@ function getIndexMovieData(){
             $.each(data, function (index, itemData) {
                 $('#slick-sap-chieu').append('<div class="movie-block">' +
                     '<div class="thumbnail">' +
-                    '<img src="http://placehold.it/215x318" alt="" class="movie-block-img">' +
+                    '<img src="' + itemData.movie_image + '" alt="" class="movie-block-img">' +
                     '</div>' +
                     '<div class="info-detail">' +
                     '<div class="movie-block-title">' + itemData.movie_title + '</div>' +
