@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -30,7 +31,7 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
 			+ " JOIN Cinema c on c.id = cs.cinema "
 			+ "WHERE o.status = 'Completed' AND o.orderTime >= ?2 "
 			+ "AND o.orderTime <= ?3 AND c.id = ?1")
-	List<TicketReportDTO> findTicketByCinema(Long cinemaId, LocalDate fromDate, LocalDate toDate);
+	List<TicketReportDTO> findTicketByCinema(Long cinemaId, LocalDateTime fromDate, LocalDateTime toDate);
 	
 	
 	  @Query( "SELECT o.id as orderId, t.member as memberId, o.orderTime, t.amount " +

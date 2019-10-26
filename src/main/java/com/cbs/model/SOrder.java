@@ -24,7 +24,7 @@ import lombok.ToString;
 public class SOrder extends BaseEntity{
 	private static final long serialVersionUID = 1L;
 	private Double total;
-	private Boolean paid;
+//	private Boolean paid;
 	private LocalDateTime orderTime;
 	private String status;
 
