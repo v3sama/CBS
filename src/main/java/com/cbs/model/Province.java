@@ -4,6 +4,7 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -18,6 +19,7 @@ import lombok.ToString;;
 public class Province extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 	@Column(unique=true)
+	@NotNull
     private String name;
 
     @OneToMany(mappedBy = "province")
