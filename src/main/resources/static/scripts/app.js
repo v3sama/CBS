@@ -1,6 +1,6 @@
 $("document").ready(function () {
     // render tên user đang lỗi
-    // $.renderUser();
+    $.renderUser();
 
     //lấy data phim lên tab đang chiếu - sắp chiếu
     getIndexMovieData();
@@ -237,11 +237,13 @@ function getIndexMovieData(){
         async: false,
         dataType: "json",
         success: function (data) {
+            console.log(data)
             movieList = data;
             $.each(data, function (index, itemData) {
+                console.log(itemData.movie_image)
                 $('#slick-dang-chieu').append('<div class="movie-block">' +
                     '<div class="thumbnail">' +
-                    '<img src="' + itemData.movie_image ==="" ? imgplaceholder : itemData.movie_image+ '" alt="" class="movie-block-img">' +
+                    '<img src="' + itemData.movie_image + '" alt="" class="movie-block-img">' +
                     '</div>' +
                     '<div class="info-detail">' +
                     '<div class="movie-block-title">' + itemData.movie_title + '</div>' +
@@ -318,12 +320,13 @@ $.getUser = function () {
 
 $.renderUser = function () {
     dataUser = $.getUser();
-    if (dataUser.id && dataUser.id !=""){
+    console.log(dataUser)
+    if (dataUser!==undefined){
         $('#user-acc-name').empty();
         $('#user-acc-name').append(dataUser.name);
         $('#user-acc-link').attr("href", "/user/"+dataUser.name) ;
-        $('#user-acc-link').after(function () {
-            return '<a href=\"/logout\"></a>';
+        $('.nav-right').prepend(function () {
+            return '<a style="float: right;" href=\"/logout\">Logout</a>';
         })
     }
 }

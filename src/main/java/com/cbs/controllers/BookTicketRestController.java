@@ -7,6 +7,7 @@ import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -266,6 +267,8 @@ public class BookTicketRestController {
     @GetMapping(value = "api/getUserCardInfo")
     public UserCardInfoDTO getUserCardInfo(){
         UserCardInfoDTO userCardInfoDTO = new UserCardInfoDTO();
+
+//        boolean loc = SecurityContextHolder.getContext().getAuthentication().isAuthenticated();
         CustomUserDetail loggedInUser = (CustomUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         long userid  =  loggedInUser.getUserId();
         try {
@@ -282,7 +285,6 @@ public class BookTicketRestController {
 
     @PostMapping(value = "api/checkout")
     public String checkPayment(@RequestBody CheckoutDTO checkoutDTO){
-
         int orderid = checkoutDTO.getOrder();
         SOrder order = orderService.getOrderByID(Long.valueOf(orderid));
 
@@ -308,11 +310,15 @@ public class BookTicketRestController {
     
     @GetMapping(value = "api/checkoutFIRST")
     public String checkPaymentFIRST(@RequestParam(value = "orderid") String orderid){
-        SOrder order = orderService.findOrderByID(Long.parseLong(orderid));
-
-        if (order.getStatus().equals("Completed") || order.getStatus().equals("Pending")){
-            return "dathanhtoan";
+        if (orderService.existOrderOrNot(Long.parseLong(orderid))){
+            SOrder order = orderService.findOrderByID(Long.parseLong(orderid));
+            String status = (order.getStatus() == null)? "NA" : "NI";
+            if (status.equals("NI")){
+                return "dathanhtoan";
+            }
+            return "chuathanhtoan";
         }
+
         return "chuathanhtoan";
     }
 

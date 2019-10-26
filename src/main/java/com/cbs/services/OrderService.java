@@ -34,13 +34,12 @@ public class OrderService {
     public void addOrder(SOrder order) {
         orderRepository.saveAndFlush(order);
     }
-
-    public SOrder findOrderByID(long id){
-        return orderRepository.findSOrderById(id);
-    }
 	
 	public SOrder findOrderByID(long id){
         return orderRepository.findSOrderById(id);
     }
-	
+
+    public boolean existOrderOrNot(long id){
+        return orderRepository.existsSOrderById(id);
+    }
 }
