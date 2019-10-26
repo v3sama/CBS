@@ -35,4 +35,8 @@ public class OrderService {
         orderRepository.saveAndFlush(order);
     }
 	
+	public SOrder findOrderByID(long id){
+        return orderRepository.findSOrderById(id);
+    }
+	
 }
