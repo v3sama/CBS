@@ -1,0 +1,86 @@
+div.seatCharts-container {
+	/*width: auto;*/
+	/*max-width: 700px;*/
+}
+
+div.seatCharts-cell {
+	height: 22px;
+	width: 22px;
+	margin: 6px;
+	float: left;
+	text-align: center;
+	outline: none;
+	font-size: 13px;
+	line-height: 16px;
+	color: blue;
+}
+
+div.seatCharts-seat {
+	background-color: green;
+	color: white;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	cursor: default;
+	position: relative;
+}
+
+div.seatCharts-seat:focus {
+	border: none;
+}
+
+/*
+.seatCharts-seat:focus {
+	outline: none;
+}
+*/
+div.seatCharts-space {
+	background-color: white;
+}
+
+div.seatCharts-row:after {
+	clear: both;
+}
+
+div.seatCharts-seat.selected {
+	background-color: aqua;
+}
+
+div.seatCharts-seat.focused {
+	background-color: #6db131;
+}
+
+div.seatCharts-seat.available {
+	background-color: green;
+}
+
+div.seatCharts-seat.unavailable {
+	background-color: white;
+	border: 1px solid rgb(75, 75, 75);
+	cursor: not-allowed;
+}
+
+ul.seatCharts-legendList {
+	list-style: none;
+}
+
+li.seatCharts-legendItem {
+	margin-top: 10px;
+	line-height: 2;
+}
+
+div.seatCharts-seat.unavailable::after {
+	position: absolute;
+	top: 0px;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	content: "\d7";
+	/* use the hex value here... */
+	font-size: 35px;
+	color: #5f5f5f;
+	/* line-height: 100px; */
+	text-align: center;
+	font-weight: 100;
+	font-family: 'Raleway', sans-serif;
+}
