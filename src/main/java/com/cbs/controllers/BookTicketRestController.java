@@ -305,5 +305,15 @@ public class BookTicketRestController {
         orderService.addOrder(order);
         return ""+orderid;
     }
+    
+    @GetMapping(value = "api/checkoutFIRST")
+    public String checkPaymentFIRST(@RequestParam(value = "orderid") String orderid){
+        SOrder order = orderService.findOrderByID(Long.parseLong(orderid));
+
+        if (order.getStatus().equals("Completed") || order.getStatus().equals("Pending")){
+            return "dathanhtoan";
+        }
+        return "chuathanhtoan";
+    }
 
 }
