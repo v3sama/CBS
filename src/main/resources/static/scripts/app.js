@@ -1,6 +1,6 @@
 $("document").ready(function () {
-   //  render tên user đang lỗi
-     $.renderUser();
+    // render tên user đang lỗi
+    $.renderUser();
 
     //lấy data phim lên tab đang chiếu - sắp chiếu
     getIndexMovieData();
@@ -319,7 +319,7 @@ $.getUser = function () {
 
 $.renderUser = function () {
     dataUser = $.getUser();
-    if (dataUser!==undefined){
+    if (dataUser !== undefined){
         $('#user-acc-name').empty();
         $('#user-acc-name').append(dataUser.name);
         $('#user-acc-link').attr("href", "/user/"+dataUser.name) ;
