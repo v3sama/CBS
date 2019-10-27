@@ -20,8 +20,9 @@ import java.util.Set;
 public class Screen extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 
-	@Column(unique=true)
+	@Column(unique=true,columnDefinition = "nvarchar(255)")
 	@NotNull
+	
     private String title;
 
     private String description;

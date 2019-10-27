@@ -5,6 +5,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -39,6 +40,7 @@ import com.cbs.model.CinemaScreen;
 import com.cbs.model.Movie;
 import com.cbs.model.Province;
 import com.cbs.model.Ticket;
+import com.cbs.model.User;
 import com.cbs.repository.CinemaRepository;
 import com.cbs.repository.MovieRepository;
 import com.cbs.repository.MovieSessionRepository;
@@ -91,9 +93,22 @@ public class ReportController {
 	@RequestMapping(value = "/admin/report", method = RequestMethod.GET)
 	public String reportHome(Model model) {
 		model.addAttribute("provinces", provinceRepo.findAll());
-		model.addAttribute("cinemas", cinemaRepo.findAll());
-		model.addAttribute("movies", movieRepo.findAll());
-		model.addAttribute("members", userRepo.findAll());
+		
+		List<Cinema> cinemas =new ArrayList<Cinema>();
+		cinemas.add(new Cinema());
+		cinemas.addAll(cinemaRepo.findAll());
+		
+		List<Movie> movies =new ArrayList<Movie>();
+		movies.add(new Movie());
+		movies.addAll(movieRepo.findAll());
+		
+		List<User> customers =new ArrayList<User>();
+		customers.add(new User());
+		customers.addAll(userRepo.findAll());
+		
+		model.addAttribute("cinemas", cinemas);
+		model.addAttribute("movies",movies);
+		model.addAttribute("customers", customers);
 		model.addAttribute("reportForm", new ReportForm());
 
 		return "/admin/report";

@@ -22,7 +22,7 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true,exclude = {"province","cinemaScreens"})
 public class Cinema extends BaseEntity {
 	private static final long serialVersionUID = 1L;
-	@Column(unique=true)
+	@Column(unique=true,columnDefinition = "nvarchar(255)")
     private String title;
     private String address;
     private String phone;
