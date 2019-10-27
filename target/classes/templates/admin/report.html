@@ -69,6 +69,7 @@
 								<div class="col-sm-4">
 									<select th:field="*{provinceId}" class="form-control"
 										required="required" onchange="getCinemaByProvince()">
+										<option value="0"></option>
 										<th:block th:each="province : ${provinces}">
 											<option th:value="${province.id}" th:text="${province.name}"></option>
 										</th:block>
@@ -78,6 +79,7 @@
 								<label class="col-sm-2 control-label">Cinema</label>
 								<div class="col-sm-4">
 									<select th:field="*{cinemaId}" class="form-control">
+										<option value="0"></option>
 										<th:block th:each="cinema : ${cinemas}">
 											<option th:value="${cinema.id}" th:text="${cinema.title}"></option>
 										</th:block>
@@ -88,7 +90,9 @@
 								<label class="col-sm-2 control-label"> Movie</label>
 								<div class="col-sm-4">
 									<select th:field="*{movieId}" class="form-control">
+										<option value="0"></option>
 										<th:block th:each="movie : ${movies}">
+
 											<option th:value="${movie.id}" th:text="${movie.title}"></option>
 										</th:block>
 									</select>
@@ -97,8 +101,10 @@
 								<label class="col-sm-2 control-label">Customer</label>
 								<div class="col-sm-4">
 									<select th:field="*{customerId}" class="form-control">
+										<option value="0"></option>
 										<th:block th:each="customer : ${customers}">
-											<option th:value="${customer.id}" th:text="${customer.firstName + ' ' + customer.lastName}"></option>
+											<option th:value="${customer.id}"
+												th:text="${customer.firstName + ' ' + customer.lastName}"></option>
 										</th:block>
 									</select>
 								</div>
@@ -146,9 +152,11 @@
 				'success' : function(data) {
 					//xoa het may cái option hien tai
 					$("#cinemaId").html('');
-
+					//all
+					$("#cinemaId").append('<option value="0"></option>');
 					//cái này xử lý giá trị server trả về
 					$.each(data, function(index, value) {
+						
 						$("#cinemaId").append(
 								"<option value='"+index+"'>" + value
 										+ "</option>");

@@ -93,22 +93,9 @@ public class ReportController {
 	@RequestMapping(value = "/admin/report", method = RequestMethod.GET)
 	public String reportHome(Model model) {
 		model.addAttribute("provinces", provinceRepo.findAll());
-		
-		List<Cinema> cinemas =new ArrayList<Cinema>();
-		cinemas.add(new Cinema());
-		cinemas.addAll(cinemaRepo.findAll());
-		
-		List<Movie> movies =new ArrayList<Movie>();
-		movies.add(new Movie());
-		movies.addAll(movieRepo.findAll());
-		
-		List<User> customers =new ArrayList<User>();
-		customers.add(new User());
-		customers.addAll(userRepo.findAll());
-		
-		model.addAttribute("cinemas", cinemas);
-		model.addAttribute("movies",movies);
-		model.addAttribute("customers", customers);
+		model.addAttribute("cinemas", cinemaRepo.findAll());
+		model.addAttribute("movies", movieRepo.findAll());
+		model.addAttribute("customers",  userRepo.findAll());
 		model.addAttribute("reportForm", new ReportForm());
 
 		return "/admin/report";
@@ -116,9 +103,31 @@ public class ReportController {
 
 	@RequestMapping(value = "/admin/report", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody List<TicketReportDTO> ticketByCinema(@Valid ReportForm reportForm, Model model) {
+		Long provinceId = reportForm.getProvinceId();
+		Long cinemaId= reportForm.getCinemaId();
+		Long movieId = reportForm.getMovieId();
+		Long customerId = reportForm.getCustomerId();
+		LocalDateTime fromDate = convertToLDT(reportForm.getFromDate());
+		LocalDateTime toDate = reportForm.getToDate().atTime(23, 59);
 		
-		List<TicketReportDTO> list =  ticketRepo.findTicketByCinema(reportForm.getCinemaId(), 
-				convertToLDT(reportForm.getFromDate()),convertToLDT(reportForm.getToDate()));
+		List<TicketReportDTO> list = new ArrayList<TicketReportDTO>();
+		if(provinceId == 0 && cinemaId != 0 && movieId != 0) {
+			list.addAll(ticketRepo.findTicketByMovieCinema(cinemaId, movieId, fromDate, toDate));
+		} else if(provinceId != 0 && cinemaId == 0 && movieId != 0) {
+			list.addAll(ticketRepo.findTicketByMovieProvince(provinceId, movieId, fromDate, toDate));
+		} else if (cinemaId != 0 && movieId == 0) {
+			list.addAll(ticketRepo.findTicketByCinema(cinemaId, fromDate, toDate));
+		} else if(provinceId != 0 && cinemaId == 0 && movieId == 0) {
+			list.addAll(ticketRepo.findTicketByProvince(provinceId, fromDate, toDate));
+		} else if(provinceId == 0 && cinemaId == 0 && movieId != 0) {
+			list.addAll(ticketRepo.findTicketByMovie(movieId, fromDate, toDate));
+		} else if(customerId != 0) {
+			list.addAll(ticketRepo.findTicketByCustomer(customerId, fromDate, toDate));
+		} else if(provinceId == 0 && cinemaId == 0 && movieId == 0) {
+			list.addAll(ticketRepo.findTicket(fromDate, toDate));
+		}
+		
+	
 		
 		//model.addAttribute("ticket",list);
 		return list;

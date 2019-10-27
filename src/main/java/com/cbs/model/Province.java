@@ -18,7 +18,7 @@ import lombok.ToString;;
 @EqualsAndHashCode(callSuper = true,exclude = {"cinemas"})
 public class Province extends BaseEntity {
 	private static final long serialVersionUID = 1L;
-	@Column(unique=true,columnDefinition = "nvarchar(255")
+	@Column(unique=true,columnDefinition = "nvarchar(255)")
 	@NotNull
     private String name;
 

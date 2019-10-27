@@ -34,7 +34,7 @@ public class Movie extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 
 	@NotNull
-	@Column(columnDefinition = "nvarchar(255) ")
+	@Column(columnDefinition = "varchar(255) CHARSET utf8 ")
 	private String title;
 	@Min(0)
 	private int duration;
@@ -43,18 +43,18 @@ public class Movie extends BaseEntity {
 	private LocalDate date_release;
 	private String image;
 	private String thumbnail;
-	@Column(columnDefinition = "nvarchar(255) default ''")
+	@Column(columnDefinition = "varchar(255) default ''")
 	private String director;
 	@Min(0)
 	@Max(2300)
 	private String year;
-	@Column(columnDefinition = "nvarchar(255) default ''")
+	@Column(columnDefinition = "varchar(255) CHARSET utf8 default ''")
 	private String language;
 	private float avg_user_rating_star;
 	
 	private String trailer_link;
 	private Boolean status;
-	@Column(columnDefinition = "text default ''")
+	@Column(columnDefinition = "text")
 	private String description;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate date_end;
