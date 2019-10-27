@@ -1,11 +1,6 @@
 $("document").ready(function () {
-<<<<<<< HEAD
    //  render tên user đang lỗi
      $.renderUser();
-=======
-    // render tên user đang lỗi
-    $.renderUser();
->>>>>>> branch 'dev' of https://github.com/v3sama/CBS
 
     //lấy data phim lên tab đang chiếu - sắp chiếu
     getIndexMovieData();
@@ -324,7 +319,7 @@ $.getUser = function () {
 
 $.renderUser = function () {
     dataUser = $.getUser();
-    if (dataUser.id && dataUser.id !=""){
+    if (dataUser!==undefined){
         $('#user-acc-name').empty();
         $('#user-acc-name').append(dataUser.name);
         $('#user-acc-link').attr("href", "/user/"+dataUser.name) ;
