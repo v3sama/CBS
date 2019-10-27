@@ -35,9 +35,11 @@ public class User extends BaseEntity {
 
 	@NotNull
 	@Size(min = 2, max = 30)
+	@Column(columnDefinition = "nvarchar(255) default ''")
 	private String firstName;
 	@NotNull
 	@Size(min = 2, max = 30)
+	@Column(columnDefinition = "nvarchar(255) default ''")
 	private String lastName;
 	@Column(unique = true)
 	@ContactNumberConstraint
