@@ -3,6 +3,9 @@ package com.cbs.controllers;
 
 import org.apache.poi.ss.usermodel.Sheet;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -77,18 +80,37 @@ public class ReportController {
 
 	public String createExcel() {
 
-		// Tạo workbook
-		XSSFWorkbook workbook = new XSSFWorkbook();
-
-		// # Tạo spreadsheet
-		XSSFSheet spreadsheet = workbook.createSheet("Sheet Name");
-
-		// # Tạo row trong spreadsheet
-		XSSFRow row = spreadsheet.createRow(1);
-
-		// # Tạo cell trong row
-		Cell cell = row.createCell(1);
-		return "";
+		System.out.println("Create file excel");
+	    XSSFWorkbook workbook = new XSSFWorkbook();
+	    XSSFSheet sheet = workbook.createSheet("Customer_Info");
+	    int rowNum = 0;
+	    Row firstRow = sheet.createRow(rowNum++);
+	    Cell firstCell = firstRow.createCell(0);
+	    firstCell.setCellValue("List of Customer");
+	    List<TicketReportDTO> tickets = new ArrayList<TicketReportDTO>();
+	 
+	    for (TicketReportDTO ticket : tickets) {
+	      Row row = sheet.createRow(rowNum++);
+	      Cell cell1 = row.createCell(0);
+	      cell1.setCellValue(ticket.getMemberId());
+	      Cell cell2 = row.createCell(1);
+	      cell2.setCellValue(ticket.getOrderId());
+	      Cell cell3 = row.createCell(2);
+	      cell3.setCellValue(ticket.getOrderTime());
+	      Cell cell4 = row.createCell(3);
+	      cell3.setCellValue(ticket.getAmount());
+	    }
+	    try {
+	      FileOutputStream outputStream = new FileOutputStream("Demo-ApachePOI-Excel.xlsx");
+	      workbook.write(outputStream);
+	      workbook.close();
+	    } catch (FileNotFoundException e) {
+	      e.printStackTrace();
+	    } catch (IOException e) {
+	      e.printStackTrace();
+	    }
+	    System.out.println("Done");
+	    return "Download";
 	}
 	@RequestMapping(value = "/admin/report", method = RequestMethod.GET)
 	public String reportHome(Model model) {
