@@ -13,6 +13,9 @@ $("document").ready(function () {
 
 })
 
+let username ="";
+let citySelect ="";
+
 function openCity(evt, cityName) {	// function openCity(evt, cityName) {
     // Declare all variables	//     // Declare all variables
     var i, tabcontent, tablinks;	//     var i, tabcontent, tablinks;
@@ -51,6 +54,7 @@ $.getUser = function () {
 $.renderUser = function () {
     dataUser = $.getUser();
     if (dataUser!==undefined){
+        username = dataUser.name
         $('#user-acc-name').empty();
         $('#user-acc-name').append(dataUser.name);
         $('#user-acc-link').attr("href", "/user/"+dataUser.name) ;
@@ -105,7 +109,30 @@ $.getMovie = function () {
 }
 
 let submitReview = function () {
-    console.log($('input:radio[name="rating"]:checked').attr("id"))
-    $('input:radio[name="rating"]:checked').attr("id");
+    let content = $('#review-box').val()
+    const movieid = $.urlParam("id");
+    let star = $('input:radio[name="rating"]:checked').attr("id");
+    data = {
+        "content" :content,
+        "star" : star,
+        "movie" : movieid
+    };
+    // if (username === ""){
+    //     window.location.href = "http://localhost:8080/login";
+    // }else {
+        $.ajax({
+            type: "post",
+            url: "http://localhost:8080/api/postReview",
+            data: JSON.stringify(data),
+            async: false,
+            contentType: "application/json",
+            success: function (data) {
+                console.log(data)
+
+            }
+        }).fail(function () {
+            alert("He thong dang gap su co, xin vui long thu lai sau")
+        });
+    // }
 }
 

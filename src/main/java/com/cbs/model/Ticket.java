@@ -27,7 +27,6 @@ public class Ticket extends BaseEntity {
                 ", movieSession=" + movieSession +
                 ", order=" + order +
                 ", price=" + price +
-                ", rating=" + rating +
                 '}';
     }
 
@@ -54,7 +53,5 @@ public class Ticket extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "price_id")
     private Price price;	
-    
-    @OneToOne(mappedBy = "ticket")
-    private Rating rating;	
+
 }

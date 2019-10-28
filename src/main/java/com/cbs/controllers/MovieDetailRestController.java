@@ -1,26 +1,47 @@
 package com.cbs.controllers;
 
-import com.cbs.dto.MovieIndexClientDTO;
+import com.cbs.dto.*;
 import com.cbs.model.Movie;
-import com.cbs.services.GenreService;
-import com.cbs.services.MovieService;
+import com.cbs.model.Rating;
+import com.cbs.services.*;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 public class MovieDetailRestController {
     private final MovieService movieService;
     private final GenreService genreService;
+    private final RatingService ratingService;
+    private final TicketService ticketService;
+    private final OrderService orderService;
 
-    public MovieDetailRestController(MovieService movieService, GenreService genreService) {
+    public MovieDetailRestController(MovieService movieService, GenreService genreService, RatingService ratingService, TicketService ticketService, OrderService orderService) {
         this.movieService = movieService;
         this.genreService = genreService;
+        this.ratingService = ratingService;
+        this.ticketService = ticketService;
+        this.orderService = orderService;
     }
+
+    //Khai báo rating map
+    Map<String, Float> ratingMap = new HashMap<String, Float>() {{
+        put("star1", 1f);
+        put("star1half", 1.5f);
+        put("star2", 2f);
+        put("star2half", 2.5f);
+        put("star3", 3f);
+        put("star3half", 3.5f);
+        put("star4", 4f);
+        put("star4half", 4.5f);
+        put("star5", 5f);
+    }};
 
 
     @GetMapping(value = "/api/movieDetail", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -46,5 +67,42 @@ public class MovieDetailRestController {
         movieIndexClientDTO.setLanguage(movie.getLanguage());
         movieIndexClientDTO.setDescription(movie.getDescription());
         return movieIndexClientDTO;
+
     }
+    //http://localhost:8080/
+
+    @PostMapping(value = "api/postReview")
+    public String nhanGhe(@RequestBody ReviewFormDTO reviewFormDTO) throws Exception {
+
+        if (SecurityContextHolder.getContext().getAuthentication() != null &&
+                SecurityContextHolder.getContext().getAuthentication().isAuthenticated() &&
+                //when Anonymous Authentication is enabled
+                !(SecurityContextHolder.getContext().getAuthentication()
+                        instanceof AnonymousAuthenticationToken)
+        ) {
+            CustomUserDetail loggedInUser = (CustomUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+            TicketReviewDTO reviewDTO = ticketService.findTicketUAM(loggedInUser.getUserId().intValue(), Integer.parseInt(reviewFormDTO.getMovie()));
+            String loc = reviewDTO.getId();
+            if (Integer.parseInt(loc) > 0) {
+                Rating rating = new Rating();
+                rating.setContent(reviewFormDTO.getContent());
+
+                //lấy order theo member với movie
+                List<TicketReviewDTO> reviewDTOList = ticketService.findListTicketByUAM(loggedInUser.getUserId().intValue(), Integer.parseInt(reviewFormDTO.getMovie()));
+                String ordid = reviewDTOList.get(0).getId();
+                rating.setOrder(orderService.findOrderByID(Long.parseLong(ordid)));
+
+                Float star = ratingMap.get(reviewFormDTO.getStar());
+                rating.setStar(star);
+
+                ratingService.saveRate(rating);
+                return "vui";
+            }
+            return "chuamua";
+        }
+        return "dangnhap";
+    }
+
+
 }
