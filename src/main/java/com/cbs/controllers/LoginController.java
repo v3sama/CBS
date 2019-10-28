@@ -32,35 +32,33 @@ public class LoginController {
 	private CustomUserDetail loggedInUser;
 	private UserDetails userDetails;
 	private String userInfo;
-	
+
 	@Autowired
 	public LoginController(UserService userService) {
 		this.userService = userService;
-		
+
 	}
-	
-	
+
 	/*
 	 * @RequestMapping(value = "/admin/", method = RequestMethod.GET) public String
 	 * index(Model model) { return "/admin/index"; }
 	 */
 
-	@SuppressWarnings("unlikely-arg-type")
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login(Model model, String error, String logout, Principal principal) {
 		Authentication authentication = (Authentication) SecurityContextHolder.getContext().getAuthentication();// .getPrincipal();
-		 	
+
 		if (error != null)
-			model.addAttribute("error", "Your username and password is invalid."); 
+			model.addAttribute("error", "Your username and password is invalid.");
 
 		if (logout != null)
 			model.addAttribute("message", "You have been logged out successfully.");
-		
-		//đã login
-		if(principal != null) {
+
+		// đã login
+		if (principal != null) {
 			GrantedAuthority adminAuth = new SimpleGrantedAuthority("ADMIN");
-			//role = "ADMIN"
-			if(authentication.getAuthorities().size() != 0 
+			// role = "ADMIN"
+			if (authentication.getAuthorities().size() != 0
 					&& authentication.getAuthorities().iterator().next().equals(adminAuth))
 				return "/admin/index";
 			else
@@ -69,26 +67,14 @@ public class LoginController {
 		return "/client/login";
 	}
 
-	/*
-	 * @RequestMapping(value = "/registration", method = RequestMethod.GET) public
-	 * String registration(Model model) { model.addAttribute("userForm", new
-	 * User()); return "/registration"; }
-	 * 
-	 * @RequestMapping(value = "/registration", method = RequestMethod.POST) public
-	 * String registration(@ModelAttribute("userForm") User userForm, BindingResult
-	 * bindingResult, Model model) { if (bindingResult.hasErrors()) { return
-	 * "registration"; } userService.add(userForm);
-	 * 
-	 * return "redirect:/"; }
-	 */
-
 	@RequestMapping(value = "/403", method = RequestMethod.GET)
 	public String accessDenied(Model model, Principal principal) {
 		if (principal != null) {
 			loggedInUser = (CustomUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			 userInfo = loggedInUser.getFname();	
+			userInfo = loggedInUser.getFname();
+			loggedInUser.getUserId();
 			model.addAttribute("userInfo", userInfo);
-			String message = "Hi " + principal.getName() //
+			String message = "Hi " + userInfo //
 					+ "<br> You do not have permission to access this page!";
 			model.addAttribute("message", message);
 
