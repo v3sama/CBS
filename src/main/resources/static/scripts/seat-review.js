@@ -21,7 +21,7 @@ $(document).ready(function () {
     //Đổ data lên phần xác nhận
     let dataOrder = $.getMovieData();
     console.log("dataOrder" + dataOrder)
-    $('#confirm-seat').append(dataOrder.ghe.toString())
+    $('#confirm-seat').append(dataOrder.ghe.join(', '))
     $('#confirm-date').append(dataOrder.ngay);
     $('#confirm-session').append(dataOrder.suatchieu);
     $('#tong-tien').append(dataOrder.amount);
