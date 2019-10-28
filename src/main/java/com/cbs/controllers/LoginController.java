@@ -12,7 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,6 +30,7 @@ public class LoginController {
 
 	private final UserService userService;
 	private CustomUserDetail loggedInUser;
+	private UserDetails userDetails;
 	private String userInfo;
 	
 	@Autowired
@@ -41,15 +45,27 @@ public class LoginController {
 	 * index(Model model) { return "/admin/index"; }
 	 */
 
+	@SuppressWarnings("unlikely-arg-type")
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String login(Model model, String error, String logout) {
-		
+	public String login(Model model, String error, String logout, Principal principal) {
+		Authentication authentication = (Authentication) SecurityContextHolder.getContext().getAuthentication();// .getPrincipal();
+		 	
 		if (error != null)
-			model.addAttribute("error", "Your username and password is invalid.");
+			model.addAttribute("error", "Your username and password is invalid."); 
 
 		if (logout != null)
 			model.addAttribute("message", "You have been logged out successfully.");
-
+		
+		//đã login
+		if(principal != null) {
+			GrantedAuthority adminAuth = new SimpleGrantedAuthority("ADMIN");
+			//role = "ADMIN"
+			if(authentication.getAuthorities().size() != 0 
+					&& authentication.getAuthorities().iterator().next().equals(adminAuth))
+				return "/admin/index";
+			else
+				return "/client/index";
+		}
 		return "/client/login";
 	}
 
@@ -71,10 +87,7 @@ public class LoginController {
 		if (principal != null) {
 			loggedInUser = (CustomUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			 userInfo = loggedInUser.getFname();	
-			//CustomUserDetail loggedInUser = (CustomUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		//	String userInfo = loggedInUser.getFname();
 			model.addAttribute("userInfo", userInfo);
-
 			String message = "Hi " + principal.getName() //
 					+ "<br> You do not have permission to access this page!";
 			model.addAttribute("message", message);

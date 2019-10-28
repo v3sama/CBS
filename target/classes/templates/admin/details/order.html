@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=2" />
 <link rel="stylesheet" th:href="@{/css/adminlte.min.css}" />
 <link rel="stylesheet" th:href="@{/css/all.min.css}" />
-
+<script th:src="@{/scripts/custom.js}"></script>
 <script th:src="@{/scripts/jquery.min.js}"></script>
 <script th:src="@{/scripts/bootstrap.bundle.min.js}"></script>
 </head>
@@ -66,7 +66,7 @@
 					</div>
 						<div  class="form-group row">
 						<label class="col-sm-3" >Total amount</label>
-						<div class="col-sm-9" th:text="${order.total}">
+						<div class="col-sm-9 amount" th:text="${order.total}" >
 						</div>
 						
 					</div>
@@ -83,14 +83,13 @@
 							<tbody>
 								<th:block th:each="ticket : ${tickets}">
 									<tr>
-										<td>
-											<span th:text="${ticket.seat.row.tittle}"></span>
-											 <span th:text="${ticket.seat.id}"></span>
+										<td th:text="${ticket.seat.row.tittle + ticket.seat.id }">
+											
 										</td>
 										<td >
 											<input type="checkbox" th:checked="${ticket.price.isVIP}" disabled/>
 										</td>	
-										<td th:text="${ticket.amount}"></td>
+										<td th:text="${ticket.amount}" class="amount"></td>
 
 									</tr>
 								</th:block>
@@ -159,6 +158,12 @@
 		</div>
 		<!-- /.content -->
 	</div>
-
+<script>
+	$(document).ready(function() {
+		$(".amount").each(function(){
+			formatNumber(this);
+		});
+	});
+</script>
 </body>
 </html>
