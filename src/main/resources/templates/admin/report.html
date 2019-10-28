@@ -104,7 +104,7 @@
 										<option value="0"></option>
 										<th:block th:each="customer : ${customers}">
 											<option th:value="${customer.id}"
-												th:text="${customer.firstName + ' ' + customer.lastName}"></option>
+												th:text="${customer.id + '(' + customer.phone + ')'}"></option>
 										</th:block>
 									</select>
 								</div>
