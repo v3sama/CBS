@@ -16,47 +16,60 @@ import javax.validation.Valid;
 
 public class GenreController {
 
-    private final GenreService genreService;
+	private final GenreService genreService;
 
-    @Autowired
-    public GenreController(GenreService genreService) {
-        this.genreService = genreService;
-    }
+	@Autowired
+	public GenreController(GenreService genreService) {
+		this.genreService = genreService;
+	}
 
-    @RequestMapping(value = "/admin/genre", method = RequestMethod.GET)
-    public String allGenre(Model model) {
-        model.addAttribute("genres", genreService.getAllGenre());
-        return "/admin/genre-list";
-    }
+	@RequestMapping(value = "/admin/genre", method = RequestMethod.GET)
+	public String allGenre(Model model) {
+		model.addAttribute("genres", genreService.getAllGenre());
+		return "/admin/genre-list";
+	}
 
-    @RequestMapping(value = "/genre", method = RequestMethod.GET)
-    public String allGenreUser(Model model) {
-        model.addAttribute("genres", genreService.getAllGenre());
-        return "/genre";
-    }
+	@RequestMapping(value = "/genre", method = RequestMethod.GET)
+	public String allGenreUser(Model model) {
+		model.addAttribute("genres", genreService.getAllGenre());
+		return "/genre";
+	}
 
-    @RequestMapping(value = "/admin/delete/genre", method = RequestMethod.GET)
-    public String deleteGenre(@RequestParam Long genreId, Model model) {
-        genreService.deleteGenreById(genreId);
-        return "redirect:/admin/genre";
-    }
+	@RequestMapping(value = "/admin/delete/genre", method = RequestMethod.GET)
+	public String deleteGenre(@RequestParam Long genreId, Model model) {
+		genreService.deleteGenreById(genreId);
+		return "redirect:/admin/genre";
+	}
 
-    @RequestMapping(value = "/admin/edit/genre", method = RequestMethod.GET, params = {"genreId"})
-    public String editGenre(@RequestParam Long genreId, Model model) {
-        model.addAttribute("genre", genreService.getGenreByID(genreId));
-        return "/admin/add/genre";
-    }
+	@RequestMapping(value = "/admin/edit/genre", method = RequestMethod.GET, params = { "genreId" })
+	public String editGenre(@RequestParam Long genreId, Model model) {
+		model.addAttribute("genre", genreService.getGenreByID(genreId));
+		return "/admin/add/genre";
+	}
 
-    @RequestMapping(value = "/admin/add/genre", method = RequestMethod.GET)
-    public String addGenre(Model model) {
-        model.addAttribute("genre", new Genre());
-        return "/admin/add/genre";
-    }
+	@RequestMapping(value = "/admin/add/genre", method = RequestMethod.GET)
+	public String addGenre(Model model) {
+		model.addAttribute("genre", new Genre());
+		return "/admin/add/genre";
+	}
 
-    @RequestMapping(value = "/admin/add/genre", method = RequestMethod.POST)
-    public String addGenre(@Valid Genre genre, BindingResult bindingResult, Model model) {
-        genreService.addGenre(genre);
-        return "redirect:/admin/genre";
-    }
+	@RequestMapping(value = "/admin/add/genre", method = RequestMethod.POST, params = { "name" })
+	public String addGenre(@Valid Genre genre, BindingResult bindingResult, Model model, @RequestParam String name) {
+		if (name.trim().isEmpty()) {
+			model.addAttribute("error", "Genre name must not be blank.");
+			return "admin/add/genre";
+		}
+
+		if (bindingResult.hasErrors()) {
+			return "admin/add/genre";
+		}
+		try {
+			genreService.addGenre(genre);
+		} catch (Exception e) {
+			model.addAttribute("error", "Genre name must be uinique");
+			return "admin/add/genre";
+		}
+		return "redirect:/admin/genre";
+	}
 
 }
