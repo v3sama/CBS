@@ -37,4 +37,9 @@ public class Actor extends BaseEntity {
 
 	public Actor() {
 	}
+
+	@Override
+	public String toString() {
+		return '"' + name + '"';
+	}
 }

@@ -1,16 +1,18 @@
 $("document").ready(function () {
-    // render tên user đang lỗi
-    $.renderUser();
+   //  render tên user đang lỗi
+     $.renderUser();
+    initSlickTop();
 
     //lấy data phim lên tab đang chiếu - sắp chiếu
     getIndexMovieData();
+    initSlickTab();
 
     //lấy danh sách rạp lên bảng
+    //tạo bảng lịch chiếu
     getCinemaList()
     createDataSchedule()
-    // createDataSchedule()
-    // khởi tạo slick
-    initSlick();
+
+
     trailerBox();
     initSelectize();
     $('#sap-chieu').hide();
@@ -30,6 +32,7 @@ let cinemaList = [];
 let movieList = [];
 let schedule = [];
 
+
 // ĐÓNG MỞ BOX TRAILER
 function trailerBox() {
     $('.box-trailer').click(function (e) {
@@ -45,7 +48,6 @@ function trailerBox() {
     $('.close').click(function () {
         $('.modal-box-trailer').hide();
     })
-
 }
 
 function hoverMobieBlock() {
@@ -77,7 +79,7 @@ $(".tab-slider--nav li").click(function () {
 });
 
 // KHỞI TẠO SLICK
-function initSlick() {
+function initSlickTab() {
     $('.slick-bla').slick({
         dots: true,
         infinite: false,
@@ -86,6 +88,9 @@ function initSlick() {
         slidesToShow: 4,
         slidesToScroll: 4
     });
+}
+
+function initSlickTop() {
     $('.carousel').slick({
         dots: false,
         arrow: true,
@@ -228,7 +233,7 @@ function getSessionByCinemaData(movieId, cinemaId) {
 }
 
 function getIndexMovieData(){
-    let imgplaceholder = "http://placehold.it/215x318"
+    const imgplaceholder = "http://placehold.it/215x318"
     $.ajax({
         type: "get",
         url: "http://localhost:8080/api/movieShowing",
@@ -239,16 +244,16 @@ function getIndexMovieData(){
         success: function (data) {
             movieList = data;
             $.each(data, function (index, itemData) {
-                console.log(itemData.movie_image)
+                let hinh = itemData.movie_image===null? imgplaceholder : itemData.movie_image;
                 $('#slick-dang-chieu').append('<div class="movie-block">' +
                     '<div class="thumbnail">' +
-                    '<img src="http://placehold.it/215x318" alt="" class="movie-block-img">' +
+                    '<img src="'+ hinh +'" alt="" class="movie-block-img">' +
                     '</div>' +
                     '<div class="info-detail">' +
                     '<div class="movie-block-title">' + itemData.movie_title + '</div>' +
                     '<div class="movie-block-detail">' +
                     '<div class="time">' + itemData.duration + ' phút</div>' +
-                    '<div class="imdb">' + itemData.avg_point + ' IMDb</div>' +
+                    '<div class="imdb">' + itemData.avg_point + ' rating</div>' +
                     '</div>' +
                     '</div>' +
                     '<div class="movie-block-hover">' +
@@ -257,7 +262,7 @@ function getIndexMovieData(){
                     '<i class="far fa-play-circle"></i>' +
                     '</a></div>' +
                     '<div class="button-container datveBtn">' +
-                    '<a href="#" class="button">dat ngay</a>' +
+                    '<a href="movie?id='+ itemData.movie_id +'" class="button">dat ngay</a>' +
                     '</div>' +
                     '</div>' +
                     '</div>')
@@ -274,17 +279,17 @@ function getIndexMovieData(){
         async: false,
         dataType: "json",
         success: function (data) {
-            console.log(data)
             $.each(data, function (index, itemData) {
+                let hinh = itemData.movie_image===null? imgplaceholder : itemData.movie_image;
                 $('#slick-sap-chieu').append('<div class="movie-block">' +
                     '<div class="thumbnail">' +
-                    '<img src="http://placehold.it/215x318" alt="" class="movie-block-img">' +
+                    '<a href="/loc"><img src="'+hinh+'" alt="" class="movie-block-img"></a>' +
                     '</div>' +
                     '<div class="info-detail">' +
                     '<div class="movie-block-title">' + itemData.movie_title + '</div>' +
                     '<div class="movie-block-detail">' +
                     '<div class="time">' + itemData.duration + ' phút</div>' +
-                    '<div class="imdb">' + itemData.avg_point + ' point</div>' +
+                    '<div class="imdb">' + itemData.avg_point + ' rating</div>' +
                     '</div>' +
                     '</div>' +
                     '<div class="movie-block-hover">' +
@@ -319,7 +324,7 @@ $.getUser = function () {
 
 $.renderUser = function () {
     dataUser = $.getUser();
-    if (dataUser !== undefined){
+    if (dataUser!==undefined){
         $('#user-acc-name').empty();
         $('#user-acc-name').append(dataUser.name);
         $('#user-acc-link').attr("href", "/user/"+dataUser.name) ;

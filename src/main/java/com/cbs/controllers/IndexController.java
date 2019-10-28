@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.websocket.server.PathParam;
 import java.util.List;
 
 @Controller
@@ -41,4 +42,11 @@ public class IndexController {
     public String bookResut(@RequestParam(value = "ordercode") String ordercode) {
         return "client/book-success";
     }
+
+    @GetMapping(value = "/movie")
+    public String movieDetail(@RequestParam("id") String movieid) {
+        return "client/movie-detail";
+    }
+
+
 }
