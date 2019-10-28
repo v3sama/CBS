@@ -2,18 +2,14 @@ package com.cbs.dto;
 
 import java.time.LocalDateTime;
 
+import javax.servlet.Registration;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
 public interface TicketReportDTO {
-	Long getOderId();
+	Long getOrderId();
 	Long getMemberId();
-	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	LocalDateTime getOrderTime();
-	Double getAmount();
+	Float getAmount();
 	
-//	public getOrderId();  orderId;
-//	private String memberId;
-//	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-//	private LocalDateTime  orderTime;
-//	private Double amount;
 }

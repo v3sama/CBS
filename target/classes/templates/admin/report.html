@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=2" />
+<link rel="stylesheet" th:href="@{/css/adminlte.min.css}" />
+<link rel="stylesheet" th:href="@{/css/all.min.css}" />
+<script th:src="@{/scripts/jquery.min.js}"></script>
+<script th:src="@{/scripts/bootstrap.bundle.min.js}"></script>
+
+<title>CBS Admin</title>
+<style>
+.navbar {
+	margin-bottom: 10px;
+	border-radius: 0;
+}
+
+.jumbotron {
+	margin-bottom: 0;
+}
+</style>
+</head>
+<body>
+
+	<nav th:replace="admin/layout :: admin-nav"></nav>
+
+	<aside th:replace="admin/layout :: admin-sidebar"></aside>
+	<div class="content-wrapper">
+		<!-- Content Header (Page header) -->
+		<div class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-6">
+						<h1 class="m-0 text-dark">Report</h1>
+					</div>
+					<!-- /.col -->
+					<div class="col-sm-6">
+						<ol class="breadcrumb float-sm-right">
+							<li class="breadcrumb-item"><a href="#">Home</a></li>
+							<li class="breadcrumb-item active">Report</li>
+						</ol>
+					</div>
+					<!-- /.col -->
+				</div>
+				<!-- /.row -->
+			</div>
+			<!-- /.container-fluid -->
+		</div>
+		<!-- /.content-header -->
+
+		<!-- Main content -->
+		<div class="content">
+			<div class="container text-center">
+				<div class="card card-info">
+
+					<div class="card-header">
+						<h3 class="card-title">Select parameters</h3>
+					</div>
+					<!-- form start -->
+					<form class="form-horizontal" data-toggle="validator" role="form"
+						action="#" th:action="@{/admin/report}" th:object="${reportForm}"
+						method="post">
+						<div class="card-body">
+
+
+							<div class="form-group row">
+								<label class="col-sm-2 control-label">Province</label>
+								<div class="col-sm-4">
+									<select th:field="*{provinceId}" class="form-control"
+										required="required" onchange="getCinemaByProvince()">
+										<option value="0"></option>
+										<th:block th:each="province : ${provinces}">
+											<option th:value="${province.id}" th:text="${province.name}"></option>
+										</th:block>
+									</select>
+								</div>
+
+								<label class="col-sm-2 control-label">Cinema</label>
+								<div class="col-sm-4">
+									<select th:field="*{cinemaId}" class="form-control">
+										<option value="0"></option>
+										<th:block th:each="cinema : ${cinemas}">
+											<option th:value="${cinema.id}" th:text="${cinema.title}"></option>
+										</th:block>
+									</select>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-sm-2 control-label"> Movie</label>
+								<div class="col-sm-4">
+									<select th:field="*{movieId}" class="form-control">
+										<option value="0"></option>
+										<th:block th:each="movie : ${movies}">
+
+											<option th:value="${movie.id}" th:text="${movie.title}"></option>
+										</th:block>
+									</select>
+								</div>
+
+								<label class="col-sm-2 control-label">Customer</label>
+								<div class="col-sm-4">
+									<select th:field="*{customerId}" class="form-control">
+										<option value="0"></option>
+										<th:block th:each="customer : ${customers}">
+											<option th:value="${customer.id}"
+												th:text="${customer.firstName + ' ' + customer.lastName}"></option>
+										</th:block>
+									</select>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-sm-2 control-label">From date</label>
+								<div class="col-sm-4">
+									<input class="form-control" type="date" required="required"
+										th:field="*{fromDate}" />
+								</div>
+
+								<label class="col-sm-2 control-label">To date</label>
+								<div class="col-sm-4">
+									<input class="form-control" type="date" required="required"
+										th:field="*{toDate}" />
+								</div>
+							</div>
+						</div>
+						<div class="card-footer">
+							<button type="submit" class="btn btn-info">Generate
+								Report</button>
+
+
+						</div>
+					</form>
+				</div>
+			</div>
+
+
+		</div>
+		<!-- /.content -->
+	</div>
+	<!-- /.content-wrapper -->
+	<script>
+		function getCinemaByProvince() {
+			//lay du lieu tu id thi dung #, tu class thi dung .
+			var provinceId = $("#provinceId").val();
+
+			$.ajax({
+				'url' : 'http://localhost:8080/api/admin/getCinemaByProvince',
+				'type' : 'GET',
+				'data' : {
+					'provinceId' : provinceId
+				},
+				'success' : function(data) {
+					//xoa het may cái option hien tai
+					$("#cinemaId").html('');
+					//all
+					$("#cinemaId").append('<option value="0"></option>');
+					//cái này xử lý giá trị server trả về
+					$.each(data, function(index, value) {
+						
+						$("#cinemaId").append(
+								"<option value='"+index+"'>" + value
+										+ "</option>");
+					});
+
+				},
+				'error' : function(request, error) {
+					//lỗi ko gửi đc request lên server
+					alert("Request: " + JSON.stringify(request));
+				}
+			});
+		}
+	</script>
+</body>
+</html>

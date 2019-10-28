@@ -32,7 +32,7 @@ public class InitialData implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-
+		
 //		FormatType formatType = new FormatType();
 //		formatType.setName("2D");
 //		formatTypeRepository.save(formatType);
