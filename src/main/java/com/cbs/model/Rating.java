@@ -22,6 +22,6 @@ public class Rating extends BaseEntity {
 	private float star;
 	
 	@OneToOne
-	@JoinColumn(name = "ticket_id",referencedColumnName = "id")
-	private Ticket ticket;
+	@JoinColumn(name = "order_id",referencedColumnName = "id")
+	private SOrder order;
 }
