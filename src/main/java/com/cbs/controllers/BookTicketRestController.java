@@ -355,7 +355,7 @@ public class BookTicketRestController {
 			msg.append("Session: " +first.getMovieSession().getTime() +"\n \n\n");
 			
 			for (Ticket ticket : order.getTickets()) {
-				msg.append(ticket.getSeat().getRow().getTittle() + ticket.getSeat().getId()+
+				msg.append(ticket.getSeat().getRow().getTitle() + ticket.getSeat().getId()+
 						":\t" + ticket.getPrice() +"\n");
 			}
 			msg.append("Total: " +order.getTotal() + "\n\n\n Thanks!");

@@ -158,9 +158,9 @@ public class MovieController {
 					BufferedImage image = ImageIO.read(fileData.getInputStream());
 					 BufferedImage resized ;
 					if (i == 0)
-						 resized = resize(image, 318, 215);
+						 resized = resize(image, 600, 1440);
 					else
-						 resized = resize(image, 50, 50);
+						 resized = resize(image, 318, 215);
 					
 					//BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
 					//stream.write(((MultipartFile) newImage).getBytes());
@@ -170,11 +170,9 @@ public class MovieController {
 					uploadedFiles.add(serverFile);
 					System.out.println("Write file: " + serverFile);
 					if (i == 0)
-						movie.setThumbnail(File.separator + "images" + File.separator + "movies" + File.separator
-								+ movie.getId() + File.separator + name);
+						movie.setThumbnail( "http://localhost:8080/images/movies/" + movie.getId()+"/" + name);
 					else
-						movie.setImage(File.separator + "images" + File.separator + "movies" + File.separator
-								+ movie.getId() + File.separator + name);
+						movie.setImage( "http://localhost:8080/images/movies/" + movie.getId()+"/" + name);
 					i++;
 				} catch (Exception e) {
 					System.out.println("Error Write file: " + name);
