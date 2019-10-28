@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<!-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">     -->
+
+<link rel="stylesheet" th:href="@{/css/grid.css}">
+<!-- <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet"> -->
+<link rel="stylesheet" th:href="@{/css/site.css}">
+<link rel="stylesheet" th:href="@{/css/default-site.css}">
+<link rel="stylesheet" th:href="@{/css/movie-detail.css}">
+<link href="https://fonts.googleapis.com/css?family=Quicksand&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" type="text/css" th:href="@{/css/slick.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/slick-theme.css}" />
+<link rel="stylesheet" th:href="@{/css/selectize.css}" />
+<link rel="stylesheet" th:href="@{/css/fontawesome/css/all.min.css}" />
+<title>Document</title>
+</head>
+
+<body>
+<Nav th:fragment="client-nav" th:replace="client/fragments/navbar :: client-nav"></Nav>
+
+	<section class="section-movie-detail">
+		<div class="wrapper">
+			<div class="mainDetail">
+				<div class="row">
+					<div class="col span-2-of-10">
+						<img id="movie-img" src="" alt="">
+
+					</div>
+					<div class="col span-5-of-10 mainInfo">
+						<div>
+							<span class="dateRe dataRe"></span>
+						</div>
+						<div class="rateAndName">
+							<span class="rateTy dataRateTy"></span> <span class="nameMo dataName"></span>
+						</div>
+						<div>
+							<span class="infoFra dataInfoFra"></span>
+						</div>
+					</div>
+					<div class="col span-3-of-10 rating-point-avg">
+						<div class="rating-circle">
+							<span class="diemso dataDiem"></span>
+						</div>
+					</div>
+
+				</div>
+
+
+
+			</div>
+		</div>
+	</section>
+
+	<section id="nhaylichchieu" class="section-movie">
+		<div class="row">
+			<div class="tabset">
+				<!-- Tab 1 -->
+				<input type="radio" name="tabset" id="tab1"
+					aria-controls="lichchieu" checked> <label class="mg20"
+					for="tab1">Lich Chieu</label>
+				<!-- Tab 2 -->
+				<input type="radio" name="tabset" id="tab2" aria-controls="thongtin">
+				<label for="tab2">Thong Tin</label>
+				<!-- Tab 3 -->
+				<input type="radio" name="tabset" id="tab3" aria-controls="review">
+				<label for="tab3">Danh Gia</label>
+
+				<div class="tab-panels">
+					<section id="lichchieu" class="tab-panel">
+						<section id="nhaycumrap" class="section-time">
+							<div class="row">
+								<div class="tab-loc">
+									<button class="tablinks" onclick="openCity(event, 'London')"
+										id="defaultOpen">
+										<img src="https://via.placeholder.com/50x50" alt="">
+										<div class="locate-detail">
+											<div class="locate-name">CGV Vincom Thu Duc</div>
+											<div class="locate-address">Tầng 5, TTTM Vincom Thủ
+												Đức, 216 Võ Văn Ngân, Phường Bình Thọ, Quận Thủ Đức</div>
+											<a href=""><i class="fas fa-long-arrow-alt-right"></i></a>
+										</div>
+									</button>
+									<button class="tablinks" onclick="openCity(event, 'Paris')">
+										<img src="https://via.placeholder.com/50x50" alt="">
+										<div class="locate-detail">
+											<div class="locate-name">CGV Hoang Van Thu</div>
+											<div class="locate-address">Tầng 1 và 2, Gala Center,
+												số 415, Hoàng Văn Thụ, Phường 2, Quận Tân Bình, TPHCM</div>
+											<a href=""><i class="fas fa-long-arrow-alt-right"></i></a>
+										</div>
+									</button>
+									<button class="tablinks" onclick="openCity(event, 'Tokyo')">
+										<img src="https://via.placeholder.com/50x50" alt="">
+										<div class="locate-detail">
+											<div class="locate-name">CGV Sư Vạn Hạnh</div>
+											<div class="locate-address">11 tran hung dao Quan 3</div>
+											<a href=""><i class="fas fa-long-arrow-alt-right"></i></a>
+										</div>
+									</button>
+									<button class="tablinks" onclick="openCity(event, 'Tokyo')">
+										<img src="https://via.placeholder.com/50x50" alt="">
+										<div class="locate-detail">
+											<div class="locate-name">CGV IMC Trần Quang Khải</div>
+											<div class="locate-address">Tầng 2 & 3, Trung Tâm Văn
+												Hóa Đa Năng, 62 Trần Quang Khải, P. Tân Định, Q. 1</div>
+											<a href=""><i class="fas fa-long-arrow-alt-right"></i></a>
+										</div>
+									</button>
+									<button class="tablinks" onclick="openCity(event, 'Tokyo')">
+										<img src="https://via.placeholder.com/50x50" alt="">
+										<div class="locate-detail">
+											<div class="locate-name">CGV Vincom Center Landmark 81</div>
+											<div class="locate-address">11 tran hung dao Quan 3</div>
+											<a href=""><i class="fas fa-long-arrow-alt-right"></i></a>
+										</div>
+									</button>
+
+									<button class="tablinks" onclick="openCity(event, 'Tokyo')">
+										<img src="https://via.placeholder.com/50x50" alt="">
+										<div class="locate-detail">
+											<div class="locate-name">CGV Satra Củ Chi</div>
+											<div class="locate-address">Tầng 3, TTTM Satra Củ Chi,
+												Số 1239, Tỉnh Lộ 8, Ấp Thạnh An, Xã Trung An, Huyện Củ Chi,
+												TP.HCM</div>
+											<a href=""><i class="fas fa-long-arrow-alt-right"></i></a>
+										</div>
+									</button>
+									<button class="tablinks" onclick="openCity(event, 'Tokyo')">
+										<img src="https://via.placeholder.com/50x50" alt="">
+										<div class="locate-detail">
+											<div class="locate-name">CGV Parkson Đồng Khởi</div>
+											<div class="locate-address">Tầng 5, số 35 bis-45, đường
+												Lê Thánh Tôn, Phường Bến Nghé, Quận 1, Tp. Hồ Chí Minh, Việt
+												Nam</div>
+											<a href=""><i class="fas fa-long-arrow-alt-right"></i></a>
+										</div>
+									</button>
+								</div>
+
+								<div id="London" class="tabcontent">
+									<div class="tabcontent-row">
+										<div class="tab-movie-date">
+											<p>Thứ 2 - 21/10/2019</p>
+										</div>
+										<div class="tab-movie-session">
+											<!-- <img src="http://placehold.it/50x50" alt=""> -->
+											<div class="list-time">
+												<a href="#">17:0</a> <a href="#">21:10</a> <a href="#">23:10</a>
+											</div>
+										</div>
+									</div>
+									<div class="tabcontent-row">
+										<div class="tab-movie-date">
+											<p>Thứ 3 - 22/10/2019</p>
+										</div>
+										<div class="tab-movie-session">
+											<!-- <img src="http://placehold.it/50x50" alt=""> -->
+											<div class="list-time">
+												<a href="#">19:40</a> <a href="#">20:20</a> <a href="#">21:40</a>
+												<a href="#">22:10</a> <a href="#">22:40</a> <a href="#">23:20</a>
+											</div>
+										</div>
+									</div>
+									<div class="tabcontent-row">
+										<div class="tab-movie-date">
+											<p>Thứ 4 - 23/10/2019</p>
+										</div>
+										<div class="tab-movie-session">
+											<!-- <img src="http://placehold.it/50x50" alt=""> -->
+											<div class="list-time">
+												<a href="#">21:10</a> <a href="#">21:10</a> <a href="#">21:10</a>
+												<a href="#">21:10</a>
+											</div>
+										</div>
+									</div>
+									<div class="tabcontent-row">
+										<div class="tab-movie-date">
+											<p>Thứ 5 - 24/10/2019</p>
+										</div>
+										<div class="tab-movie-session">
+											<!-- <img src="http://placehold.it/50x50" alt=""> -->
+											<div class="list-time">
+												<a href="#">21:10</a> <a href="#">21:10</a> <a href="#">21:10</a>
+												<a href="#">21:10</a>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div id="Paris" class="tabcontent">
+									<div class="tabcontent-row">
+										<div class="tab-movie-info">
+											<img src="http://placehold.it/50x50" alt="">
+											<p class="tab-movie-title">Gã Hề Ma Quái 2 - It Chapter
+												Two</p>
+											<p class="tab-movie-detail">172 phút - cinema 8 - IMDb
+												7.1</p>
+										</div>
+										<div class="tab-movie-session">
+											<!-- <img src="http://placehold.it/50x50" alt=""> -->
+											<div class="list-time">
+												<a href="#">17:0</a> <a href="#">21:10</a> <a href="#">23:10</a>
+											</div>
+										</div>
+									</div>
+									<div class="tabcontent-row">
+										<div class="tab-movie-info">
+											<img src="http://placehold.it/50x50" alt="">
+											<p class="tab-movie-title">Đứa Con Của Thời Tiết -
+												Weathering With You</p>
+											<p class="tab-movie-detail">120 phút - cinema 8.5 - IMDb
+												6.4</p>
+										</div>
+										<div class="tab-movie-session">
+											<!-- <img src="http://placehold.it/50x50" alt=""> -->
+											<div class="list-time">
+												<a href="#">19:40</a> <a href="#">20:20</a> <a href="#">21:40</a>
+												<a href="#">22:10</a> <a href="#">22:40</a> <a href="#">23:20</a>
+											</div>
+										</div>
+									</div>
+									<div class="tabcontent-row">
+										<div class="tab-movie-info">
+											<img src="http://placehold.it/50x50" alt="">
+											<p class="tab-movie-title">Gã Hề Ma Quái 2 - It Chapter
+												Two</p>
+											<p class="tab-movie-detail">172 phút - cinema 8 - IMDb
+												7.1</p>
+										</div>
+										<div class="tab-movie-session">
+											<!-- <img src="http://placehold.it/50x50" alt=""> -->
+											<div class="list-time">
+												<a href="#">21:10</a> <a href="#">21:10</a> <a href="#">21:10</a>
+												<a href="#">21:10</a>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div id="Tokyo" class="tabcontent">
+									<h3>Tokyo</h3>
+									<p>Tokyo is the capital of Japan.</p>
+								</div>
+
+							</div>
+						</section>
+					</section>
+					<section id="thongtin" class="tab-panel">
+						<div class="row">
+							<div class="col span-1-of-2 cottrai">
+								<div class="row">
+									<div class="col span-1-of-2">Ngày ra mắt</div>
+									<div class="col span-1-of-2">
+										<p class="dataRe"></p>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col span-1-of-2">Đạo điễn</div>
+									<div class="col span-1-of-2">
+										<p class="dataDirec"></p>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col span-1-of-2">Diễn viên</div>
+									<div class="col span-1-of-2">
+										<p class="dataActor"></p>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col span-1-of-2">Thể loại</div>
+									<div class="col span-1-of-2">
+										<p class="dataGenre"></p>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col span-1-of-2">Định dạng</div>
+									<div class="col span-1-of-2">
+										<p class="dataFormat"></p>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col span-1-of-2">Ngôn ngữ</div>
+									<div class="col span-1-of-2">
+										<p class="dataLang"></p>
+									</div>
+								</div>
+							</div>
+							<div class="col span-1-of-2 descr">
+								Description
+								<p class="dataDesc"></p>
+							</div>
+						</div>
+
+					</section>
+					<section id="review" class="tab-panel">
+						<div class="review-box">
+							<form action="" class="review-form">
+								<input type="text" class="input-with-lable"
+									placeholder="ban nghi j ve phim nay?">
+								<fieldset class="rating">
+									<input type="radio" id="star5" name="rating" value="5" /> <label
+										class="full" for="star5" title="Awesome - 5 stars"></label> <input
+										type="radio" id="star4half" name="rating" value="4 and a half" />
+									<label class="half" for="star4half"
+										title="Pretty good - 4.5 stars"></label> <input type="radio"
+										id="star4" name="rating" value="4" /> <label class="full"
+										for="star4" title="Pretty good - 4 stars"></label> <input
+										type="radio" id="star3half" name="rating" value="3 and a half" /><label
+										class="half" for="star3half" title="Meh - 3.5 stars"></label>
+									<input type="radio" id="star3" name="rating" value="3" /><label
+										class="full" for="star3" title="Meh - 3 stars"></label> <input
+										type="radio" id="star2half" name="rating" value="2 and a half" /><label
+										class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
+									<input type="radio" id="star2" name="rating" value="2" /><label
+										class="full" for="star2" title="Kinda bad - 2 stars"></label>
+									<input type="radio" id="star1half" name="rating"
+										value="1 and a half" /><label class="half" for="star1half"
+										title="Meh - 1.5 stars"></label> <input type="radio"
+										id="star1" name="rating" value="1" /><label class="full"
+										for="star1" title="Sucks big time - 1 star"></label> <input
+										type="radio" id="starhalf" name="rating" value="half" /><label
+										class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
+								</fieldset>
+								<div id="one" class="submit-review-btn" onclick="submitReview()">Submit</div>
+							</form>
+						</div>
+						<div class="user-reviews">
+							<h3 class="user-review-name">Lâm Nhơn</h3>
+							<p class="user-review-content">Phim ngoài dàn diễn viên ra
+								thì không hay mà ai cũng khen, cốt truyện thì k có. Nội dung hài
+								lặp lại nhàm chán.</p>
+						</div>
+						<div class="user-reviews">
+							<h3 class="user-review-name">Phuc Huynh</h3>
+							<p class="user-review-content">Nam thần đẹp quá 😍. Người
+								Thái Lan mà cứ tưởng Hàn Quốc.👍. Phim này ra mắt làm cho con
+								tim yêu thương quan tâm đến những người thân.</p>
+						</div>
+						<div class="user-reviews">
+							<h3 class="user-review-name">Sinh Viet</h3>
+							<p class="user-review-content">Có cậu cháu như này có khi
+								thành bà cô cả đời chứ chả đùa :))))</p>
+						</div>
+						<div class="user-reviews">
+							<h3 class="user-review-name">Xinh Linh</h3>
+							<p class="user-review-content">Phim hài hước những vẫn mang
+								thông điệp tình cảm gia đình, luôn quan tâm cho nhau rất tình
+								cảm</p>
+						</div>
+					</section>
+				</div>
+			</div>
+		</div>
+	</section>
+
+
+
+	<section class="secion-news"></section>
+
+<footer th:fragment="client-footer" th:replace="client/fragments/footer :: client-footer"></footer>
+
+	<script th:src="@{/scripts/jquery.min.js}"></script>
+	<script th:src="@{/scripts/jquery-ui.min.js}"></script>
+
+	<!-- <script src="/resource/js/select2.min.js"></script> -->
+	<script type="text/javascript" th:src="@{/scripts/slick.js}"></script>
+	<script type="text/javascript" th:src="@{/scripts/movie-detail.js}"></script>
+	<script type="text/javascript" th:src="@{/scripts/selectize.js}"></script>
+</body>
+
+</html>
