@@ -18,8 +18,9 @@ public class ReportForm {
 	private LocalDate fromDate;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate toDate;
-	private Boolean showDetail;
-	private Boolean showTotal;
-	private Boolean showSeatType;
 	
+	private Boolean sumByCustomer;
+	private Boolean sumByOrder;
+	private Boolean sumByCinema;
+	private Boolean sumByMovie;
 }
