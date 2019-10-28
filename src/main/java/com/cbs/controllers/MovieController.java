@@ -95,6 +95,8 @@ public class MovieController {
 		 if (bindingResult.hasErrors()) { return "error"; }
 		 
         Movie movie = movieForm.getMovie();
+        if(movie.getDate_end().compareTo( movie.getDate_release()) <= 0)
+        	return "error";
         movieService.addMovie(movie);
         try {
             this.doUpload(request,movie,movieForm);
@@ -116,6 +118,8 @@ public class MovieController {
             uploadRootDir.mkdirs();
         }
         MultipartFile[] fileDatas = {movieForm.getThumbnail(),movieForm.getImage()};
+       validateImage(movieForm.getThumbnail());
+       validateImage(movieForm.getImage());
         // 
         List<File> uploadedFiles = new ArrayList<File>();
         List<String> failedFiles = new ArrayList<String>();
@@ -157,7 +161,7 @@ public class MovieController {
        
 	}
 
-	@RequestMapping(value = "/admin/delete/movie", method = RequestMethod.GET, params = {"movieId"})
+//	@RequestMapping(value = "/admin/delete/movie", method = RequestMethod.GET, params = {"movieId"})
     public String deleteMovie(@RequestParam Long movieId, Model model) {
         movieService.deleteMovieByID(movieId);
         return "redirect:/admin/movie";
@@ -175,14 +179,14 @@ public class MovieController {
         return "/admin/add/movie";
     }
 
-    @RequestMapping(value = "/admin/add/genre_to_movie", method = RequestMethod.GET, params = {"movieId"})
+  //  @RequestMapping(value = "/admin/add/genre_to_movie", method = RequestMethod.GET, params = {"movieId"})
     public String addGenres(@RequestParam Long movieId, Model model) {
         model.addAttribute("allGenres", genreService.getAllGenre());
         model.addAttribute("movie", movieService.getMovieByID(movieId));
         return "/admin/add/genre_to_movie";
     }
 
-    @RequestMapping(value = "/admin/add/genre_to_movie", method = RequestMethod.POST)
+ //   @RequestMapping(value = "/admin/add/genre_to_movie", method = RequestMethod.POST)
     public String addGenres(@Valid Movie movie, Model model, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "error";
@@ -191,20 +195,20 @@ public class MovieController {
         return "redirect:/admin/movie";
     }
 
-    @RequestMapping(value = "/details/movie", method = RequestMethod.GET)
+ //   @RequestMapping(value = "/details/movie", method = RequestMethod.GET)
     public String getMovie(@RequestParam Long movieId, Model model) {
         model.addAttribute("movie", movieService.getMovieByID(movieId));
         return "/details/movie";
     }
 
-    @RequestMapping(value = "/admin/add/actor_to_movie", method = RequestMethod.GET, params = {"movieId"})
+ //   @RequestMapping(value = "/admin/add/actor_to_movie", method = RequestMethod.GET, params = {"movieId"})
     public String addActors(@RequestParam Long movieId, Model model) {
         model.addAttribute("allActors", actorService.getAllActors());
         model.addAttribute("movie", movieService.getMovieByID(movieId));
         return "/admin/add/actor_to_movie";
     }
 
-    @RequestMapping(value = "/admin/add/actor_to_movie", method = RequestMethod.POST)
+ //   @RequestMapping(value = "/admin/add/actor_to_movie", method = RequestMethod.POST)
     public String addActors(@Valid Movie movie, Model model, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "error";

@@ -58,10 +58,28 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		
+		if(roleService.findByName("MEMBER") == null) {
+			Role role = new Role();
+			role.setName("MEMBER");
+			roleService.addRole(role);
+		}
+		if(roleService.findByName("ADMIN") == null) {
+			Role role = new Role();
+			role.setName("ADMIN");
+			roleService.addRole(role);
+		}
+		if(userService.findByEmail("admin") == null ){
+			User user = new User();
+			user.setActive(true);
+			user.setEmail("admin");
+			user.setPassword(passwordEncoder().encode("admin"));
 			
+			Set<Role> roles = new HashSet<Role>();
+			roles.add(roleService.findByName("ADMIN"));
+			user.setRoles(roles);
 			
-		
+			userService.add(user);
+		}
 		// Sét đặt dịch vụ để tìm kiếm User trong Database.
 		// Và sét đặt PasswordEncoder.
 		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());

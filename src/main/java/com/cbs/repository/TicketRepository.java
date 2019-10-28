@@ -23,26 +23,26 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
 	
 	
 	
-	@Query("SELECT o.id as orderId, t.member as memberId, o.orderTime as orderTime, t.amount as amount "
+	@Query(value = "SELECT t.order_id as orderId,  o.order_time as orderTime, t.amount as amount "
 			+ "FROM Ticket t "
-			+ " JOIN SOrder o on t.order = o.id "
-			+ " JOIN MovieSession ms on t.movieSession = ms.id "
-			+ " JOIN CinemaScreen cs on ms.cinemaScreen = cs.id "
-			+ " JOIN Cinema c on c.id = cs.cinema "
-			+ "WHERE o.status = 'Completed' AND o.orderTime >= ?2 "
-			+ "AND o.orderTime <= ?3 AND c.id = ?1")
+			+ " JOIN sOrder o on t.order_id = o.id "
+			+ " JOIN movie_session ms on t.movie_session_id = ms.id "
+			+ " JOIN cinema_screen cs on ms.cinema_room_id = cs.id "
+			+ " JOIN cinema c on c.id = cs.cinema_id "
+			+ "WHERE o.status = 'Completed' AND o.order_time >= ?2 "
+			+ "AND o.order_time <= ?3 AND c.id = ?1" , nativeQuery = true)
 	List<TicketReportDTO> findTicketByCinema(Long cinemaId, LocalDateTime fromDate, LocalDateTime toDate);
 	
-	
-	  @Query( "SELECT o.id as orderId, t.member as memberId, o.orderTime, t.amount " +
-		  "FROM Ticket t " + 
-		  " JOIN SOrder o on t.order = o.id " +
-		  " JOIN MovieSession ms on t.movieSession = ms.id " +
-		  " JOIN CinemaScreen cs on ms.cinemaScreen = cs.id " +
-		  " JOIN Cinema c on c.id = cs.cinema " +
-		  " JOIN Province p on p.id = c.province " +
-		  "WHERE o.status = 'Completed' AND o.orderTime >= :fromDate " +
-		  "AND o.orderTime <= :toDate AND p.id = :provinceId  ")
-	  List<TicketReportDTO>	  findTicketByProvince(Long provinceId, LocalDate fromDate, LocalDate toDate);
-	 
+	/*
+	 * @Query(
+	 * "SELECT o.id as orderId, t.member as memberId, o.orderTime, t.amount " +
+	 * "FROM Ticket t " + " JOIN SOrder o on t.order = o.id " +
+	 * " JOIN MovieSession ms on t.movieSession = ms.id " +
+	 * " JOIN CinemaScreen cs on ms.cinemaScreen = cs.id " +
+	 * " JOIN Cinema c on c.id = cs.cinema " +
+	 * " JOIN Province p on p.id = c.province " +
+	 * "WHERE o.status = 'Completed' AND o.orderTime >= :fromDate " +
+	 * "AND o.orderTime <= :toDate AND p.id = :provinceId  ") List<TicketReportDTO>
+	 * findTicketByProvince(Long provinceId, LocalDate fromDate, LocalDate toDate);
+	 */	 
 }

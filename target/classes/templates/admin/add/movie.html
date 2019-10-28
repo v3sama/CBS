@@ -84,7 +84,7 @@
 								<div class="col-sm-2">
 									<input class="form-control" type="number"
 										placeholder=" enter title here" required="required"
-										th:field="*{movie.duration}" />
+										th:field="*{movie.duration}" min="50" />
 									<div class="help-block with-errors"></div>
 								</div>
 								<label class="col-sm-2 control-label">Format</label>
@@ -107,14 +107,14 @@
 							<div class="form-group row">
 								<label class="col-sm-2 control-label">Thumbnail</label>
 								<div class="col-sm-4">
-									<input type="file" th:value="*{thumbnail}"
+									<input type="file" accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*" th:value="*{thumbnail}"
 										th:field="*{thumbnail}" required="required" />
 									<div class="help-block with-errors"></div>
 								</div>
 
 								<label class="col-sm-2 control-label">Image</label>
 								<div class="col-sm-4">
-									<input type="file" th:field="*{image}" required="required" />
+									<input type="file" accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*" th:field="*{image}" required="required" />
 									<div class="help-block with-errors"></div>
 								</div>
 							</div>
