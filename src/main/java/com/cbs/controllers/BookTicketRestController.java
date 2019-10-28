@@ -349,14 +349,14 @@ public class BookTicketRestController {
 			StringBuilder msg = new StringBuilder();
 			msg.append("Dear " + loggedInUser.getFname() +"!\n");
 			msg.append("Below are your ticket details: \n " );
-			msg.append("OrderId: " +order.getId() + "\tMovie: " + first.getMovieSession().getMovie().getTitle() + "\n");
+			msg.append("OrderId: " +order.getId() + "\t\tMovie: " + first.getMovieSession().getMovie().getTitle() + "\n");
 			msg.append("Cinema: " +first.getMovieSession().getCinemaScreen().getCinema().getTitle() +"\n ");
 			msg.append("Screen: " +first.getMovieSession().getCinemaScreen().getScreen().getTitle() +"\t\t ");
 			msg.append("Session: " +first.getMovieSession().getTime() +"\n \n\n");
 			
 			for (Ticket ticket : order.getTickets()) {
 				msg.append(ticket.getSeat().getRow().getTitle() + ticket.getSeat().getId()+
-						":\t" + ticket.getPrice() +"\n");
+						":\t\t" + ticket.getAmount() +"\n");
 			}
 			msg.append("Total: " +order.getTotal() + "\n\n\n Thanks!");
 			

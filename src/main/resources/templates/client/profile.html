@@ -8,9 +8,25 @@
 
 <link rel="stylesheet" th:href="@{/css/adminlte.min.css}" />
 <link rel="stylesheet" th:href="@{/css/all.min.css}" />
+<link rel="stylesheet" th:href="@{/css/default-site.css}" />
 <script th:src="@{/scripts/jquery.min.js}"></script>
 <script th:src="@{/scripts/bootstrap.bundle.min.js}"></script>
+
 <title>Profile</title>
+<style>
+footer {
+	background-color: #555;
+		color: white;
+	}
+	
+	footer.a {
+		color: white;
+	}
+	
+	.container-fluid {
+		padding-top: 50px;
+	}
+</style>
 </head>
 
 <body>
@@ -75,9 +91,12 @@
 									<!-- timeline time label -->
 									<th:block th:each="order : ${orders}">
 										<div class="time-label">
-											<span class="bg-success" th:text="${order.orderTime}">
-
-											</span>
+											<span th:if="${order.status== 'Pending'}" class="bg-warning"
+												th:text="${order.orderTime}"></span> <span
+												th:if="${order.status== 'Completed'}" class="bg-success"
+												th:text="${order.orderTime}"></span> <span
+												th:if="${order.status== 'Cancelled'}" class="bg-danger"
+												th:text="${order.orderTime}"></span>
 										</div>
 										<!-- /.timeline-label -->
 										<!-- timeline item -->
@@ -87,13 +106,12 @@
 											<div class="timeline-item">
 												<span class="time" th:text="${order.status}"></span>
 
-												<h3 class="timeline-header">You have placed an order</h3>
+												<h3 class="timeline-header">
+													You have placed an order. Amount :<span
+														th:text="${order.total}"></span>
+												</h3>
 
-												<div class="timeline-body">
-													<th:block th:each="ticket: ${order.tickets}">
-														<p th:text="${ticket.seat.row.title +'' +ticket.seat.id }"></p>
-													</th:block>
-												</div>
+
 												<div class="timeline-footer">
 													<a href="#" class="btn btn-primary btn-sm">Read more</a>
 												</div>
@@ -204,7 +222,41 @@
 	</div>
 
 
+	<script>
+		$(document)
+				.ready(
+						function() {
+							$.getUser = function() {
+								let dataUser
+								$
+										.ajax({
+											type : "get",
+											url : "http://localhost:8080/api/UserSession",
+											async : false,
+											dataType : "json",
+											success : function(data) {
+												dataUser = data
+											}
+										})
+								return dataUser;
+							}
 
+							$.renderUser = function() {
+								dataUser = $.getUser();
+								if (dataUser !== undefined) {
+									$('#user-acc-name').empty();
+									$('#user-acc-name').append(dataUser.name);
+									$('#user-acc-link')
+											.attr("href", "/profile");
+									$('.nav-right')
+											.prepend(
+													function() {
+														return '<a style="float: right;" href=\"/logout\">Logout</a>';
+													})
+								}
+							}
+						});
+	</script>
 
 	<footer th:fragment="client-footer"
 		th:replace="client/fragments/footer :: client-footer"></footer>

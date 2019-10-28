@@ -113,7 +113,7 @@ public class IndexRestController {
             UserIndexDTO user = new UserIndexDTO();
             CustomUserDetail loggedInUser = (CustomUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             user.setId(loggedInUser.getUserId());
-            user.setName(loggedInUser.getUsername());
+            user.setName(loggedInUser.getFname());
             return user;
         }else {
             return null;
