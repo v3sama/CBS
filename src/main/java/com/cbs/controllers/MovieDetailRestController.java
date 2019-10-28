@@ -85,19 +85,37 @@ public class MovieDetailRestController {
             TicketReviewDTO reviewDTO = ticketService.findTicketUAM(loggedInUser.getUserId().intValue(), Integer.parseInt(reviewFormDTO.getMovie()));
             String loc = reviewDTO.getId();
             if (Integer.parseInt(loc) > 0) {
+
                 Rating rating = new Rating();
                 rating.setContent(reviewFormDTO.getContent());
 
                 //lấy order theo member với movie
                 List<TicketReviewDTO> reviewDTOList = ticketService.findListTicketByUAM(loggedInUser.getUserId().intValue(), Integer.parseInt(reviewFormDTO.getMovie()));
                 String ordid = reviewDTOList.get(0).getId();
-                rating.setOrder(orderService.findOrderByID(Long.parseLong(ordid)));
+                if (ratingService.existRatingByOrder(Long.parseLong(ordid))){
+                    return "davote";
+                }else {
+                    rating.setOrder(orderService.findOrderByID(Long.parseLong(ordid)));
 
-                Float star = ratingMap.get(reviewFormDTO.getStar());
-                rating.setStar(star);
+                    Float star = ratingMap.get(reviewFormDTO.getStar());
+                    rating.setStar(star);
+                    System.out.println("star" + star);
+                    ratingService.saveRate(rating);
 
-                ratingService.saveRate(rating);
-                return "vui";
+
+                    Movie movie = movieService.getMovieByID(Long.parseLong(reviewFormDTO.getMovie()));
+                    int currentVote = movie.getVote_count();
+                    System.out.println("currem "+currentVote);
+                    int nowVote = currentVote+1;
+                    System.out.println("now "+nowVote);
+                    movie.setVote_count(nowVote);
+                    float lastestPoint = movie.getAvg_user_rating_star();
+                    float nowPoint = ((lastestPoint * currentVote) + star)/(nowVote);
+
+                    movie.setAvg_user_rating_star(nowPoint);
+                    movieService.addMovie(movie);
+                    return "vui";
+                }
             }
             return "chuamua";
         }

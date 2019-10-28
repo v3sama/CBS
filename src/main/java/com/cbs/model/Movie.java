@@ -51,6 +51,8 @@ public class Movie extends BaseEntity {
 	@Column(columnDefinition = "varchar(255) CHARSET utf8 default ''")
 	private String language;
 	private float avg_user_rating_star;
+
+	@Column(columnDefinition = "integer default 0")
 	private int vote_count;
 	
 	private String trailer_link;
@@ -89,4 +91,6 @@ public class Movie extends BaseEntity {
 	@JoinTable(joinColumns = @JoinColumn(name = "movie_id"), inverseJoinColumns = @JoinColumn(name = "actor_id"))
 	private Set<Actor> actors;
 
+	@OneToMany(mappedBy = "movie")
+	private Set<Rating> ratings;
 }

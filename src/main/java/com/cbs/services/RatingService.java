@@ -15,8 +15,11 @@ public class RatingService {
         this.ratingRepository = ratingRepository;
     }
 
-
     public void saveRate(Rating rating){
         ratingRepository.save(rating);
+    }
+
+    public boolean existRatingByOrder(long id){
+        return ratingRepository.existsByOrder_Id(id);
     }
 }
