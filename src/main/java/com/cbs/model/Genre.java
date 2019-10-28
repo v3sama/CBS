@@ -11,6 +11,8 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.validation.constraints.NotNull;
+
 import java.util.Set;
 @Getter
 @Setter
@@ -19,6 +21,7 @@ import java.util.Set;
 public class Genre extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 	@Column(unique=true)
+	@NotNull
     private String name;
 
     @ManyToMany

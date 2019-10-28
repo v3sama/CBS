@@ -305,5 +305,19 @@ public class BookTicketRestController {
         orderService.addOrder(order);
         return ""+orderid;
     }
+    
+    @GetMapping(value = "api/checkoutFIRST")
+    public String checkPaymentFIRST(@RequestParam(value = "orderid") String orderid){
+        if (orderService.existOrderOrNot(Long.parseLong(orderid))){
+            SOrder order = orderService.findOrderByID(Long.parseLong(orderid));
+            String status = (order.getStatus() == null)? "NA" : "NI";
+            if (status.equals("NI")){
+                return "dathanhtoan";
+            }
+            return "chuathanhtoan";
+        }
+
+        return "chuathanhtoan";
+    }
 
 }

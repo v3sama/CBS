@@ -101,16 +101,20 @@ public class CinemaController {
 
     @RequestMapping(value = "/admin/add/cinema", method = RequestMethod.POST)
     public String addCinema(@Valid CinemaCreationDTO cinemaForm, BindingResult bindingResult, Model model, String[] screens, String[] rows) {
-        Cinema cinema = cinemaForm.getCinema();
-        cinemaService.addCinema(cinema);
-        
+        Set<CinemaScreen> list = new HashSet<CinemaScreen>();
         for (CinemaScreen cs  : cinemaForm.getCinemaScreens()) {
-        	if((cs.getRows() != 0 || cs.getId() != 0) && cs.getRows() <= rowService.getAllRow().size()) {
-	        		cs.setCinema(cinema);
-	    			cinemaScreenService.add(cs);
+        	if(cs.getId() != null && (cs.getRows() != 0 || cs.getId() != 0)  && cs.getRows() <= rowService.getAllRow().size()) {
+        			list.add(cs);
         	}
 		}
-        return "redirect:/admin/cinema";
+        if(list.size() != 0) {
+        	 Cinema cinema = cinemaForm.getCinema();
+             cinemaService.addCinema(cinema);
+             cinemaScreenService.addAll(list);
+             return "redirect:/admin/cinema";
+        }  
+       model.addAttribute("error", "You have to choose at least one screen");
+       return "redirect:/admin/add/cinema";
     }
 
 	/*

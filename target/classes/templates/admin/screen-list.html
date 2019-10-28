@@ -73,9 +73,11 @@
 									<td th:text="${screen.description}"></td>
 									<td><a th:href="@{/admin/edit/screen(id= ${screen.id})}">
 											<button type="button" class="btn btn-info">Edit</button>
-									</a> <a th:href="@{/admin/delete/screen(id = ${screen.id})}">
-											<button type="button" class="btn btn-danger">Delete</button>
-									</a></td>
+									</a> 
+<!-- 									<a th:href="@{/admin/delete/screen(id = ${screen.id})}"> -->
+<!-- 											<button type="button" class="btn btn-danger">Delete</button> -->
+<!-- 									</a> -->
+									</td>
 								</tr>
 							</th:block>
 						</tbody>
@@ -91,9 +93,9 @@
 	<div class="container text-center"></div>
 
 	<script>
-	$(document).ready(function() {
-		 $('#dataTable').DataTable();
-	});
+		$(document).ready(function() {
+			$('#dataTable').DataTable();
+		});
 	</script>
 
 </body>

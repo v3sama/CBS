@@ -12,7 +12,7 @@ import lombok.Setter;
 public class ReportForm {
 	private Long provinceId;
 	private Long cinemaId;
-	private Long memberId;
+	private Long customerId;
 	private Long movieId;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate fromDate;

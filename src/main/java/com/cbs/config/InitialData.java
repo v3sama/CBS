@@ -70,8 +70,8 @@ public class InitialData implements CommandLineRunner {
 //		Actor ac4 = new Actor("Frances Conroy");
 //		actors.add(ac4);
 //		actorRepository.saveAll(actors);
-
-		System.out.println("finish");
+//
+//		System.out.println("finish");
 
 	}
 }

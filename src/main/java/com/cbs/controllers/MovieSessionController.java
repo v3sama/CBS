@@ -86,7 +86,7 @@ public class MovieSessionController {
 		model.addAttribute("date", date);
 		model.addAttribute("cinemaScreens", screenService.getScreenByCinema(cinemaValue));
 		model.addAttribute("sessionMovies",
-				movieSessionService.findSessionByMovieAndCinemaScreen(Long.parseLong(movieValue), cinemaValue));
+				movieSessionService.findSessionByCinemaAndMovieAndDate(value, cinemaValue, movieValue, date));
 
 		if (cinemaService.hasSession(Long.parseLong(movieValue), date) > 0)
 			return "/admin/details/session-details";

@@ -81,9 +81,11 @@
 
 									<td><a th:href="@{/admin/edit/cinema(id= ${cinema.id})}">
 											<button type="button" class="btn btn-info">Edit</button>
-									</a> <a th:href="@{/admin/delete/cinema(id = ${cinema.id})}">
-											<button type="button" class="btn btn-danger">Delete</button>
-									</a> <a th:href="@{/admin/screen(cinemaId = ${cinema.id})}"> </a> <a
+									</a> 
+<!-- 									<a th:href="@{/admin/delete/cinema(id = ${cinema.id})}"> -->
+<!-- 											<button type="button" class="btn btn-danger">Delete</button> -->
+<!-- 									</a>  -->
+									<a th:href="@{/admin/screen(cinemaId = ${cinema.id})}"> </a> <a
 										th:href="@{/admin/screen(id = ${cinema.id})}">
 											<button type="button" class="btn btn-primary">View
 												screens</button>

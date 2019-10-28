@@ -1,3 +1,4 @@
+
 package com.cbs.controllers;
 
 import com.cbs.dto.*;
@@ -5,6 +6,7 @@ import com.cbs.model.*;
 import com.cbs.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -102,15 +104,21 @@ public class IndexRestController {
 
     @GetMapping(value = "/api/UserSession")
     public UserIndexDTO getUserSession(){
-        UserIndexDTO user = new UserIndexDTO();
-        CustomUserDetail loggedInUser = (CustomUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (loggedInUser.isEnabled()){
+        if (SecurityContextHolder.getContext().getAuthentication() != null &&
+                SecurityContextHolder.getContext().getAuthentication().isAuthenticated() &&
+                //when Anonymous Authentication is enabled
+                !(SecurityContextHolder.getContext().getAuthentication()
+                        instanceof AnonymousAuthenticationToken)
+        ){
+            UserIndexDTO user = new UserIndexDTO();
+            CustomUserDetail loggedInUser = (CustomUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             user.setId(loggedInUser.getUserId());
             user.setName(loggedInUser.getUsername());
             return user;
+        }else {
+            return null;
         }
-        return user;
-    }
 
+    }
 
 }

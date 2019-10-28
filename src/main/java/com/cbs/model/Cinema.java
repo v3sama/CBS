@@ -13,16 +13,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-
 import java.util.Set;
 
 @Getter
 @Setter
 @Entity
-@EqualsAndHashCode(callSuper = true,exclude = {"province","cinemaScreens"})
+@EqualsAndHashCode(callSuper = true, exclude = { "province", "cinemaScreens" })
 public class Cinema extends BaseEntity {
 	private static final long serialVersionUID = 1L;
-	@Column(unique=true)
+	@Column(unique=true,columnDefinition = "nvarchar(255)")
     private String title;
     private String address;
     private String phone;
@@ -34,6 +33,5 @@ public class Cinema extends BaseEntity {
    
    @OneToMany(mappedBy = "cinema")
     private Set<CinemaScreen> cinemaScreens;
-
-
+	
 }
