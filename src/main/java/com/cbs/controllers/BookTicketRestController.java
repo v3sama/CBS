@@ -8,6 +8,7 @@ import com.google.common.collect.Multimap;
 
 import org.apache.catalina.authenticator.SpnegoAuthenticator.AuthenticateAction;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.logging.LoggingApplicationListener;
 import org.springframework.http.MediaType;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.core.Authentication;
@@ -334,19 +335,42 @@ public class BookTicketRestController {
     //Send email order
 	public void sendEmailOrderSuccess( Long orderId) {
 		Authentication au = (Authentication) SecurityContextHolder.getContext().getAuthentication();
+		
 		if (au.getPrincipal() != null) {
 			CustomUserDetail loggedInUser = (CustomUserDetail) SecurityContextHolder.getContext().getAuthentication()
 					.getPrincipal();
 			long userId = loggedInUser.getUserId();
 
 			SOrder order = orderService.getOrderByID(orderId);
+			Set<Ticket> tickets = orderService.getOrderByID(orderId).getTickets();
+			Ticket first = tickets.stream().findFirst().get();
 			
 			SimpleMailMessage mailOrder = new SimpleMailMessage();
+			StringBuilder msg = new StringBuilder();
+			msg.append("Dear " + loggedInUser.getFname() +"!\n");
+			msg.append("Below are your ticket details: \n " );
+			msg.append("OrderId: " +order.getId() + "\tMovie: " + first.getMovieSession().getMovie().getTitle() + "\n");
+			msg.append("Cinema: " +first.getMovieSession().getCinemaScreen().getCinema().getTitle() +"\n ");
+			msg.append("Screen: " +first.getMovieSession().getCinemaScreen().getScreen().getTitle() +"\t ");
+			msg.append("Session: " +first.getMovieSession().getTime() +"\n \n\n");
+			
+			for (Ticket ticket : order.getTickets()) {
+				msg.append(ticket.getSeat().getRow().getTittle() + ticket.getSeat().getId()+
+						":\t" + ticket.getPrice() +"\n");
+			}
+			msg.append("Total: " +order.getTotal() + "\n\n\n Thanks!");
+//			msg.append(getString("signup.email.message"));
+//		    msg.append("\n\n").append(("user.username"));
+//		    msg.append(": ").append(user.getUsername()).append("\n");
+//		    msg.append(getString("user.password")).append(": ");
+//		    msg.append(user.getPassword());
+//		    msg.append("\n\nLogin at: ").append(RequestCycle.get().getUrlRenderer().renderFullUrl(Url.parse(urlFor(Login.class, null).toString())));
+			
 			mailOrder.setFrom("4brotherstechvn@gmail.com");
 			mailOrder.setTo(loggedInUser.getUser().getEmail());
 			mailOrder.setSubject("Order Tickets");
 			//ghi noi dung mail o text
-			mailOrder.setText(" Your Order Code : " + order + "your ticket:" + order.getTickets()  );
+			mailOrder.setText(msg.toString());
 			
 			emailService.sendEmail(mailOrder);
 		}
