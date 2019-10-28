@@ -3,18 +3,13 @@ package com.cbs.controllers;
 import com.cbs.dto.*;
 import com.cbs.model.Movie;
 import com.cbs.model.Rating;
-import com.cbs.model.Ticket;
-import com.cbs.services.GenreService;
-import com.cbs.services.MovieService;
-import com.cbs.services.RatingService;
-import com.cbs.services.TicketService;
+import com.cbs.services.*;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,12 +20,14 @@ public class MovieDetailRestController {
     private final GenreService genreService;
     private final RatingService ratingService;
     private final TicketService ticketService;
+    private final OrderService orderService;
 
-    public MovieDetailRestController(MovieService movieService, GenreService genreService, RatingService ratingService, TicketService ticketService) {
+    public MovieDetailRestController(MovieService movieService, GenreService genreService, RatingService ratingService, TicketService ticketService, OrderService orderService) {
         this.movieService = movieService;
         this.genreService = genreService;
         this.ratingService = ratingService;
         this.ticketService = ticketService;
+        this.orderService = orderService;
     }
 
     //Khai báo rating map
@@ -90,9 +87,16 @@ public class MovieDetailRestController {
             if (Integer.parseInt(loc) > 0) {
                 Rating rating = new Rating();
                 rating.setContent(reviewFormDTO.getContent());
+
+                //lấy order theo member với movie
                 List<TicketReviewDTO> reviewDTOList = ticketService.findListTicketByUAM(loggedInUser.getUserId().intValue(), Integer.parseInt(reviewFormDTO.getMovie()));
-                String tickid = reviewDTOList.get(0).getId();
-                System.out.println(tickid);
+                String ordid = reviewDTOList.get(0).getId();
+                rating.setOrder(orderService.findOrderByID(Long.parseLong(ordid)));
+
+                Float star = ratingMap.get(reviewFormDTO.getStar());
+                rating.setStar(star);
+
+                ratingService.saveRate(rating);
                 return "vui";
             }
             return "chuamua";

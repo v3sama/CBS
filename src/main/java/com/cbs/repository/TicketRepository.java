@@ -103,7 +103,7 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
 			  "where t.member_id = :member and movie_session.movie_id = :movie and sorder.status= 'Completed'", nativeQuery = true)
 	  TicketReviewDTO findByUAM(@Param("member") Integer member, @Param("movie")Integer movie);
 
-	@Query(value = "select t.id as id from ticket t " +
+	@Query(value = "select sorder.id as id from ticket t " +
 			"left join  movie_session " +
 			"on t.movie_session_id = movie_session.id " +
 			"left join sorder " +

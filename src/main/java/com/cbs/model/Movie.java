@@ -51,6 +51,7 @@ public class Movie extends BaseEntity {
 	@Column(columnDefinition = "varchar(255) CHARSET utf8 default ''")
 	private String language;
 	private float avg_user_rating_star;
+	private int vote_count;
 	
 	private String trailer_link;
 	private Boolean status;
