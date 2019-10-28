@@ -351,7 +351,7 @@ public class BookTicketRestController {
 			msg.append("Below are your ticket details: \n " );
 			msg.append("OrderId: " +order.getId() + "\tMovie: " + first.getMovieSession().getMovie().getTitle() + "\n");
 			msg.append("Cinema: " +first.getMovieSession().getCinemaScreen().getCinema().getTitle() +"\n ");
-			msg.append("Screen: " +first.getMovieSession().getCinemaScreen().getScreen().getTitle() +"\t ");
+			msg.append("Screen: " +first.getMovieSession().getCinemaScreen().getScreen().getTitle() +"\t\t ");
 			msg.append("Session: " +first.getMovieSession().getTime() +"\n \n\n");
 			
 			for (Ticket ticket : order.getTickets()) {
@@ -359,12 +359,6 @@ public class BookTicketRestController {
 						":\t" + ticket.getPrice() +"\n");
 			}
 			msg.append("Total: " +order.getTotal() + "\n\n\n Thanks!");
-//			msg.append(getString("signup.email.message"));
-//		    msg.append("\n\n").append(("user.username"));
-//		    msg.append(": ").append(user.getUsername()).append("\n");
-//		    msg.append(getString("user.password")).append(": ");
-//		    msg.append(user.getPassword());
-//		    msg.append("\n\nLogin at: ").append(RequestCycle.get().getUrlRenderer().renderFullUrl(Url.parse(urlFor(Login.class, null).toString())));
 			
 			mailOrder.setFrom("4brotherstechvn@gmail.com");
 			mailOrder.setTo(loggedInUser.getUser().getEmail());
