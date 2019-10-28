@@ -5,11 +5,16 @@ import com.cbs.model.*;
 import com.cbs.services.*;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
+
+import org.apache.catalina.authenticator.SpnegoAuthenticator.AuthenticateAction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -29,9 +34,12 @@ public class BookTicketRestController {
     private final OrderService orderService;
     private final CardService cardService;
     private final PaymentService paymentService;
+     private final EmailService emailService;
+    //Send mail order
+
 
     @Autowired
-    public BookTicketRestController(MovieService movieService, MovieSessionService movieSessionService, CinemaService cinemaService, ProvinceService provinceService, TicketService ticketService, SeatServices seatServices, PriceService priceService, UserService userService, OrderService orderService, CardService cardService, PaymentService paymentService) {
+    public BookTicketRestController(MovieService movieService, MovieSessionService movieSessionService, CinemaService cinemaService, ProvinceService provinceService, TicketService ticketService, SeatServices seatServices, PriceService priceService, UserService userService, OrderService orderService, CardService cardService, PaymentService paymentService, EmailService emailService) {
         this.movieService = movieService;
         this.movieSessionService = movieSessionService;
         this.cinemaService = cinemaService;
@@ -43,6 +51,8 @@ public class BookTicketRestController {
         this.orderService = orderService;
         this.cardService = cardService;
         this.paymentService = paymentService;
+        this.emailService = emailService;
+        	
     }
 
     private Price priceVipObj;
@@ -303,6 +313,7 @@ public class BookTicketRestController {
         paymentService.savePayment(payment);
         order.setPayment(payment);
         orderService.addOrder(order);
+        this.sendEmailOrderSuccess(order.getId());
         return ""+orderid;
     }
     
@@ -319,5 +330,28 @@ public class BookTicketRestController {
 
         return "chuathanhtoan";
     }
+    
+    //Send email order
+	public void sendEmailOrderSuccess( Long orderId) {
+		Authentication au = (Authentication) SecurityContextHolder.getContext().getAuthentication();
+		if (au.getPrincipal() != null) {
+			CustomUserDetail loggedInUser = (CustomUserDetail) SecurityContextHolder.getContext().getAuthentication()
+					.getPrincipal();
+			long userId = loggedInUser.getUserId();
+
+			SOrder order = orderService.getOrderByID(orderId);
+			
+			SimpleMailMessage mailOrder = new SimpleMailMessage();
+			mailOrder.setFrom("4brotherstechvn@gmail.com");
+			mailOrder.setTo(loggedInUser.getUser().getEmail());
+			mailOrder.setSubject("Order Tickets");
+			//ghi noi dung mail o text
+			mailOrder.setText(" Your Order Code : " + order + "your ticket:" + order.getTickets()  );
+			
+			emailService.sendEmail(mailOrder);
+		}
+
+		
+	}
 
 }
