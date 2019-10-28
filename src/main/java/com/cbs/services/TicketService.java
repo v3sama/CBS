@@ -1,5 +1,7 @@
 package com.cbs.services;
 
+import com.cbs.dto.TicketReportDTO;
+import com.cbs.dto.TicketReviewDTO;
 import com.cbs.model.Ticket;
 import com.cbs.repository.TicketRepository;
 import com.cbs.services.TicketService;
@@ -57,5 +59,17 @@ public class TicketService {
     public boolean findTicketbySessionAndSeat(long sid, long smid){
         List<Ticket> ticket = ticketRepository.findTicketBySeat_IdAndMovieSession_Id(sid, smid);
         return ticket.isEmpty();
+    }
+
+    public List<Ticket> existTicketByUserAndMovie(long userId){
+        return ticketRepository.findTicketByMember_Id(userId);
+    }
+
+    public TicketReviewDTO findTicketUAM(int userid, int movieid){
+        return ticketRepository.findByUAM(userid, movieid);
+    }
+
+    public List<TicketReviewDTO> findListTicketByUAM(int userid, int movieid){
+        return ticketRepository.findTicketsByUAM(userid, movieid);
     }
 }

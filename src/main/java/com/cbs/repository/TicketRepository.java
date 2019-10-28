@@ -1,6 +1,7 @@
 package com.cbs.repository;
 
 import com.cbs.dto.TicketReportDTO;
+import com.cbs.dto.TicketReviewDTO;
 import com.cbs.model.Ticket;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -91,5 +92,22 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
 			  "WHERE s.status = 'Completed' AND s.orderTime >= ?1 " +
 			  "AND s.orderTime <= ?2 ")
 	  List<TicketReportDTO>	 findTicket(LocalDateTime fromDate, LocalDateTime toDate);
-	 
+
+	  List<Ticket> findTicketByMember_Id(long id);
+
+	  @Query(value = "select (count(*) > 0) as id from ticket t " +
+			  "left join  movie_session " +
+			  "on t.movie_session_id = movie_session.id " +
+			  "left join sorder " +
+			  "on t.order_id = sorder.id "+
+			  "where t.member_id = :member and movie_session.movie_id = :movie and sorder.status= 'Completed'", nativeQuery = true)
+	  TicketReviewDTO findByUAM(@Param("member") Integer member, @Param("movie")Integer movie);
+
+	@Query(value = "select t.id as id from ticket t " +
+			"left join  movie_session " +
+			"on t.movie_session_id = movie_session.id " +
+			"left join sorder " +
+			"on t.order_id = sorder.id "+
+			"where t.member_id = :member and movie_session.movie_id = :movie and sorder.status= 'Completed'", nativeQuery = true)
+	  List<TicketReviewDTO> findTicketsByUAM(@Param("member") Integer member, @Param("movie")Integer movie);
 }
