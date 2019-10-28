@@ -7,9 +7,15 @@ import javax.servlet.Registration;
 import org.springframework.format.annotation.DateTimeFormat;
 
 public interface TicketReportDTO {
-	Long getOrderId();
 	Long getMemberId();
+	//String getCustomer();
+	Long getOrderId();
 	LocalDateTime getOrderTime();
-	Float getAmount();
-	
+	String getProvince();
+	String getCinema();
+	String getFormat();
+	String getMovie();
+	LocalDateTime getSessionTime();
+	Boolean getSeatType();
+	Float getPrice();
 }
