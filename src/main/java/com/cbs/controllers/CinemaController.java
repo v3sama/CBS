@@ -153,5 +153,6 @@ public class CinemaController {
         return "/admin/add/cinema";
     }
 
+
 }
 
