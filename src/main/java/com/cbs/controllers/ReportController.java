@@ -10,6 +10,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -47,18 +48,19 @@ public class ReportController {
 	@RequestMapping(value = "/admin/report", method = RequestMethod.POST)
 	public ResponseEntity<InputStreamResource> generateReport(@Valid ReportForm reportForm, Model model)
 			throws IOException {
+
 		List<TicketReportDTO> tickets = this.buildTicket(reportForm, model);
-		if(tickets.size() != 0) {
-			ByteArrayInputStream in = ExcelGenerator.ticketsToExcel(tickets);
-			// return IOUtils.toByteArray(in);
-	
-			HttpHeaders headers = new HttpHeaders();
-			headers.add("Content-Disposition", "attachment; filename=report.xlsx");
-	
-			return ResponseEntity.ok().headers(headers).body(new InputStreamResource(in));
-		};
-		return null; 
-		
+		// if(tickets.size() != 0) {
+		ByteArrayInputStream in = ExcelGenerator.ticketsToExcel(tickets, reportForm.getFromDate(),
+				reportForm.getToDate());
+		// return IOUtils.toByteArray(in);
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Disposition", "attachment; filename=report.xlsx");
+
+		return ResponseEntity.ok().headers(headers).body(new InputStreamResource(in));
+		// };
+		// return new ResponseEntity(HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/admin/report", method = RequestMethod.GET)
