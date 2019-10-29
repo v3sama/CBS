@@ -123,7 +123,9 @@
 								</div>
 							</div>
 						</div>
+						<p th:text="${error}" style="color:red;font-weight:bold"></p>
 						<div class="card-footer">
+						
 							<button type="submit" class="btn btn-info">Generate
 								Report</button>
 
@@ -168,7 +170,18 @@
 					alert("Request: " + JSON.stringify(request));
 				}
 			});
-		}
+		};
+		$('form').submit(function() {
+		     var res = true;
+		     // here I am checking for textFields, password fields, and any 
+		     // drop down you may have in the form
+		     $("input[type='text'],select,input[type='password']",this).each(function() {
+		         if($(this).val().trim() == "") {
+		             res = false; 
+		         }
+		     })
+		     return res; // returning false will prevent the form from submitting.
+		});
 	</script>
 </body>
 </html>
