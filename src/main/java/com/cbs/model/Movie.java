@@ -33,9 +33,8 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true, exclude = { "formatType", "genres", "prices", "movieSessions", "actors" })
 public class Movie extends BaseEntity {
 	private static final long serialVersionUID = 1L;
-	@Column(unique = true, columnDefinition = "varchar(255) CHARSET utf8 ")
+	@Column(unique = true)
 	@NotNull
-//	@Column(columnDefinition = "varchar(255) CHARSET utf8 ")
 	private String title;
 	@Min(60)
 	@Max(500)
@@ -50,7 +49,6 @@ public class Movie extends BaseEntity {
 	@Min(0)
 	@Max(2300)
 	private String year;
-	@Column(columnDefinition = "varchar(255) CHARSET utf8 default ''")
 	private String language;
 	private float avg_user_rating_star;
 
