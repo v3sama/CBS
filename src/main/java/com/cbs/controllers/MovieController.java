@@ -46,6 +46,7 @@ public class MovieController {
 	private final FormatTypeService formatTypeService;
 	private final ServletContext servletContext;
 
+<<<<<<< HEAD
 	@Autowired
 	public MovieController(MovieService movieService, ActorService actorService, GenreService genreService,
 			FormatTypeService formatTypeService, ServletContext servletContext) {
@@ -54,6 +55,23 @@ public class MovieController {
 		this.genreService = genreService;
 		this.formatTypeService = formatTypeService;
 		this.servletContext = servletContext;
+=======
+	private final MovieService movieService;
+
+	private final ActorService actorService;
+
+	private final GenreService genreService;
+
+	private final FormatTypeService formatTypeService;
+
+	@Autowired
+	public MovieController(MovieService movieService, ActorService actorService, GenreService genreService,
+			FormatTypeService formatTypeService) {
+		this.movieService = movieService;
+		this.actorService = actorService;
+		this.genreService = genreService;
+		this.formatTypeService = formatTypeService;
+>>>>>>> refs/remotes/origin/master
 	}
 
 	@RequestMapping(value = "/admin/movie", method = RequestMethod.GET)
@@ -61,6 +79,7 @@ public class MovieController {
 		model.addAttribute("movies", movieService.getAllMovies());
 		return "/admin/movie-list";
 	}
+<<<<<<< HEAD
 
 	@RequestMapping(value = "/admin/movie", method = RequestMethod.GET, params = { "actorId" })
 	public String allMovies(Model model, Long actorId) {
@@ -190,9 +209,197 @@ public class MovieController {
         g2d.dispose();
         return resized;
     }
+=======
+>>>>>>> refs/remotes/origin/master
 
+<<<<<<< HEAD
+=======
+	@RequestMapping(value = "/admin/movie", method = RequestMethod.GET, params = { "actorId" })
+	public String allMovies(Model model, Long actorId) {
+>>>>>>> refs/remotes/origin/master
 
+<<<<<<< HEAD
 //	@RequestMapping(value = "/admin/delete/movie", method = RequestMethod.GET, params = {"movieId"})
+	public String deleteMovie(@RequestParam Long movieId, Model model) {
+		movieService.deleteMovieByID(movieId);
+		return "redirect:/admin/movie";
+=======
+		model.addAttribute("movies", actorService.getActorByID(actorId).getMovies());
+		return "/admin/movie-list";
+>>>>>>> refs/remotes/origin/master
+	}
+
+<<<<<<< HEAD
+	@RequestMapping(value = "/admin/edit/movie", method = RequestMethod.GET, params = { "movieId" })
+	public String editMovie(@RequestParam Long movieId, Model model) {
+		MovieCreationDTO movieDTO = new MovieCreationDTO();
+		movieDTO.setMovie(movieService.getMovieByID(movieId));
+=======
+//    @RequestMapping(value = "/movie", method = RequestMethod.GET)
+	public String allMovieUser(@RequestParam(defaultValue = "1", required = false) Integer page, Model model) {
+		Page<Movie> pages = movieService.getAllMoviesPage(page);
+		model.addAttribute("allMovie", pages);
+		model.addAttribute("movies", movieService.getAllMovies());
+		return "/movie";
+	}
+>>>>>>> refs/remotes/origin/master
+
+<<<<<<< HEAD
+		model.addAttribute("movieForm", movieDTO);
+		model.addAttribute("formats", formatTypeService.getAllFormatType());
+		model.addAttribute("actors", actorService.getAllActors());
+		model.addAttribute("genres", genreService.getAllGenre());
+		return "/admin/add/movie";
+=======
+//    @RequestMapping(value = "/movie", method = RequestMethod.GET, params = {"movieTitle"})
+	public String searchMovie(@RequestParam String movieTitle,
+			@RequestParam(defaultValue = "1", required = false) Integer page, Model model) {
+		Page<Movie> searchResult = movieService.searchByTittle(movieTitle, page);
+		model.addAttribute("allMovie", searchResult);
+		return "/movie";
+>>>>>>> refs/remotes/origin/master
+	}
+
+<<<<<<< HEAD
+	// @RequestMapping(value = "/admin/add/genre_to_movie", method =
+	// RequestMethod.GET, params = {"movieId"})
+	public String addGenres(@RequestParam Long movieId, Model model) {
+		model.addAttribute("allGenres", genreService.getAllGenre());
+		model.addAttribute("movie", movieService.getMovieByID(movieId));
+		return "/admin/add/genre_to_movie";
+=======
+	@RequestMapping(value = "/admin/add/movie", method = RequestMethod.GET)
+	public String addMovie(Model model) {
+		MovieCreationDTO movieDTO = new MovieCreationDTO();
+		movieDTO.getMovie().setStatus(true);
+		model.addAttribute("movieForm", movieDTO);
+		model.addAttribute("formats", formatTypeService.getAllFormatType());
+		model.addAttribute("actors", actorService.getAllActors());
+		model.addAttribute("genres", genreService.getAllGenre());
+		return "/admin/add/movie";
+>>>>>>> refs/remotes/origin/master
+	}
+
+<<<<<<< HEAD
+	// @RequestMapping(value = "/admin/add/genre_to_movie", method =
+	// RequestMethod.POST)
+	public String addGenres(@Valid Movie movie, Model model, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			return "error";
+		}
+		movieService.addMovie(movie);
+		return "redirect:/admin/movie";
+	}
+=======
+	@RequestMapping(value = "/admin/add/movie", method = RequestMethod.POST, params = { "movie.title",
+			"movie.trailer_link", "movie.date_release", "movie.date_end" })
+	public String addMovie(@ModelAttribute("movieForm") MovieCreationDTO movieForm, BindingResult bindingResult,
+			@RequestParam("movie.title") String title, @RequestParam("movie.trailer_link") String trailerLink,
+			Model model, HttpServletRequest request) {
+>>>>>>> refs/remotes/origin/master
+
+<<<<<<< HEAD
+	// @RequestMapping(value = "/details/movie", method = RequestMethod.GET)
+	public String getMovie(@RequestParam Long movieId, Model model) {
+		model.addAttribute("movie", movieService.getMovieByID(movieId));
+		return "/details/movie";
+	}
+
+	// @RequestMapping(value = "/admin/add/actor_to_movie", method =
+	// RequestMethod.GET, params = {"movieId"})
+	public String addActors(@RequestParam Long movieId, Model model) {
+		model.addAttribute("allActors", actorService.getAllActors());
+		model.addAttribute("movie", movieService.getMovieByID(movieId));
+		return "/admin/add/actor_to_movie";
+	}
+
+	// @RequestMapping(value = "/admin/add/actor_to_movie", method =
+	// RequestMethod.POST)
+=======
+		if (title.trim().isEmpty()) {
+			model.addAttribute("error", "Title must not be blank.");
+			return "/admin/add/movie";
+		}
+
+		if (trailerLink.trim().isEmpty()) {
+			model.addAttribute("linkError", "Trailer link must not be blank.");
+			return "/admin/add/movie";
+		}
+
+		if (bindingResult.hasErrors()) {
+			return "/admin/add/movie";
+		}
+
+		Movie movie = movieForm.getMovie();
+		movieService.addMovie(movie);
+		try {
+			this.doUpload(request, movie, movieForm);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		try {
+			movieService.addMovie(movie);
+		} catch (Exception e) {
+			model.addAttribute("error", "Title must be unique.");
+			return "/admin/add/movie";
+		}
+		return "redirect:/admin/movie";
+	}
+
+	private void doUpload(HttpServletRequest request, Movie movie, MovieCreationDTO movieForm) {
+		// Thư mục gốc upload file.
+		String uploadRootPath = request.getServletContext().getRealPath("upload");
+		System.out.println("uploadRootPath=" + uploadRootPath);
+
+		File uploadRootDir = new File(uploadRootPath);
+		// Tạo thư mục gốc upload nếu nó không tồn tại.
+		if (!uploadRootDir.exists()) {
+			uploadRootDir.mkdirs();
+		}
+		MultipartFile[] fileDatas = { movieForm.getThumbnail(), movieForm.getImage() };
+		//
+		List<File> uploadedFiles = new ArrayList<File>();
+		List<String> failedFiles = new ArrayList<String>();
+		int i = 0;
+		for (MultipartFile fileData : fileDatas) {
+
+			// Tên file gốc tại Client.
+			String name = fileData.getOriginalFilename();
+			System.out.println("Client File Name = " + name);
+
+			if (name != null && name.length() > 0) {
+				try {
+					// Tạo file tại Server.
+					File serverPath = new File("C:" + File.separator + File.separator + "Uploads" + File.separator
+							+ "images" + File.separator + "movies" + File.separator + movie.getId());
+					if (!serverPath.exists())
+						serverPath.mkdirs();
+
+					// File serverFile = new File(uploadRootDir.getAbsolutePath() + File.separator +
+					// name);
+					File serverFile = new File(serverPath.getPath() + File.separator + name);
+
+					BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+					stream.write(fileData.getBytes());
+					stream.close();
+					//
+					uploadedFiles.add(serverFile);
+					System.out.println("Write file: " + serverFile);
+					if (i == 0)
+						movie.setThumbnail(serverFile.getPath());
+					else
+						movie.setImage(serverFile.getPath());
+					i++;
+				} catch (Exception e) {
+					System.out.println("Error Write file: " + name);
+					failedFiles.add(name);
+				}
+			}
+		}
+
+	}
+
+	@RequestMapping(value = "/admin/delete/movie", method = RequestMethod.GET, params = { "movieId" })
 	public String deleteMovie(@RequestParam Long movieId, Model model) {
 		movieService.deleteMovieByID(movieId);
 		return "redirect:/admin/movie";
@@ -210,16 +417,14 @@ public class MovieController {
 		return "/admin/add/movie";
 	}
 
-	// @RequestMapping(value = "/admin/add/genre_to_movie", method =
-	// RequestMethod.GET, params = {"movieId"})
+	@RequestMapping(value = "/admin/add/genre_to_movie", method = RequestMethod.GET, params = { "movieId" })
 	public String addGenres(@RequestParam Long movieId, Model model) {
 		model.addAttribute("allGenres", genreService.getAllGenre());
 		model.addAttribute("movie", movieService.getMovieByID(movieId));
 		return "/admin/add/genre_to_movie";
 	}
 
-	// @RequestMapping(value = "/admin/add/genre_to_movie", method =
-	// RequestMethod.POST)
+	@RequestMapping(value = "/admin/add/genre_to_movie", method = RequestMethod.POST)
 	public String addGenres(@Valid Movie movie, Model model, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
 			return "error";
@@ -228,22 +433,21 @@ public class MovieController {
 		return "redirect:/admin/movie";
 	}
 
-	// @RequestMapping(value = "/details/movie", method = RequestMethod.GET)
+	@RequestMapping(value = "/details/movie", method = RequestMethod.GET)
 	public String getMovie(@RequestParam Long movieId, Model model) {
 		model.addAttribute("movie", movieService.getMovieByID(movieId));
 		return "/details/movie";
 	}
 
-	// @RequestMapping(value = "/admin/add/actor_to_movie", method =
-	// RequestMethod.GET, params = {"movieId"})
+	@RequestMapping(value = "/admin/add/actor_to_movie", method = RequestMethod.GET, params = { "movieId" })
 	public String addActors(@RequestParam Long movieId, Model model) {
 		model.addAttribute("allActors", actorService.getAllActors());
 		model.addAttribute("movie", movieService.getMovieByID(movieId));
 		return "/admin/add/actor_to_movie";
 	}
 
-	// @RequestMapping(value = "/admin/add/actor_to_movie", method =
-	// RequestMethod.POST)
+	@RequestMapping(value = "/admin/add/actor_to_movie", method = RequestMethod.POST)
+>>>>>>> refs/remotes/origin/master
 	public String addActors(@Valid Movie movie, Model model, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
 			return "error";
