@@ -7,6 +7,7 @@ import com.cbs.services.UserService;
 import java.io.IOException;
 import java.security.Principal;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -48,12 +50,25 @@ public class LoginController {
 	public String login(Model model, String error, String logout, Principal principal) {
 		Authentication authentication = (Authentication) SecurityContextHolder.getContext().getAuthentication();// .getPrincipal();
 
-		if (error != null)
+		int totalApptempt = 5;
+
+		if (error != null) {
 			model.addAttribute("error", "Your username and password is invalid.");
+//			String username = filter.getUsernameParameter();
+//			int count = userService.findByEmail(username).getCount();
+//			count++;
+//			userService.findByEmail(username).setCount(count);
+//			if (count >= totalApptempt) {
+//				userService.deactivate(userService.findByEmail(username).getId());
+//				model.addAttribute("error", "Your account is blocked, please conntact help center.");
+//			}
 
-		if (logout != null)
+		}
+
+		if (logout != null) {
 			model.addAttribute("message", "You have been logged out successfully.");
-
+//			userService.findByEmail(filter.getUsernameParameter()).setCount(0);
+		}
 		// đã login
 		if (principal != null) {
 			GrantedAuthority adminAuth = new SimpleGrantedAuthority("ADMIN");

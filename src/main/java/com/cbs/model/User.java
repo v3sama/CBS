@@ -48,6 +48,8 @@ public class User extends BaseEntity {
 
 	private boolean active;
 
+	private int count;
+
 	@Column(unique = true)
 	private String email;
 
