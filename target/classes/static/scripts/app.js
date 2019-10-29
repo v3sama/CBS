@@ -1,12 +1,7 @@
 $("document").ready(function () {
-<<<<<<< HEAD
    //  render tên user đang lỗi
      $.renderUser();
     initSlickTop();
-=======
-    // render tên user đang lỗi
-    $.renderUser();
->>>>>>> refs/remotes/origin/master
 
     //lấy data phim lên tab đang chiếu - sắp chiếu
     getIndexMovieData();
@@ -329,11 +324,7 @@ $.getUser = function () {
 
 $.renderUser = function () {
     dataUser = $.getUser();
-<<<<<<< HEAD
     if (dataUser!==undefined){
-=======
-    if (dataUser !== undefined){
->>>>>>> refs/remotes/origin/master
         $('#user-acc-name').empty();
         $('#user-acc-name').append(dataUser.name);
         $('#user-acc-link').attr("href", "/profile") ;
