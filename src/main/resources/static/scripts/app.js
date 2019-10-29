@@ -327,7 +327,7 @@ $.renderUser = function () {
     if (dataUser!==undefined){
         $('#user-acc-name').empty();
         $('#user-acc-name').append(dataUser.name);
-        $('#user-acc-link').attr("href", "/user/"+dataUser.name) ;
+        $('#user-acc-link').attr("href", "/profile") ;
         $('.nav-right').prepend(function () {
             return '<a style="float: right;" href=\"/logout\">Logout</a>';
         })

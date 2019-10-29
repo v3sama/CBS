@@ -85,11 +85,11 @@ public class PasswordForgotController {
         model.put("user", user);
         model.put("signature", "https://cbs.com");
         String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
-        model.put("resetUrl", url + "/reset-password?token=" + token.getToken());
-//        mail.setModel(model);
+        mail.setText( url + "/reset-password?token=" + token.getToken());
+        
         emailService.sendEmail(mail);
 
-        return "redirect:/client/forgot-password?success";
+        return "redirect:/forgotPassword?success";
 
     }
 

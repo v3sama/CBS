@@ -61,6 +61,9 @@ public class User extends BaseEntity {
 
 	@OneToMany(mappedBy = "member")
 	private Set<CardInformation> cards;
+	
+	@OneToMany(mappedBy = "member")
+	private Set<SOrder> orders;
 
 	@ManyToMany
 	@JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
