@@ -90,14 +90,21 @@ public class MovieController {
 		return "/admin/add/movie";
 	}
 
-	@RequestMapping(value = "/admin/add/movie", method = RequestMethod.POST)
+	@RequestMapping(value = "/admin/add/movie", method = RequestMethod.POST, params = { "movie.title",
+			"movie.trailer_link", "movie.date_release", "movie.date_end" })
 	public String addMovie(@ModelAttribute("movieForm") MovieCreationDTO movieForm, BindingResult bindingResult,
+			@RequestParam("movie.title") String title, @RequestParam("movie.trailer_link") String trailerLink,
 			Model model, HttpServletRequest request) {
 
-//		if (name.trim().isEmpty()) {
-//			model.addAttribute("error", "Tile must not be blank.");
-//			return "/admin/add/movie";
-//		}
+		if (title.trim().isEmpty()) {
+			model.addAttribute("error", "Title must not be blank.");
+			return "/admin/add/movie";
+		}
+
+		if (trailerLink.trim().isEmpty()) {
+			model.addAttribute("linkError", "Trailer link must not be blank.");
+			return "/admin/add/movie";
+		}
 
 		if (bindingResult.hasErrors()) {
 			return "/admin/add/movie";

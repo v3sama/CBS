@@ -45,12 +45,12 @@ public class ScreenController {
 		return "/admin/add/screen";
 	}
 
-	@RequestMapping(value = "/admin/add/screen", method = RequestMethod.POST, params = { "name", "des" })
+	@RequestMapping(value = "/admin/add/screen", method = RequestMethod.POST, params = { "title", "description" })
 	public String addScreen(@Valid Screen screen, BindingResult bindingResult, Model model,
-			@RequestParam("name") String name, @RequestParam("des") String des) {
+			@RequestParam("title") String title, @RequestParam("description") String description) {
 
-		if (name.trim().isEmpty() || des.trim().isEmpty()) {
-			model.addAttribute("nameError", "Title or description must be not be blank");
+		if (title.trim().isEmpty() || description.trim().isEmpty()) {
+			model.addAttribute("error", "Title or description must be not be blank");
 			return "/admin/add/screen";
 		}
 
@@ -60,7 +60,7 @@ public class ScreenController {
 		try {
 			screenService.addScreen(screen);
 		} catch (Exception e) {
-			model.addAttribute("error", e.getMessage());
+			model.addAttribute("error", "Title must be unique.");
 			return "/admin/add/screen";
 		}
 		return "redirect:/admin/screen";
