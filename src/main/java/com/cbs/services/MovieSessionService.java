@@ -1,5 +1,6 @@
 package com.cbs.services;
 
+import com.cbs.dto.SessionDateDTO;
 import com.cbs.dto.SessionList2DTO;
 import com.cbs.dto.SessionListDTO;
 import com.cbs.model.Movie;
@@ -62,4 +63,14 @@ public class MovieSessionService {
 	public MovieSession findSessionByID2(long id){
 		return movieSessionRepository.findMovieSessionById(id);
 	}
+
+	public List<SessionList2DTO> findDateOfSessionByCinemaAndMovieAndDate(int province_id, int cinema_id, int movie_id){
+		return movieSessionRepository.findDateOfSessionByCinemaAndMovieAndDate(province_id, cinema_id, movie_id);
+	}
+
+	public List<SessionList2DTO> findTimeOfSessionByCinemaAndMovieAndDate(int province_id, int cinema_id, int movie_id, String date){
+		return movieSessionRepository.findTimeOfSessionByCinemaAndMovieAndDate(province_id, cinema_id, movie_id, date);
+	}
+
+
 }
