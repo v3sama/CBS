@@ -16,7 +16,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @Entity
-@EqualsAndHashCode(callSuper = true,exclude = {"ticket"})
+@EqualsAndHashCode(callSuper = true,exclude = {"order","movie"})
 public class Rating extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 	private String content;

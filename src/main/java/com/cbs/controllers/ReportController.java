@@ -2,6 +2,7 @@ package com.cbs.controllers;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.lang.ProcessBuilder.Redirect;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -48,17 +50,10 @@ public class ReportController {
 	public ResponseEntity<InputStreamResource> generateReport(@Valid ReportForm reportForm, Model model)
 			throws IOException {
 		List<TicketReportDTO> tickets = this.buildTicket(reportForm, model);
-		if(tickets.size() != 0) {
-			ByteArrayInputStream in = ExcelGenerator.ticketsToExcel(tickets);
-			// return IOUtils.toByteArray(in);
-	
-			HttpHeaders headers = new HttpHeaders();
-			headers.add("Content-Disposition", "attachment; filename=report.xlsx");
-	
-			return ResponseEntity.ok().headers(headers).body(new InputStreamResource(in));
-		};
-		return null; 
-		
+		ByteArrayInputStream in = ExcelGenerator.ticketsToExcel(tickets, reportForm.getFromDate(),reportForm.getToDate());
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Disposition", "attachment; filename=report.xlsx");
+		return ResponseEntity.ok().headers(headers).body(new InputStreamResource(in));
 	}
 
 	@RequestMapping(value = "/admin/report", method = RequestMethod.GET)
@@ -97,8 +92,6 @@ public class ReportController {
 			list.addAll(ticketRepo.findTicket(fromDate, toDate));
 		}
 
-//		list.addAll(ticketRepo.findTicket(fromDate, toDate));
-		// model.addAttribute("ticket",list);
 		return list;
 	}
 
