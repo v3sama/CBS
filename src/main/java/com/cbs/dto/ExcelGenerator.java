@@ -29,7 +29,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 public class ExcelGenerator {
 
 	public static ByteArrayInputStream ticketsToExcel(List<TicketReportDTO> tickets) throws IOException {
-		String[] COLUMNs = { "Customer ID", "OrderId", "Order Time", "Province", "Cinema ", "Movie", "Movie Format",
+		String[] COLUMNs = {"No", "Customer ID", "OrderId", "Order Time", "Province", "Cinema ", "Movie", "Movie Format",
 				"Session Time", "VIP Seat", "Ticket Price" };
 		try (Workbook workbook = new XSSFWorkbook(); ByteArrayOutputStream out = new ByteArrayOutputStream();) {
 			CreationHelper createHelper = workbook.getCreationHelper();
@@ -58,7 +58,7 @@ public class ExcelGenerator {
 			        0, //first row (0-based)
 			        0, //last row  (0-based)
 			        0, //first column (0-based)
-			        9  //last column  (0-based)
+			        10  //last column  (0-based)
 			));
 			
 			Row headerRow = sheet.createRow(0);
@@ -128,22 +128,22 @@ public class ExcelGenerator {
 			style.setBorderTop(BorderStyle.THIN);
 			style.setTopBorderColor(IndexedColors.BLACK.getIndex());
 
-			int rowIdx = 5;
+			int rowIdx = 6;
 			LocalDateTime fromDate = tickets.stream().findFirst().get().getOrderTime();
 			LocalDateTime toDate = fromDate;
 			for (TicketReportDTO ticket : tickets) {
 				Row row = sheet.createRow(rowIdx++);
-
-				row.createCell(0).setCellValue(ticket.getMemberId());
-				row.createCell(1).setCellValue(ticket.getOrderId());
-				row.createCell(2).setCellValue(ticket.getOrderTime());
-				row.createCell(3).setCellValue(ticket.getProvince());
-				row.createCell(4).setCellValue(ticket.getCinema());
-				row.createCell(5).setCellValue(ticket.getMovie());
-				row.createCell(6).setCellValue(ticket.getFormat());
-				row.createCell(7).setCellValue(ticket.getSessionTime());
-				row.createCell(8).setCellValue(ticket.getSeatType());
-				row.createCell(9).setCellValue(ticket.getPrice());
+				row.createCell(0).setCellValue(rowIdx-5);
+				row.createCell(1).setCellValue(ticket.getMemberId());
+				row.createCell(2).setCellValue(ticket.getOrderId());
+				row.createCell(3).setCellValue(ticket.getOrderTime());
+				row.createCell(4).setCellValue(ticket.getProvince());
+				row.createCell(5).setCellValue(ticket.getCinema());
+				row.createCell(6).setCellValue(ticket.getMovie());
+				row.createCell(7).setCellValue(ticket.getFormat());
+				row.createCell(8).setCellValue(ticket.getSessionTime());
+				row.createCell(9).setCellValue(ticket.getSeatType());
+				row.createCell(10).setCellValue(ticket.getPrice());
 				//update toDate
 				if(ticket.getOrderTime().compareTo(toDate) > 0)
 					toDate = ticket.getOrderTime();
@@ -153,55 +153,55 @@ public class ExcelGenerator {
 				}
 
 				// set styles
-				row.getCell(2).setCellStyle(dateStyle);
-				row.getCell(7).setCellStyle(dateStyle);
-				row.getCell(9).setCellStyle(numberStyle);
+				row.getCell(3).setCellStyle(dateStyle);
+				row.getCell(8).setCellStyle(dateStyle);
+				row.getCell(10).setCellStyle(numberStyle);
 			}
 
 			// Autofit
 			for (int col = 0; col < COLUMNs.length; col++) {
 				sheet.autoSizeColumn(col);
 			}
-			
-			sheet.setColumnWidth(2, 16);
-			sheet.setColumnWidth(7, 16);
+			//set width /256
+			sheet.setColumnWidth(3,5000);
+			sheet.setColumnWidth(8, 5000);
 	
 			
 			
 			//LAST DATA ROW
 			Integer rows = tickets.size();
-			Row lastRow = sheet.getRow(rows + 5);
+			Row lastRow = sheet.getRow(rows + 6);
 			
 //			DVConstraint  dvConstraint = DVConstraint.createFormulaListConstraint("'ReportDATA'!$A$4:$J$"+(rows-5)+"");
 			
 			//sheet autofilter
-			sheet.setAutoFilter(CellRangeAddress.valueOf("'ReportDATA'!$A$5:$J$"+(rows-5)+""));
+			sheet.setAutoFilter(CellRangeAddress.valueOf("'ReportDATA'!$A$6:$J$"+(rows-4)+""));
 			
 			//From..To
 			sheet.addMergedRegion(new CellRangeAddress(
 			        1, //first row (0-based)
 			        1, //last row  (0-based)
-			        7, //first column (0-based)
-			        9  //last column  (0-based)
+			        8, //first column (0-based)
+			        10  //last column  (0-based)
 			));
 			sheet.addMergedRegion(new CellRangeAddress(
 			        2, //first row (0-based)
 			        2, //last row  (0-based)
-			        7, //first column (0-based)
-			        9  //last column  (0-based)
+			        8, //first column (0-based)
+			        10  //last column  (0-based)
 			));
 			
 			
 			//FROM..TO IN THE HEADER
 			Row fromDateRow = sheet.createRow(1);
-			fromDateRow.createCell(7).setCellValue("From date: " + fromDate.toLocalDate() );
-			fromDateRow.getCell(7).setCellStyle(headerCellStyle);
+			fromDateRow.createCell(8).setCellValue("From date: " + fromDate.toLocalDate() );
+			fromDateRow.getCell(8).setCellStyle(headerCellStyle);
 			Row toDateRow = sheet.createRow(2);
-			toDateRow.createCell(7).setCellValue("To date: " + toDate.toLocalDate());
-			toDateRow.getCell(7).setCellStyle(headerCellStyle);
+			toDateRow.createCell(8).setCellValue("To date: " + toDate.toLocalDate());
+			toDateRow.getCell(8).setCellStyle(headerCellStyle);
 			
 			//ADD FORMULAS
-			Row sumRow = sheet.createRow(rows + 5);
+			Row sumRow = sheet.createRow(rows + 6);
 			
 			CellStyle totalCellStyle = workbook.createCellStyle();
 			totalCellStyle.setBorderBottom(BorderStyle.MEDIUM);
@@ -217,17 +217,37 @@ public class ExcelGenerator {
 			
 			
 			sheet.addMergedRegion(new CellRangeAddress(
-			        rows+5, //first row (0-based)
-			        rows+5, //last row  (0-based)
+			        rows+6, //first row (0-based)
+			        rows+6, //last row  (0-based)
 			        0, //first column (0-based)
-			        8  //last column  (0-based)
+			        9  //last column  (0-based)
 			));
 			
-			sumRow.createCell(9).setCellFormula("SUBTOTAL(9,$J$6:$J$"+(rows+5)+")");
+			sumRow.createCell(10).setCellFormula("SUBTOTAL(9,$K$7:$K$"+(rows+6)+")");
 			sumRow.createCell(0).setCellValue("TOTAL");
 			
 			sumRow.getCell(0).setCellStyle(headerCellStyle);
-			sumRow.getCell(9).setCellStyle(totalCellStyle);
+			sumRow.getCell(10).setCellStyle(totalCellStyle);
+			
+			
+			//signature
+			Row signRow1 = sheet.createRow(rows + 8);
+			signRow1.createCell(8).setCellValue("Nhân viên");
+			sheet.addMergedRegion(new CellRangeAddress(
+			        rows+8, //first row (0-based)
+			        rows+8, //last row  (0-based)
+			        8, //first column (0-based)
+			        10  //last column  (0-based)
+			));
+			
+			sheet.createRow(rows + 9).createCell(8).setCellValue("(Ký,ghi họ tên");
+			sheet.addMergedRegion(new CellRangeAddress(
+			        rows+9, //first row (0-based)
+			        rows+9, //last row  (0-based)
+			        8, //first column (0-based)
+			        10  //last column  (0-based)
+			));
+			
 			
 			workbook.write(out);
 			return new ByteArrayInputStream(out.toByteArray());

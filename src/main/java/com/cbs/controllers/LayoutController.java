@@ -60,7 +60,7 @@ public class LayoutController {
 			for (int i = oldRow + 1; i <= numOfRow; i++) {
 				Row r = new Row();
 				r.setId(Long.valueOf(i));
-				r.setTittle(String.valueOf((char) (i + 64)));
+				r.setTitle(String.valueOf((char) (i + 64)));
 				rows.add(r);
 
 				for (int j = 1; j <= 12; j++) {
