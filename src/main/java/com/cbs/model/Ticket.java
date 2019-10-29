@@ -18,17 +18,17 @@ import javax.persistence.OneToOne;
 @Entity
 @EqualsAndHashCode(callSuper = true,exclude = {"member","seat","movieSession","order","price","rating"})
 public class Ticket extends BaseEntity {
-    @Override
-    public String toString() {
-        return "Ticket{" +
-                "amount=" + amount +
-                ", member=" + member +
-                ", seat=" + seat +
-                ", movieSession=" + movieSession +
-                ", order=" + order +
-                ", price=" + price +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "Ticket{" +
+//                "amount=" + amount +
+//                ", member=" + member +
+//                ", seat=" + seat +
+//                ", movieSession=" + movieSession +
+//                ", order=" + order +
+//                ", price=" + price +
+//                '}';
+//    }
 
     private static final long serialVersionUID = 1L;
 

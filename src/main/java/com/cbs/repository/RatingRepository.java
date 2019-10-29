@@ -1,5 +1,7 @@
 package com.cbs.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -20,5 +22,5 @@ public interface RatingRepository extends JpaRepository<Rating, Long> {
 //            "left join sorder s on r.order_id = s.id " +
 //            "left join ", nativeQuery = true)
 //    List<Rating> findRatingByContentEquals;
-
+    Page<Rating> findRatingByMovie_IdOrderByIdDesc(long id, Pageable pageable);
 }

@@ -1,3 +1,4 @@
+
 package com.cbs.controllers;
 
 import com.cbs.dto.*;
@@ -216,10 +217,10 @@ public class BookTicketRestController {
                 String rowtitle = seat.substring(0, 1);
                 int seatAtRow = Integer.parseInt(seat.substring(1, seat.length()));
                 int rowId = doubleBraceMap.get(rowtitle);
-                int rowIdHandle = rowId == 1 ? 1 : (rowId - 1);
+                int rowIdHandle = rowId == 1 ? 0 : (rowId - 1);
                 long seatId = (rowIdHandle * 12) + seatAtRow;
                 Seat newSeat = seatServices.getSeatById(seatId);
-                MovieSession newMS = movieSessionService.getSessionById(sessionReceived);
+                MovieSession newMS = movieSessionService.findSessionByID2(sessionReceived);
 
                 Ticket ticket = new Ticket();
                 ticket.setSeat(newSeat);
@@ -235,7 +236,6 @@ public class BookTicketRestController {
 
                 ticket.setOrder(orderService.getOrderByID(orderId));
                 ticketService.addTicket(ticket);
-                System.out.println(ticket.toString());
             }
 
         }catch (Exception e){
@@ -293,9 +293,7 @@ public class BookTicketRestController {
 
     @PostMapping(value = "api/checkout")
     public String checkPayment(@RequestBody CheckoutDTO checkoutDTO){
-    	CustomUserDetail loggedInUser = (CustomUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		
-		
+
         int orderid = checkoutDTO.getOrder();
         SOrder order = orderService.getOrderByID(Long.valueOf(orderid));
 
@@ -306,19 +304,18 @@ public class BookTicketRestController {
         payment.setPayment_status(1);
 
         if (paymentMode.equals("card")){
+        	CustomUserDetail loggedInUser = (CustomUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             order.setStatus("Completed");
             payment.setPayment_time(LocalDateTime.now());
-            
             CardInformation card = new CardInformation(loggedInUser.getUser());
-         //   card.setBank(checkoutDTO.getCardinfo().get(0));
-            card.setCard_no(checkoutDTO.getCardinfo().get(0));
-            String cardDateStr= checkoutDTO.getCardinfo().get(1);
-            LocalDate cardDate= LocalDate.of(Integer.parseInt(cardDateStr.substring(6, 9)), 
-            		Integer.parseInt(cardDateStr.substring(1, 2)), 1);
-            card.setCard_date(cardDate);
-            card.setBank("");
-            cardService.addCard(card);
-            
+            //   card.setBank(checkoutDTO.getCardinfo().get(0));
+               card.setCard_no(checkoutDTO.getCardinfo().get(0));
+               String cardDateStr= checkoutDTO.getCardinfo().get(1);
+               LocalDate cardDate= LocalDate.of(Integer.parseInt(cardDateStr.substring(6, 9)), 
+               		Integer.parseInt(cardDateStr.substring(1, 2)), 1);
+               card.setCard_date(cardDate);
+               card.setBank("");
+               cardService.addCard(card);
         }else {
             order.setStatus("Pending");
         }
