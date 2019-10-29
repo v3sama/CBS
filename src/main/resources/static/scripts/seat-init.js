@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    renderUsername();
     var dataSeat = $.getSeatData(),
         $cart = $('#selected-seats'),
         $counter = $('#counter'),
@@ -42,7 +43,7 @@ $(document).ready(function () {
                     //let's create a new <li> which we'll add to the cart items
                     // console.log(this.settings);
                     
-                    $('<li>' + this.data().category + '  ' + this.settings.id + ': <b>' + this.data().price + '&#273;</b> <a href="#" class="cancel-cart-item">[huy]</a></li>')
+                    $('<li>' + this.data().category + '  ' + this.settings.id + ': <b>' + this.data().price + '&#273;</b> <a href="#" class="cancel-cart-item">[huỷ]</a></li>')
                         .attr('id', 'cart-item-' + this.settings.id)
                         .data('seatId', this.settings.id)
                         .appendTo($cart);
@@ -201,6 +202,22 @@ function confirmBook() {
             if (data.length>0){
                 window.location.href = "http://localhost:8080/confirmVe?code=" + data;
             }
+        }
+    })
+}
+
+let renderUsername = function () {
+    $.ajax({
+        type: "get",
+        url: "http://localhost:8080/api/UserSession",
+        async: true,
+        dataType: "json",
+        success: function (data) {
+            $('.user-info').empty();
+            $('.user-info').append('<h4 >'+ data.name +'</h4>');
+        },
+        beforeSend: function () {
+            $('.user-info').append('<img src="/images/ajax-loader.gif"/></div>')
         }
     })
 }
