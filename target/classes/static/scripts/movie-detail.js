@@ -1,3 +1,5 @@
+// var pageIndex = Number(${pageIndex});
+let locationPick = 1;
 $("document").ready(function () {
     $.renderUser();
     $.getMovie();
@@ -10,7 +12,16 @@ $("document").ready(function () {
     let tablinks = document.getElementsByClassName("tablinks");
     tablinks[0].classList.add('active')
 
-
+    $("#Pagination").pagination(totalCount, {
+        callback : pageselectCallback,
+        prev_text : '< lui',
+        next_text: 'tien >',
+        items_per_page : 6,
+        num_display_entries : 6,
+        current_page : pageIndex,
+        num_edge_entries : 1,
+        link_to: "http://localhost:8080/api/ratingList?movie=2&page=__id__"  //分页的js中会自动把"__id__"替换为当前的数。0
+    });
 })
 
 let username ="";
@@ -127,12 +138,43 @@ let submitReview = function () {
             async: false,
             contentType: "application/json",
             success: function (data) {
-                console.log(data)
-
+                if (data === "davote"){
+                    alert("Bạn đã review lúc trước, không thể review lại");
+                }
+                if (data === "vui"){
+                    alert("Review thành công");
+                }
             }
         }).fail(function () {
             alert("He thong dang gap su co, xin vui long thu lai sau")
         });
     // }
 }
+
+// let renderReview = function () {
+//     $('#Pagination').pagination({
+//         dataSource: 'http://localhost:8080/api/ratingList?movie=2&page=0',
+//         // locator: 'items',
+//         pageSize: 3,
+//         ajax: {
+//             beforeSend: function() {
+//                 dataContainer.html('Loading data from flickr.com ...');
+//             }
+//         },
+//         callback: function(data, pagination) {
+//             // template method of yourself
+//             var html = template(data);
+//             dataContainer.html(html);
+//         }
+//     })
+//
+// }
+//
+// let template = function (data) {
+//     html += '<div class="user-reviews">' +
+//         '<h3 class="user-review-name">'+ data.uname +'</h3>' +
+//         '<p class="user-review-content">'+ data.content +'</p>' +
+//         '</div>'
+//     return html;
+// }
 

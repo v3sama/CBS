@@ -330,29 +330,14 @@
 								<div id="one" class="submit-review-btn" onclick="submitReview()">Submit</div>
 							</form>
 						</div>
-						<div class="user-reviews">
-							<h3 class="user-review-name">Lâm Nhơn</h3>
-							<p class="user-review-content">Phim ngoài dàn diễn viên ra
-								thì không hay mà ai cũng khen, cốt truyện thì k có. Nội dung hài
-								lặp lại nhàm chán.</p>
+						<div id="content-reviews">
+							<div class="user-reviews">
+							<h3 class="user-review-name"> data.uname </h3>
+							<p class="user-review-content">data.content </p></div>
+
 						</div>
-						<div class="user-reviews">
-							<h3 class="user-review-name">Phuc Huynh</h3>
-							<p class="user-review-content">Nam thần đẹp quá 😍. Người
-								Thái Lan mà cứ tưởng Hàn Quốc.👍. Phim này ra mắt làm cho con
-								tim yêu thương quan tâm đến những người thân.</p>
-						</div>
-						<div class="user-reviews">
-							<h3 class="user-review-name">Sinh Viet</h3>
-							<p class="user-review-content">Có cậu cháu như này có khi
-								thành bà cô cả đời chứ chả đùa :))))</p>
-						</div>
-						<div class="user-reviews">
-							<h3 class="user-review-name">Xinh Linh</h3>
-							<p class="user-review-content">Phim hài hước những vẫn mang
-								thông điệp tình cảm gia đình, luôn quan tâm cho nhau rất tình
-								cảm</p>
-						</div>
+
+						<div id="Pagination" class="pagination"></div>
 					</section>
 				</div>
 			</div>
@@ -361,7 +346,7 @@
 
 
 
-	<section class="secion-news"></section>
+	<section class="section-news"></section>
 
 <footer th:fragment="client-footer" th:replace="client/fragments/footer :: client-footer"></footer>
 
@@ -371,7 +356,8 @@
 	<!-- <script src="/resource/js/select2.min.js"></script> -->
 	<script type="text/javascript" th:src="@{/scripts/slick.js}"></script>
 	<script type="text/javascript" th:src="@{/scripts/movie-detail.js}"></script>
-	<script type="text/javascript" th:src="@{/scripts/selectize.js}"></script>
+	<script type="text/javascript" th:src="@{/scripts/pagination.js}"></script>
+
 </body>
 
 </html>

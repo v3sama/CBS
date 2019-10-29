@@ -47,6 +47,13 @@ public class LayoutController {
 		model.addAttribute("row", rowService.getAllRow().size());
 		return "/admin/seat";
 	}
+	
+	@RequestMapping(value = "/about", method = RequestMethod.GET)
+	public String aboutUs(Model model) {
+	
+		return "/client/about";
+	}
+
 
 	@RequestMapping(value = "/admin/seat", method = RequestMethod.POST)
 	public String seatSetting(Model model, String row, String error) {

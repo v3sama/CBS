@@ -4,12 +4,15 @@ import com.cbs.dto.*;
 import com.cbs.model.Movie;
 import com.cbs.model.Rating;
 import com.cbs.services.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +35,7 @@ public class MovieDetailRestController {
 
     //Khai báo rating map
     Map<String, Float> ratingMap = new HashMap<String, Float>() {{
+        put("starhalf", 0.5f);
         put("star1", 1f);
         put("star1half", 1.5f);
         put("star2", 2f);
@@ -42,7 +46,6 @@ public class MovieDetailRestController {
         put("star4half", 4.5f);
         put("star5", 5f);
     }};
-
 
     @GetMapping(value = "/api/movieDetail", produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody MovieIndexClientDTO getMovieDetail(@RequestParam(value = "id") String movieid) {
@@ -99,11 +102,12 @@ public class MovieDetailRestController {
 
                     Float star = ratingMap.get(reviewFormDTO.getStar());
                     rating.setStar(star);
+
                     System.out.println("star" + star);
                     ratingService.saveRate(rating);
 
-
                     Movie movie = movieService.getMovieByID(Long.parseLong(reviewFormDTO.getMovie()));
+                    rating.setMovie(movie);
                     int currentVote = movie.getVote_count();
                     System.out.println("currem "+currentVote);
                     int nowVote = currentVote+1;
@@ -120,6 +124,27 @@ public class MovieDetailRestController {
             return "chuamua";
         }
         return "dangnhap";
+    }
+
+    @GetMapping(value = "api/ratingList", produces = MediaType.APPLICATION_JSON_VALUE)
+    public RatingListDTO getAllRating(@RequestParam(value = "page") String page, @RequestParam(value = "movie") String movieid){
+//        if (page == null){
+//            page = 0;
+//        }
+        RatingListDTO lists = new RatingListDTO();
+        Page<Rating> ratings = ratingService.getRatingByMovie(Long.parseLong(movieid), PageRequest.of(Integer.parseInt(page),10));
+        lists.setTotalPage(ratings.getTotalPages());
+        lists.setTotalElememt(ratings.getTotalElements());
+//        lists.setPage();
+//        ratings.
+        for (Rating rating : ratings) {
+            RatingDTO ratingDTO = new RatingDTO();
+            ratingDTO.setContent(rating.getContent());
+            ratingDTO.setUname(rating.getOrder().getMember().getFirstName());
+//            lists.add(ratingDTO);
+        }
+//        System.out.println(ratings.toString());
+        return lists;
     }
 
 

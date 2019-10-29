@@ -1,4 +1,5 @@
 package com.cbs.model;
+
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -10,18 +11,18 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;;
+import lombok.ToString;
 
 @Getter
 @Setter
 @Entity
-@EqualsAndHashCode(callSuper = true,exclude = {"cinemas"})
+@EqualsAndHashCode(callSuper = true, exclude = { "cinemas" })
 public class Province extends BaseEntity {
 	private static final long serialVersionUID = 1L;
-	@Column(unique=true,columnDefinition = "nvarchar(255)")
+	@Column(unique = true, columnDefinition = "nvarchar(255)")
 	@NotNull
-    private String name;
+	private String name;
 
-    @OneToMany(mappedBy = "province")
-    private Set<Cinema> cinemas;
+	@OneToMany(mappedBy = "province")
+	private Set<Cinema> cinemas;
 }

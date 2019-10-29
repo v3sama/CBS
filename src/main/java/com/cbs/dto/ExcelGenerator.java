@@ -133,7 +133,7 @@ public class ExcelGenerator {
 			LocalDateTime toDate = fromDate;
 			for (TicketReportDTO ticket : tickets) {
 				Row row = sheet.createRow(rowIdx++);
-				row.createCell(0).setCellValue(rowIdx-5);
+				row.createCell(0).setCellValue(rowIdx-6);
 				row.createCell(1).setCellValue(ticket.getMemberId());
 				row.createCell(2).setCellValue(ticket.getOrderId());
 				row.createCell(3).setCellValue(ticket.getOrderTime());
@@ -175,7 +175,7 @@ public class ExcelGenerator {
 //			DVConstraint  dvConstraint = DVConstraint.createFormulaListConstraint("'ReportDATA'!$A$4:$J$"+(rows-5)+"");
 			
 			//sheet autofilter
-			sheet.setAutoFilter(CellRangeAddress.valueOf("'ReportDATA'!$A$6:$J$"+(rows-4)+""));
+			sheet.setAutoFilter(CellRangeAddress.valueOf("'ReportDATA'!$A$6:$K$"+(rows+6)+""));
 			
 			//From..To
 			sheet.addMergedRegion(new CellRangeAddress(

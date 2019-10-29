@@ -190,7 +190,11 @@ public class MovieSessionController {
 	@RequestMapping(value = "/api/admin/getCinemaByProvince", method = RequestMethod.GET, params = {
 			"provinceId" }, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody Map<Long, String> getCinemaByProvince(@RequestParam("provinceId") Long provinceId) {
-		Set<Cinema> cinemas = provinceService.getProvinceByID(provinceId).getCinemas();
+		Set<Cinema> cinemas = new HashSet<Cinema>();
+		if(provinceId == 0)
+			cinemas =  new HashSet<Cinema>(cinemaService.getAllCinema());
+		else
+			cinemas = provinceService.getProvinceByID(provinceId).getCinemas();
 
 		Map<Long, String> cinemasMap = new HashMap<Long, String>();
 		for (Cinema cinema : cinemas) {

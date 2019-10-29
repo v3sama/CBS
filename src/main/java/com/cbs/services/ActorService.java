@@ -44,6 +44,10 @@ public class ActorService {
 	public Actor getActorByID(Long id) {
 		return actorRepository.getOne(id);
 	}
+	
+	public Actor getActorByName(String name) {
+		return actorRepository.findActorByName(name);
+	}
 
 	public void deleteActorByID(Long id) {
 		if (actorRepository.findById(id) != null) {

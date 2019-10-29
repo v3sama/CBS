@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.thymeleaf.util.StringUtils;
 
 import javax.validation.Valid;
 
@@ -54,12 +55,23 @@ public class ActorController {
 		return "/admin/add/actor";
 	}
 
-	@RequestMapping(value = "/admin/add/actor", method = RequestMethod.POST)
-	public String addActor(@Valid Actor actor, BindingResult bindingResult, Model model) {
-		if (bindingResult.hasErrors()) {
-			return "error";
+	@RequestMapping(value = "/admin/add/actor", method = RequestMethod.POST, params = { "name" })
+	public String addActor(@Valid Actor actor, BindingResult bindingResult, Model model, @RequestParam String name) {
+
+		if (name.trim().isEmpty()) {
+			model.addAttribute("error", "Actor name must not be blank.");
+			return "admin/add/actor";
 		}
-		actorService.addActor(actor);
+
+		if (bindingResult.hasErrors()) {
+			return "admin/add/actor";
+		}
+		try {
+			actorService.addActor(actor);
+		} catch (Exception e) {
+			model.addAttribute("error", "Actor name must be uinique.");
+			return "/admin/add/actor";
+		}
 		return "redirect:/admin/actor";
 	}
 
