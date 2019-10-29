@@ -36,6 +36,7 @@ public class CinemaService {
 		return cinemaRepository.findAll();
 	}
 
+	
 	private boolean existCinema(Cinema cinema) {
 		return cinemaRepository.existsById(cinema.getId());
 	}

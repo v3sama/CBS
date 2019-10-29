@@ -48,7 +48,7 @@ public class OrderController {
         return "/admin/order-list";
     }
     
-    @RequestMapping(value = {"/admin/viewDetails/order","/review"}, method = RequestMethod.GET,params = {"orderId"})
+    @RequestMapping(value = {"/admin/viewDetails/order"}, method = RequestMethod.GET,params = {"orderId"})
     public String viewOrderDetails(@RequestParam Long orderId, Model model) {
     	SOrder order = orderService.getOrderByID(orderId);
         model.addAttribute("order", order);
@@ -59,6 +59,19 @@ public class OrderController {
 		
         model.addAttribute("card",card);
         return "/admin/details/order";
+    }
+    
+    @RequestMapping(value = {"/client/order/details"}, method = RequestMethod.GET,params = {"orderId"})
+    public String viewOrder(@RequestParam Long orderId, Model model) {
+    	SOrder order = orderService.getOrderByID(orderId);
+        model.addAttribute("order", order);
+        model.addAttribute("tickets",order.getTickets());
+        model.addAttribute("payment",order.getPayment());
+        CardInformation card = order.getPayment().getCardInformation() == null
+        		? new CardInformation(order.getMember()) : order.getPayment().getCardInformation();
+		
+        model.addAttribute("card",card);
+        return "/client/order-details";
     }
     
     @RequestMapping(value = {"/admin/update/order"}, method = RequestMethod.GET,params = {"orderId"})

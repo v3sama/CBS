@@ -35,11 +35,9 @@ public class User extends BaseEntity {
 
 	@NotNull
 	@Size(min = 2, max = 30)
-	@Column(columnDefinition = "nvarchar(255) default ''")
 	private String firstName;
 	@NotNull
 	@Size(min = 2, max = 30)
-	@Column(columnDefinition = "nvarchar(255) default ''")
 	private String lastName;
 	@Column(unique = true)
 	@ContactNumberConstraint
@@ -49,6 +47,7 @@ public class User extends BaseEntity {
 	private String confirmationToken;
 
 	private boolean active;
+
 	@Column(unique = true)
 	private String email;
 
@@ -61,7 +60,7 @@ public class User extends BaseEntity {
 
 	@OneToMany(mappedBy = "member")
 	private Set<CardInformation> cards;
-	
+
 	@OneToMany(mappedBy = "member")
 	private Set<SOrder> orders;
 

@@ -9,7 +9,7 @@
 <script th:src="@{/scripts/jquery.min.js}"></script>
 <script th:src="@{/scripts/bootstrap.bundle.min.js}"></script>
 
-<title>CBS Admin</title>
+<title>Report</title>
 <style>
 .navbar {
 	margin-bottom: 10px;
@@ -123,7 +123,9 @@
 								</div>
 							</div>
 						</div>
+						<p th:text="${error}" style="color:red;font-weight:bold"></p>
 						<div class="card-footer">
+						
 							<button type="submit" class="btn btn-info">Generate
 								Report</button>
 
@@ -168,7 +170,17 @@
 					alert("Request: " + JSON.stringify(request));
 				}
 			});
-		}
+		};
+		$('form').submit(function() {
+		     var res = true;
+		    var fromDate = $("#fromDate").val();
+		    var toDate = $("#toDate").val();
+		    if(new Date(toDate) <= new Date(fromDate)){
+		    	alert('The toDate must be larger than or equal to fromDate!')
+		    	res = false;
+		    }
+		    return res; // returning false will prevent the form from submitting.
+		});
 	</script>
 </body>
 </html>

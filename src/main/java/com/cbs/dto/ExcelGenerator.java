@@ -3,6 +3,7 @@ package com.cbs.dto;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
@@ -24,13 +25,15 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.ss.util.RegionUtil;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class ExcelGenerator {
 
-	public static ByteArrayInputStream ticketsToExcel(List<TicketReportDTO> tickets) throws IOException {
-		String[] COLUMNs = {"No", "Customer ID", "OrderId", "Order Time", "Province", "Cinema ", "Movie", "Movie Format",
-				"Session Time", "VIP Seat", "Ticket Price" };
+	public static ByteArrayInputStream ticketsToExcel(List<TicketReportDTO> tickets, LocalDate fromDate,
+			LocalDate toDate) throws IOException {
+		String[] COLUMNs = { "STT", "Mã KH", "Đơn hàng", "Thời gian mua", "Tỉnh", "Cụm rạp", "Phim", "Định dạng phim",
+				"Suất chiếu", "Ghế VIP", "Giá vé" };
 		try (Workbook workbook = new XSSFWorkbook(); ByteArrayOutputStream out = new ByteArrayOutputStream();) {
 			CreationHelper createHelper = workbook.getCreationHelper();
 
@@ -43,33 +46,31 @@ public class ExcelGenerator {
 			sheet.setFitToPage(true);
 			printSetup.setFitWidth((short) 1);
 			printSetup.setFitHeight((short) 0);
-			
+
 			// Create a new font and alter it.
 			Font font = workbook.createFont();
-			font.setFontHeightInPoints((short)24);
+			font.setFontHeightInPoints((short) 24);
 			font.setFontName("Stencil Std");
 			font.setBold(true);
 			CellStyle headerRowStyle = workbook.createCellStyle();
 			headerRowStyle.setFont(font);
 			headerRowStyle.setAlignment(HorizontalAlignment.CENTER);
-			
+
 			// sheet header
-			sheet.addMergedRegion(new CellRangeAddress(
-			        0, //first row (0-based)
-			        0, //last row  (0-based)
-			        0, //first column (0-based)
-			        10  //last column  (0-based)
+			sheet.addMergedRegion(new CellRangeAddress(0, // first row (0-based)
+					0, // last row (0-based)
+					0, // first column (0-based)
+					10 // last column (0-based)
 			));
-			
+
 			Row headerRow = sheet.createRow(0);
 			headerRow.createCell(0).setCellValue("BÁO CÁO DOANH THU");
 			headerRow.getCell(0).setCellStyle(headerRowStyle);
-			
-			
+
 			// column header
 			Font headerFont = workbook.createFont();
 			headerFont.setBold(true);
-			headerFont.setFontHeightInPoints((short)13);
+			headerFont.setFontHeightInPoints((short) 13);
 			headerFont.setColor(IndexedColors.BLUE.getIndex());
 
 			CellStyle headerCellStyle = workbook.createCellStyle();
@@ -82,16 +83,6 @@ public class ExcelGenerator {
 			headerCellStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
 			headerCellStyle.setBorderTop(BorderStyle.MEDIUM);
 			headerCellStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
-
-			// Row for Header
-			Row columnHeaderRow = sheet.createRow(4);
-			
-			// Header
-			for (int col = 0; col < COLUMNs.length; col++) {
-				Cell cell = columnHeaderRow.createCell(col);
-				cell.setCellValue(COLUMNs[col]);
-				cell.setCellStyle(headerCellStyle);
-			}
 
 			// Date Style
 			CellStyle dateStyle = workbook.createCellStyle();
@@ -129,11 +120,11 @@ public class ExcelGenerator {
 			style.setTopBorderColor(IndexedColors.BLACK.getIndex());
 
 			int rowIdx = 6;
-			LocalDateTime fromDate = tickets.stream().findFirst().get().getOrderTime();
-			LocalDateTime toDate = fromDate;
+			// LocalDateTime fromDate = tickets.stream().findFirst().get().getOrderTime();
+			// LocalDateTime toDate = fromDate;
 			for (TicketReportDTO ticket : tickets) {
 				Row row = sheet.createRow(rowIdx++);
-				row.createCell(0).setCellValue(rowIdx-5);
+				row.createCell(0).setCellValue(rowIdx - 6);
 				row.createCell(1).setCellValue(ticket.getMemberId());
 				row.createCell(2).setCellValue(ticket.getOrderId());
 				row.createCell(3).setCellValue(ticket.getOrderTime());
@@ -144,9 +135,7 @@ public class ExcelGenerator {
 				row.createCell(8).setCellValue(ticket.getSessionTime());
 				row.createCell(9).setCellValue(ticket.getSeatType());
 				row.createCell(10).setCellValue(ticket.getPrice());
-				//update toDate
-				if(ticket.getOrderTime().compareTo(toDate) > 0)
-					toDate = ticket.getOrderTime();
+
 				// border
 				for (int i = 0; i < COLUMNs.length; i++) {
 					row.getCell(i).setCellStyle(style);
@@ -158,97 +147,103 @@ public class ExcelGenerator {
 				row.getCell(10).setCellStyle(numberStyle);
 			}
 
-			// Autofit
-			for (int col = 0; col < COLUMNs.length; col++) {
-				sheet.autoSizeColumn(col);
-			}
-			//set width /256
-			sheet.setColumnWidth(3,5000);
-			sheet.setColumnWidth(8, 5000);
-	
-			
-			
-			//LAST DATA ROW
+			// LAST DATA ROW
 			Integer rows = tickets.size();
 			Row lastRow = sheet.getRow(rows + 6);
-			
+
 //			DVConstraint  dvConstraint = DVConstraint.createFormulaListConstraint("'ReportDATA'!$A$4:$J$"+(rows-5)+"");
-			
-			//sheet autofilter
-			sheet.setAutoFilter(CellRangeAddress.valueOf("'ReportDATA'!$A$6:$J$"+(rows-4)+""));
-			
-			//From..To
-			sheet.addMergedRegion(new CellRangeAddress(
-			        1, //first row (0-based)
-			        1, //last row  (0-based)
-			        8, //first column (0-based)
-			        10  //last column  (0-based)
-			));
-			sheet.addMergedRegion(new CellRangeAddress(
-			        2, //first row (0-based)
-			        2, //last row  (0-based)
-			        8, //first column (0-based)
-			        10  //last column  (0-based)
-			));
-			
-			
-			//FROM..TO IN THE HEADER
+
+			// sheet autofilter
+			sheet.setAutoFilter(CellRangeAddress.valueOf("'ReportDATA'!$A$6:$K$" + (rows + 6) + ""));
+
+			// From..To
 			Row fromDateRow = sheet.createRow(1);
-			fromDateRow.createCell(8).setCellValue("From date: " + fromDate.toLocalDate() );
-			fromDateRow.getCell(8).setCellStyle(headerCellStyle);
+			fromDateRow.createCell(8).setCellValue("Từ ngày: " + fromDate);
+			
 			Row toDateRow = sheet.createRow(2);
-			toDateRow.createCell(8).setCellValue("To date: " + toDate.toLocalDate());
+			toDateRow.createCell(8).setCellValue("Đến ngày: " + toDate);
+			
+			
+			CellRangeAddress cellRangeAddress1 = new CellRangeAddress(1, 1, 8, 10);
+			sheet.addMergedRegion(cellRangeAddress1);
+			RegionUtil.setBorderTop(BorderStyle.MEDIUM, cellRangeAddress1, sheet);
+			RegionUtil.setBorderLeft(BorderStyle.MEDIUM, cellRangeAddress1, sheet);
+			RegionUtil.setBorderRight(BorderStyle.MEDIUM, cellRangeAddress1, sheet);
+			RegionUtil.setBorderBottom(BorderStyle.MEDIUM, cellRangeAddress1, sheet);
+			fromDateRow.getCell(8).setCellStyle(headerCellStyle);
+			
+			CellRangeAddress cellRangeAddress2 = new CellRangeAddress(2, 2, 8, 10);
+			sheet.addMergedRegion(cellRangeAddress2);
+			RegionUtil.setBorderTop(BorderStyle.MEDIUM, cellRangeAddress2, sheet);
+			RegionUtil.setBorderLeft(BorderStyle.MEDIUM, cellRangeAddress2, sheet);
+			RegionUtil.setBorderRight(BorderStyle.MEDIUM, cellRangeAddress2, sheet);
+			RegionUtil.setBorderBottom(BorderStyle.MEDIUM, cellRangeAddress2, sheet);
 			toDateRow.getCell(8).setCellStyle(headerCellStyle);
 			
-			//ADD FORMULAS
-			Row sumRow = sheet.createRow(rows + 6);
-			
-			CellStyle totalCellStyle = workbook.createCellStyle();
-			totalCellStyle.setBorderBottom(BorderStyle.MEDIUM);
-			totalCellStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
-			totalCellStyle.setBorderLeft(BorderStyle.MEDIUM);
-			totalCellStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
-			totalCellStyle.setBorderRight(BorderStyle.MEDIUM);
-			totalCellStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
-			totalCellStyle.setBorderTop(BorderStyle.MEDIUM);
-			totalCellStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
-			totalCellStyle.setDataFormat(createHelper.createDataFormat().getFormat("#,##0"));
-			totalCellStyle.setFont(headerFont);
-			
-			
-			sheet.addMergedRegion(new CellRangeAddress(
-			        rows+6, //first row (0-based)
-			        rows+6, //last row  (0-based)
-			        0, //first column (0-based)
-			        9  //last column  (0-based)
-			));
-			
-			sumRow.createCell(10).setCellFormula("SUBTOTAL(9,$K$7:$K$"+(rows+6)+")");
-			sumRow.createCell(0).setCellValue("TOTAL");
-			
-			sumRow.getCell(0).setCellStyle(headerCellStyle);
-			sumRow.getCell(10).setCellStyle(totalCellStyle);
-			
-			
-			//signature
+
+
+			// ADD FORMULAS
+			if (tickets.size() != 0) {
+				Row sumRow = sheet.createRow(rows + 6);
+
+				CellStyle totalCellStyle = workbook.createCellStyle();
+				totalCellStyle.setBorderBottom(BorderStyle.MEDIUM);
+				totalCellStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+				totalCellStyle.setBorderLeft(BorderStyle.MEDIUM);
+				totalCellStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+				totalCellStyle.setBorderRight(BorderStyle.MEDIUM);
+				totalCellStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
+				totalCellStyle.setBorderTop(BorderStyle.MEDIUM);
+				totalCellStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+				totalCellStyle.setDataFormat(createHelper.createDataFormat().getFormat("#,##0"));
+				totalCellStyle.setFont(headerFont);
+
+				CellRangeAddress cellRangeAddress3 = new CellRangeAddress(rows + 6, rows + 6, 0, 9);
+				sheet.addMergedRegion(cellRangeAddress3);
+				sumRow.createCell(0).setCellValue("TỔNG TIỀN");
+				RegionUtil.setBorderTop(BorderStyle.MEDIUM, cellRangeAddress3, sheet);
+				RegionUtil.setBorderLeft(BorderStyle.MEDIUM, cellRangeAddress3, sheet);
+				RegionUtil.setBorderRight(BorderStyle.MEDIUM, cellRangeAddress3, sheet);
+				RegionUtil.setBorderBottom(BorderStyle.MEDIUM, cellRangeAddress3, sheet);
+
+				sumRow.createCell(10).setCellFormula("SUBTOTAL(9,$K$7:$K$" + (rows + 6) + ")");
+				sumRow.createCell(0).setCellValue("TỔNG TIỀN");
+
+				sumRow.getCell(0).setCellStyle(headerCellStyle);
+				sumRow.getCell(10).setCellStyle(totalCellStyle);
+			}
+
+			// Row for Header
+			Row columnHeaderRow = sheet.createRow(4);
+
+			// Autofit
+			for (int col = 0; col < COLUMNs.length; col++) {
+				Cell cell = columnHeaderRow.createCell(col);
+				cell.setCellValue(COLUMNs[col]);
+				cell.setCellStyle(headerCellStyle);
+				sheet.autoSizeColumn(col);
+			}
+			// set width /256
+			sheet.setColumnWidth(3, 5000);
+			sheet.setColumnWidth(8, 5000);
+			sheet.setColumnWidth(10, 3500);
+			// signature
 			Row signRow1 = sheet.createRow(rows + 8);
 			signRow1.createCell(8).setCellValue("Nhân viên");
-			sheet.addMergedRegion(new CellRangeAddress(
-			        rows+8, //first row (0-based)
-			        rows+8, //last row  (0-based)
-			        8, //first column (0-based)
-			        10  //last column  (0-based)
+
+			sheet.addMergedRegion(new CellRangeAddress(rows + 8, // first row (0-based)
+					rows + 8, // last row (0-based)
+					8, // first column (0-based)
+					10 // last column (0-based)
 			));
-			
+
 			sheet.createRow(rows + 9).createCell(8).setCellValue("(Ký,ghi họ tên");
-			sheet.addMergedRegion(new CellRangeAddress(
-			        rows+9, //first row (0-based)
-			        rows+9, //last row  (0-based)
-			        8, //first column (0-based)
-			        10  //last column  (0-based)
+			sheet.addMergedRegion(new CellRangeAddress(rows + 9, // first row (0-based)
+					rows + 9, // last row (0-based)
+					8, // first column (0-based)
+					10 // last column (0-based)
 			));
-			
-			
+
 			workbook.write(out);
 			return new ByteArrayInputStream(out.toByteArray());
 		}
