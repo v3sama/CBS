@@ -15,6 +15,7 @@ import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -38,9 +39,9 @@ public class RegisterController {
 	private RoleService roleService;
 
 	@Autowired
-	public RegisterController( UserService userService,BCryptPasswordEncoder bCryptPasswordEncoder,
+	public RegisterController(UserService userService, BCryptPasswordEncoder bCryptPasswordEncoder,
 			EmailService emailService, RoleService roleService) {
-		//this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+		// this.bCryptPasswordEncoder = bCryptPasswordEncoder;
 		this.userService = userService;
 		this.emailService = emailService;
 		this.roleService = roleService;
@@ -49,7 +50,7 @@ public class RegisterController {
 
 	// Return registration form template
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
-	public ModelAndView showRegistrationForm(ModelAndView modelAndView, 	 User user) {
+	public ModelAndView showRegistrationForm(ModelAndView modelAndView, User user) {
 		modelAndView.addObject("user", user);
 		modelAndView.setViewName("/client/register");
 		return modelAndView;
@@ -60,7 +61,8 @@ public class RegisterController {
 	public ModelAndView processRegistrationForm(ModelAndView modelAndView, @Valid User user,
 			BindingResult bindingResult, HttpServletRequest request) {
 
-		// Lookup user in database by e-mail
+		// Lookup user in database by e-mail, by phone
+		User phoneExists = userService.findByPhone(user.getPhone());
 		User userExists = userService.findByEmail(user.getEmail());
 
 		System.out.println(userExists);
@@ -71,6 +73,12 @@ public class RegisterController {
 			modelAndView.setViewName("/client/register");
 			bindingResult.reject("email");
 		}
+		if (phoneExists != null) {
+			modelAndView.addObject("alreadyExitsPhone",
+					"Oops!  There is already a user registered with the phone provided.");
+			modelAndView.setViewName("/client/register");
+			bindingResult.reject("phone");
+		}
 
 		if (bindingResult.hasErrors()) {
 			modelAndView.setViewName("/client/register");
@@ -78,23 +86,23 @@ public class RegisterController {
 
 			// Disable user until they click on confirmation link in email
 			user.setActive(false);
-			
-			//Set user's role to MEMBER
+
+			// Set user's role to MEMBER
 			Role memberRole = roleService.findByName("MEMBER");
-			//Role adminRole = roleService.findByName("ADMIN");
+			// Role adminRole = roleService.findByName("ADMIN");
 			Set<Role> roles = new HashSet<Role>();
 			roles.add(memberRole);
-			//roles.add(adminRole);
+			// roles.add(adminRole);
 			user.setRoles(roles);
-			
-			//user.setRoles(new HashSet<Role>(Arrays.asList(memberRole)));
+
+			// user.setRoles(new HashSet<Role>(Arrays.asList(memberRole)));
 
 			// Generate random 36-character string token for confirmation link
 			user.setConfirmationToken(UUID.randomUUID().toString());
 
 			userService.saveUser(user);
 
-			String appUrl = request.getScheme() + "://" + request.getServerName() + ":"+request.getServerPort();
+			String appUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
 
 			SimpleMailMessage registrationEmail = new SimpleMailMessage();
 			registrationEmail.setTo(user.getEmail());
@@ -132,7 +140,7 @@ public class RegisterController {
 	@RequestMapping(value = "/confirm", method = RequestMethod.POST)
 	public ModelAndView processConfirmationForm(ModelAndView modelAndView, BindingResult bindingResult,
 			@RequestParam Map requestParams, RedirectAttributes redir) {
-		
+
 		modelAndView.setViewName("/client/confirm");
 
 		Zxcvbn passwordCheck = new Zxcvbn();
@@ -163,7 +171,5 @@ public class RegisterController {
 		modelAndView.addObject("successMessage", "Your password has been set!");
 		return modelAndView;
 	}
-	
 
-	
 }

@@ -21,7 +21,6 @@ public class IndexRestController {
     private final CinemaService cinemaService;
     private final ProvinceService provinceService;
 
-
     @Autowired
     public IndexRestController(MovieService movieService, MovieSessionService movieSessionService, CinemaService cinemaService, ProvinceService provinceService) {
         this.movieService = movieService;
@@ -82,6 +81,7 @@ public class IndexRestController {
     //Lấy session theo tỉnh thành, cinema và movie
     @RequestMapping(value = "/api/cinemaList1", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<SessionList2DTO> getCinemas1(@RequestParam(value = "provinceId") String provinceId, @RequestParam(value = "cinemaId") String cinemaId, @RequestParam(value = "movieId") String movieId) throws Exception{
+
         return movieSessionService.findSessionByCinemaAndMovie(Integer.parseInt(provinceId),Integer.parseInt(cinemaId),Integer.parseInt(movieId));
     }
 
@@ -115,10 +115,46 @@ public class IndexRestController {
             user.setId(loggedInUser.getUserId());
             user.setName(loggedInUser.getFname());
             return user;
-        }else {
-            return null;
         }
-
+        return null;
     }
 
+    @GetMapping(value = "/api/cityUHH", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<CityUHHDTO> getAllCity(){
+        List<CityUHHDTO> list = new ArrayList<>();
+        List<Province> provinceList = provinceService.findAllOrderByID();
+        for (Province province : provinceList) {
+            CityUHHDTO cityUHHDTO = new CityUHHDTO();
+            cityUHHDTO.setId(province.getId());
+            cityUHHDTO.setName(province.getName());
+            list.add(cityUHHDTO);
+        }
+        return list;
+    }
+
+    @GetMapping(value = "/api/getDateSession", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<SessionTimeDTO> getDateSession(@RequestParam(value = "provinceId") String provinceId, @RequestParam(value = "cinemaId") String cinemaId, @RequestParam(value = "movieId") String movieId){
+        List<SessionTimeDTO> list = new ArrayList<>();
+        List<SessionList2DTO> sessionList2DTOList = movieSessionService.findDateOfSessionByCinemaAndMovieAndDate(Integer.parseInt(provinceId),Integer.parseInt(cinemaId),Integer.parseInt(movieId));
+        for (SessionList2DTO sessionList2DTO : sessionList2DTOList) {
+            SessionTimeDTO session = new SessionTimeDTO();
+            session.setId(sessionList2DTO.getId());
+            session.setDatetime(sessionList2DTO.getTime());
+            list.add(session);
+        }
+        return list;
+    }
+
+    @GetMapping(value = "/api/getTimeSession", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<SessionTimeDTO> getTimeSession(@RequestParam(value = "provinceId") String provinceId, @RequestParam(value = "cinemaId") String cinemaId, @RequestParam(value = "movieId") String movieId, @RequestParam(value = "date") String date){
+        List<SessionTimeDTO> list = new ArrayList<>();
+        List<SessionList2DTO> sessionList2DTOList = movieSessionService.findTimeOfSessionByCinemaAndMovieAndDate(Integer.parseInt(provinceId),Integer.parseInt(cinemaId),Integer.parseInt(movieId), date);
+        for (SessionList2DTO sessionList2DTO : sessionList2DTOList) {
+            SessionTimeDTO session = new SessionTimeDTO();
+            session.setId(sessionList2DTO.getId());
+            session.setDatetime(sessionList2DTO.getTime());
+            list.add(session);
+        }
+        return list;
+    }
 }
