@@ -59,4 +59,7 @@ public class MovieSessionService {
 		return movieSessionRepository.findSessionByCinemaAndMovieAndDate(province_id, cinema_id, movie_id, time);
 	}
 
+	public MovieSession findSessionByID2(long id){
+		return movieSessionRepository.findMovieSessionById(id);
+	}
 }

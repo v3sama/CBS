@@ -216,10 +216,10 @@ public class BookTicketRestController {
                 String rowtitle = seat.substring(0, 1);
                 int seatAtRow = Integer.parseInt(seat.substring(1, seat.length()));
                 int rowId = doubleBraceMap.get(rowtitle);
-                int rowIdHandle = rowId == 1 ? 1 : (rowId - 1);
+                int rowIdHandle = rowId == 1 ? 0 : (rowId - 1);
                 long seatId = (rowIdHandle * 12) + seatAtRow;
                 Seat newSeat = seatServices.getSeatById(seatId);
-                MovieSession newMS = movieSessionService.getSessionById(sessionReceived);
+                MovieSession newMS = movieSessionService.findSessionByID2(sessionReceived);
 
                 Ticket ticket = new Ticket();
                 ticket.setSeat(newSeat);
@@ -235,7 +235,6 @@ public class BookTicketRestController {
 
                 ticket.setOrder(orderService.getOrderByID(orderId));
                 ticketService.addTicket(ticket);
-                System.out.println(ticket.toString());
             }
 
         }catch (Exception e){

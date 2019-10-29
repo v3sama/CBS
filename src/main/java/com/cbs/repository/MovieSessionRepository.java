@@ -24,4 +24,5 @@ public interface MovieSessionRepository extends JpaRepository<MovieSession, Long
 	public List<SessionList2DTO> findSessionByCinemaAndMovieAndDate(String province_id, Long cinema_id, String movie_id,
 			String time);
 
+	MovieSession findMovieSessionById(long id);
 }
