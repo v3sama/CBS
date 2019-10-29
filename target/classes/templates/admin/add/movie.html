@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Add/Edit movie</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=2" />
+<link rel="stylesheet" th:href="@{/css/adminlte.min.css}" />
+<link rel="stylesheet" th:href="@{/css/all.min.css}" />
+<link rel="stylesheet" th:href="@{/css/summernote-bs4.css}" />
+<link rel="stylesheet" th:href="@{/css/ionicons.min.css}">
+<script th:src="@{/scripts/jquery.min.js}"></script>
+<script th:src="@{/scripts/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/scripts/summernote-bs4.min.js}"></script>
+<script th:src="@{/scripts/demo.js}"></script>
+</head>
+<body>
+
+	<nav th:replace="admin/layout :: admin-nav"></nav>
+
+	<aside th:replace="admin/layout :: admin-sidebar"></aside>
+
+
+	<div class="content-wrapper">
+		<!-- Content Header (Page header) -->
+		<div class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-6">
+						<h1 class="m-0 text-dark">Movie Management</h1>
+					</div>
+					<!-- /.col -->
+					<div class="col-sm-6">
+						<ol class="breadcrumb float-sm-right">
+							<li class="breadcrumb-item"><a href="#">Home</a></li>
+							<li class="breadcrumb-item active">Movie Management</li>
+						</ol>
+					</div>
+					<!-- /.col -->
+				</div>
+				<!-- /.row -->
+			</div>
+			<!-- /.container-fluid -->
+		</div>
+		<!-- /.content-header -->
+
+		<!-- Main content -->
+		<div class="content">
+			<div class="container text-center">
+				<div class="card card-info">
+
+					<div class="card-header">
+						<h3 class="card-title">Create/Update movie</h3>
+					</div>
+					<!-- form start -->
+					<form class="form-horizontal" data-toggle="validator" role="form"
+						action="#" th:action="@{/admin/add/movie}"
+						th:object="${movieForm}" method="post"
+						enctype="multipart/form-data">
+						<div class="card-body">
+							<div class="form-group row">
+								<input class="form-control" type="hidden" th:field="*{movie.id}" />
+							</div>
+
+							<div class="form-group row">
+								<label class="col-sm-2 control-label">Title</label>
+								<div class="col-sm-10">
+									<input class="form-control" type="text"
+										placeholder="Enter title here" required="required"
+										th:field="*{movie.title}" />
+									<div class="help-block with-errors">
+										<span th:if="${error}" th:text="${error}"
+											style="color: red; font-weight: bold">No error</span> <span
+											th:if="${#fields.hasErrors('movie.title')}"
+											th:errors="*{movie.title}"
+											style="color: red; font-weight: bold">Name error</span>
+									</div>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-sm-2 control-label">Trailer</label>
+								<div class="col-sm-10">
+									<input class="form-control" type="text"
+										placeholder="Enter trailer link here" required="required"
+										th:field="*{movie.trailer_link}" />
+									<div class="help-block with-errors">
+										<span th:if="${linkError}" th:text="${linkError}"
+											style="color: red; font-weight: bold">No error</span>
+									</div>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-sm-2 control-label">Duration</label>
+								<div class="col-sm-2">
+									<input class="form-control" type="number" min=60 max=500
+										placeholder="Enter here" required="required"
+										th:field="*{movie.duration}" />
+									<div class="help-block with-errors"></div>
+								</div>
+								<label class="col-sm-2 control-label">Format</label>
+								<div class="col-sm-2">
+									<select th:field="*{movie.formatType}" class="form-control"
+										required="required">
+										<th:block th:each="format : ${formats}">
+											<option th:value="${format.id}" th:text="${format.name}"></option>
+										</th:block>
+									</select>
+								</div>
+								<label class="col-sm-2 control-label">Status</label>
+								<div class="col-sm-2">
+									<input type="checkbox" th:checked="*{movie.status}"
+										th:field="*{movie.status}" value="1" />
+									<div class="help-block with-errors"></div>
+								</div>
+							</div>
+
+							<div class="form-group row">
+								<label class="col-sm-2 control-label">Thumbnail</label>
+								<div class="col-sm-4">
+									<input type="file" th:value="*{thumbnail}"
+										th:field="*{thumbnail}" required="required" />
+									<div class="help-block with-errors"></div>
+								</div>
+
+								<label class="col-sm-2 control-label">Image</label>
+								<div class="col-sm-4">
+									<input type="file" th:field="*{image}" required="required" />
+									<div class="help-block with-errors"></div>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-sm-2 control-label">Release date</label>
+								<div class="col-sm-4">
+									<input class="form-control" type="date" required="required"
+										th:field="*{movie.date_release}" />
+									<div class="help-block with-errors"></div>
+								</div>
+
+								<label class="col-sm-2 control-label">End date</label>
+								<div class="col-sm-4">
+									<input class="form-control" type="date" required="required"
+										th:field="*{movie.date_end}" />
+									<div class="help-block with-errors"></div>
+								</div>
+								<span th:if="${dateError}" th:text="${dateError}"
+									style="color: red; font-weight: bold">No error</span>
+							</div>
+
+
+
+							<div class="form-group row">
+								<label class="col-sm-2 control-label">Genre</label>
+								<div class="col-sm-10">
+									<div class="row">
+										<th:block th:each="genre : ${genres}">
+											<div class="col-sm-3">
+												<div class="form-check">
+													<input class="form-check-input" type="checkbox"
+														th:field="*{movie.genres}" th:value="${genre.id}" /> <label
+														class="form-check-label" th:text="${genre.name}"></label>
+												</div>
+											</div>
+										</th:block>
+									</div>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-sm-2 control-label">Actor</label>
+								<div class="col-sm-10">
+									<div class="row">
+										<th:block th:each="actor : ${actors}">
+											<div class="col-sm-3">
+												<div class="form-check">
+													<input class="form-check-input" type="checkbox"
+														th:value="${actor.id}" th:field="*{movie.actors}" /> <label
+														class="form-check-label" th:text="${actor.name}"></label>
+												</div>
+											</div>
+										</th:block>
+									</div>
+								</div>
+							</div>
+							<div class="form-group row">
+								
+								 <textarea id="summernote" name="movie.description" th:text="*{movie.description}"></textarea>
+							</div>
+							
+						</div>
+						<!-- /.card-body -->
+						<div class="card-footer">
+							<button type="submit" class="btn btn-info">Create/Update</button>
+
+							<button type="reset" class="btn btn-danger ">Reset</button>
+							<button type="button" class="btn btn-warning"
+								onclick="window.location.href='/admin/movie'">Return to
+								list</button>
+						</div>
+						<!-- /.card-footer -->
+					</form>
+				</div>
+			</div>
+		</div>
+		<!-- /.content -->
+	</div>
+<script type="text/javascript">
+$(document).ready(function() {
+	  $('#summernote').summernote();
+	});
+	</script>
+
+</body>
+</html>

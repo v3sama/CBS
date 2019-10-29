@@ -13,6 +13,8 @@ import com.cbs.services.UserService;
 
 import org.hibernate.sql.Update;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -140,7 +142,9 @@ public class UserController {
 		}
 		loggedInUser = (CustomUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		user = loggedInUser.getUser();
-
+		
+		if(loggedInUser.getAuthorities().stream().findFirst().get().equals(new SimpleGrantedAuthority("ADMIN")))
+			return "/admin/index";
 		user.setFirstName(updateForm.getFirstName());
 		user.setLastName(updateForm.getLastName());
 		user.setPhone(updateForm.getPhone());
