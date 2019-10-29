@@ -1,6 +1,10 @@
+let citySelect = 1
+
 $("document").ready(function () {
    //  render tên user đang lỗi
      $.renderUser();
+
+    getAllCity();
     initSlickTop();
 
     //lấy data phim lên tab đang chiếu - sắp chiếu
@@ -9,22 +13,18 @@ $("document").ready(function () {
 
     //lấy danh sách rạp lên bảng
     //tạo bảng lịch chiếu
-    getCinemaList()
-    createDataSchedule()
+    selectlocationCity(citySelect);
+    // getCinemaList(citySelect)
+    // createDataSchedule(citySelect)
 
-
+    renderMovieDataToDatVeBar();
     trailerBox();
     initSelectize();
     $('#sap-chieu').hide();
     hoverMobieBlock();
 
-    let tabcontent = document.getElementsByClassName("tabcontent");
-    for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].style.display = "none";
-    }
-    tabcontent[0].style.display = "block";
-    let tablinks = document.getElementsByClassName("tablinks");
-    tablinks[0].classList.add('active')
+
+
 });
 
 // khai báo biến toàn cục
@@ -115,6 +115,17 @@ function initSelectize() {
     });
 }
 
+function renderTabSchedule() {
+    let tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    tabcontent[0].style.display = "block";
+    let tablinks = document.getElementsByClassName("tablinks");
+    tablinks[0].classList.add('active')
+
+}
+
 function openCity(evt, cityName) {	// function openCity(evt, cityName) {
     // Declare all variables	//     // Declare all variables
     var i, tabcontent, tablinks;	//     var i, tabcontent, tablinks;
@@ -136,16 +147,18 @@ function openCity(evt, cityName) {	// function openCity(evt, cityName) {
     evt.currentTarget.className += " active";	//     evt.currentTarget.className += " active";
 }
 
-function getCinemaList() {
+function getCinemaList(citySelect) {
     // let username = 'user';
     // let password = '123';
     $.ajax({
         type: "get",
-        url: "http://localhost:8080/api/cinemaList?provinceId=1",
+        url: "http://localhost:8080/api/cinemaList",
         // headers: {
         //     'authorization':'Basic '+ btoa(username + ":" + password),
         // },
-        data: "data",
+        data: {
+            "provinceId": citySelect
+        },
         async: false,
         dataType: "json",
         success: function (data) {
@@ -178,9 +191,10 @@ function getCinemaList() {
 
 }
 
-function createDataSchedule() {
+function createDataSchedule(citySelect) {
+    console.log(cinemaList)
     $.each(cinemaList, function (index, itemData) {
-        addSessionsToMovie(itemData.cinemaId)
+        addSessionsToMovie(itemData.cinemaId, citySelect)
         $('#tab-content-render').append('<div id="cinema'+ itemData.cinemaId +'" class="tabcontent"></div>')
         $.each(movieList, function (indexM, itemDataM) {
             $('#cinema'+itemData.cinemaId).append('<div class="tabcontent-row">' +
@@ -207,19 +221,19 @@ function createDataSchedule() {
     })
 }
 
-function addSessionsToMovie(cinemaId) {
+function addSessionsToMovie(cinemaId, citySelect) {
     $.each(movieList, function (index, itemData) {
-        itemData.sessions = getSessionByCinemaData(itemData.movie_id, cinemaId)
+        itemData.sessions = getSessionByCinemaData(itemData.movie_id, cinemaId, citySelect)
     })
 }
 
-function getSessionByCinemaData(movieId, cinemaId) {
+function getSessionByCinemaData(movieId, cinemaId, citySelect) {
     var sessionList = new Object()
     $.ajax({
         type: "get",
         url: "http://localhost:8080/api/cinemaList1",
         data: {
-            "provinceId": 1,
+            "provinceId": citySelect,
             "cinemaId": cinemaId,
             "movieId": movieId
         },
@@ -243,6 +257,7 @@ function getIndexMovieData(){
         dataType: "json",
         success: function (data) {
             movieList = data;
+
             $.each(data, function (index, itemData) {
                 let hinh = itemData.movie_image===null? imgplaceholder : itemData.movie_image;
                 $('#slick-dang-chieu').append('<div class="movie-block">' +
@@ -333,3 +348,165 @@ $.renderUser = function () {
         })
     }
 }
+
+let selectlocationCity = function (citySelect) {
+    getCinemaList(citySelect)
+    createDataSchedule(citySelect)
+    renderTabSchedule();
+    $('select[name="cityselect"]').change(function(){
+        //
+        // if ($(this).val() == "2"){
+        //     alert("call the do something function on option 2");
+        // }
+        console.log($(this).val())
+        $('#tab-content-render').empty();
+        $('#tab-locate-render').empty();
+        // citySelect = $(this).val();
+        cinemaList = [];
+        movieList = [];
+        getCinemaList($(this).val());
+        getNowShowMovieData();
+        createDataSchedule($(this).val());
+        renderTabSchedule();
+    });
+}
+
+let getAllCity  = function () {
+    $.ajax({
+        type: "get",
+        url: "http://localhost:8080/api/cityUHH",
+        async: false,
+        dataType: "json",
+        beforeSend: function(){
+
+        },
+        success: function (data) {
+            $.each(data, function (index, itemData) {
+                $('#citySelect').append('<option value="'+ itemData.id +'">'+ itemData.name +'</option>')
+            })
+        }
+    })
+}
+
+let getNowShowMovieData = function () {
+    $.ajax({
+        type: "get",
+        url: "http://localhost:8080/api/movieShowing",
+        async: false,
+        dataType: "json",
+        success: function (data) {
+            movieList = data;
+        }
+    })
+}
+
+let getDateSessionData = function(city, movie, cinema){
+    let dateData
+    $.ajax({
+        type: "get",
+        url: "http://localhost:8080/api/getDateSession",
+        data: {
+            "provinceId": city,
+            "cinemaId": cinema,
+            "movieId" : movie
+        },
+        async: false,
+        dataType: "json",
+        success: function (data) {
+            dateData = data;
+        }
+    })
+    return dateData;
+}
+
+let getTimeSessionData = function(city, movie, cinema, date){
+    let timeData
+    $.ajax({
+        type: "get",
+        url: "http://localhost:8080/api/getTimeSession",
+        data: {
+            "provinceId": city,
+            "cinemaId": cinema,
+            "movieId" : movie,
+            "date" : date
+        },
+        async: false,
+        dataType: "json",
+        success: function (data) {
+            timeData = data;
+        }
+    })
+    return timeData;
+}
+
+
+let renderMovieDataToDatVeBar = function(){
+    $('#select-movie').empty();
+    // $('#select-cinema').empty();
+    // $('#select-date').empty();
+    // $('#select-session').empty();
+    $.each(movieList, function (index, itemData) {
+        $('#select-movie').append('<option value="' + itemData.movie_id +'">' + itemData.movie_title + '</option>')
+    })
+};
+
+let renderCinemaDataToDatVeBar = function(movieid){
+    $('#select-cinema').empty()
+    // $('#select-date').empty();
+    // $('#select-session').empty();
+    $.each(cinemaList, function (index, itemData) {
+        $('#select-cinema').append('<option value="' + itemData.cinemaId +'">' + itemData.name + '</option>')
+    })
+}
+
+let renderDateDataToDatVeBar = function(data){
+    $('#select-date').empty();
+    // $('#select-session').empty();
+    $.each(data, function (index, itemData) {
+        $('#select-date').append('<option value="' + itemData.id +'">' + itemData.datetime + '</option>')
+    })
+}
+
+let renderTimeDataToDatVeBar = function(data){
+    $('#select-session').empty();
+    $.each(data, function (index, itemData) {
+        $('#select-session').append('<option value="' + itemData.id +'">' + itemData.datetime + '</option>')
+    })
+}
+
+let movieid;
+let cinemaid;
+let dateid;
+let timeid;
+
+$('select[name="select-movie"]').change(function(){
+    movieid = $(this).val();
+    console.log(movieid)
+    renderCinemaDataToDatVeBar();
+});
+
+$('select[name="select-cinema"]').change(function(){
+    cinemaid = $(this).val();
+    console.log("city: " + citySelect);
+    console.log("movie: " + movieid);
+    console.log("cinema: " + cinemaid);
+    let data = getDateSessionData(citySelect, movieid, cinemaid);
+    renderDateDataToDatVeBar(data);
+})
+
+$('select[name="select-date"]').change(function(){
+    dateid = $(this).val();
+    let data = getTimeSessionData(citySelect, movieid, cinemaid, dateid);
+    renderTimeDataToDatVeBar(data);
+})
+
+$('select[name="select-session"]').change(function(){
+    timeid =$(this).val();
+})
+
+$('#dat-ve').click(function () {
+    let url = 'http://localhost:8080/datve?session=';
+    window.location.href = url + timeid;
+})
+
+
