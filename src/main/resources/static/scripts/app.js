@@ -1,7 +1,7 @@
 let citySelect = 1
 
 $("document").ready(function () {
-   //  render tên user đang lỗi
+   //  render tên user
      $.renderUser();
 
      //render dropdown city nav
