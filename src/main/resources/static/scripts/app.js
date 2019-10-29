@@ -283,7 +283,7 @@ function getIndexMovieData(){
                     '<i class="far fa-play-circle"></i>' +
                     '</a></div>' +
                     '<div class="button-container datveBtn">' +
-                    '<a href="movie?id='+ itemData.movie_id +'" class="button">dat ngay</a>' +
+                    '<a href="movie?id='+ itemData.movie_id +'" class="button">xem chi tiết</a>' +
                     '</div>' +
                     '</div>' +
                     '</div>')
