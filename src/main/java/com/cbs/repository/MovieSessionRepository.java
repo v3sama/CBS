@@ -21,8 +21,8 @@ public interface MovieSessionRepository extends JpaRepository<MovieSession, Long
 	List<MovieSession> findMovieSessionByMovie_IdAndCinemaScreen_Id(long movieId, long csID);
 
 	@Query(value = "SELECT ms.id as id, TIME(ms.time) as time FROM movie_session ms left join cinema_screen cs on ms.cinema_room_id = cs.id left join movie m on m.id = ms.movie_id left join cinema c on c.id = cs.cinema_id left join province p on p.id = c.province_id where p.id = :province_id and c.id = :cinema_id and m.id = :movie_id and DATE_FORMAT(ms.time,'%Y-%m-%d') LIKE :time", nativeQuery = true)
-	public List<SessionList2DTO> findSessionByCinemaAndMovieAndDate(String province_id, Long cinema_id, String movie_id,
-			String time);
+	public List<SessionList2DTO> findSessionByCinemaAndMovieAndDate(@Param("province_id") String province_id,
+			@Param("cinema_id") Long cinema_id, @Param("movie_id") String movie_id, @Param("time") String time);
 
 	MovieSession findMovieSessionById(long id);
 }
