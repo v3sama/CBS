@@ -12,15 +12,14 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
 	User findByConfirmationToken(String confirmationToken);
 
-    User findByEmail(String email);
+	User findByEmail(String email);
 
-    User findByPhone(String phone);
+	User findByPhone(String phone);
 
-    User findUserById(long id);
+	User findUserById(long id);
 
-    //reset password
-    @Modifying
-    @Query("update User u set u.password = :password where u.id = :id")
-    void updatePassword(@Param("password") String password, @Param("id") Long id);
+	// reset password
+	@Modifying
+	@Query("update User u set u.password = :password where u.id = :id")
+	void updatePassword(@Param("password") String password, @Param("id") Long id);
 }
-
