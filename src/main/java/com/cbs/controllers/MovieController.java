@@ -2,19 +2,16 @@ package com.cbs.controllers;
 
 import com.cbs.dto.MovieCreationDTO;
 import com.cbs.model.Movie;
-import com.cbs.model.MyReponse;
 import com.cbs.services.ActorService;
 import com.cbs.services.FormatTypeService;
 import com.cbs.services.MovieService;
 import com.cbs.services.GenreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
+
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,7 +24,13 @@ import javax.validation.Valid;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -94,15 +97,44 @@ public class MovieController {
 			"movie.trailer_link", "movie.date_release", "movie.date_end" })
 	public String addMovie(@ModelAttribute("movieForm") MovieCreationDTO movieForm, BindingResult bindingResult,
 			@RequestParam("movie.title") String title, @RequestParam("movie.trailer_link") String trailerLink,
-			Model model, HttpServletRequest request) {
+			@RequestParam("movie.date_release") String dateS, @RequestParam("movie.date_end") String dateE, Model model,
+			HttpServletRequest request) throws ParseException {
 
 		if (title.trim().isEmpty()) {
 			model.addAttribute("error", "Title must not be blank.");
+			MovieCreationDTO movieDTO = new MovieCreationDTO();
+			movieDTO.getMovie().setStatus(true);
+			model.addAttribute("movieForm", movieDTO);
+			model.addAttribute("formats", formatTypeService.getAllFormatType());
+			model.addAttribute("actors", actorService.getAllActors());
+			model.addAttribute("genres", genreService.getAllGenre());
 			return "/admin/add/movie";
 		}
 
 		if (trailerLink.trim().isEmpty()) {
 			model.addAttribute("linkError", "Trailer link must not be blank.");
+			MovieCreationDTO movieDTO = new MovieCreationDTO();
+			movieDTO.getMovie().setStatus(true);
+			model.addAttribute("movieForm", movieDTO);
+			model.addAttribute("formats", formatTypeService.getAllFormatType());
+			model.addAttribute("actors", actorService.getAllActors());
+			model.addAttribute("genres", genreService.getAllGenre());
+			return "/admin/add/movie";
+		}
+
+		System.out.println(dateE);
+
+		Date dateStart = new SimpleDateFormat("yyyy-MM-dd").parse(dateS);
+		Date dateEnd = new SimpleDateFormat("yyyy-MM-dd").parse(dateE);
+
+		if (dateEnd.before(dateStart)) {
+			model.addAttribute("dateError", "Date end must be after date release.");
+			MovieCreationDTO movieDTO = new MovieCreationDTO();
+			movieDTO.getMovie().setStatus(true);
+			model.addAttribute("movieForm", movieDTO);
+			model.addAttribute("formats", formatTypeService.getAllFormatType());
+			model.addAttribute("actors", actorService.getAllActors());
+			model.addAttribute("genres", genreService.getAllGenre());
 			return "/admin/add/movie";
 		}
 
