@@ -293,7 +293,9 @@ public class BookTicketRestController {
 
     @PostMapping(value = "api/checkout")
     public String checkPayment(@RequestBody CheckoutDTO checkoutDTO){
-
+    	CustomUserDetail loggedInUser = (CustomUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
+		
         int orderid = checkoutDTO.getOrder();
         SOrder order = orderService.getOrderByID(Long.valueOf(orderid));
 
@@ -306,8 +308,17 @@ public class BookTicketRestController {
         if (paymentMode.equals("card")){
             order.setStatus("Completed");
             payment.setPayment_time(LocalDateTime.now());
-//            CardInformation cardInformation = new CardInformation();
-//            cardInformation.setCard_date();
+            
+            CardInformation card = new CardInformation(loggedInUser.getUser());
+         //   card.setBank(checkoutDTO.getCardinfo().get(0));
+            card.setCard_no(checkoutDTO.getCardinfo().get(0));
+            String cardDateStr= checkoutDTO.getCardinfo().get(1);
+            LocalDate cardDate= LocalDate.of(Integer.parseInt(cardDateStr.substring(6, 9)), 
+            		Integer.parseInt(cardDateStr.substring(1, 2)), 1);
+            card.setCard_date(cardDate);
+            card.setBank("");
+            cardService.addCard(card);
+            
         }else {
             order.setStatus("Pending");
         }
