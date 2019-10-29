@@ -9,7 +9,7 @@
 <script th:src="@{/scripts/jquery.min.js}"></script>
 <script th:src="@{/scripts/bootstrap.bundle.min.js}"></script>
 
-<title>CBS Admin</title>
+<title>Report</title>
 <style>
 .navbar {
 	margin-bottom: 10px;
@@ -173,14 +173,13 @@
 		};
 		$('form').submit(function() {
 		     var res = true;
-		     // here I am checking for textFields, password fields, and any 
-		     // drop down you may have in the form
-		     $("input[type='text'],select,input[type='password']",this).each(function() {
-		         if($(this).val().trim() == "") {
-		             res = false; 
-		         }
-		     })
-		     return res; // returning false will prevent the form from submitting.
+		    var fromDate = $("#fromDate").val();
+		    var toDate = $("#toDate").val();
+		    if(new Date(toDate) <= new Date(fromDate)){
+		    	alert('The toDate must be larger than or equal to fromDate!')
+		    	res = false;
+		    }
+		    return res; // returning false will prevent the form from submitting.
 		});
 	</script>
 </body>

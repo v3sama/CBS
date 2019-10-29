@@ -76,7 +76,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			user.setPassword("admin");
 			user.setFirstName("admin");
 			user.setLastName("admin");
-			user.setPhone("095789462");
+			user.setPhone("0957894622");
 			
 
 			Set<Role> roles = new HashSet<Role>();
@@ -99,7 +99,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 		http.authorizeRequests()
 				.antMatchers("/admin/**","/admin").hasAuthority("ADMIN")
-				.antMatchers("/profile/**", "/orders/**", "/datve", "/confirmVe", "/booksuccess").hasAuthority("MEMBER")
+				.antMatchers("/profile/**","/change-password","/update-profile", "/orders/**", "/datve", "/confirmVe", "/booksuccess").hasAuthority("MEMBER")
 				.antMatchers("/**").permitAll();
 						
 
