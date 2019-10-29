@@ -1,61 +1,224 @@
-<div class="wrapper row2">
-  <div id="container" class="clear">
-    <div id="about-us" class="clear">
-      <section id="about-intro" class="clear">
-        <p>CBS is one of the top newest cinema in the world and is the newest cinema in Viet Nam. Our goal is to be a typical company model that contributes to the continuous development of VietNam's film industry.</p>
-        <p>CBS has created a unique concept of transforming traditional cinemas into a cultural complex “Cultureplex”, where audiences not only come to enjoy diverse cinema through advanced technologies such as SCREENX, IMAX. , STARIUM, 4DX, Dolby Atmos, as well as enjoying completely new and different cuisines while experiencing the best quality service at CGV.</p>
-		<p>Vietnam will continue the long-term journey to contribute to building an increasingly stronger Vietnamese film industry with potential customers, filmmakers and prestigious business partners, and the whole society.</p>
-      </section>
-      
-      <section id="team">
-        <ul class="clear">
-          <li class="one_quarter first">
-            <figure><img src="#imageURL" alt="image">
-              <figcaption>
-                <p class="team_name">Hoang Manh Vinh</p>
-                <p class="team_title">Chief Executive Officer (CEO)</p>
-                <p class="team_description">Outline the strategy to implement the company's vision and mission.Responsible for planning and specific directions for the company.Direct the construction, implementation of business plans approved by the Board of Directors. Responsible for the profits and growth of the company. Ensure the achievement of short-term and long-term goals. Provide ideas and suggestions to improve the company's operations. Building, developing and promoting the company's image and brand..</p>
-              </figcaption>
-            </figure>
-          </li>
-          <li class="one_quarter">
-            <figure><img src="#imageURL" alt="image">
-              <figcaption>
-                <p class="team_name">Nguyen Thanh Loc</p>
-                <p class="team_title">Job Title Here</p>
-                <p class="team_description">Perating, managing and implementing information technology (IT) strategy.In addition to monitoring hardware, software, and data that help other executives perform their jobs effectively, he study new technologies, how they can provide business value. and solve issues related to digital information.</p>
-              </figcaption>
-            </figure>
-          </li>
-          <li class="one_quarter">
-            <figure><img src="#imageURL" alt="image">
-              <figcaption>
-                <p class="team_name">Nguyen Hoang Hung</p>
-                <p class="team_title">Chief Operating Officer (COO)</p>
-                <p class="team_description">Initiate the rollout of new product lines, and may likewise be responsible for production, research and development, and marketing..</p>
-              </figcaption>
-            </figure>
-          </li>
-          <li class="one_quarter">
-            <figure><img src="#imageURL" alt="image">
-              <figcaption>
-                <p class="team_name">Nguyen Trinh Huu Chung</p>
-                <p class="team_title">Job Title Here</p>
-                <p class="team_description">Responsible for managing the company's finances, including financial planning, management of financial risks, record-keeping, financial reporting,and responsible for analysis of data..</p>
-              </figcaption>
-            </figure>
-          </li>
-        </ul>
-      </section>
-      <section id="client_logos">
-        <ul class="clear">
-          <li class="one_fifth first"><img src="#imageURL" alt="image"></li>
-          <li class="one_fifth"><img src="imageURL" alt="image"></li>
-          <li class="one_fifth"><img src="imageURL" alt="image"></li>
-          <li class="one_fifth"><img src="imageURL" alt="image"></li>
-          <li class="one_fifth"><img src="imageURL" alt="image"></li>
-        </ul>
-      </section>
-    </div>
-  </div>
-</div>
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+<link rel="stylesheet" th:href="@{/css/adminlte.min.css}" />
+<link rel="stylesheet" th:href="@{/css/all.min.css}" />
+<link rel="stylesheet" th:href="@{/css/default-site.css}" />
+<script th:src="@{/scripts/jquery.min.js}"></script>
+<script th:src="@{/scripts/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/scripts/custom.js}"></script>
+
+<title>About Us</title>
+</head>
+
+<body>
+	<Nav th:fragment="client-nav"
+		th:replace="client/fragments/navbar :: client-nav"></Nav>
+
+	<div class="container">
+		<button type="button" data-toggle="collapse"
+			data-target="#navbarSupportedContent"
+			aria-controls="navbarSupportedContent" aria-expanded="false"
+			aria-label="Toggle navigation" class="navbar-toggler">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div id="navbarSupportedContent" class="collapse navbar-collapse">
+			<ul class="navbar-nav ml-auto">
+				<li class="nav-item active"><a href="#"
+					class="nav-link font-italic"> Home </a></li>
+				<li class="nav-item active"><a href="#"
+					class="nav-link font-italic"> About </a></li>
+				<li class="nav-item active"><a href="#"
+					class="nav-link font-italic"> Services </a></li>
+				<li class="nav-item active"><a href="#"
+					class="nav-link font-italic"> Contact</a></li>
+			</ul>
+		</div>
+	</div>
+	</nav>
+
+	<div class="bg-light">
+		<div class="container py-5">
+			<div class="row h-100 align-items-center py-5">
+				<div class="col-lg-6">
+					<h1 class="display-4">About Cinema Booking System</h1>
+					<p class="lead text-muted mb-0">CBS is one of the top newest
+						cinema in the world and is the newest cinema in Viet Nam. Our goal
+						is to be a typical company model that contributes to the
+						continuous development of VietNam's film industry.</p>
+				</div>
+				<div class="col-lg-6 d-none d-lg-block">
+					<img
+						src="https://res.cloudinary.com/mhmd/image/upload/v1556834136/illus_kftyh4.png"
+						alt="" class="img-fluid">
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="bg-white py-5">
+		<div class="container py-5">
+			<div class="row align-items-center mb-5">
+				<div class="col-lg-6 order-2 order-lg-1">
+					<i class="fa fa-bar-chart fa-2x mb-3 text-primary"></i>
+					<h2 class="font-weight-light">Friendships</h2>
+					<p class="font-italic text-muted mb-4">Vietnam will continue
+						the long-term journey to contribute to building an increasingly
+						stronger Vietnamese film industry with potential customers, film
+						makers and prestigious business partners, and the whole society.</p>
+					<a href="#" class="btn btn-light px-5 rounded-pill shadow-sm">Learn
+						More</a>
+				</div>
+				<div class="col-lg-5 px-5 mx-auto order-1 order-lg-2">
+					<img
+						src="https://res.cloudinary.com/mhmd/image/upload/v1556834139/img-1_e25nvh.jpg"
+						alt="" class="img-fluid mb-4 mb-lg-0">
+				</div>
+			</div>
+			<div class="row align-items-center">
+				<div class="col-lg-5 px-5 mx-auto">
+					<img
+						src="https://res.cloudinary.com/mhmd/image/upload/v1556834136/img-2_vdgqgn.jpg"
+						alt="" class="img-fluid mb-4 mb-lg-0">
+				</div>
+				<div class="col-lg-6">
+					<i class="fa fa-leaf fa-2x mb-3 text-primary"></i>
+					<h2 class="font-weight-light">Destiny</h2>
+					<p class="font-italic text-muted mb-4">CBS has created a unique
+						concept of transforming traditional cinemas into a cultural
+						complex, where audiences not only come to enjoy diverse cinema
+						through advanced technologies such as SCREENX, IMAX. , STARIUM,
+						4DX, Dolby Atmos, as well as enjoying completely new and different
+						cuisines while experiencing the best quality service at CBS.</p>
+					<a href="#" class="btn btn-light px-5 rounded-pill shadow-sm">Learn
+						More</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="bg-light py-5">
+		<div class="container py-5">
+			<div class="row mb-4">
+				<div class="col-lg-5">
+					<h2 class="display-4 font-weight-light">Our team</h2>
+					<p class="font-italic text-muted">Founder and President.</p>
+				</div>
+			</div>
+
+			<div class="row text-center">
+				<!-- Team item-->
+				<div class="col-xl-3 col-sm-6 mb-5">
+					<div class="bg-white rounded shadow-sm py-5 px-4">
+						<img
+							src="https://res.cloudinary.com/mhmd/image/upload/v1556834132/avatar-4_ozhrib.png"
+							alt="" width="100"
+							class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
+						<h5 class="mb-0">Hoang Manh Vinh</h5>
+						<span class="small text-uppercase text-muted">CEO - CHIEF
+							EXECUTIVE OFFICER</span>
+						<ul class="social mb-0 list-inline mt-3">
+							<li class="list-inline-item"><a href="#" class="social-link"><i
+									class="fa fa-facebook-f"></i></a></li>
+							<li class="list-inline-item"><a href="#" class="social-link"><i
+									class="fa fa-twitter"></i></a></li>
+							<li class="list-inline-item"><a href="#" class="social-link"><i
+									class="fa fa-instagram"></i></a></li>
+							<li class="list-inline-item"><a href="#" class="social-link"><i
+									class="fa fa-linkedin"></i></a></li>
+						</ul>
+					</div>
+				</div>
+				<!-- End-->
+
+				<!-- Team item-->
+				<div class="col-xl-3 col-sm-6 mb-5">
+					<div class="bg-white rounded shadow-sm py-5 px-4">
+						<img
+							src="https://res.cloudinary.com/mhmd/image/upload/v1556834130/avatar-3_hzlize.png"
+							alt="" width="100"
+							class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
+						<h5 class="mb-0">Nguyen Thanh Loc</h5>
+						<span class="small text-uppercase text-muted">CPO - CHIEF
+							PRODUCTION OFFICER</span>
+						<ul class="social mb-0 list-inline mt-3">
+							<li class="list-inline-item"><a href="#" class="social-link"><i
+									class="fa fa-facebook-f"></i></a></li>
+							<li class="list-inline-item"><a href="#" class="social-link"><i
+									class="fa fa-twitter"></i></a></li>
+							<li class="list-inline-item"><a href="#" class="social-link"><i
+									class="fa fa-instagram"></i></a></li>
+							<li class="list-inline-item"><a href="#" class="social-link"><i
+									class="fa fa-linkedin"></i></a></li>
+						</ul>
+					</div>
+				</div>
+				<!-- End-->
+
+				<!-- Team item-->
+				<div class="col-xl-3 col-sm-6 mb-5">
+					<div class="bg-white rounded shadow-sm py-5 px-4">
+						<img
+							src="https://res.cloudinary.com/mhmd/image/upload/v1556834133/avatar-2_f8dowd.png"
+							alt="" width="100"
+							class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
+						<h5 class="mb-0">Nguyen Hoang Hung</h5>
+						<span class="small text-uppercase text-muted">CFO - CHIEF
+							FINANCIAL OFFICER</span>
+						<ul class="social mb-0 list-inline mt-3">
+							<li class="list-inline-item"><a href="#" class="social-link"><i
+									class="fa fa-facebook-f"></i></a></li>
+							<li class="list-inline-item"><a href="#" class="social-link"><i
+									class="fa fa-twitter"></i></a></li>
+							<li class="list-inline-item"><a href="#" class="social-link"><i
+									class="fa fa-instagram"></i></a></li>
+							<li class="list-inline-item"><a href="#" class="social-link"><i
+									class="fa fa-linkedin"></i></a></li>
+						</ul>
+					</div>
+				</div>
+				<!-- End-->
+
+				<!-- Team item-->
+				<div class="col-xl-3 col-sm-6 mb-5">
+					<div class="bg-white rounded shadow-sm py-5 px-4">
+						<img
+							src="https://res.cloudinary.com/mhmd/image/upload/v1556834133/avatar-1_s02nlg.png"
+							alt="" width="100"
+							class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
+						<h5 class="mb-0">Nguyen Trinh Huu Chung</h5>
+						<span class="small text-uppercase text-muted">CCO - CHIEF
+							CUSTOMER OFFICER</span>
+						<ul class="social mb-0 list-inline mt-3">
+							<li class="list-inline-item"><a href="#" class="social-link"><i
+									class="fa fa-facebook-f"></i></a></li>
+							<li class="list-inline-item"><a href="#" class="social-link"><i
+									class="fa fa-twitter"></i></a></li>
+							<li class="list-inline-item"><a href="#" class="social-link"><i
+									class="fa fa-instagram"></i></a></li>
+							<li class="list-inline-item"><a href="#" class="social-link"><i
+									class="fa fa-linkedin"></i></a></li>
+						</ul>
+					</div>
+				</div>
+				<!-- End-->
+
+			</div>
+		</div>
+	</div>
+	<footer th:fragment="client-footer"
+		th:replace="client/fragments/footer :: client-footer"></footer>
+
+	<script th:src="@{/scripts/jquery.min.js}"></script>
+	<script th:src="@{/scripts/jquery-ui.min.js}"></script>
+
+	<!-- <script src="/resource/js/select2.min.js"></script> -->
+	<script type="text/javascript" th:src="@{/scripts/slick.js}"></script>
+	<script type="text/javascript" th:src="@{/scripts/movie-detail.js}"></script>
+	<script type="text/javascript" th:src="@{/scripts/selectize.js}"></script>
+</body>
