@@ -127,21 +127,19 @@ public class MovieDetailRestController {
     }
 
     @GetMapping(value = "api/ratingList", produces = MediaType.APPLICATION_JSON_VALUE)
-    public RatingListDTO getAllRating(@RequestParam(value = "page") String page, @RequestParam(value = "movie") String movieid){
+    public List<RatingDTO> getAllRating(@RequestParam(value = "page") String page, @RequestParam(value = "movie") String movieid){
 //        if (page == null){
 //            page = 0;
 //        }
-        RatingListDTO lists = new RatingListDTO();
-        Page<Rating> ratings = ratingService.getRatingByMovie(Long.parseLong(movieid), PageRequest.of(Integer.parseInt(page),10));
-        lists.setTotalPage(ratings.getTotalPages());
-        lists.setTotalElememt(ratings.getTotalElements());
+        List<RatingDTO> lists = new ArrayList<>();
+        Page<Rating> ratings = ratingService.getRatingByMovie(Long.parseLong(movieid), PageRequest.of(Integer.parseInt(page),20));
 //        lists.setPage();
 //        ratings.
         for (Rating rating : ratings) {
             RatingDTO ratingDTO = new RatingDTO();
             ratingDTO.setContent(rating.getContent());
             ratingDTO.setUname(rating.getOrder().getMember().getFirstName());
-//            lists.add(ratingDTO);
+            lists.add(ratingDTO);
         }
 //        System.out.println(ratings.toString());
         return lists;
