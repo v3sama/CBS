@@ -78,9 +78,12 @@
 							<div class="form-group row">
 								<label class="col-sm-2 control-label">Email</label>
 								<div class="col-sm-10">
-									<input class="form-control" type="email"
+									<input th:if="*{id == 0}" class="form-control" type="email"
 										placeholder="Enter email here" required="required"
 										th:field="*{email}" />
+									<input th:if="*{id != 0}" class="form-control" type="email"
+										placeholder="Enter email here" required="required"
+										th:field="*{email}" readonly/>
 									<div class="help-block with-errors">
 										<span th:if="${alreadyRegisteredMessage}"
 											th:text="${alreadyRegisteredMessage}"
