@@ -1,5 +1,8 @@
 package com.cbs.controllers;
 
+import com.cbs.dto.SessionDTO;
+import com.cbs.dto.SessionList2DTO;
+import com.cbs.dto.test1;
 import com.cbs.model.Cinema;
 import com.cbs.model.CinemaScreen;
 import com.cbs.model.Movie;
@@ -85,11 +88,29 @@ public class MovieSessionController {
 		model.addAttribute("movie", movieService.getMovieByID(Long.parseLong(movieValue)).getTitle());
 		model.addAttribute("date", date);
 		model.addAttribute("cinemaScreens", screenService.getScreenByCinema(cinemaValue));
-		model.addAttribute("sessionMovies",
-				movieSessionService.findSessionByCinemaAndMovieAndDate(value, cinemaValue, movieValue, date));
-
-		if (cinemaService.hasSession(Long.parseLong(movieValue), date) > 0)
+//		model.addAttribute("sessionMovies",
+//				movieSessionService.findSessionByCinemaAndMovieAndDate( cinemaValue, movieValue, date));
+		
+		
+		if (cinemaService.hasSession(Long.parseLong(movieValue), date) > 0) {
+			List<test1> list = movieSessionService.findSessionByCinemaAndMovieAndDate(cinemaValue, Long.parseLong(movieValue), date);
+			List<SessionDTO> returnList = new ArrayList<SessionDTO>();
+			String lastScreen = "";
+			for (test1 test1 : list) {
+				SessionDTO mSession = new SessionDTO();
+				mSession.setTime(test1.getTime());
+				if(!test1.getScreenName().equals(lastScreen)) {
+					mSession.setScreen(test1.getScreenName());
+					lastScreen = test1.getScreenName();
+				} else {
+					mSession.setScreen("");
+				}
+				returnList.add(mSession);
+			}
+			model.addAttribute("sessions",returnList);
 			return "/admin/details/session-details";
+		}
+			
 
 		int noOfMovies = movies.size();
 		// int noOfRooms = cinemaScreens.size();
@@ -121,6 +142,22 @@ public class MovieSessionController {
 			first = 8 * 60;
 		}
 		movieSessionService.addAll(movieSessions);
+
+		List<test1> list = movieSessionService.findSessionByCinemaAndMovieAndDate(cinemaValue, Long.parseLong(movieValue), date);
+		List<SessionDTO> returnList = new ArrayList<SessionDTO>();
+		String lastScreen = "";
+		for (test1 test1 : list) {
+			SessionDTO mSession = new SessionDTO();
+			mSession.setTime(test1.getTime());
+			if(!test1.getScreenName().equals(lastScreen)) {
+				mSession.setScreen(test1.getScreenName());
+				lastScreen = test1.getScreenName();
+			} else {
+				mSession.setScreen("");
+			}
+			returnList.add(mSession);
+		}
+		model.addAttribute("sessions",returnList);
 
 		return "/admin/details/session-details";
 	}
@@ -191,8 +228,8 @@ public class MovieSessionController {
 			"provinceId" }, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody Map<Long, String> getCinemaByProvince(@RequestParam("provinceId") Long provinceId) {
 		Set<Cinema> cinemas = new HashSet<Cinema>();
-		if(provinceId == 0)
-			cinemas =  new HashSet<Cinema>(cinemaService.getAllCinema());
+		if (provinceId == 0)
+			cinemas = new HashSet<Cinema>(cinemaService.getAllCinema());
 		else
 			cinemas = provinceService.getProvinceByID(provinceId).getCinemas();
 

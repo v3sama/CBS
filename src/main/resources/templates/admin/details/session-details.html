@@ -75,18 +75,15 @@
 
 						<table class="table">
 							<thead>
-								<tr th:each="cinemaScreen : ${cinemaScreens}">
-									<th th:text="${cinemaScreen.title}"></th>
-									<th:block th:each="sessionMovie : ${sessionMovies}">
-
-										<td th:text="${sessionMovie.time}"></td>
-
-									</th:block>
+								<tr>
+									<th >Screen</th>
+									<th >Session Time</th>
 								</tr>
 							</thead>
 							<tbody>
-								<th:block th:each="sessionMovie : ${sessionMovies}">
+								<th:block th:each="sessionMovie : ${sessions}">
 									<tr>
+										<td th:text="${sessionMovie.screen}"></td>
 										<td th:text="${sessionMovie.time}"></td>
 									</tr>
 								</th:block>
@@ -109,7 +106,6 @@
 		<!-- /.content -->
 	</div>
 	<!-- 	<!-- 	<script> -->
-	-->
 	<!-- 	// function getCinemaByProvince() { // //lay du lieu tu id thi dung #, -->
 	<!-- 	tu class thi dung . // var provinceId = $("#province").val(); // -->
 	<!-- 	$.ajax({ // 'url' : -->
