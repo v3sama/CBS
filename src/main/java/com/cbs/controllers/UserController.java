@@ -82,20 +82,27 @@ public class UserController {
 
 	@RequestMapping(value = "/admin/add/user", method = RequestMethod.POST)
 	public String addUser(@Valid User user, BindingResult bindingResult, Model model) {
-
+		
 		User phoneExists = userService.findByPhone(user.getPhone());
 		User userExists = userService.findByEmail(user.getEmail());
-
+		
+		if(user.getId() == 0) {
+			
+		
 		if (userExists != null) {
 			model.addAttribute("alreadyRegisteredMessage",
 					"Oops!  There is already a user registered with the email provided.");
 			bindingResult.reject("email");
+			model.addAttribute("allRoles", roleService.getAllRole());
 			return "/admin/add/user";
 		}
+		}
+		
 		if (phoneExists != null) {
 			model.addAttribute("alreadyExitsPhone",
 					"Oops!  There is already a user registered with the phone provided.");
 			bindingResult.reject("phone");
+			model.addAttribute("allRoles", roleService.getAllRole());
 			return "/admin/add/user";
 
 		}
