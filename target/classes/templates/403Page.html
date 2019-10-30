@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title> 403 Page not found</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" th:href="@{/css/adminlte.min.css}" />
+	<link rel="stylesheet" th:href="@{/css/all.min.css}" />
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+  <!-- Navbar -->
+   
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>403 Access Denied</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="http://localhost:8080/">Home</a></li>
+              <li class="breadcrumb-item active">403 Error Page</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="error-page">
+
+    <h3 th:if="${message != null}" th:utext="${message}" style="color: red;"></h3>
+ 
+    <h3> Click <a href="http://localhost:8080/">here</a> to return to homepage.</h3>
+     
+ </div>
+      <!-- /.error-page -->
+    </section>
+    <!-- /.content -->
+  </div>
+  </div>
+</body>
+</html>

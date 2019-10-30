@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Add/Edit cinema</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=2" />
+<link rel="stylesheet" th:href="@{/css/adminlte.min.css}" />
+<link rel="stylesheet" th:href="@{/css/all.min.css}" />
+
+<script th:src="@{/scripts/jquery.min.js}"></script>
+<script th:src="@{/scripts/bootstrap.bundle.min.js}"></script>
+</head>
+<body>
+
+	<nav th:replace="admin/layout :: admin-nav"></nav>
+
+	<aside th:replace="admin/layout :: admin-sidebar"></aside>
+
+
+	<div class="content-wrapper">
+		<!-- Content Header (Page header) -->
+		<div class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-6">
+						<h1 class="m-0 text-dark">Cinema Management</h1>
+					</div>
+					<!-- /.col -->
+					<div class="col-sm-6">
+						<ol class="breadcrumb float-sm-right">
+							<li class="breadcrumb-item"><a href="#">Home</a></li>
+							<li class="breadcrumb-item active">Cinema Management</li>
+						</ol>
+					</div>
+					<!-- /.col -->
+				</div>
+				<!-- /.row -->
+			</div>
+			<!-- /.container-fluid -->
+		</div>
+		<!-- /.content-header -->
+
+		<!-- Main content -->
+		<div class="content">
+			<div class="container text-center">
+				<div class="card card-info">
+
+					<div class="card-header">
+						<h3 class="card-title">Create/Update cinema</h3>
+					</div>
+					<!-- form start -->
+					<form class="form-horizontal" data-toggle="validator" role="form"
+						action="#" th:action="@{/admin/add/cinema}"
+						th:object="${cinemaForm}" method="post">
+						<div class="card-body">
+							<p th:text="${error}" style="color:red;font-weight:bold"></p>
+						
+							<div class="form-group row">
+								<input class="form-control" type="hidden"
+									th:field="*{cinema.id}" />
+							</div>
+
+							<div class="form-group row">
+								<label class="col-sm-2 control-label">Title</label>
+								<div class="col-sm-10">
+									<input class="form-control" type="text"
+										placeholder=" enter title here" required="required"
+										th:field="*{cinema.title}" />
+									<div class="help-block with-errors"></div>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-sm-2 control-label">Address</label>
+								<div class="col-sm-10">
+									<input class="form-control" type="text"
+										placeholder="enter address here" required="required"
+										th:field="*{cinema.address}" />
+									<div class="help-block with-errors"></div>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-sm-2 control-label">Phone</label>
+								<div class="col-sm-10">
+									<input class="form-control" type="number"
+										placeholder="enter phone here" required="required"
+										th:field="*{cinema.phone}" data-maxlength="12" />
+
+									<div class="help-block with-errors"></div>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-sm-2 control-label">Province</label>
+								<div class="col-sm-10">
+									<select th:field="*{cinema.province}" class="form-control">
+										<th:block th:each="province : ${provinces}">
+											<option th:value="${province.id}" th:text="${province.name}"></option>
+										</th:block>
+									</select>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-sm-2 control-label">Screens</label>
+								<div class="col-sm-10">
+									<table class="table">
+										<thead>
+											<tr>
+
+												<th>Select</th>
+												<th>Title</th>
+												<th>Rows</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:each="cinemaScreen, itemStat: *{cinemaScreens}">
+												<td><input class="number" type="hidden"
+													th:field="*{cinemaScreens[__${itemStat.index}__].id}"
+													th:value="${cinemaScreen.id}" /></td>
+												<td><input class="box" type="checkbox"
+													th:field="*{cinemaScreens[__${itemStat.index}__].screen.id}"
+													th:value="${cinemaScreen.screen.id}" /></td>
+												<td th:text="${cinemaScreen.screen.title}"></td>
+												<td><input class="form-control" type="number"
+													th:id="${cinemaScreen.screen.id}"
+													th:field="*{cinemaScreens[__${itemStat.index}__].rows}" />
+												</td>
+
+											</tr>
+											<!-- <tr th:each="screen,itemStat : ${screens}">
+												<td><input type="checkbox"  name="cinemaScreens[" th:text=${itemStat.index} ".screenId"
+													th:value="${screen.id}" /></td>
+												<td th:text="${screen.title}" th:field="*{cinemaScreens}">
+
+												</td>
+												<td><input class="form-control" type="text"
+													th:field="*{cinemaScreens}" /></td>
+
+													<td><input class="box" type="checkbox" name="screens"
+														th:value="${screen.id}"></td>
+													<td><label class="form-check-label"
+														th:text="${screen.title}"> </label></td>
+													<td><input class="form-control" type="number"
+														name="rows" disabled="true" th:id="${screen.id}">
+													</td>
+											</tr> -->
+
+										</tbody>
+									</table>
+
+								</div>
+							</div>
+						</div>
+						<!-- /.card-body -->
+						<div class="card-footer">
+							<button type="submit" class="btn btn-info">Create/Update</button>
+
+							<button type="reset" class="btn btn-danger ">Reset</button>
+							<button type="button" class="btn btn-warning"
+								onclick="window.location.href='/admin/cinema'">Return
+								to list</button>
+						</div>
+						<!-- /.card-footer -->
+					</form>
+				</div>
+			</div>
+		</div>
+		<!-- /.content -->
+	</div>
+
+	<script>
+		$(document).ready(function() {
+			$('.box').each(function() {
+				$(this).prop("checked", false);
+				$('#' + $(this).val()).prop('disabled', true);
+			});
+			$('.box').click(function() {
+				var set = $(this).is(':checked') ? false : true;
+				$('#' + $(this).val()).prop('disabled', set);
+			});
+		});
+	</script>
+</body>
+</html>

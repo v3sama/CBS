@@ -90,7 +90,8 @@ public class UserController {
 		}
 
 		user.setActive(true);
-		user.setPassword("123456");
+		if(user.getId() == 0)
+			user.setPassword("cbs123456");
 		userService.add(user);
 		return "redirect:/admin/user";
 	}
@@ -140,11 +141,7 @@ public class UserController {
 		if (bindingResult.hasErrors()) {
 			return "";
 		}
-		loggedInUser = (CustomUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		user = loggedInUser.getUser();
 		
-		if(loggedInUser.getAuthorities().stream().findFirst().get().equals(new SimpleGrantedAuthority("ADMIN")))
-			return "/admin/index";
 		user.setFirstName(updateForm.getFirstName());
 		user.setLastName(updateForm.getLastName());
 		user.setPhone(updateForm.getPhone());
@@ -175,6 +172,8 @@ public class UserController {
 		loggedInUser = (CustomUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		user = loggedInUser.getUser();
 
+		if(loggedInUser.getAuthorities().stream().findFirst().get().equals(new SimpleGrantedAuthority("ADMIN")))
+			return "/admin/index";
 		UpdateUserDTO updateForm = new UpdateUserDTO();
 		updateForm.setEmail(user.getEmail());
 		updateForm.setFirstName(user.getFirstName());

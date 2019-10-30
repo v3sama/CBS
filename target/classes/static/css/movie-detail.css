@@ -1,0 +1,280 @@
+/* ----- CAU HINH TAB  ----- */
+
+
+.tabset > input[type="radio"] {
+	position: absolute;
+	left: -200vw;
+}
+
+.tabset .tab-panel {
+	display: none;
+}
+
+.tabset > input:first-child:checked ~ .tab-panels > .tab-panel:first-child,
+.tabset > input:nth-child(3):checked ~ .tab-panels > .tab-panel:nth-child(2),
+.tabset > input:nth-child(5):checked ~ .tab-panels > .tab-panel:nth-child(3),
+.tabset > input:nth-child(7):checked ~ .tab-panels > .tab-panel:nth-child(4),
+.tabset > input:nth-child(9):checked ~ .tab-panels > .tab-panel:nth-child(5),
+.tabset > input:nth-child(11):checked ~ .tab-panels > .tab-panel:nth-child(6) {
+	display: block;
+}
+
+.mg20 {
+	margin-left: 20px;
+}
+
+.tabset > label {
+	position: relative;
+	display: inline-block;
+	padding: 15px 15px 25px;
+	border: 1px solid transparent;
+	border-bottom: 0;
+	cursor: pointer;
+	font-weight: 600;
+}
+
+.tabset > label::after {
+	content: "";
+	position: absolute;
+	left: 15px;
+	bottom: 10px;
+	width: 22px;
+	height: 4px;
+	background: #8d8d8d;
+}
+
+.tabset > label:hover,
+.tabset > input:focus + label {
+	color: #06c;
+}
+
+.tabset > label:hover::after,
+.tabset > input:focus + label::after,
+.tabset > input:checked + label::after {
+	background: #06c;
+}
+
+.tabset > input:checked + label {
+	border-color: #ccc;
+	border-bottom: 1px solid #fff;
+	margin-bottom: -1px;
+}
+
+.tab-panel {
+	padding: 30px 0;
+	border-top: 1px solid #ccc;
+}
+
+.section-time {
+	margin: 0;
+}
+
+/* ----- CAU HINH STAR VOTE ----- */
+
+.rating {
+	border: 1px solid #acacac61;
+	float: left;
+	height: 2.5rem;
+	padding-top: 5px;
+	width: 17%;
+	border-radius: 0.375rem;
+
+}
+
+.rating > input {
+	display: none;
+}
+.rating > label:before {
+	margin: 5px;
+	font-size: 1.25em;
+	font-family: FontAwesome;
+	display: inline-block;
+	content: "\f005";
+}
+
+.rating > .half:before {
+	content: "\f089";
+	position: absolute;
+}
+
+.rating > label {
+	color: #ddd;
+	float: right;
+}
+
+/***** CSS Magic to Highlight Stars on Hover *****/
+
+.rating > input:checked ~ label, /* show gold star when clicked */
+.rating:not(:checked) > label:hover, /* hover current star */
+.rating:not(:checked) > label:hover ~ label {
+	color: #ffd700;
+} /* hover previous stars in list */
+
+.rating > input:checked + label:hover, /* hover current star when changing rating */
+.rating > input:checked ~ label:hover,
+.rating > label:hover ~ input:checked ~ label, /* lighten current selection */
+.rating > input:checked ~ label:hover ~ label {
+	color: #ffed85;
+}
+
+/* ----- SECTION MOVIE DETAIL ----- */
+
+.mainDetail{
+	height: 350px;
+}
+
+.section-movie-detail{
+	padding-top: 80px;
+}
+
+.mainInfo{
+	padding-top: 100px;
+	padding-left: 20px;
+}
+
+.dateRe{
+	font-size: 12px;
+}
+
+.nameMo{
+	/* position: absolute; */
+	display: inline-block;
+	font-size: 20px;
+	max-width: 300px;
+	height: auto;
+	margin-left: 35px;
+}
+
+.infoFra{
+	font-size: 12px;
+}
+
+.rateAndName{
+	display: block;
+	position: relative;
+}
+
+.rateTy{
+	display: inline-block;
+	position: absolute;
+	padding: 4px 12px;
+	border-radius: 10%;
+	font-size: 13px;
+	background-color: rgb(67, 158, 42);
+	color: #fff;
+	line-height: 15px;
+}
+
+.rating-point-avg{
+	position: relative;
+	/* width: 100px; */
+	height: 350px;
+	margin-top: 100px;
+}
+
+.rating-circle{
+	position: relative;
+	background: #fff;
+	border: 8px solid #7ed6df;
+	width: 100px;
+	height: 100px;
+	border-radius: 50%;
+}
+
+.diemso{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+/* ----- TAB LICH CHIEU ----- */
+
+.tab-movie-date{
+	font-weight: bold;
+	/* font-family: 'Quicksand', sans-serif; */
+	color: #eb4d4b;
+}
+
+.tab-movie-session .list-time{
+	margin-left: 0;
+}
+
+.list-time a{
+	color: #000;
+}
+
+/* ----- TAB THONG TIN ----- */
+
+#thongtin{
+	padding: 10px 20px;
+}
+
+#thongtin .descr p{
+	font-size: 14px;
+	margin-top: 15px;
+}
+
+#thongtin .cottrai .row{
+	margin-bottom: 10px;
+}
+
+#thongtin .cottrai p{
+	font-size: 15px;
+	line-height: 23px;
+	padding-top: 1px;
+}
+
+
+/* ----- TAB REVIEW ----- */
+.review-form{
+	height: 50px;
+	margin: 20px 0;
+}
+
+.input-with-lable{
+	float: left;
+	height: 2.5rem;
+	width: 70%;
+	border: 1px solid #acacac61;
+	border-radius: 0.375rem;
+	background: transparent;
+	padding: 0 0.625rem;
+	letter-spacing: 0.0625rem;
+	font-size: 0.875rem;
+	color: #222;
+}
+
+.submit-review-btn{
+	display: inline-block;
+	text-align: center;
+	padding: 10px 15px;
+	font-size: 18px;
+	background-color: #f69595;
+	border-radius: 0.375rem     ;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+	cursor: pointer;
+	height: 2.5rem;
+	line-height: 1.5rem;
+	color: white;
+	width: 13%;
+}
+
+.user-review-name{
+	font-size: 15px;
+}
+.user-reviews {
+	margin: 20px 50px;
+	border: 1px solid #dadada;
+	padding: 7px;
+	border-radius: 0.375rem;
+}
+
+.user-review-content {
+	font-size: 13px;
+	margin-top: 10px;
+}
+
+.button-detail-movie{
+	margin-top: 15px;
+}
