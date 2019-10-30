@@ -221,6 +221,8 @@
 
 #thongtin .cottrai p{
 	font-size: 15px;
+	line-height: 23px;
+	padding-top: 1px;
 }
 
 
@@ -273,3 +275,6 @@
 	margin-top: 10px;
 }
 
+.button-detail-movie{
+	margin-top: 15px;
+}

@@ -106,7 +106,7 @@ $.getMovie = function () {
     $('.dataRateTy').append(dataMovie.rate_type);
     $('.dataName').append(dataMovie.movie_title);
     $('.dataInfoFra').append(dataMovie.duration + " - " + dataMovie.format_type);
-    $('.dataDiem').append(dataMovie.avg_point);
+    $('.dataDiem').append(dataMovie.avg_point + "/5");
     $('.dataDirec').append(dataMovie.director);
 
     let genres = JSON.parse(dataMovie.genres);

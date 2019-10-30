@@ -1,11 +1,12 @@
 let citySelect = 1
 
 $("document").ready(function () {
-   //  render tên user đang lỗi
+   //  render tên user
      $.renderUser();
 
+     //render dropdown city nav
     getAllCity();
-    initSlickTop();
+
 
     //lấy data phim lên tab đang chiếu - sắp chiếu
     getIndexMovieData();
@@ -16,6 +17,11 @@ $("document").ready(function () {
     selectlocationCity(citySelect);
     // getCinemaList(citySelect)
     // createDataSchedule(citySelect)
+
+    //render carousel
+    renderCarousel();
+    initSlickTop();
+
 
     renderMovieDataToDatVeBar();
     trailerBox();
@@ -167,7 +173,7 @@ function getCinemaList(citySelect) {
                 if (index == 0){
                     console.log(index)
                     $('#tab-locate-render').append('<button class="tablinks" onclick="openCity(event,cinema'+ itemData.cinemaId +')" id="defaultOpen">' +
-                        '<img src="https://via.placeholder.com/50x50" alt="">' +
+                        '<img src="https://s3img.vcdn.vn/123phim/2018/09/galaxy-pham-van-chi-15381059548289.jpg" style="width: 50px; height: 50px alt="">' +
                         '<div class="locate-detail">' +
                         '<div class="locate-name">' + itemData.name + '</div>' +
                         '<div class="locate-address">' + itemData.address + '</div>' +
@@ -176,7 +182,7 @@ function getCinemaList(citySelect) {
                         '</button>')
                 }else{
                     $('#tab-locate-render').append('<button class="tablinks" onclick="openCity(event,cinema'+ itemData.cinemaId +')">' +
-                        '<img src="https://via.placeholder.com/50x50" alt="">' +
+                        '<img src="https://s3img.vcdn.vn/123phim/2018/09/galaxy-pham-van-chi-15381059548289.jpg" style="width: 50px; height: 50px" alt="">' +
                         '<div class="locate-detail">' +
                         '<div class="locate-name">' + itemData.name + '</div>' +
                         '<div class="locate-address">' + itemData.address + '</div>' +
@@ -277,7 +283,7 @@ function getIndexMovieData(){
                     '<i class="far fa-play-circle"></i>' +
                     '</a></div>' +
                     '<div class="button-container datveBtn">' +
-                    '<a href="movie?id='+ itemData.movie_id +'" class="button">dat ngay</a>' +
+                    '<a href="movie?id='+ itemData.movie_id +'" class="button">xem chi tiết</a>' +
                     '</div>' +
                     '</div>' +
                     '</div>')
@@ -313,7 +319,7 @@ function getIndexMovieData(){
                     '<i class="far fa-play-circle"></i>' +
                     '</a></div>' +
                     '<div class="button-container datveBtn">' +
-                    '<a href="#" class="button">dat ngay</a>' +
+                    '<a href="#" class="button">đặt ngay</a>' +
                     '</div>' +
                     '</div>' +
                     '</div>')
@@ -445,6 +451,7 @@ let renderMovieDataToDatVeBar = function(){
     // $('#select-cinema').empty();
     // $('#select-date').empty();
     // $('#select-session').empty();
+    $('#select-movie').append('<option selected value="">Phim</option>')
     $.each(movieList, function (index, itemData) {
         $('#select-movie').append('<option value="' + itemData.movie_id +'">' + itemData.movie_title + '</option>')
     })
@@ -454,6 +461,7 @@ let renderCinemaDataToDatVeBar = function(movieid){
     $('#select-cinema').empty()
     // $('#select-date').empty();
     // $('#select-session').empty();
+    $('#select-cinema').append('<option selected value="">Rạp</option>')
     $.each(cinemaList, function (index, itemData) {
         $('#select-cinema').append('<option value="' + itemData.cinemaId +'">' + itemData.name + '</option>')
     })
@@ -462,6 +470,7 @@ let renderCinemaDataToDatVeBar = function(movieid){
 let renderDateDataToDatVeBar = function(data){
     $('#select-date').empty();
     // $('#select-session').empty();
+    $('#select-date').append('<option selected value="">Ngày chiếu</option>')
     $.each(data, function (index, itemData) {
         $('#select-date').append('<option value="' + itemData.id +'">' + itemData.datetime + '</option>')
     })
@@ -469,6 +478,7 @@ let renderDateDataToDatVeBar = function(data){
 
 let renderTimeDataToDatVeBar = function(data){
     $('#select-session').empty();
+    $('#select-session').append('<option selected value="">Xuất chiếu</option>')
     $.each(data, function (index, itemData) {
         $('#select-session').append('<option value="' + itemData.id +'">' + itemData.datetime + '</option>')
     })
@@ -508,5 +518,14 @@ $('#dat-ve').click(function () {
     let url = 'http://localhost:8080/datve?session=';
     window.location.href = url + timeid;
 })
+
+let renderCarousel = function () {
+    const placeholder = "https://via.placeholder.com/1440x600?text=Carousel+1440x600"
+
+    $.each(movieList, function (index, itemData) {
+        let hinh = itemData.movie_thumbnail===null? placeholder : itemData.movie_thumbnail;
+        $('#top-carousel').append('<img src="'+ hinh + '" alt="">')
+    })
+}
 
 
