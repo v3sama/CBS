@@ -18,9 +18,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -182,35 +186,57 @@ public class MovieController {
 			if (name != null && name.length() > 0) {
 				try {
 					// Tạo file tại Server.
-					File serverPath = new File("C:" + File.separator + File.separator + "Uploads" + File.separator
-							+ "images" + File.separator + "movies" + File.separator + movie.getId());
+					File serverPath = new File("D:" + File.separator + File.separator + "CBS" + File.separator + "src"
+							+ File.separator + "main" + File.separator + "resources" + File.separator + "static"
+							+ File.separator + "images" + File.separator + "movies" + File.separator + movie.getId());
 					if (!serverPath.exists())
 						serverPath.mkdirs();
-
-					// File serverFile = new File(uploadRootDir.getAbsolutePath() + File.separator +
-					// name);
-					File serverFile = new File(serverPath.getPath() + File.separator + name);
-
-					BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
-					stream.write(fileData.getBytes());
-					stream.close();
-					//
+					
+					File serverFile = new File(serverPath + File.separator + name);
+					name = getFileName(serverFile) + ".png";
+					serverFile = new File(serverPath + File.separator + name);
+					BufferedImage image = ImageIO.read(fileData.getInputStream());
+					BufferedImage resized;
+					if (i == 0)
+						resized = resize(image, 600, 1440);
+					else
+						resized = resize(image, 318, 215);
+					
+					ImageIO.write(resized, "png", serverFile);
+			
 					uploadedFiles.add(serverFile);
 					System.out.println("Write file: " + serverFile);
 					if (i == 0)
-						movie.setThumbnail(serverFile.getPath());
+						movie.setThumbnail("http://localhost:8080/images/movies/" + movie.getId() + "/" + name);
 					else
-						movie.setImage(serverFile.getPath());
+						movie.setImage("http://localhost:8080/images/movies/" + movie.getId() + "/" + name);
 					i++;
 				} catch (Exception e) {
 					System.out.println("Error Write file: " + name);
 					failedFiles.add(name);
 				}
 			}
+
 		}
 
 	}
 
+	private static BufferedImage resize(BufferedImage img, int height, int width) {
+		Image tmp = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+		BufferedImage resized = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		Graphics2D g2d = resized.createGraphics();
+		g2d.drawImage(tmp, 0, 0, null);
+		g2d.dispose();
+		return resized;
+	}
+
+	private static String getFileName(File file) {
+        String fileName = file.getName();
+        if(fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0)
+        return fileName.substring(0,fileName.lastIndexOf("."));
+        else return fileName;
+    }
+	
 	@RequestMapping(value = "/admin/delete/movie", method = RequestMethod.GET, params = { "movieId" })
 	public String deleteMovie(@RequestParam Long movieId, Model model) {
 		movieService.deleteMovieByID(movieId);

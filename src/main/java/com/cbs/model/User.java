@@ -47,6 +47,9 @@ public class User extends BaseEntity {
 	private String confirmationToken;
 
 	private boolean active;
+
+	private int count;
+
 	@Column(unique = true)
 	private String email;
 
@@ -59,7 +62,7 @@ public class User extends BaseEntity {
 
 	@OneToMany(mappedBy = "member")
 	private Set<CardInformation> cards;
-	
+
 	@OneToMany(mappedBy = "member")
 	private Set<SOrder> orders;
 

@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
 <head>
-<meta charset="utf-8" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="description" content="User account registration" />
-<link rel="icon" href="favicon.ico" />
-
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>Registration Page</title>
+<!-- Tell the browser to be responsive to screen width -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" th:href="@{/css/adminlte.min.css}" />
+<link rel="stylesheet" th:href="@{/css/all.min.css}" />
+<link rel="stylesheet" th:href="@{/css/jquery.dataTables.min.css}" />
+<link rel="stylesheet" th:href="@{/css/custom.css}" />
+<script th:src="@{/scripts/jquery.js}"></script>
+<script th:src="@{/scripts/bootstrap.bundle.min.js}"></script>
 
 <!-- Bootstrap core CSS -->
 <link
@@ -29,12 +32,18 @@
 				th:object="${user}" method="post" class="m-t" role="form"
 				data-toggle="validator">
 
+				<div th:if="${alreadyExitsPhone}" class="alert alert-success"
+					role="alert" th:text=${alreadyExitsPhone}></div>
+
+
+				<div th:if="${alreadyRegisteredMessage}" class="alert alert-success"
+					role="alert" th:text=${alreadyRegisteredMessage}></div>
+
 				<div th:if="${confirmationMessage}" class="alert alert-success"
 					role="alert" th:text=${confirmationMessage}></div>
 
 				<div th:if="${errorMessage}" class="alert alert-danger" role="alert"
 					th:text="${errorMessage}"></div>
-
 
 				<div th:if="${#fields.hasErrors('firstName')}"
 					th:errors="*{firstName}"
@@ -52,16 +61,27 @@
 						th:errors="*{firstName}" class="validation-message"></label> <span
 						class="input-group-addon"> <span
 						class="glyphicon glyphicon-user"></span>
-					</span> <input type="text" th:field="*{firstName}"
-						placeholder="First Name" class="form-control" required /> <span
+					</span> <input type="text" pattern=".{2,}" maxlength="30"
+						th:field="*{firstName}" placeholder="First Name"
+						class="form-control" required /> <span
 						class="glyphicon form-control-feedback" aria-hidden="true"></span>
 				</div>
 
 				<div class="form-group input-group has-feedback">
 					<span class="input-group-addon"> <span
 						class="glyphicon glyphicon-user"></span>
-					</span> <input type="text" th:field="*{lastName}" placeholder="Last Name"
+					</span> <input type="text" pattern=".{2,}" maxlength="30"
+						th:field="*{lastName}" placeholder="Last Name"
 						class="form-control" required /> <span
+						class="glyphicon form-control-feedback" aria-hidden="true"></span>
+				</div>
+
+				<div class="form-group input-group has-feedback">
+					<span class="input-group-addon"> <span
+						class="glyphicon glyphicon-phone"></span>
+					</span> <input type="tel" pattern="0[0-9]{9}" th:field="*{phone}"
+						placeholder="Phone" class="form-control"
+						data-error="Phone does not match the pattern" required /> <span
 						class="glyphicon form-control-feedback" aria-hidden="true"></span>
 				</div>
 

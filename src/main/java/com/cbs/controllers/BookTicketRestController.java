@@ -316,8 +316,8 @@ public class BookTicketRestController {
 					.getPrincipal();
 			order.setStatus("Completed");
 			payment.setPayment_time(LocalDateTime.now());
-			CardInformation card = new CardInformation(loggedInUser.getUser());
-			// card.setBank(checkoutDTO.getCardinfo().get(0));
+			CardInformation card = new CardInformation();
+			card.setMember(loggedInUser.getUser());
 			card.setCard_no(checkoutDTO.getCardinfo().get(0));
 			String cardDateStr = checkoutDTO.getCardinfo().get(1);
 			LocalDate cardDate = LocalDate.of(Integer.parseInt(cardDateStr.substring(6, 9)),
@@ -333,7 +333,7 @@ public class BookTicketRestController {
 		paymentService.savePayment(payment);
 		order.setPayment(payment);
 		orderService.addOrder(order);
-		// this.sendEmailOrderSuccess(order.getId());
+		 this.sendEmailOrderSuccess(order.getId());
 		return "" + orderid;
 	}
 

@@ -59,7 +59,7 @@ public class MovieDetailRestController {
         movieIndexClientDTO.setTrailer_link(movie.getTrailer_link());
         movieIndexClientDTO.setMovie_thumbnail(movie.getThumbnail());
         movieIndexClientDTO.setDuration(String.valueOf(movie.getDuration()));
-        movieIndexClientDTO.setAvg_point(String.valueOf(movie.getAvg_user_rating_star()));
+        movieIndexClientDTO.setAvg_point(String.format("%.1f",movie.getAvg_user_rating_star()));
         movieIndexClientDTO.setMovie_id(movie.getId());
         movieIndexClientDTO.setRate_type(movie.getRating_type());
         movieIndexClientDTO.setDate_release(formatter.format(movie.getDate_release()));

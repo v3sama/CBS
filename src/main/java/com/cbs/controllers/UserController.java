@@ -13,6 +13,8 @@ import com.cbs.services.UserService;
 
 import org.hibernate.sql.Update;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -88,7 +90,8 @@ public class UserController {
 		}
 
 		user.setActive(true);
-		user.setPassword("123456");
+		if(user.getId() == 0)
+			user.setPassword("cbs123456");
 		userService.add(user);
 		return "redirect:/admin/user";
 	}
@@ -138,9 +141,7 @@ public class UserController {
 		if (bindingResult.hasErrors()) {
 			return "";
 		}
-		loggedInUser = (CustomUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		user = loggedInUser.getUser();
-
+		
 		user.setFirstName(updateForm.getFirstName());
 		user.setLastName(updateForm.getLastName());
 		user.setPhone(updateForm.getPhone());
@@ -171,6 +172,8 @@ public class UserController {
 		loggedInUser = (CustomUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		user = loggedInUser.getUser();
 
+		if(loggedInUser.getAuthorities().stream().findFirst().get().equals(new SimpleGrantedAuthority("ADMIN")))
+			return "/admin/index";
 		UpdateUserDTO updateForm = new UpdateUserDTO();
 		updateForm.setEmail(user.getEmail());
 		updateForm.setFirstName(user.getFirstName());

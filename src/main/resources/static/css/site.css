@@ -44,6 +44,9 @@
 	/* background-color: rgb(226, 115, 115); */
 	transform: translate(-50%, -50%);
 	margin: auto;
+	border-top-left-radius: 20px;
+	border-top-right-radius: 20px;
+	box-shadow: 0 0 15px rgb(0, 0, 0, 0.3)
 }
 
 .select-box {
@@ -53,7 +56,7 @@
 }
 
 .select-selected {
-	background-color: DodgerBlue;
+	/*background-color: DodgerBlue;*/
 }
 
 .select-box:first-of-type {
@@ -68,35 +71,44 @@
 
 .small-block-30 {
 	width: 30%;
-	background-color: aquamarine
+	/*background-color: aquamarine*/
 }
 
-.select-box select {
-	display: none;
-}
+/*.select-box select {*/
+/*	display: none;*/
+/*}*/
 
 .small-block {
 	width: calc(70%/ 4);
 }
 
 .small-block:nth-last-of-type(0) {
-	background-color: rgb(57, 57, 75);
+	/*background-color: rgb(57, 57, 75);*/
 }
 
 .small-block:nth-last-of-type(1) {
-	background-color: rgb(124, 124, 231);
+	/*background-color: rgb(124, 124, 231);*/
 }
 
 .small-block:nth-last-of-type(2) {
-	background-color: rgb(229, 231, 124);
+	/*background-color: rgb(229, 231, 124);*/
 }
 
 .small-block:nth-last-of-type(3) {
-	background-color: rgb(202, 97, 228);
+	/*background-color: rgb(202, 97, 228);*/
 }
 
 .small-block:nth-last-of-type(4) {
-	background-color: rgb(226, 115, 115);
+	/*background-color: rgb(226, 115, 115);*/
+}
+
+.btn-datve {
+	background-color: #fff;
+	line-height: 80px;
+	font-weight: bold;
+	cursor: pointer;
+	text-align: center;
+	text-transform: uppercase;
 }
 
 /* -------------------- */
@@ -134,7 +146,7 @@
 .tab-slider--tabs:after {
 	content: "";
 	width: 50%;
-	background: #b2bec3;
+	background: #39bda7;
 	height: 100%;
 	position: absolute;
 	top: 0;
@@ -293,9 +305,9 @@
 }
 
 .thumbnail img {
-	width: auto;
-	height: auto;
-	transition: filter 0.5s;
+width: auto;
+height: auto;
+transition: filter 0.5s;
 }
 
 .blurImg {
@@ -366,12 +378,15 @@
 /* ---button--- */
 .button {
 	display: inline-block;
-	padding: 12px 65px;
+	padding: 10px 58px;
 	border: 1px solid #4f4f4f;
 	border-radius: 4px;
 	transition: all 0.2s ease-in;
 	position: relative;
 	overflow: hidden;
+	text-transform: uppercase;
+	font-size: 13px;
+	font-weight: bold;
 }
 
 .button:before {
