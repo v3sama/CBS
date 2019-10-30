@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>Screen management</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=2" />
+<link rel="stylesheet" th:href="@{/css/adminlte.min.css}" />
+<link rel="stylesheet" th:href="@{/css/all.min.css}" />
+<link rel="stylesheet" th:href="@{/css/jquery.dataTables.min.css}" />
+<script th:src="@{/scripts/jquery.js}"></script>
+<script th:src="@{/scripts/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/scripts/jquery.dataTables.min.js}"></script>
+
+</head>
+
+<body>
+	<nav th:replace="admin/layout :: admin-nav"></nav>
+
+	<aside th:replace="admin/layout :: admin-sidebar"></aside>
+
+	<div class="content-wrapper">
+		<!-- Content Header (Page header) -->
+		<div class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-6">
+						<h1 class="m-0 text-dark">Screen Management</h1>
+						<a href="/admin/add/screen.html" th:href="@{/admin/add/screen}">
+							<button type="button" class="btn btn-success">Create new
+							</button>
+						</a>
+					</div>
+					<!-- /.col -->
+					<div class="col-sm-6">
+						<ol class="breadcrumb float-sm-right">
+							<li class="breadcrumb-item"><a href="#">Home</a></li>
+							<li class="breadcrumb-item active">Screen Management</li>
+						</ol>
+					</div>
+					<!-- /.col -->
+				</div>
+				<!-- /.row -->
+			</div>
+			<!-- /.container-fluid -->
+		</div>
+		<!-- /.content-header -->
+
+		<!-- Main content -->
+		<div class="content">
+			<div class="container-fluid">
+				<div class="table-responsive" align="center">
+					<table id="dataTable" class="display" style="width: 100%">
+						<thead>
+							<tr>
+								<th>Title</th>
+								<th>Description</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tfoot>
+							<tr>
+								<th></th>
+								<th></th>
+								<th></th>
+							</tr>
+						</tfoot>
+						<tbody>
+							<th:block th:each="screen : ${screens}">
+
+								<tr>
+									<td th:text="${screen.title}"></td>
+									<td th:text="${screen.description}"></td>
+									<td><a th:href="@{/admin/edit/screen(id= ${screen.id})}">
+											<button type="button" class="btn btn-info">Edit</button>
+									</a> 
+<!-- 									<a th:href="@{/admin/delete/screen(id = ${screen.id})}"> -->
+<!-- 											<button type="button" class="btn btn-danger">Delete</button> -->
+<!-- 									</a> -->
+									</td>
+								</tr>
+							</th:block>
+						</tbody>
+					</table>
+				</div>
+
+
+			</div>
+		</div>
+		<!-- /.content -->
+	</div>
+
+	<div class="container text-center"></div>
+
+	<script>
+		$(document).ready(function() {
+			$('#dataTable').DataTable();
+		});
+	</script>
+
+</body>
+</html>

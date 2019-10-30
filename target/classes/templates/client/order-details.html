@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+<link rel="stylesheet" th:href="@{/css/adminlte.min.css}" />
+<link rel="stylesheet" th:href="@{/css/all.min.css}" />
+<link rel="stylesheet" th:href="@{/css/default-site.css}" />
+<script th:src="@{/scripts/jquery.min.js}"></script>
+<script th:src="@{/scripts/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/scripts/custom.js}"></script>
+
+<title>Profile</title>
+<style>
+footer {
+	background-color: #555;
+		color: white;
+	}
+	
+	footer.a {
+		color: white;
+	}
+	
+	.container-fluid {
+		padding-top: 50px;
+	}
+	.row {
+		margin: 5px;
+	}
+</style>
+</head>
+
+<body>
+	<Nav th:fragment="client-nav"
+		th:replace="client/fragments/navbar :: client-nav"></Nav>
+
+	<div class="container-fluid">
+		<!-- Main content -->
+		<div class="content">
+			<div class="container text-center">
+				<div class="card card-info">
+
+					<div class="card-header">
+						<h3 class="card-title">Order details</h3>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-2">Movie</label>
+						<div class="col-sm-4"
+							th:text="${tickets[0].movieSession.movie.title}"></div>
+						<label class="col-sm-2">Time</label>
+						<div class="col-sm-4" th:text="${tickets[0].movieSession.time}">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-2">Cinema</label>
+						<div class="col-sm-4"
+							th:text="${tickets[0].movieSession.cinemaScreen.cinema.title}">
+						</div>
+						<label class="col-sm-2">Screen</label>
+						<div class="col-sm-4"
+							th:text="${tickets[0].movieSession.cinemaScreen.screen.title}">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-2">Total</label>
+						<div class="col-sm-4 amount" th:text="${order.total}"></div>
+						<label class="col-sm-2">Status</label>
+						<div class="col-sm-4" th:text="${order.status}"></div>
+
+					</div>
+					<div class="table-responsive" align="center">
+						<table class="table table-hover" style="width: 100%">
+							<thead>
+								<tr>
+									<th>Ticket</th>
+									<th>VIP Ticket</th>
+									<th>Price</th>
+								</tr>
+							</thead>
+
+							<tbody>
+								<th:block th:each="ticket : ${tickets}">
+									<tr>
+										<td th:text="${ticket.seat.row.title + ticket.seat.id }">
+
+										</td>
+										<td><input type="checkbox"
+											th:checked="${ticket.price.isVIP}" disabled /></td>
+										<td th:text="${ticket.amount}" class="amount"></td>
+
+									</tr>
+								</th:block>
+							</tbody>
+						</table>
+					</div>
+
+					<!-- form start -->
+					<div th:if="${order.status} == 'Pending'">
+						<form class="form-horizontal" data-toggle="validator" role="form"
+							action="#" th:action="@{/admin/pay/order}" th:object="${card}"
+							method="post" enctype="multipart/form-data">
+							<div class="card card-info">
+								<div class="card-header">
+									<h3 class="card-title">Payment information</h3>
+								</div>
+								<div class="card-body">
+									<div>
+										<input type="hidden" th:value="${card.id}" th:field="*{id}" />
+										<input type="hidden" th:value="${order.member.id}"
+											th:field="*{member}" /> <input type="hidden"
+											th:value="${order.id}" name="orderId" /> 
+										<div id="content" class="form-group row" >
+											<div class="col-sm-4">
+												<input type="number" class="form-control"
+													th:field="*{card_no}" placeholder="card number" />
+											</div>
+											<div class="col-sm-3">
+												<input type="date" class="form-control"
+													placeholder="date expire" th:field="*{card_date}" />
+											</div>
+											<div class="col-sm-2">
+												<input type="password" class="form-control"
+													placeholder="ccv" name="card-ccv" />
+											</div>
+											<div class="col-sm-3">
+												<input type="text" class="form-control" placeholder="bank"
+													th:field="*{bank}" />
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- /.card-body -->
+								<div class="card-footer">
+									<button type="submit" class="btn btn-success">Pay</button>
+								</div>
+							</div>
+							
+						</form>
+						
+					</div>
+					<div class="card-footer">
+									<button type="button" class="btn btn-warning"
+										onclick="window.location.href='/profile'">Return
+										to list</button>
+								</div>
+							<!-- /.card-footer -->
+				</div>
+			</div>
+		</div>
+		<!-- /.row -->
+	</div>
+
+
+	<script>
+
+		$(document).ready(function() {
+	
+		$.getUser = function() {
+								let dataUser
+								$
+										.ajax({
+											type : "get",
+											url : "http://localhost:8080/api/UserSession",
+											async : false,
+											dataType : "json",
+											success : function(data) {
+												dataUser = data
+											}
+										})
+								return dataUser;
+							}
+
+							$.renderUser = function() {
+								dataUser = $.getUser();
+								if (dataUser !== undefined) {
+									$('#user-acc-name').empty();
+									$('#user-acc-name').append(dataUser.name);
+									$('#user-acc-link')
+											.attr("href", "/profile");
+									$('.nav-right')
+											.prepend(
+													function() {
+														return '<a style="float: right;" href=\"/logout\">Logout</a>';
+													})
+								}
+							}
+							$(".amount").each(function() {
+								formatNumber(this);
+							});
+						
+						});
+	</script>
+
+	<footer th:fragment="client-footer"
+		th:replace="client/fragments/footer :: client-footer"></footer>
+
+	<script th:src="@{/scripts/jquery.min.js}"></script>
+	<script th:src="@{/scripts/jquery-ui.min.js}"></script>
+
+	<!-- <script src="/resource/js/select2.min.js"></script> -->
+	<script type="text/javascript" th:src="@{/scripts/slick.js}"></script>
+	<script type="text/javascript" th:src="@{/scripts/movie-detail.js}"></script>
+	<script type="text/javascript" th:src="@{/scripts/selectize.js}"></script>
+</body>
+
+</html>
