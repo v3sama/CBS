@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+<link rel="stylesheet" th:href="@{/css/adminlte.min.css}" />
+<link rel="stylesheet" th:href="@{/css/all.min.css}" />
+<link rel="stylesheet" th:href="@{/css/default-site.css}" />
+<script th:src="@{/scripts/jquery.min.js}"></script>
+<script th:src="@{/scripts/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/scripts/custom.js}"></script>
+
+<title>Cinema Detai</title>
+<style>
+footer {
+	background-color: #555;
+		color: white;
+	}
+	
+	footer.a {
+		color: white;
+	}
+	
+	.container-fluid {
+		padding-top: 50px;
+	}
+</style>
+</head>
+
+<body>
+	<Nav th:fragment="client-nav"
+		th:replace="client/fragments/navbar :: client-nav"></Nav>
+
+
+		<!-- <div class="cinemas-list">
+							<ul>
+									<li class="cgv_city_1 current" style="">
+										<span id="cgv_site_004" onclick="site('https://www.cgv.vn/default/cinox/site/cgv-hung-vuong-plaza',this)">CGV Hùng Vương Plaza</span>
+									</li>
+									<li class="cgv_city_1" style="">
+										<span id="cgv_site_008" onclick="site('https://www.cgv.vn/default/cinox/site/cgv-crescent-mall',this)">CGV Crescent Mall</span>
+									</li>
+							
+									
+									
+							</ul>
+		</div> -->
+		
+			<!-- Main content -->
+		<div class="content">
+			<div class="container-fluid">
+
+								<tr>
+									<td th:text="${cinema1.title}"></td>
+									<td th:text="${cinema1.address}"></td>
+									
+									<td>
+										<div class="mapouter"><div class="gmap_canvas"><iframe width="600" height="500" id="gmap_canvas" 
+										src="https://maps.google.com/maps?q=${cinema1.address}&t=&z=13&ie=UTF8&iwloc=&output=embed" 
+										frameborder="0" scrolling="no" marginheight="0" marginwidth="0">
+										</iframe>
+										<a href="https://usave.co.uk">usave</a>
+										</div>
+										<style>.mapouter{position:relative;text-align:right;height:500px;width:600px;}.gmap_canvas {overflow:hidden;background:none!important;height:500px;width:600px;}</style></div>
+									</td> 
+									<td th:text="${cinema1.phone}"></td>
+									<td th:text="${cinema1.province.name}"></td>
+									
+
+									
+								</tr>
+			</div>
+		</div>
+
+	<script>
+		$(document)
+				.ready(
+						function() {
+							$.getUser = function() {
+								let dataUser
+								$
+										.ajax({
+											type : "get",
+											url : "http://localhost:8080/api/UserSession",
+											async : false,
+											dataType : "json",
+											success : function(data) {
+												dataUser = data
+											}
+										})
+								return dataUser;
+							}
+
+							$.renderUser = function() {
+								dataUser = $.getUser();
+								if (dataUser !== undefined) {
+									$('#user-acc-name').empty();
+									$('#user-acc-name').append(dataUser.name);
+									$('#user-acc-link')
+											.attr("href", "/profile");
+									$('.nav-right')
+											.prepend(
+													function() {
+														return '<a style="float: right;" href=\"/logout\">Logout</a>';
+													})
+								}
+							};
+							$(".amount").each(function() {
+								formatNumber(this);
+							});
+							
+						});
+		
+	</script>
+
+	<footer th:fragment="client-footer"
+		th:replace="client/fragments/footer :: client-footer"></footer>
+
+	<script th:src="@{/scripts/jquery.min.js}"></script>
+	<script th:src="@{/scripts/jquery-ui.min.js}"></script>
+
+	<!-- <script src="/resource/js/select2.min.js"></script> -->
+	<script type="text/javascript" th:src="@{/scripts/slick.js}"></script>
+	<script type="text/javascript" th:src="@{/scripts/movie-detail.js}"></script>
+	<script type="text/javascript" th:src="@{/scripts/selectize.js}"></script>
+</body>
+
+</html>

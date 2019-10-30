@@ -153,5 +153,14 @@ public class CinemaController {
         return "/admin/add/cinema";
     }
 
+//click cinema
+    @RequestMapping(value = "/client/cinema-detail", method = RequestMethod.GET, params = {"id"})
+    public String showMapCinema(@RequestParam long id, Model model) {
+    	model.addAttribute("cinema1", cinemaService.getCinemaByID(id));
+        return "/client/cinema-detail";
+    }
+    
+    
+    
 }
 
