@@ -7,13 +7,10 @@ import com.cbs.model.Discount;
 import com.cbs.model.SOrder;
 import com.cbs.model.User;
 import com.cbs.services.DiscountService;
-import com.cbs.services.OrderService;
 import com.cbs.services.RoleService;
 import com.cbs.services.UserService;
 
-import org.hibernate.sql.Update;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,8 +22,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
-import java.util.List;
 import java.util.Set;
 
 import javax.validation.Valid;
@@ -85,15 +82,34 @@ public class UserController {
 
 	@RequestMapping(value = "/admin/add/user", method = RequestMethod.POST)
 	public String addUser(@Valid User user, BindingResult bindingResult, Model model) {
-		if (bindingResult.hasErrors()) {
-			return "redirect:/admin/add/user";
+
+		User phoneExists = userService.findByPhone(user.getPhone());
+		User userExists = userService.findByEmail(user.getEmail());
+
+		if (userExists != null) {
+			model.addAttribute("alreadyRegisteredMessage",
+					"Oops!  There is already a user registered with the email provided.");
+			bindingResult.reject("email");
+			return "/admin/add/user";
+		}
+		if (phoneExists != null) {
+			model.addAttribute("alreadyExitsPhone",
+					"Oops!  There is already a user registered with the phone provided.");
+			bindingResult.reject("phone");
+			return "/admin/add/user";
+
 		}
 
-		user.setActive(true);
-		if(user.getId() == 0)
+		if (bindingResult.hasErrors()) {
+			return "/admin/add/user";
+		} else {
+
 			user.setPassword("cbs123456");
-		userService.add(user);
-		return "redirect:/admin/user";
+			user.setActive(true);
+			userService.add(user);
+			return "redirect:/admin/user";
+		}
+
 	}
 
 	@RequestMapping(value = "/admin/deactivate/user", method = RequestMethod.GET)
@@ -141,12 +157,11 @@ public class UserController {
 		if (bindingResult.hasErrors()) {
 			return "";
 		}
-		
+
 		user.setFirstName(updateForm.getFirstName());
 		user.setLastName(updateForm.getLastName());
 		user.setPhone(updateForm.getPhone());
-		
-		
+
 		userService.update(user);
 		return "redirect:/profile";
 	}
@@ -158,7 +173,6 @@ public class UserController {
 		}
 		loggedInUser = (CustomUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-		
 		if (BCrypt.checkpw(pwForm.getOldPassword(), user.getPassword())
 				&& pwForm.getNewPassword().equals(pwForm.getCfPassword())) {
 			user.setPassword(pwForm.getNewPassword());
@@ -172,7 +186,7 @@ public class UserController {
 		loggedInUser = (CustomUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		user = loggedInUser.getUser();
 
-		if(loggedInUser.getAuthorities().stream().findFirst().get().equals(new SimpleGrantedAuthority("ADMIN")))
+		if (loggedInUser.getAuthorities().stream().findFirst().get().equals(new SimpleGrantedAuthority("ADMIN")))
 			return "/admin/index";
 		UpdateUserDTO updateForm = new UpdateUserDTO();
 		updateForm.setEmail(user.getEmail());
@@ -180,12 +194,12 @@ public class UserController {
 		updateForm.setLastName(user.getLastName());
 		updateForm.setPhone(user.getPhone());
 		updateForm.setId(user.getId());
-		
+
 		model.addAttribute("updateForm", updateForm);
 		ChangePasswordDTO pwForm = new ChangePasswordDTO();
 		pwForm.setId(user.getId());
 		model.addAttribute("pwForm", pwForm);
-		
+
 		Set<SOrder> orders = userService.findById(user.getId()).getOrders();
 		model.addAttribute("orders", orders);
 		return "/client/profile";
