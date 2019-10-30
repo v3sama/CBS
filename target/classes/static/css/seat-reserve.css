@@ -6,7 +6,7 @@
 .topbar {
 	position: absolute;
 	height: 50px;
-	width: 70%;
+	width: 100%;
 	border-bottom: 1px solid #fff;
 	box-shadow: 0 0 15px rgb(0, 0, 0, 0.3);
 	background-color: rgba(255, 255, 255, 0.8);

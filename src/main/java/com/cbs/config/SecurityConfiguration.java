@@ -98,8 +98,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 		// Các trang không yêu cầu login
 
-		http.authorizeRequests().antMatchers("/admin/**", "/admin").hasAuthority("ADMIN").antMatchers("/profile/**",
-				"/change-password", "/update-profile", "/orders/**", "/datve", "/confirmVe", "/booksuccess")
+		http.authorizeRequests()
+				.antMatchers("/admin/**", "/admin","/profile").hasAuthority("ADMIN")
+				.antMatchers("/profile**","/profile","/change-password", "/update-profile", "/orders/**", "/datve", "/confirmVe", "/booksuccess")
 				.hasAuthority("MEMBER").antMatchers("/**").permitAll();
 
 		// Khi người dùng đã login, với vai trò XX.
