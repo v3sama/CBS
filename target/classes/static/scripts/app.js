@@ -177,7 +177,7 @@ function getCinemaList(citySelect) {
                         '<div class="locate-detail">' +
                         '<div class="locate-name">' + itemData.name + '</div>' +
                         '<div class="locate-address">' + itemData.address + '</div>' +
-                        '<a href=""><i class="fas fa-long-arrow-alt-right"></i></a>' +
+                        '<a href="http://localhost:8080/client/cinema-detail?id='+ itemData.cinemaId +'"><i class="fas fa-long-arrow-alt-right"></i></a>' +
                         '</div>' +
                         '</button>')
                 }else{
@@ -186,7 +186,7 @@ function getCinemaList(citySelect) {
                         '<div class="locate-detail">' +
                         '<div class="locate-name">' + itemData.name + '</div>' +
                         '<div class="locate-address">' + itemData.address + '</div>' +
-                        '<a href=""><i class="fas fa-long-arrow-alt-right"></i></a>' +
+                        '<a href="http://localhost:8080/client/cinema-detail?id='+ itemData.cinemaId +'"><i class="fas fa-long-arrow-alt-right"></i></a>' +
                         '</div>' +
                         '</button>')
                 }
