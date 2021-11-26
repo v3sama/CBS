@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>AdminLTE 3 | Log in</title>
+<title>CBS| Log in</title>
 <!-- Tell the browser to be responsive to screen width -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" th:href="@{/css/adminlte.min.css}" />
@@ -24,8 +24,9 @@
 		<!-- /.login-logo -->
 		<div class="card">
 			<div class="card-body login-card-body">
-				<p class="login-box-msg">Sign in to start enjoying the best movie in the world</p>
-				<p th:text="${error}" style="color:red;font-weight:bold"></p>
+				<p class="login-box-msg">Sign in to start enjoying the best
+					movie in the world</p>
+				<p th:text="${error}" style="color: red; font-weight: bold"></p>
 				<form name='f' th:action="@{/j_spring_security_check}" method="post">
 					<div class="input-group mb-3">
 						<input type="text" class="form-control" placeholder="Username"
@@ -60,7 +61,7 @@
 						<!-- /.col -->
 					</div>
 				</form>
-<!-- 
+				<!-- 
 				<div class="social-auth-links text-center mb-3">
 					<p>- OR -</p>
 					<a href="#" class="btn btn-block btn-primary"> <i

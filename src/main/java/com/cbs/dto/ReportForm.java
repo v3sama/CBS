@@ -12,14 +12,15 @@ import lombok.Setter;
 public class ReportForm {
 	private Long provinceId;
 	private Long cinemaId;
-	private Long memberId;
+	private Long customerId;
 	private Long movieId;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate fromDate;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate toDate;
-	private Boolean showDetail;
-	private Boolean showTotal;
-	private Boolean showSeatType;
 	
+	private Boolean sumByCustomer;
+	private Boolean sumByOrder;
+	private Boolean sumByCinema;
+	private Boolean sumByMovie;
 }

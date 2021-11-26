@@ -51,4 +51,7 @@ public class ProvinceService {
 
 	}
 
+	public List<Province> findAllOrderByID(){
+		return provinceRepository.findAllByOrderByIdAsc();
+	}
 }

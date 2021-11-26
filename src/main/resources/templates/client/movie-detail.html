@@ -12,65 +12,43 @@
 <link rel="stylesheet" th:href="@{/css/site.css}">
 <link rel="stylesheet" th:href="@{/css/default-site.css}">
 <link rel="stylesheet" th:href="@{/css/movie-detail.css}">
-<link
-	href="https://fonts.googleapis.com/css?family=Quicksand&display=swap"
-	rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Quicksand&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" type="text/css" th:href="@{/css/slick.css}" />
 <link rel="stylesheet" type="text/css" th:href="@{/css/slick-theme.css}" />
-<link rel="stylesheet" th:href="@{/css/selectize.css}">
+<link rel="stylesheet" th:href="@{/css/selectize.css}" />
 <link rel="stylesheet" th:href="@{/css/fontawesome/css/all.min.css}" />
 <title>Document</title>
 </head>
 
 <body>
-	<Nav>
-		<div class="nav-bar clearfix">
-			<div class="logo">
-				<img src="" alt="logo">
-			</div>
-			<ul class="nav-list">
-				<li><a href="#nhaylichchieu">Lịch Chiếu</a></li>
-				<li><a href="#nhaycumrap">Cụm Rạp</a></li>
-				<li>Tin Tức</li>
-			</ul>
-			<div class="nav-right">
-				<div class="account">
-					<a href="#"> <i class="icon-signin"></i>
-						<p>Đăng nhập</p>
-					</a>
-				</div>
-				<div class="locate">
-					<i class="icon-locate"></i>
-					<div class="dropdown">Hồ Chí Minh</div>
-				</div>
-			</div>
-		</div>
-	</Nav>
+<Nav th:fragment="client-nav" th:replace="client/fragments/navbar :: client-nav"></Nav>
+
 	<section class="section-movie-detail">
 		<div class="wrapper">
 			<div class="mainDetail">
 				<div class="row">
 					<div class="col span-2-of-10">
-						<img src="https://via.placeholder.com/215x318" alt="">
+						<img id="movie-img" src="" alt="">
 
 					</div>
 					<div class="col span-5-of-10 mainInfo">
 						<div>
-							<span class="dateRe">18.10.2019</span>
+							<span class="dateRe dataRe"></span>
 						</div>
 						<div class="rateAndName">
-							<span class="rateTy">R</span> <span class="nameMo">'Dì'
-								Ơi, Đừng Có Bồ - Love and Run</span>
+							<span class="rateTy dataRateTy"></span> <span class="nameMo dataName"></span>
 						</div>
 						<div>
-							<span class="infoFra">102 phút - 0 IMDb - 2D/Digital</span>
+							<span class="infoFra dataInfoFra"></span>
 						</div>
-						<button>Mua ve</button>
+						<div class="button-detail-movie" >
+							<a class="button" href="http://localhost:8080/#nhaycumrap">đặt vé</a>
+						</div>
 					</div>
 					<div class="col span-3-of-10 rating-point-avg">
 						<div class="rating-circle">
-							<span class="diemso">8.0</span>
+							<span class="diemso dataDiem"></span>
 						</div>
 					</div>
 
@@ -85,18 +63,16 @@
 	<section id="nhaylichchieu" class="section-movie">
 		<div class="row">
 			<div class="tabset">
-				<!-- Tab 1 -->
-				<input type="radio" name="tabset" id="tab1"
-					aria-controls="lichchieu" checked> <label class="mg20"
-					for="tab1">Lich Chieu</label>
-				<!-- Tab 2 -->
-				<input type="radio" name="tabset" id="tab2" aria-controls="thongtin">
-				<label for="tab2">Thong Tin</label>
+<!--				<input type="radio" name="tabset" id="tab1" aria-controls="lichchieu" checked>-->
+<!--				<label class="mg20" for="tab1">Lich Chieu</label>-->
+				<input type="radio" checked name="tabset" id="tab2" aria-controls="thongtin">
+				<label for="tab2" >Thông tin </label>
 				<!-- Tab 3 -->
 				<input type="radio" name="tabset" id="tab3" aria-controls="review">
-				<label for="tab3">Danh Gia</label>
+				<label for="tab3">Đánh giá</label>
 
 				<div class="tab-panels">
+
 					<section id="lichchieu" class="tab-panel">
 						<section id="nhaycumrap" class="section-time">
 							<div class="row">
@@ -105,7 +81,7 @@
 										id="defaultOpen">
 										<img src="https://via.placeholder.com/50x50" alt="">
 										<div class="locate-detail">
-											<div class="locate-name">CGV Vincom Thu Duc</div>
+											<div class="locate-name"> CBS Trần Quang </div>
 											<div class="locate-address">Tầng 5, TTTM Vincom Thủ
 												Đức, 216 Võ Văn Ngân, Phường Bình Thọ, Quận Thủ Đức</div>
 											<a href=""><i class="fas fa-long-arrow-alt-right"></i></a>
@@ -146,181 +122,232 @@
 										</div>
 									</button>
 
-									<button class="tablinks" onclick="openCity(event, 'Tokyo')">
-										<img src="https://via.placeholder.com/50x50" alt="">
-										<div class="locate-detail">
-											<div class="locate-name">CGV Satra Củ Chi</div>
-											<div class="locate-address">Tầng 3, TTTM Satra Củ Chi,
-												Số 1239, Tỉnh Lộ 8, Ấp Thạnh An, Xã Trung An, Huyện Củ Chi,
-												TP.HCM</div>
-											<a href=""><i class="fas fa-long-arrow-alt-right"></i></a>
-										</div>
-									</button>
-									<button class="tablinks" onclick="openCity(event, 'Tokyo')">
-										<img src="https://via.placeholder.com/50x50" alt="">
-										<div class="locate-detail">
-											<div class="locate-name">CGV Parkson Đồng Khởi</div>
-											<div class="locate-address">Tầng 5, số 35 bis-45, đường
-												Lê Thánh Tôn, Phường Bến Nghé, Quận 1, Tp. Hồ Chí Minh, Việt
-												Nam</div>
-											<a href=""><i class="fas fa-long-arrow-alt-right"></i></a>
-										</div>
-									</button>
-								</div>
+<!--					<section id="lichchieu" class="tab-panel">-->
+<!--						<section id="nhaycumrap" class="section-time">-->
+<!--							<div class="row">-->
+<!--								<div class="tab-loc">-->
+<!--									<button class="tablinks" onclick="openCity(event, 'London')"-->
+<!--										id="defaultOpen">-->
+<!--										<img src="https://via.placeholder.com/50x50" alt="">-->
+<!--										<div class="locate-detail">-->
+<!--											<div class="locate-name">CGV Vincom Thu Duc</div>-->
+<!--											<div class="locate-address">Tầng 5, TTTM Vincom Thủ-->
+<!--												Đức, 216 Võ Văn Ngân, Phường Bình Thọ, Quận Thủ Đức</div>-->
+<!--											<a href=""><i class="fas fa-long-arrow-alt-right"></i></a>-->
+<!--										</div>-->
+<!--									</button>-->
+<!--									<button class="tablinks" onclick="openCity(event, 'Paris')">-->
+<!--										<img src="https://via.placeholder.com/50x50" alt="">-->
+<!--										<div class="locate-detail">-->
+<!--											<div class="locate-name">CGV Hoang Van Thu</div>-->
+<!--											<div class="locate-address">Tầng 1 và 2, Gala Center,-->
+<!--												số 415, Hoàng Văn Thụ, Phường 2, Quận Tân Bình, TPHCM</div>-->
+<!--											<a href=""><i class="fas fa-long-arrow-alt-right"></i></a>-->
+<!--										</div>-->
+<!--									</button>-->
+<!--									<button class="tablinks" onclick="openCity(event, 'Tokyo')">-->
+<!--										<img src="https://via.placeholder.com/50x50" alt="">-->
+<!--										<div class="locate-detail">-->
+<!--											<div class="locate-name">CGV Sư Vạn Hạnh</div>-->
+<!--											<div class="locate-address">11 tran hung dao Quan 3</div>-->
+<!--											<a href=""><i class="fas fa-long-arrow-alt-right"></i></a>-->
+<!--										</div>-->
+<!--									</button>-->
+<!--									<button class="tablinks" onclick="openCity(event, 'Tokyo')">-->
+<!--										<img src="https://via.placeholder.com/50x50" alt="">-->
+<!--										<div class="locate-detail">-->
+<!--											<div class="locate-name">CGV IMC Trần Quang Khải</div>-->
+<!--											<div class="locate-address">Tầng 2 & 3, Trung Tâm Văn-->
+<!--												Hóa Đa Năng, 62 Trần Quang Khải, P. Tân Định, Q. 1</div>-->
+<!--											<a href=""><i class="fas fa-long-arrow-alt-right"></i></a>-->
+<!--										</div>-->
+<!--									</button>-->
+<!--									<button class="tablinks" onclick="openCity(event, 'Tokyo')">-->
+<!--										<img src="https://via.placeholder.com/50x50" alt="">-->
+<!--										<div class="locate-detail">-->
+<!--											<div class="locate-name">CGV Vincom Center Landmark 81</div>-->
+<!--											<div class="locate-address">11 tran hung dao Quan 3</div>-->
+<!--											<a href=""><i class="fas fa-long-arrow-alt-right"></i></a>-->
+<!--										</div>-->
+<!--									</button>-->
 
-								<div id="London" class="tabcontent">
-									<div class="tabcontent-row">
-										<div class="tab-movie-date">
-											<p>Thứ 2 - 21/10/2019</p>
-										</div>
-										<div class="tab-movie-session">
-											<!-- <img src="http://placehold.it/50x50" alt=""> -->
-											<div class="list-time">
-												<a href="#">17:0</a> <a href="#">21:10</a> <a href="#">23:10</a>
-											</div>
-										</div>
-									</div>
-									<div class="tabcontent-row">
-										<div class="tab-movie-date">
-											<p>Thứ 3 - 22/10/2019</p>
-										</div>
-										<div class="tab-movie-session">
-											<!-- <img src="http://placehold.it/50x50" alt=""> -->
-											<div class="list-time">
-												<a href="#">19:40</a> <a href="#">20:20</a> <a href="#">21:40</a>
-												<a href="#">22:10</a> <a href="#">22:40</a> <a href="#">23:20</a>
-											</div>
-										</div>
-									</div>
-									<div class="tabcontent-row">
-										<div class="tab-movie-date">
-											<p>Thứ 4 - 23/10/2019</p>
-										</div>
-										<div class="tab-movie-session">
-											<!-- <img src="http://placehold.it/50x50" alt=""> -->
-											<div class="list-time">
-												<a href="#">21:10</a> <a href="#">21:10</a> <a href="#">21:10</a>
-												<a href="#">21:10</a>
-											</div>
-										</div>
-									</div>
-									<div class="tabcontent-row">
-										<div class="tab-movie-date">
-											<p>Thứ 5 - 24/10/2019</p>
-										</div>
-										<div class="tab-movie-session">
-											<!-- <img src="http://placehold.it/50x50" alt=""> -->
-											<div class="list-time">
-												<a href="#">21:10</a> <a href="#">21:10</a> <a href="#">21:10</a>
-												<a href="#">21:10</a>
-											</div>
-										</div>
-									</div>
-								</div>
 
-								<div id="Paris" class="tabcontent">
-									<div class="tabcontent-row">
-										<div class="tab-movie-info">
-											<img src="http://placehold.it/50x50" alt="">
-											<p class="tab-movie-title">Gã Hề Ma Quái 2 - It Chapter
-												Two</p>
-											<p class="tab-movie-detail">172 phút - cinema 8 - IMDb
-												7.1</p>
-										</div>
-										<div class="tab-movie-session">
-											<!-- <img src="http://placehold.it/50x50" alt=""> -->
-											<div class="list-time">
-												<a href="#">17:0</a> <a href="#">21:10</a> <a href="#">23:10</a>
-											</div>
-										</div>
-									</div>
-									<div class="tabcontent-row">
-										<div class="tab-movie-info">
-											<img src="http://placehold.it/50x50" alt="">
-											<p class="tab-movie-title">Đứa Con Của Thời Tiết -
-												Weathering With You</p>
-											<p class="tab-movie-detail">120 phút - cinema 8.5 - IMDb
-												6.4</p>
-										</div>
-										<div class="tab-movie-session">
-											<!-- <img src="http://placehold.it/50x50" alt=""> -->
-											<div class="list-time">
-												<a href="#">19:40</a> <a href="#">20:20</a> <a href="#">21:40</a>
-												<a href="#">22:10</a> <a href="#">22:40</a> <a href="#">23:20</a>
-											</div>
-										</div>
-									</div>
-									<div class="tabcontent-row">
-										<div class="tab-movie-info">
-											<img src="http://placehold.it/50x50" alt="">
-											<p class="tab-movie-title">Gã Hề Ma Quái 2 - It Chapter
-												Two</p>
-											<p class="tab-movie-detail">172 phút - cinema 8 - IMDb
-												7.1</p>
-										</div>
-										<div class="tab-movie-session">
-											<!-- <img src="http://placehold.it/50x50" alt=""> -->
-											<div class="list-time">
-												<a href="#">21:10</a> <a href="#">21:10</a> <a href="#">21:10</a>
-												<a href="#">21:10</a>
-											</div>
-										</div>
-									</div>
-								</div>
+<!--									<button class="tablinks" onclick="openCity(event, 'Tokyo')">-->
+<!--										<img src="https://via.placeholder.com/50x50" alt="">-->
+<!--										<div class="locate-detail">-->
+<!--											<div class="locate-name">CGV Satra Củ Chi</div>-->
+<!--											<div class="locate-address">Tầng 3, TTTM Satra Củ Chi,-->
+<!--												Số 1239, Tỉnh Lộ 8, Ấp Thạnh An, Xã Trung An, Huyện Củ Chi,-->
+<!--												TP.HCM</div>-->
+<!--											<a href=""><i class="fas fa-long-arrow-alt-right"></i></a>-->
+<!--										</div>-->
+<!--									</button>-->
+<!--									<button class="tablinks" onclick="openCity(event, 'Tokyo')">-->
+<!--										<img src="https://via.placeholder.com/50x50" alt="">-->
+<!--										<div class="locate-detail">-->
+<!--											<div class="locate-name">CGV Parkson Đồng Khởi</div>-->
+<!--											<div class="locate-address">Tầng 5, số 35 bis-45, đường-->
+<!--												Lê Thánh Tôn, Phường Bến Nghé, Quận 1, Tp. Hồ Chí Minh, Việt-->
+<!--												Nam</div>-->
+<!--											<a href=""><i class="fas fa-long-arrow-alt-right"></i></a>-->
+<!--										</div>-->
+<!--									</button>-->
+<!--								</div>-->
 
-								<div id="Tokyo" class="tabcontent">
-									<h3>Tokyo</h3>
-									<p>Tokyo is the capital of Japan.</p>
-								</div>
-							</div>
-						</section>
-					</section>
+<!--								<div id="London" class="tabcontent">-->
+<!--									<div class="tabcontent-row">-->
+<!--										<div class="tab-movie-date">-->
+<!--											<p>Thứ 2 - 21/10/2019</p>-->
+<!--										</div>-->
+<!--										<div class="tab-movie-session">-->
+<!--											&lt;!&ndash; <img src="http://placehold.it/50x50" alt=""> &ndash;&gt;-->
+<!--											<div class="list-time">-->
+<!--												<a href="#">17:0</a> <a href="#">21:10</a> <a href="#">23:10</a>-->
+<!--											</div>-->
+<!--										</div>-->
+<!--									</div>-->
+<!--									<div class="tabcontent-row">-->
+<!--										<div class="tab-movie-date">-->
+<!--											<p>Thứ 3 - 22/10/2019</p>-->
+<!--										</div>-->
+<!--										<div class="tab-movie-session">-->
+<!--											&lt;!&ndash; <img src="http://placehold.it/50x50" alt=""> &ndash;&gt;-->
+<!--											<div class="list-time">-->
+<!--												<a href="#">19:40</a> <a href="#">20:20</a> <a href="#">21:40</a>-->
+<!--												<a href="#">22:10</a> <a href="#">22:40</a> <a href="#">23:20</a>-->
+<!--											</div>-->
+<!--										</div>-->
+<!--									</div>-->
+<!--									<div class="tabcontent-row">-->
+<!--										<div class="tab-movie-date">-->
+<!--											<p>Thứ 4 - 23/10/2019</p>-->
+<!--										</div>-->
+<!--										<div class="tab-movie-session">-->
+<!--											&lt;!&ndash; <img src="http://placehold.it/50x50" alt=""> &ndash;&gt;-->
+<!--											<div class="list-time">-->
+<!--												<a href="#">21:10</a> <a href="#">21:10</a> <a href="#">21:10</a>-->
+<!--												<a href="#">21:10</a>-->
+<!--											</div>-->
+<!--										</div>-->
+<!--									</div>-->
+<!--									<div class="tabcontent-row">-->
+<!--										<div class="tab-movie-date">-->
+<!--											<p>Thứ 5 - 24/10/2019</p>-->
+<!--										</div>-->
+<!--										<div class="tab-movie-session">-->
+<!--											&lt;!&ndash; <img src="http://placehold.it/50x50" alt=""> &ndash;&gt;-->
+<!--											<div class="list-time">-->
+<!--												<a href="#">21:10</a> <a href="#">21:10</a> <a href="#">21:10</a>-->
+<!--												<a href="#">21:10</a>-->
+<!--											</div>-->
+<!--										</div>-->
+<!--									</div>-->
+<!--								</div>-->
+
+<!--								<div id="Paris" class="tabcontent">-->
+<!--									<div class="tabcontent-row">-->
+<!--										<div class="tab-movie-info">-->
+<!--											<img src="http://placehold.it/50x50" alt="">-->
+<!--											<p class="tab-movie-title">Gã Hề Ma Quái 2 - It Chapter-->
+<!--												Two</p>-->
+<!--											<p class="tab-movie-detail">172 phút - cinema 8 - IMDb-->
+<!--												7.1</p>-->
+<!--										</div>-->
+<!--										<div class="tab-movie-session">-->
+<!--											&lt;!&ndash; <img src="http://placehold.it/50x50" alt=""> &ndash;&gt;-->
+<!--											<div class="list-time">-->
+<!--												<a href="#">17:0</a> <a href="#">21:10</a> <a href="#">23:10</a>-->
+<!--											</div>-->
+<!--										</div>-->
+<!--									</div>-->
+<!--									<div class="tabcontent-row">-->
+<!--										<div class="tab-movie-info">-->
+<!--											<img src="http://placehold.it/50x50" alt="">-->
+<!--											<p class="tab-movie-title">Đứa Con Của Thời Tiết - -->
+<!--												Weathering With You</p>-->
+<!--											<p class="tab-movie-detail">120 phút - cinema 8.5 - IMDb-->
+<!--												6.4</p>-->
+<!--										</div>-->
+<!--										<div class="tab-movie-session">-->
+<!--											&lt;!&ndash; <img src="http://placehold.it/50x50" alt=""> &ndash;&gt;-->
+<!--											<div class="list-time">-->
+<!--												<a href="#">19:40</a> <a href="#">20:20</a> <a href="#">21:40</a>-->
+<!--												<a href="#">22:10</a> <a href="#">22:40</a> <a href="#">23:20</a>-->
+<!--											</div>-->
+<!--										</div>-->
+<!--									</div>-->
+<!--									<div class="tabcontent-row">-->
+<!--										<div class="tab-movie-info">-->
+<!--											<img src="http://placehold.it/50x50" alt="">-->
+<!--											<p class="tab-movie-title">Gã Hề Ma Quái 2 - It Chapter-->
+<!--												Two</p>-->
+<!--											<p class="tab-movie-detail">172 phút - cinema 8 - IMDb-->
+<!--												7.1</p>-->
+<!--										</div>-->
+<!--										<div class="tab-movie-session">-->
+<!--											&lt;!&ndash; <img src="http://placehold.it/50x50" alt=""> &ndash;&gt;-->
+<!--											<div class="list-time">-->
+<!--												<a href="#">21:10</a> <a href="#">21:10</a> <a href="#">21:10</a>-->
+<!--												<a href="#">21:10</a>-->
+<!--											</div>-->
+<!--										</div>-->
+<!--									</div>-->
+<!--								</div>-->
+
+<!--								<div id="Tokyo" class="tabcontent">-->
+<!--									<h3>Tokyo</h3>-->
+<!--									<p>Tokyo is the capital of Japan.</p>-->
+<!--								</div>-->
+
+<!--							</div>-->
+<!--						</section>-->
+<!--					</section>-->
 					<section id="thongtin" class="tab-panel">
 						<div class="row">
 							<div class="col span-1-of-2 cottrai">
 								<div class="row">
-									<div class="col span-1-of-2">Release day</div>
+									<div class="col span-1-of-2">Ngày ra mắt</div>
 									<div class="col span-1-of-2">
-										<p>18.10.2019</p>
+										<p class="dataRe"></p>
 									</div>
 								</div>
 								<div class="row">
-									<div class="col span-1-of-2">Director</div>
+									<div class="col span-1-of-2">Đạo điễn</div>
 									<div class="col span-1-of-2">
-										<p>Chainarong Tampong</p>
+										<p class="dataDirec"></p>
 									</div>
 								</div>
 								<div class="row">
-									<div class="col span-1-of-2">Actor</div>
+									<div class="col span-1-of-2">Diễn viên</div>
 									<div class="col span-1-of-2">
-										<p></p>
+										<p class="dataActor"></p>
 									</div>
 								</div>
 								<div class="row">
-									<div class="col span-1-of-2">Genre</div>
+									<div class="col span-1-of-2">Thể loại</div>
 									<div class="col span-1-of-2">
-										<p>tình cảm, hài hước</p>
+										<p class="dataGenre"></p>
 									</div>
 								</div>
 								<div class="row">
-									<div class="col span-1-of-2">Format</div>
+									<div class="col span-1-of-2">Định dạng</div>
 									<div class="col span-1-of-2">
-										<p>2D/Digital</p>
+										<p class="dataFormat"></p>
 									</div>
 								</div>
 								<div class="row">
-									<div class="col span-1-of-2">Nation</div>
+									<div class="col span-1-of-2">Ngôn ngữ</div>
 									<div class="col span-1-of-2">
-										<p>Thailand</p>
+										<p class="dataLang"></p>
 									</div>
 								</div>
 							</div>
-							<div class="col span-1-of-2 descr">
+
+						</div>
+						<div class="row">
+							<div class="descr">
 								Description
-								<p>Cuộc sống cơm ba bữa êm đềm của Due (Chanon
-									Santinatornkul) bỗng bị nhân tố mang tên “bà dì” Lin (Supassara
-									Thanachat) quấy tung lên, nhiệm vụ của Due là phải làm kẻ "kì
-									đà cản mũi" những gã trai muốn tán tỉnh "dì" mình.</p>
+								<p class="dataDesc"></p>
 							</div>
 						</div>
 
@@ -328,7 +355,7 @@
 					<section id="review" class="tab-panel">
 						<div class="review-box">
 							<form action="" class="review-form">
-								<input type="text" class="input-with-lable"
+								<input id="review-box" type="text" class="input-with-lable"
 									placeholder="ban nghi j ve phim nay?">
 								<fieldset class="rating">
 									<input type="radio" id="star5" name="rating" value="5" /> <label
@@ -354,32 +381,17 @@
 										type="radio" id="starhalf" name="rating" value="half" /><label
 										class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
 								</fieldset>
-								<div id="one" class="submit-review-btn">Submit</div>
+								<div id="one" class="submit-review-btn" onclick="submitReview()">Submit</div>
 							</form>
 						</div>
-						<div class="user-reviews">
-							<h3 class="user-review-name">Lâm Nhơn</h3>
-							<p class="user-review-content">Phim ngoài dàn diễn viên ra
-								thì không hay mà ai cũng khen, cốt truyện thì k có. Nội dung hài
-								lặp lại nhàm chán.</p>
+						<div id="content-reviews">
+							<div class="user-reviews">
+								<h3 class="user-review-name"> data.uname </h3>
+								<p class="user-review-content">data.content </p>
+							</div>
 						</div>
-						<div class="user-reviews">
-							<h3 class="user-review-name">Phuc Huynh</h3>
-							<p class="user-review-content">Nam thần đẹp quá 😍. Người
-								Thái Lan mà cứ tưởng Hàn Quốc.👍. Phim này ra mắt làm cho con
-								tim yêu thương quan tâm đến những người thân.</p>
-						</div>
-						<div class="user-reviews">
-							<h3 class="user-review-name">Sinh Viet</h3>
-							<p class="user-review-content">Có cậu cháu như này có khi
-								thành bà cô cả đời chứ chả đùa :))))</p>
-						</div>
-						<div class="user-reviews">
-							<h3 class="user-review-name">Xinh Linh</h3>
-							<p class="user-review-content">Phim hài hước những vẫn mang
-								thông điệp tình cảm gia đình, luôn quan tâm cho nhau rất tình
-								cảm</p>
-						</div>
+
+						<div id="Pagination" class="pagination"></div>
 					</section>
 				</div>
 			</div>
@@ -388,40 +400,18 @@
 
 
 
-	<section class="secion-news"></section>
+	<section class="section-news"></section>
 
-	<footer>
-		<div class="row">
-			<div class="col span-1-of-3 footer-cinema">
-				<h3 class="footer-title">CINEMA</h3>
-				<div>
-					<div class="col span-1-of-2">
-						<a href="#">FAQ</a> <a href="#">Guidelines</a>
-					</div>
-					<div class="col span-1-of-2">
-						<a href="#">Thoả thuận sử dụng</a> <a href="#">Quy chế hoạt
-							động</a> <a href="#">Chính sách bảo mật</a> <a href="#">Quyền lợi
-							thành viên</a>
-					</div>
-				</div>
-			</div>
-			<div class="col span-1-of-3 footer-doitac-social">
-				<h3 class="footer-title">ĐỐI TÁC</h3>
-				<a href="#"><img src="http://placehold.it/30x30" alt=""></a>
-			</div>
-			<div class="col span-1-of-3 footer-doitac-social">
-				<h3 class="footer-title">SOCIAL</h3>
-				<a href="#"><img src="http://placehold.it/30x30" alt=""></a>
-			</div>
-		</div>
-	</footer>
+<footer th:fragment="client-footer" th:replace="client/fragments/footer :: client-footer"></footer>
+
 	<script th:src="@{/scripts/jquery.min.js}"></script>
 	<script th:src="@{/scripts/jquery-ui.min.js}"></script>
 
 	<!-- <script src="/resource/js/select2.min.js"></script> -->
 	<script type="text/javascript" th:src="@{/scripts/slick.js}"></script>
-	<script type="text/javascript" th:src="@{/scripts/app.js}"></script>
-	<script type="text/javascript" th:src="@{/scripts/selectize.js}"></script>
+	<script type="text/javascript" th:src="@{/scripts/movie-detail.js}"></script>
+	<script type="text/javascript" th:src="@{/scripts/pagination.js}"></script>
+
 </body>
 
 </html>

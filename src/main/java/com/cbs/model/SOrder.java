@@ -38,5 +38,8 @@ public class SOrder extends BaseEntity{
 	 @OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "payment_id", referencedColumnName = "id")
 	private Payment payment;
-	
+
+	@OneToOne(mappedBy = "order")
+	private Rating rating;
+
 }

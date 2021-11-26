@@ -6,13 +6,12 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;;
+import lombok.ToString;
 
 @Getter
 @Setter
@@ -20,9 +19,8 @@ import lombok.ToString;;
 @EqualsAndHashCode(callSuper = true, exclude = { "cinemas" })
 public class Province extends BaseEntity {
 	private static final long serialVersionUID = 1L;
-	@Column(unique = true)
+	@Column(unique = true, columnDefinition = "nvarchar(255)")
 	@NotNull
-	@Size(min = 2, max = 50)
 	private String name;
 
 	@OneToMany(mappedBy = "province")

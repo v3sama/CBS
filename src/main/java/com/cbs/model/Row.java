@@ -20,7 +20,7 @@ import javax.persistence.OneToMany;
 public class Row extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 	@Column(unique=true)
-    private String Tittle;
+    private String title;
 
 
     @OneToMany(mappedBy = "row")

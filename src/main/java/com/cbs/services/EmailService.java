@@ -59,6 +59,28 @@ public class EmailService {
         }
     }
 	
+    //Send Mail Order Detail
+    public void sendOrderEmail(Mail mailOrder) {
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message,
+                    MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
+                    StandardCharsets.UTF_8.name());
+
+            Context context = new Context();
+            context.setVariables(mailOrder.getModel());
+            String html = templateEngine.process("email/emailOrder-template", context);
+
+            helper.setTo(mailOrder.getTo());
+            helper.setText(html, true);
+            helper.setSubject(mailOrder.getSubject());
+            helper.setFrom(mailOrder.getFrom());
+
+            mailSender.send(message);
+        } catch (Exception e){
+            throw new RuntimeException(e);
+        }
+    }
 	
 	
 }

@@ -21,7 +21,7 @@ $(document).ready(function () {
     //Đổ data lên phần xác nhận
     let dataOrder = $.getMovieData();
     console.log("dataOrder" + dataOrder)
-    $('#confirm-seat').append(dataOrder.ghe.toString())
+    $('#confirm-seat').append(dataOrder.ghe.join(', '))
     $('#confirm-date').append(dataOrder.ngay);
     $('#confirm-session').append(dataOrder.suatchieu);
     $('#tong-tien').append(dataOrder.amount);
@@ -125,6 +125,9 @@ function confirmCheckout() {
             if (data.length>0){
                 window.location.href = "http://localhost:8080/booksuccess?ordercode="+data;
             }
+        },
+        error: function () {
+            alert("Hệ thống đang gặp trục trặc. xin vui lòng thử lại sau")
         }
     })
 }
@@ -147,6 +150,9 @@ function readyConfirmCheckout() {
             if (data === "dathanhtoan"){
                 window.location.href = "http://localhost:8080";
             }
+        },
+        error: function () {
+            alert("Hệ thống đang gặp trục trặc. xin vui lòng thử lại sau")
         }
     })
 }

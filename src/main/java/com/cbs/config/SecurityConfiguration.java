@@ -20,6 +20,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
 import com.cbs.model.Role;
 import com.cbs.model.User;
@@ -49,6 +50,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		return bCryptPasswordEncoder;
 	}
 
+	
 	@Bean
 	public PersistentTokenRepository persistentTokenRepository() {
 		JdbcTokenRepositoryImpl db = new JdbcTokenRepositoryImpl();
@@ -76,15 +78,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			user.setPassword("admin");
 			user.setFirstName("admin");
 			user.setLastName("admin");
-			user.setPhone("095789462");
-			
+			user.setPhone("0957894622");
 
 			Set<Role> roles = new HashSet<Role>();
 			roles.add(roleService.findByName("ADMIN"));
 			user.setRoles(roles);
 			userService.add(user);
 		}
-
 		// Sét đặt dịch vụ để tìm kiếm User trong Database.
 		// Và sét đặt PasswordEncoder.
 		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
@@ -99,10 +99,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		// Các trang không yêu cầu login
 
 		http.authorizeRequests()
-				.antMatchers("/admin/**","/admin").hasAuthority("ADMIN")
-				.antMatchers("/profile/**", "/orders/**", "/datve", "/confirmVe", "/booksuccess").hasAuthority("MEMBER")
-				.antMatchers("/**").permitAll();
-						
+				.antMatchers("/admin/**", "/admin","/profile").hasAuthority("ADMIN")
+				.antMatchers("/profile**","/profile","/change-password", "/update-profile", "/orders/**", "/datve", "/confirmVe", "/booksuccess")
+				.hasAuthority("MEMBER").antMatchers("/**").permitAll();
 
 		// Khi người dùng đã login, với vai trò XX.
 		// Nhưng truy cập vào trang yêu cầu vai trò YY,

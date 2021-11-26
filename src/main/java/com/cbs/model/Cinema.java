@@ -21,16 +21,17 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true, exclude = { "province", "cinemaScreens" })
 public class Cinema extends BaseEntity {
 	private static final long serialVersionUID = 1L;
-	@Column(unique = true)
-	private String title;
-	private String address;
-	private String phone;
-
-	@ManyToOne
-	@JoinColumn(name = "province_id")
-	private Province province;
-
-	@OneToMany(mappedBy = "cinema")
-	private Set<CinemaScreen> cinemaScreens;
-
+	@Column(unique=true,columnDefinition = "nvarchar(255)")
+    private String title;
+    private String address;
+    private String phone;
+  
+    @ManyToOne
+    @JoinColumn(name = "province_id")
+    private Province province;
+    
+   
+   @OneToMany(mappedBy = "cinema")
+    private Set<CinemaScreen> cinemaScreens;
+	
 }

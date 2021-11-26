@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+	<link rel="stylesheet" th:href="@{/css/grid.css}">
+	<!-- <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet"> -->
+	<link rel="stylesheet" th:href="@{/css/site.css}">
+	<link rel="stylesheet" th:href="@{/css/default-site.css}">
+	<link rel="stylesheet" th:href="@{/css/cinema-detail.css}">
+
+
+<title>Cinema Detai</title>
+<style>
+footer {
+	background-color: #555;
+		color: white;
+	}
+	
+	footer.a {
+		color: white;
+	}
+	
+	.container-fluid {
+		padding-top: 50px;
+	}
+</style>
+</head>
+
+<body>
+	<Nav th:fragment="client-nav"
+		th:replace="client/fragments/navbar :: client-nav"></Nav>
+
+
+		<!-- <div class="cinemas-list">
+							<ul>
+									<li class="cgv_city_1 current" style="">
+										<span id="cgv_site_004" onclick="site('https://www.cgv.vn/default/cinox/site/cgv-hung-vuong-plaza',this)">CGV Hùng Vương Plaza</span>
+									</li>
+									<li class="cgv_city_1" style="">
+										<span id="cgv_site_008" onclick="site('https://www.cgv.vn/default/cinox/site/cgv-crescent-mall',this)">CGV Crescent Mall</span>
+									</li>
+							
+									
+									
+							</ul>
+		</div> -->
+		
+			<!-- Main content -->
+	<div class="hang-top">
+		<div id="c-name"></div>
+		<div id="c-add"></div>
+	</div>
+		<div class="content">
+			<div class="container-fluid">
+
+
+			</div>
+		</div>
+
+	<script>
+	</script>
+
+	<footer th:fragment="client-footer"
+		th:replace="client/fragments/footer :: client-footer"></footer>
+
+	<script th:src="@{/scripts/jquery.min.js}"></script>
+	<script th:src="@{/scripts/jquery-ui.min.js}"></script>
+
+	<!-- <script src="/resource/js/select2.min.js"></script> -->
+<!--	<script type="text/javascript" th:src="@{/scripts/slick.js}"></script>-->
+	<script type="text/javascript" th:src="@{/scripts/cinema-detail.js}"></script>
+<!--	<script type="text/javascript" th:src="@{/scripts/selectize.js}"></script>-->
+</body>
+
+</html>

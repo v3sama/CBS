@@ -9,7 +9,7 @@
 <script th:src="@{/scripts/jquery.min.js}"></script>
 <script th:src="@{/scripts/bootstrap.bundle.min.js}"></script>
 
-<title>CBS Admin</title>
+<title>Report</title>
 <style>
 .navbar {
 	margin-bottom: 10px;
@@ -59,8 +59,8 @@
 					</div>
 					<!-- form start -->
 					<form class="form-horizontal" data-toggle="validator" role="form"
-						action="#" th:action="@{/admin/report}"
-						th:object="${reportForm}" method="post">
+						action="#" th:action="@{/admin/report}" th:object="${reportForm}"
+						method="post">
 						<div class="card-body">
 
 
@@ -68,7 +68,8 @@
 								<label class="col-sm-2 control-label">Province</label>
 								<div class="col-sm-4">
 									<select th:field="*{provinceId}" class="form-control"
-										required="required">
+										required="required" onchange="getCinemaByProvince()">
+										<option value="0"></option>
 										<th:block th:each="province : ${provinces}">
 											<option th:value="${province.id}" th:text="${province.name}"></option>
 										</th:block>
@@ -77,8 +78,8 @@
 
 								<label class="col-sm-2 control-label">Cinema</label>
 								<div class="col-sm-4">
-									<select th:field="*{cinemaId}" class="form-control"
-										required="required">
+									<select th:field="*{cinemaId}" class="form-control">
+										<option value="0"></option>
 										<th:block th:each="cinema : ${cinemas}">
 											<option th:value="${cinema.id}" th:text="${cinema.title}"></option>
 										</th:block>
@@ -86,28 +87,100 @@
 								</div>
 							</div>
 							<div class="form-group row">
+								<label class="col-sm-2 control-label"> Movie</label>
+								<div class="col-sm-4">
+									<select th:field="*{movieId}" class="form-control">
+										<option value="0"></option>
+										<th:block th:each="movie : ${movies}">
+
+											<option th:value="${movie.id}" th:text="${movie.title}"></option>
+										</th:block>
+									</select>
+								</div>
+
+								<label class="col-sm-2 control-label">Customer</label>
+								<div class="col-sm-4">
+									<select th:field="*{customerId}" class="form-control">
+										<option value="0"></option>
+										<th:block th:each="customer : ${customers}">
+											<option th:value="${customer.id}"
+												th:text="${customer.id + '(' + customer.phone + ')'}"></option>
+										</th:block>
+									</select>
+								</div>
+							</div>
+							<div class="form-group row">
 								<label class="col-sm-2 control-label">From date</label>
 								<div class="col-sm-4">
-									<input class="form-control" type="date" required="required" th:field="*{fromDate}"/>
+									<input class="form-control" type="date" required="required"
+										th:field="*{fromDate}" />
 								</div>
 
 								<label class="col-sm-2 control-label">To date</label>
 								<div class="col-sm-4">
-									<input class="form-control" type="date" required="required" th:field="*{toDate}"/>
+									<input class="form-control" type="date" required="required"
+										th:field="*{toDate}" />
 								</div>
 							</div>
 						</div>
+						<p th:text="${error}" style="color:red;font-weight:bold"></p>
 						<div class="card-footer">
-							<button type="submit" class="btn btn-info">Generate Report</button>
+						
+							<button type="submit" class="btn btn-info">Generate
+								Report</button>
 
-							
+
 						</div>
 					</form>
 				</div>
-
 			</div>
-			<!-- /.content -->
+
+
 		</div>
-		<!-- /.content-wrapper -->
+		<!-- /.content -->
+	</div>
+	<!-- /.content-wrapper -->
+	<script>
+		function getCinemaByProvince() {
+			//lay du lieu tu id thi dung #, tu class thi dung .
+			var provinceId = $("#provinceId").val();
+
+			$.ajax({
+				'url' : 'http://localhost:8080/api/admin/getCinemaByProvince',
+				'type' : 'GET',
+				'data' : {
+					'provinceId' : provinceId
+				},
+				'success' : function(data) {
+					//xoa het may cái option hien tai
+					$("#cinemaId").html('');
+					//all
+					$("#cinemaId").append('<option value="0"></option>');
+					//cái này xử lý giá trị server trả về
+					$.each(data, function(index, value) {
+						
+						$("#cinemaId").append(
+								"<option value='"+index+"'>" + value
+										+ "</option>");
+					});
+
+				},
+				'error' : function(request, error) {
+					//lỗi ko gửi đc request lên server
+					alert("Request: " + JSON.stringify(request));
+				}
+			});
+		};
+		$('form').submit(function() {
+		     var res = true;
+		    var fromDate = $("#fromDate").val();
+		    var toDate = $("#toDate").val();
+		    if(new Date(toDate) <= new Date(fromDate)){
+		    	alert('The toDate must be larger than or equal to fromDate!')
+		    	res = false;
+		    }
+		    return res; // returning false will prevent the form from submitting.
+		});
+	</script>
 </body>
 </html>

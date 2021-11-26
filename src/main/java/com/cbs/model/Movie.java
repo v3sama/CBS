@@ -44,14 +44,20 @@ public class Movie extends BaseEntity {
 	private LocalDate date_release;
 	private String image;
 	private String thumbnail;
+	@Column(columnDefinition = "varchar(255) default ''")
 	private String director;
 	@Min(0)
 	@Max(2300)
 	private String year;
 	private String language;
 	private float avg_user_rating_star;
+
+	@Column(columnDefinition = "integer default 0")
+	private int vote_count;
+	
 	private String trailer_link;
 	private Boolean status;
+	@Column(columnDefinition = "text")
 	private String description;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate date_end;
@@ -85,4 +91,6 @@ public class Movie extends BaseEntity {
 	@JoinTable(joinColumns = @JoinColumn(name = "movie_id"), inverseJoinColumns = @JoinColumn(name = "actor_id"))
 	private Set<Actor> actors;
 
+	@OneToMany(mappedBy = "movie")
+	private Set<Rating> ratings;
 }

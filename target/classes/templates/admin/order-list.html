@@ -10,6 +10,7 @@
 <link rel="stylesheet" th:href="@{/css/jquery.dataTables.min.css}" />
 <link rel="stylesheet" th:href="@{/css/custom.css}" />
 <script th:src="@{/scripts/jquery.js}"></script>
+<script th:src="@{/scripts/custom.js}"></script>
 <script th:src="@{/scripts/bootstrap.bundle.min.js}"></script>
 <script th:src="@{/scripts/jquery.dataTables.min.js}"></script>
 
@@ -69,7 +70,7 @@
 								<th></th>
 								<th></th>
 								<th></th>
-								<th></th>
+								<th id="status"></th>
 								<th></th>
 							</tr>
 						</tfoot>
@@ -81,7 +82,7 @@
 									<td th:text="${order.member.firstName + order.member.lastName}"></td>
 									<td th:text="${order.member.phone}"></td>
 									<td th:text="${order.orderTime}"></td>
-									<td th:text="${order.total}"></td>
+									<td th:text="${order.total}" class="amount"></td>
 									<td th:text="${order.status}"></td>
 									<td>
 										<a th:href="@{/admin/viewDetails/order(orderId= ${order.id})}">
@@ -104,13 +105,16 @@
 	<div class="container text-center"></div>
 
 	<script>
+	
 		$(document).ready(function() {
+			$(".amount").each(function(){
+				formatNumber(this);
+			});
 			$('#dataTable').DataTable({
 	            responsive: true,
-	            //sort by category
 	           
 	            initComplete: function () {
-	                // search by name or code
+	                // search 
 	                this.api().columns([0,1,2,3,4]).every(function () {
 	                    var column = this;
 	                    $('<input type="text" class="form-control" />')
@@ -123,7 +127,7 @@
 	                        }
 	                    });
 	                });
-	              //drop down to select category
+	              //drop down 
 	                this.api().columns(6).every(function () {
 	                    var column = this;
 	                    var select = $('<select class="form-control"><option value=""></option></select>')
@@ -140,10 +144,13 @@
 	                        select.append('<option value="' + d + '">' + d + '</option>')
 	                    });
 	                });
+	             
 	              
 	            },
 	             
 	        });
+			$("#status select").val("Pending");
+			$("#status select").trigger("change");
 		});
 	</script>
 

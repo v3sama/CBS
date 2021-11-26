@@ -6,7 +6,7 @@
 .topbar {
 	position: absolute;
 	height: 50px;
-	width: 70%;
+	width: 100%;
 	border-bottom: 1px solid #fff;
 	box-shadow: 0 0 15px rgb(0, 0, 0, 0.3);
 	background-color: rgba(255, 255, 255, 0.8);
@@ -26,7 +26,7 @@
 	font-weight: 100;
 	text-transform: uppercase;
 	font-size: 12px;
-	font-family: 'Raleway', sans-serif;
+	font-family: 'Quicksand', sans-serif;
 	line-height: 50px;
 }
 
@@ -64,7 +64,7 @@ div.seatCharts-container {
 	float: left;
 	position: absolute;
 	top: 50%;
-	left: 60%;
+	left: 68%;
 	transform: translate(-50%, -50%);
 }
 
